@@ -30,6 +30,8 @@ static void get_dimension(eglib_coordinate_t *width, eglib_coordinate_t*height) 
 
 static void draw_pixel(eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color) {
   uint8_t *p;
+  if(x >= WIDTH || y >= HEIGHT || x < 0 || y < 0)
+    return;
 
   p = tga_data + (WIDTH-y-1)*HEIGHT*3 + x*3;
   *p++ = color.b;

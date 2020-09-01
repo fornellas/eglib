@@ -33,6 +33,9 @@ static void draw_pixel(eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t
   if(x >= WIDTH || y >= HEIGHT || x < 0 || y < 0)
     return;
 
+  if ( tga_data == NULL )
+    return;
+
   p = tga_data + (WIDTH-y-1)*HEIGHT*3 + x*3;
   *p++ = color.b;
   *p++ = color.g;

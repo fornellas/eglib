@@ -1,7 +1,7 @@
 #ifndef EGLIB_DRAWING_H
 #define EGLIB_DRAWING_H
 
-#include "core.h"
+#include "eglib.h"
 
 void eglib_DrawPixel(eglib_t *ucg, eglib_coordinate_t x, eglib_coordinate_t y);
 

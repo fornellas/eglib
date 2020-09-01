@@ -1,5 +1,5 @@
-#ifndef EGLIB_CORE_H
-#define EGLIB_CORE_H
+#ifndef EGLIB_H
+#define EGLIB_H
 
 #include <stdint.h>
 #include <stddef.h>
@@ -68,5 +68,11 @@ void eglib_SetClipRange(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate_t
 bool eglib_IsPixelClipped(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate_t y);
 
 void eglib_SetColor(eglib_t *eglib, size_t idx, eglib_color_channel_t r, eglib_color_channel_t g, eglib_color_channel_t b);
+
+#include "drawing.h"
+
+#include "comm/none.h"
+
+#include "display/tga.h"
 
 #endif

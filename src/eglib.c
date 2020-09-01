@@ -1,4 +1,4 @@
-#include "core.h"
+#include "eglib.h"
 
 void eglib_Init(
 	eglib_t *eglib,

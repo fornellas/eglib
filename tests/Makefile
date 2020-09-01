@@ -1,31 +1,30 @@
 BUILD_DIR = bin
 CFILES = $(wildcard *.c)
-OBJS = $(CFILES:%.c=$(BUILD_DIR)/%.o)
+BINARIES = $(CFILES:%.c=$(BUILD_DIR)/%)
+TESTS = $(CFILES:%.c=%_test)
 CFLAGS += -MD
 EGLIB_PATH = ../src
 EGLIB_LIB = $(EGLIB_PATH)/bin/eglib.a
 INCLUDES = -I$(EGLIB_PATH)
 
-all: test
+all: $(TESTS)
 
 .PHONY: all
-
-$(BUILD_DIR)/%.o: %.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
-
--include $(OBJS:.o=.d)
 
 $(EGLIB_LIB):
 	make -C $(EGLIB_PATH)
 
-$(BUILD_DIR)/test: $(OBJS) $(EGLIB_LIB)
-	$(CC) -o $@ $^ $(CFLAGS) $(INCLUDES) $(LIBS)
+$(BUILD_DIR)/%: %.c $(EGLIB_LIB)
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
 
-test: $(BUILD_DIR)/test
-	valgrind $(BUILD_DIR)/test
+%_test: $(BUILD_DIR)/%
+	valgrind -q $<
+	cmp $<.tga $(@:%_test=%.tga)
 
-.PHONY: test
+# .PHONY: $(TESTS)
+
+-include $(OBJS:.o=.d)
 
 clean:
 	rm -rf $(BUILD_DIR)

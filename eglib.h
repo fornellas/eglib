@@ -4,4 +4,6 @@
 #include "core.h"
 #include "drawing.h"
 
+#include "comm/none.h"
+
 #endif

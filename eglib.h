@@ -6,4 +6,6 @@
 
 #include "comm/none.h"
 
+#include "display/tga.h"
+
 #endif

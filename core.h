@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 typedef struct {
   void (*power_up)(uint16_t clock_ns);
@@ -64,6 +65,7 @@ eglib_coordinate_t eglib_GetWidth(eglib_t *eglib);
 eglib_coordinate_t eglib_GetHeight(eglib_t *eglib);
 
 void eglib_SetClipRange(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate_t y, eglib_coordinate_t width, eglib_coordinate_t height);
+bool eglib_IsPixelClipped(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate_t y);
 
 void eglib_SetColor(eglib_t *eglib, size_t idx, eglib_color_channel_t r, eglib_color_channel_t g, eglib_color_channel_t b);
 

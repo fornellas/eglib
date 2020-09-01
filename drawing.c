@@ -1,6 +1,8 @@
 #include "drawing.h"
 
 void eglib_DrawPixel(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate_t y) {
+  if(eglib_IsPixelClipped(eglib, x, y))
+    return;
 	eglib->display->draw_pixel(x, y, eglib->color_index[0]);
 }
 

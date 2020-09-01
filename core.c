@@ -48,6 +48,22 @@ void eglib_SetClipRange(
 	eglib->clip.height = height;
 }
 
+bool eglib_IsPixelClipped(
+	eglib_t *eglib,
+	eglib_coordinate_t x,
+	eglib_coordinate_t y
+) {
+	if(x < eglib->clip.x)
+		return true;
+	if(x > (eglib->clip.x + eglib->clip.width))
+		return true;
+	if(y < eglib->clip.y)
+		return true;
+	if(y > (eglib->clip.y + eglib->clip.height))
+		return true;
+	return false;
+}
+
 void eglib_SetColor(
 	eglib_t *eglib,
 	size_t idx,

@@ -2,11 +2,11 @@
 
 void eglib_Init(
 	eglib_t *eglib,
-	eglib_display_t *display,
-	eglib_hardware_t *hardware
+	const eglib_display_t *display,
+	const eglib_comm_t *comm
 ) {
 	eglib->display = display;
-	eglib->hardware = hardware;
+	eglib->comm = comm;
 	eglib->clip.x = 0;
 	eglib->clip.y = 0;
 	eglib->clip.width = eglib_GetWidth(eglib);
@@ -14,12 +14,12 @@ void eglib_Init(
 }
 
 void eglib_PowerUp(eglib_t *eglib) {
-	eglib->hardware->power_up(eglib->display->clock_ns);
+	eglib->comm->power_up(eglib->display->clock_ns);
 	eglib->display->power_up();
 }
 
 void eglib_PowerDown(eglib_t *eglib) {
-	eglib->hardware->power_down();
+	eglib->comm->power_down();
 	eglib->display->power_down();
 }
 

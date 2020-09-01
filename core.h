@@ -17,7 +17,7 @@ typedef struct {
   // void (*repeat_3_bytes)(eglib_t *, uint16_t, uint8_t[3]);
   // void (*send_str)(eglib_t *, uint16_t, uint8_t *);
   // void (*send_cd_data_sequence)(eglib_t *, uint16_t, uint8_t[]);
-} eglib_hardware_t;
+} eglib_comm_t;
 
 typedef int16_t eglib_coordinate_t;
 
@@ -44,8 +44,8 @@ typedef struct {
 } eglib_display_t;
 
 typedef struct {
-	eglib_hardware_t *hardware;
-	eglib_display_t *display;
+	const eglib_comm_t *comm;
+	const eglib_display_t *display;
 	struct {
 		eglib_coordinate_t x;
 		eglib_coordinate_t y;
@@ -55,7 +55,7 @@ typedef struct {
 	eglib_color_t color_index[4];
 } eglib_t;
 
-void eglib_Init(eglib_t *eglib, eglib_display_t *display, eglib_hardware_t *hardware);
+void eglib_Init(eglib_t *eglib, const eglib_display_t *display, const eglib_comm_t *comm);
 
 void eglib_PowerUp(eglib_t *eglib);
 void eglib_PowerDown(eglib_t *eglib);

@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define WIDTH 256
-#define HEIGHT 256
+#define WIDTH 100
+#define HEIGHT 100
 
 
 static uint8_t *tga_data = NULL;

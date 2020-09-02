@@ -39,7 +39,7 @@ void eglib_DrawLine(eglib_t *eglib, eglib_coordinate_t x1, eglib_coordinate_t y1
       x_arg = y;
       y_arg = x;
     }
-    eglib->display->draw_pixel(x_arg, y_arg, eglib->color_index[0]);
+    eglib_DrawPixel(eglib, x_arg, y_arg);
     err -= (uint8_t)dy;
     if ( err < 0 ) {
       y += ystep;

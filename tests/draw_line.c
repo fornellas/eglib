@@ -1,7 +1,7 @@
 #include <eglib.h>
 #include <stdio.h>
 
-int main() {
+int main(int argc, char *argv[]) {
 	eglib_t eglib;
 
 	setbuf(stdout, NULL);
@@ -25,5 +25,8 @@ int main() {
 	eglib_SetColor(&eglib, 0, 0, 0, 255);
 	eglib_DrawLine(&eglib, 0, 0, eglib_GetWidth(&eglib) - 1, eglib_GetHeight(&eglib) - 1);
 
-	eglib_display_tga_save("bin/draw_line.tga");
+	if(argc == 2)
+		eglib_display_tga_save(argv[1]);
+	else
+		return 1;
 }

@@ -3,10 +3,18 @@
 void eglib_Init(
 	eglib_t *eglib,
 	const eglib_display_t *display,
-	const eglib_comm_t *comm
+	void *display_config,
+	const eglib_comm_t *comm,
+	void *comm_config
 ) {
-	eglib->display = display;
-	eglib->comm = comm;
+	eglib->display = *display;
+	eglib->display_config = display_config;
+	// TODO check for NULL function pointers and set default function
+
+	eglib->comm = *comm;
+	eglib->comm_config = comm_config;
+	// TODO check for NULL function pointers and set default function
+
 	eglib->clip.x = 0;
 	eglib->clip.y = 0;
 	eglib->clip.width = eglib_GetWidth(eglib);
@@ -14,24 +22,24 @@ void eglib_Init(
 }
 
 void eglib_PowerUp(eglib_t *eglib) {
-	eglib->comm->power_up(eglib->display->clock_ns);
-	eglib->display->power_up();
+	eglib->comm.power_up(eglib->comm_config, eglib->display.clock_ns);
+	eglib->display.power_up(eglib->display_config);
 }
 
 void eglib_PowerDown(eglib_t *eglib) {
-	eglib->comm->power_down();
-	eglib->display->power_down();
+	eglib->comm.power_down(eglib->comm_config);
+	eglib->display.power_down(eglib->display_config);
 }
 
 eglib_coordinate_t eglib_GetWidth(eglib_t *eglib) {
 	eglib_coordinate_t width, heigh;
-	eglib->display->get_dimension(&width, &heigh);
+	eglib->display.get_dimension(eglib->display_config, &width, &heigh);
 	return width;
 }
 
 eglib_coordinate_t eglib_GetHeight(eglib_t *eglib) {
 	eglib_coordinate_t width, heigh;
-	eglib->display->get_dimension(&width, &heigh);
+	eglib->display.get_dimension(eglib->display_config, &width, &heigh);
 	return heigh;
 }
 

@@ -1,9 +1,9 @@
 BUILD_DIR = bin
 CFILES = $(wildcard *.c)
-CFILES += $(wildcard comm/*.c)
-CFILES += $(wildcard display/*.c)
+CFILES += $(wildcard eglib/comm/*.c)
+CFILES += $(wildcard eglib/display/*.c)
 OBJS = $(CFILES:%.c=$(BUILD_DIR)/%.o)
-CFLAGS += -MD
+CFLAGS += -MD -Werror -Wall
 
 .PHONY: all
 all: $(BUILD_DIR)/eglib.a

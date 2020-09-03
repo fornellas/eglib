@@ -1,32 +1,41 @@
 #include <eglib.h>
+#include <eglib/comm/none.h>
+#include <eglib/display/tga.h>
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
 	eglib_t eglib;
+	eglib_coordinate_t width, height;
+	eglib_display_tga_config_t eglib_display_tga_config = {
+		.width = 100,
+		.height = 100,
+	};
 
 	setbuf(stdout, NULL);
 
-	eglib_Init(&eglib, &eglib_display_tga, &eglib_comm_none);
+	eglib_Init(&eglib, &eglib_display_tga, &eglib_display_tga_config, &eglib_comm_none, NULL);
 	eglib_PowerUp(&eglib);
 
-	eglib_SetColor(&eglib, 0, 0, 0, 0);
-	for(eglib_coordinate_t x=0, y=0 ; x < eglib_GetWidth(&eglib), y < eglib_GetHeight(&eglib) ; x++, y++) {
-		eglib_DrawPixel(&eglib, x, y);
-	}
+	width = eglib_GetWidth(&eglib);
+	height = eglib_GetHeight(&eglib);
 
-	eglib_SetClipRange(&eglib, 0, 0, eglib_GetWidth(&eglib) / 2, eglib_GetHeight(&eglib) / 2);
+	eglib_SetColor(&eglib, 0, 0, 0, 0);
+	for(eglib_coordinate_t v=0 ; (v < width) && (v < height) ; v++ )
+		eglib_DrawPixel(&eglib, v, v);
+
+	eglib_SetClipRange(&eglib, 0, 0, width / 2, height / 2);
 
 	eglib_SetColor(&eglib, 0, 255, 0, 0);
-	eglib_DrawLine(&eglib, 0, 0, eglib_GetWidth(&eglib) - 1, 0);
+	eglib_DrawLine(&eglib, 0, 0, width - 1, 0);
 
 	eglib_SetColor(&eglib, 0, 0, 255, 0);
-	eglib_DrawLine(&eglib, 0, eglib_GetHeight(&eglib) - 1, 0, 0);
+	eglib_DrawLine(&eglib, 0, height - 1, 0, 0);
 
 	eglib_SetColor(&eglib, 0, 0, 0, 255);
-	eglib_DrawLine(&eglib, 0, 0, eglib_GetWidth(&eglib) - 1, eglib_GetHeight(&eglib) - 1);
+	eglib_DrawLine(&eglib, 0, 0, width - 1, height - 1);
 
 	if(argc == 2)
-		eglib_display_tga_save(argv[1]);
+		eglib_display_tga_save(&eglib_display_tga_config, argv[1]);
 	else
 		return 1;
 }

@@ -3,7 +3,7 @@ CFILES = $(wildcard *.c)
 OBJS = $(CFILES:%.c=$(BUILD_DIR)/%.o)
 TEST_BINARIES = $(CFILES:%.c=$(BUILD_DIR)/%)
 TESTS = $(CFILES:%.c=%_test)
-CFLAGS += -MD
+CFLAGS += -MD -Werror -Wall
 
 EGLIB_PATH = ../src
 EGLIB_LIB = $(EGLIB_PATH)/bin/eglib.a

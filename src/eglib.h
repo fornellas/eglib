@@ -5,23 +5,6 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-typedef struct {
-  void (*power_up)(uint16_t clock_ns);
-  void (*power_down)(void);
-  // void (*delay)(eglib_t *, uint16_t);
-  // void (*change_reset_line)(eglib_t *, uint8_t);
-  // void (*change_cd_line)(eglib_t *, uint8_t);
-  // void (*change_cs_line)(eglib_t *, uint8_t);
-  // void (*send_byte)(eglib_t *, uint8_t);
-  // void (*repeat_1_byte)(eglib_t *, uint16_t, uint8_t);
-  // void (*repeat_2_bytes)(eglib_t *, uint16_t, uint8_t[2]);
-  // void (*repeat_3_bytes)(eglib_t *, uint16_t, uint8_t[3]);
-  // void (*send_str)(eglib_t *, uint16_t, uint8_t *);
-  // void (*send_cd_data_sequence)(eglib_t *, uint16_t, uint8_t[]);
-} eglib_comm_t;
-
-typedef int16_t eglib_coordinate_t;
-
 typedef uint8_t eglib_color_channel_t;
 
 typedef struct {
@@ -30,12 +13,14 @@ typedef struct {
 	eglib_color_channel_t b;
 } eglib_color_t;
 
+typedef int16_t eglib_coordinate_t;
+
 typedef struct {
 	uint16_t clock_ns;
-	void (*power_up)(void);
-	void (*power_down)(void);
-	void (*get_dimension)(eglib_coordinate_t *width, eglib_coordinate_t*height);
-	void (*draw_pixel)(eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color);
+	void (*power_up)(void *display_config); // optional
+	void (*power_down)(void *display_config); // optional
+	void (*get_dimension)(void *display_config, eglib_coordinate_t *width, eglib_coordinate_t*height); // required
+	void (*draw_pixel)(void *display_config, eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color); // required
 	// UCG_MSG_DRAW_L90FX
 	// UCG_MSG_DRAW_L90SE
 	// UCG_MSG_DRAW_L90SE
@@ -45,8 +30,25 @@ typedef struct {
 } eglib_display_t;
 
 typedef struct {
-	const eglib_comm_t *comm;
-	const eglib_display_t *display;
+  void (*power_up)(void *comm_config, uint16_t clock_ns); // optional
+  void (*power_down)(void *comm_config); // optional
+  void (*delay)(void *comm_config, uint16_t microseconds); // required
+  void (*set_reset)(void *comm_config, uint8_t state); // required
+  void (*set_cd)(void *comm_config, uint8_t state); // required
+  void (*set_cs)(void *comm_config, uint8_t state); // required
+  void (*send_byte)(void *comm_config, uint8_t state); // required
+  // void (*repeat_send_1_byte)(void *comm_config, uint16_t, uint8_t); // optional
+  // void (*repeat_send_2_bytes)(void *comm_config, uint16_t, uint8_t[2]); // optional
+  // void (*repeat_send_3_bytes)(void *comm_config, uint16_t, uint8_t[3]); // optional
+  // void (*send_bytes)(void *comm_config, uint16_t, uint8_t *); // optional
+  // void (*send_cd_data_sequence)(void *comm_config, uint16_t, uint8_t[]); // optional
+} eglib_comm_t;
+
+typedef struct {
+	eglib_display_t display;
+	void *display_config;
+	eglib_comm_t comm;
+	void *comm_config;
 	struct {
 		eglib_coordinate_t x;
 		eglib_coordinate_t y;
@@ -56,7 +58,7 @@ typedef struct {
 	eglib_color_t color_index[4];
 } eglib_t;
 
-void eglib_Init(eglib_t *eglib, const eglib_display_t *display, const eglib_comm_t *comm);
+void eglib_Init(eglib_t *eglib, const eglib_display_t *display, void *display_config, const eglib_comm_t *comm, void *comm_config);
 
 void eglib_PowerUp(eglib_t *eglib);
 void eglib_PowerDown(eglib_t *eglib);
@@ -70,9 +72,5 @@ bool eglib_IsPixelClipped(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate
 void eglib_SetColor(eglib_t *eglib, size_t idx, eglib_color_channel_t r, eglib_color_channel_t g, eglib_color_channel_t b);
 
 #include "drawing.h"
-
-#include "comm/none.h"
-
-#include "display/tga.h"
 
 #endif

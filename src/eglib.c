@@ -5,7 +5,7 @@ static void default_display_power_down(void *display_config) {}
 static void default_display_get_dimension(void *display_config, eglib_coordinate_t *width, eglib_coordinate_t*height) {}
 static void default_display_draw_pixel(void *display_config, eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color) {}
 
-static void default_comm_power_up(void *comm_config, uint16_t clock_ns) {}
+static void default_comm_power_up(void *comm_config) {}
 static void default_comm_power_down(void *comm_config) {}
 static void default_comm_delay(void *comm_config, uint16_t microseconds) {}
 static void default_comm_set_reset(void *comm_config, uint8_t state) {}
@@ -55,7 +55,7 @@ void eglib_Init(
 }
 
 void eglib_PowerUp(eglib_t *eglib) {
-	eglib->comm.power_up(eglib->comm_config, eglib->display.clock_ns);
+	eglib->comm.power_up(eglib->comm_config);
 	eglib->display.power_up(eglib->display_config);
 }
 

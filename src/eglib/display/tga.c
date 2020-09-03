@@ -44,7 +44,6 @@ static void draw_pixel(void *display_config, eglib_coordinate_t x, eglib_coordin
 }
 
 const eglib_display_t eglib_display_tga = {
-	.clock_ns = 0,
 	.power_up = power_up,
 	.power_down = power_down,
 	.get_dimension = get_dimension,

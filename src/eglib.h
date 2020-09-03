@@ -16,7 +16,6 @@ typedef struct {
 typedef int16_t eglib_coordinate_t;
 
 typedef struct {
-	uint16_t clock_ns;
 	void (*power_up)(void *display_config); // optional
 	void (*power_down)(void *display_config); // optional
 	void (*get_dimension)(void *display_config, eglib_coordinate_t *width, eglib_coordinate_t*height); // required
@@ -30,7 +29,7 @@ typedef struct {
 } eglib_display_t;
 
 typedef struct {
-  void (*power_up)(void *comm_config, uint16_t clock_ns); // optional
+  void (*power_up)(void *comm_config); // optional
   void (*power_down)(void *comm_config); // optional
   void (*delay)(void *comm_config, uint16_t microseconds); // required
   void (*set_reset)(void *comm_config, uint8_t state); // required

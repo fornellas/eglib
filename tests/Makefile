@@ -1,5 +1,5 @@
 BUILD_DIR = bin
-EGLIB_BUILD_DIR = ../tests/bin-eglib
+EGLIB_BUILD_DIR = bin-eglib
 CFILES = $(wildcard *.c)
 OBJS = $(CFILES:%.c=$(BUILD_DIR)/%.o)
 TEST_BINARIES = $(CFILES:%.c=$(BUILD_DIR)/%)
@@ -7,7 +7,8 @@ TESTS = $(CFILES:%.c=%_test)
 CFLAGS += -MD -Werror -Wall
 
 EGLIB_PATH = ../src
-EGLIB_LIB = $(EGLIB_PATH)/bin/eglib.a
+PWD_FROM_EGLIB_PATH = ../tests
+EGLIB_LIB = $(EGLIB_BUILD_DIR)/eglib.a
 
 INCLUDES = -I$(EGLIB_PATH)
 
@@ -22,7 +23,7 @@ $(BUILD_DIR)/%.o: %.c
 
 .PHONY: $(EGLIB_LIB)
 $(EGLIB_LIB):
-	make -C ../src BUILD_DIR=$(EGLIB_BUILD_DIR) $(EGLIB_BUILD_DIR)/eglib.a
+	make -C $(EGLIB_PATH) BUILD_DIR=$(PWD_FROM_EGLIB_PATH)/$(EGLIB_BUILD_DIR)
 
 $(BUILD_DIR)/%: $(BUILD_DIR)/%.o $(EGLIB_LIB)
 	mkdir -p $(dir $@)

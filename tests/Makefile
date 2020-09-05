@@ -1,4 +1,5 @@
 BUILD_DIR = bin
+EGLIB_BUILD_DIR = ../tests/bin-eglib
 CFILES = $(wildcard *.c)
 OBJS = $(CFILES:%.c=$(BUILD_DIR)/%.o)
 TEST_BINARIES = $(CFILES:%.c=$(BUILD_DIR)/%)
@@ -21,7 +22,7 @@ $(BUILD_DIR)/%.o: %.c
 
 .PHONY: $(EGLIB_LIB)
 $(EGLIB_LIB):
-	make -C ../src bin/eglib.a
+	make -C ../src BUILD_DIR=$(EGLIB_BUILD_DIR) $(EGLIB_BUILD_DIR)/eglib.a
 
 $(BUILD_DIR)/%: $(BUILD_DIR)/%.o $(EGLIB_LIB)
 	mkdir -p $(dir $@)
@@ -34,4 +35,4 @@ $(BUILD_DIR)/%: $(BUILD_DIR)/%.o $(EGLIB_LIB)
 
 .PHONY: clean
 clean:
-	rm -rf $(BUILD_DIR)
+	rm -rf $(BUILD_DIR) $(EGLIB_BUILD_DIR)

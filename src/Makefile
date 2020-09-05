@@ -1,4 +1,4 @@
-BUILD_DIR = bin
+BUILD_DIR ?= bin
 CFILES = $(wildcard *.c)
 CFILES += $(wildcard eglib/comm/*.c)
 CFILES += $(wildcard eglib/display/*.c)

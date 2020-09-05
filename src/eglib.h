@@ -35,7 +35,7 @@ typedef struct {
   void (*set_reset)(void *comm_config, uint8_t state); // required
   void (*set_cd)(void *comm_config, uint8_t state); // required
   void (*set_cs)(void *comm_config, uint8_t state); // required
-  void (*send_byte)(void *comm_config, uint8_t state); // required
+  void (*send_byte)(void *comm_config, uint8_t byte); // required
   // void (*repeat_send_1_byte)(void *comm_config, uint16_t, uint8_t); // optional
   // void (*repeat_send_2_bytes)(void *comm_config, uint16_t, uint8_t[2]); // optional
   // void (*repeat_send_3_bytes)(void *comm_config, uint16_t, uint8_t[3]); // optional

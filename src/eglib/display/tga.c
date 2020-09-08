@@ -5,7 +5,9 @@
 
 static uint8_t *tga_data = NULL;
 
-static void power_up(void *display_config) {
+static void power_up(eglib_hal_t *hal, void *hal_config, void *display_config) {
+  (void)hal;
+  (void)hal_config;
   eglib_display_tga_config_t *config = (eglib_display_tga_config_t *)display_config;
 
   if ( tga_data != NULL )
@@ -15,21 +17,27 @@ static void power_up(void *display_config) {
     exit(1);
 }
 
-static void power_down(void *display_config) {
+static void power_down(eglib_hal_t *hal, void *hal_config, void *display_config) {
+  (void)hal;
+  (void)hal_config;
   (void)display_config;
   
   if ( tga_data != NULL )
     free(tga_data);
 }
 
-static void get_dimension(void *display_config, eglib_coordinate_t *width, eglib_coordinate_t*height) {
+static void get_dimension(eglib_hal_t *hal, void *hal_config, void *display_config, eglib_coordinate_t *width, eglib_coordinate_t*height) {
+  (void)hal;
+  (void)hal_config;
   eglib_display_tga_config_t *config = (eglib_display_tga_config_t *)display_config;
 
 	*width = config->width;
 	*height = config->height;
 }
 
-static void draw_pixel(void *display_config, eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color) {
+static void draw_pixel(eglib_hal_t *hal, void *hal_config, void *display_config, eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color) {
+  (void)hal;
+  (void)hal_config;
   eglib_display_tga_config_t *config = (eglib_display_tga_config_t *)display_config;
   uint8_t *p;
 

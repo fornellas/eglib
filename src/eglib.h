@@ -5,28 +5,9 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-typedef uint8_t eglib_color_channel_t;
-
-typedef struct {
-	eglib_color_channel_t r;
-	eglib_color_channel_t g;
-	eglib_color_channel_t b;
-} eglib_color_t;
-
-typedef int16_t eglib_coordinate_t;
-
-typedef struct {
-	void (*power_up)(void *display_config); // optional
-	void (*power_down)(void *display_config); // optional
-	void (*get_dimension)(void *display_config, eglib_coordinate_t *width, eglib_coordinate_t*height); // required
-	void (*draw_pixel)(void *display_config, eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color); // required
-	// UCG_MSG_DRAW_L90FX
-	// UCG_MSG_DRAW_L90SE
-	// UCG_MSG_DRAW_L90SE
-	// UCG_MSG_SET_CLIP_BOX
-	// UCG_MSG_SEND_BUFFER
-	// uint8_t (*rotate)(uint8_t pos);
-} eglib_display_t;
+//
+// HAL
+//
 
 typedef struct {
   void (*power_up)(void *hal_config); // optional
@@ -43,10 +24,41 @@ typedef struct {
   // void (*send_cd_data_sequence)(void *hal_config, uint16_t, uint8_t[]); // optional
 } eglib_hal_t;
 
+//
+// Display
+//
+
+typedef uint8_t eglib_color_channel_t;
+
+typedef struct {
+	eglib_color_channel_t r;
+	eglib_color_channel_t g;
+	eglib_color_channel_t b;
+} eglib_color_t;
+
+typedef int16_t eglib_coordinate_t;
+
+typedef struct {
+	void (*power_up)(eglib_hal_t *hal, void *hal_config, void *display_config); // optional
+	void (*power_down)(eglib_hal_t *hal, void *hal_config, void *display_config); // optional
+	void (*get_dimension)(eglib_hal_t *hal, void *hal_config, void *display_config, eglib_coordinate_t *width, eglib_coordinate_t*height); // required
+	void (*draw_pixel)(eglib_hal_t *hal, void *hal_config, void *display_config, eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color); // required
+	// UCG_MSG_DRAW_L90FX
+	// UCG_MSG_DRAW_L90SE
+	// UCG_MSG_DRAW_L90SE
+	// UCG_MSG_SET_CLIP_BOX
+	// UCG_MSG_SEND_BUFFER
+	// uint8_t (*rotate)(uint8_t pos);
+} eglib_display_t;
+
+//
+// Eglib
+//
+
 typedef struct {
 	eglib_display_t display;
 	void *display_config;
-	eglib_hal_t comm;
+	eglib_hal_t hal;
 	void *hal_config;
 	struct {
 		eglib_coordinate_t x;
@@ -57,7 +69,11 @@ typedef struct {
 	eglib_color_t color_index[4];
 } eglib_t;
 
-void eglib_Init(eglib_t *eglib, const eglib_display_t *display, void *display_config, const eglib_hal_t *comm, void *hal_config);
+void eglib_Init(
+	eglib_t *eglib,
+	const eglib_hal_t *hal, void *hal_config,
+	const eglib_display_t *display, void *display_config
+);
 
 void eglib_PowerUp(eglib_t *eglib);
 void eglib_PowerDown(eglib_t *eglib);

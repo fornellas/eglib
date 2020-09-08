@@ -13,7 +13,11 @@ int main(int argc, char *argv[]) {
 
 	setbuf(stdout, NULL);
 
-	eglib_Init(&eglib, &eglib_display_tga, &eglib_display_tga_config, &eglib_hal_none, NULL);
+	eglib_Init(
+		&eglib,
+		&eglib_hal_none, NULL,
+		&eglib_display_tga, &eglib_display_tga_config
+	);
 	eglib_PowerUp(&eglib);
 
 	width = eglib_GetWidth(&eglib);

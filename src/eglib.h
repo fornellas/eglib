@@ -29,25 +29,25 @@ typedef struct {
 } eglib_display_t;
 
 typedef struct {
-  void (*power_up)(void *comm_config); // optional
-  void (*power_down)(void *comm_config); // optional
-  void (*delay)(void *comm_config, uint16_t microseconds); // required
-  void (*set_reset)(void *comm_config, uint8_t state); // required
-  void (*set_cd)(void *comm_config, uint8_t state); // required
-  void (*set_cs)(void *comm_config, uint8_t state); // required
-  void (*send_byte)(void *comm_config, uint8_t byte); // required
-  // void (*repeat_send_1_byte)(void *comm_config, uint16_t, uint8_t); // optional
-  // void (*repeat_send_2_bytes)(void *comm_config, uint16_t, uint8_t[2]); // optional
-  // void (*repeat_send_3_bytes)(void *comm_config, uint16_t, uint8_t[3]); // optional
-  // void (*send_bytes)(void *comm_config, uint16_t, uint8_t *); // optional
-  // void (*send_cd_data_sequence)(void *comm_config, uint16_t, uint8_t[]); // optional
-} eglib_comm_t;
+  void (*power_up)(void *hal_config); // optional
+  void (*power_down)(void *hal_config); // optional
+  void (*delay)(void *hal_config, uint32_t microseconds); // required
+  void (*set_reset)(void *hal_config, uint8_t state); // required
+  void (*set_cd)(void *hal_config, uint8_t state); // required
+  void (*set_cs)(void *hal_config, uint8_t state); // required
+  void (*send_byte)(void *hal_config, uint8_t byte); // required
+  // void (*repeat_send_1_byte)(void *hal_config, uint16_t, uint8_t); // optional
+  // void (*repeat_send_2_bytes)(void *hal_config, uint16_t, uint8_t[2]); // optional
+  // void (*repeat_send_3_bytes)(void *hal_config, uint16_t, uint8_t[3]); // optional
+  // void (*send_bytes)(void *hal_config, uint16_t, uint8_t *); // optional
+  // void (*send_cd_data_sequence)(void *hal_config, uint16_t, uint8_t[]); // optional
+} eglib_hal_t;
 
 typedef struct {
 	eglib_display_t display;
 	void *display_config;
-	eglib_comm_t comm;
-	void *comm_config;
+	eglib_hal_t comm;
+	void *hal_config;
 	struct {
 		eglib_coordinate_t x;
 		eglib_coordinate_t y;
@@ -57,7 +57,7 @@ typedef struct {
 	eglib_color_t color_index[4];
 } eglib_t;
 
-void eglib_Init(eglib_t *eglib, const eglib_display_t *display, void *display_config, const eglib_comm_t *comm, void *comm_config);
+void eglib_Init(eglib_t *eglib, const eglib_display_t *display, void *display_config, const eglib_hal_t *comm, void *hal_config);
 
 void eglib_PowerUp(eglib_t *eglib);
 void eglib_PowerDown(eglib_t *eglib);

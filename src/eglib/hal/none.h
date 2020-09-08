@@ -3,6 +3,6 @@
 
 #include "../../eglib.h"
 
-const eglib_comm_t eglib_comm_none;
+extern const eglib_hal_t eglib_hal_none;
 
 #endif

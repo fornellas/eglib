@@ -1,5 +1,5 @@
 #include <eglib.h>
-#include <eglib/comm/none.h>
+#include <eglib/hal/none.h>
 #include <eglib/display/tga.h>
 #include <stdio.h>
 
@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 
 	setbuf(stdout, NULL);
 
-	eglib_Init(&eglib, &eglib_display_tga, &eglib_display_tga_config, &eglib_comm_none, NULL);
+	eglib_Init(&eglib, &eglib_display_tga, &eglib_display_tga_config, &eglib_hal_none, NULL);
 	eglib_PowerUp(&eglib);
 
 	width = eglib_GetWidth(&eglib);

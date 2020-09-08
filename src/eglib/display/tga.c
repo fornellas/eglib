@@ -16,6 +16,8 @@ static void power_up(void *display_config) {
 }
 
 static void power_down(void *display_config) {
+  (void)display_config;
+  
   if ( tga_data != NULL )
     free(tga_data);
 }

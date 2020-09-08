@@ -8,9 +8,8 @@ CFLAGS += -MD -Werror -Wall
 
 EGLIB_PATH = ../src
 PWD_FROM_EGLIB_PATH = ../tests
-EGLIB_LIB = $(EGLIB_BUILD_DIR)/eglib.a
-
-INCLUDES = -I$(EGLIB_PATH)
+EGLIB_LIB = $(EGLIB_BUILD_DIR)/libeglib.a
+INCLUDES += -I$(EGLIB_PATH)
 
 .PHONY: all
 all: $(TESTS)
@@ -23,7 +22,11 @@ $(BUILD_DIR)/%.o: %.c
 
 .PHONY: $(EGLIB_LIB)
 $(EGLIB_LIB):
-	make -C $(EGLIB_PATH) BUILD_DIR=$(PWD_FROM_EGLIB_PATH)/$(EGLIB_BUILD_DIR)
+	make \
+		-C $(EGLIB_PATH) \
+		BUILD_DIR=$(PWD_FROM_EGLIB_PATH)/$(EGLIB_BUILD_DIR) \
+		DISPLAY_DRIVERS=tga \
+		HAL_DRIVERS=none
 
 $(BUILD_DIR)/%: $(BUILD_DIR)/%.o $(EGLIB_LIB)
 	mkdir -p $(dir $@)

@@ -8,7 +8,7 @@ typedef struct {
 	eglib_coordinate_t height;
 } eglib_display_tga_config_t;
 
-const eglib_display_t eglib_display_tga;
+extern const eglib_display_t eglib_display_tga;
 
 void eglib_display_tga_save(eglib_display_tga_config_t *config, char *path);
 

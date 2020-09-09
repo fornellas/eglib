@@ -12,9 +12,9 @@ static void default_hal_power_down(void *hal_config) {
 	(void)hal_config;
 }
 
-static void default_hal_delay(void *hal_config, uint32_t microseconds) {
+static void default_hal_delay_ms(void *hal_config, uint32_t ms) {
 	(void)hal_config;
-	(void)microseconds;	
+	(void)ms;
 }
 
 static void default_hal_set_reset(void *hal_config, uint8_t state) {
@@ -95,8 +95,8 @@ void eglib_Init(
 		eglib->hal.power_up = default_hal_power_up;
 	if(NULL == eglib->hal.power_down)
 		eglib->hal.power_down = default_hal_power_down;
-	if(NULL == eglib->hal.delay)
-		eglib->hal.delay = default_hal_delay;
+	if(NULL == eglib->hal.delay_ms)
+		eglib->hal.delay_ms = default_hal_delay_ms;
 	if(NULL == eglib->hal.set_reset)
 		eglib->hal.set_reset = default_hal_set_reset;
 	if(NULL == eglib->hal.set_cd)

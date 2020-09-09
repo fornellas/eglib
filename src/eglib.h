@@ -12,7 +12,7 @@
 typedef struct {
   void (*power_up)(void *hal_config); // optional
   void (*power_down)(void *hal_config); // optional
-  void (*delay)(void *hal_config, uint32_t microseconds); // required
+  void (*delay_ms)(void *hal_config, uint32_t ms); // required
   void (*set_reset)(void *hal_config, uint8_t state); // required
   void (*set_cd)(void *hal_config, uint8_t state); // required
   void (*set_cs)(void *hal_config, uint8_t state); // required

@@ -2,9 +2,8 @@
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/spi.h>
 
-static inline void spi_wait_not_busy(uint32_t spi) {
-	while (SPI_SR((uintptr_t)spi) & SPI_SR_BSY);
-}
+#define wait_spi_not_busy(spi) while(SPI_SR((uintptr_t)spi) & SPI_SR_BSY);
+
 
 static void power_up(void *hal_config) {
 	eglib_hal_libopencm3_stm32f4_spi_config_t *config = (eglib_hal_libopencm3_stm32f4_spi_config_t *)hal_config;
@@ -63,7 +62,7 @@ static void delay_ms(void *hal_config, uint32_t ms) {
 static void set_reset(void *hal_config, uint8_t state) {
 	eglib_hal_libopencm3_stm32f4_spi_config_t *config = (eglib_hal_libopencm3_stm32f4_spi_config_t *)hal_config;
 
-	spi_wait_not_busy(config->spi);
+	wait_spi_not_busy(config->spi);
 	if(state)
 		gpio_set(config->port_rst, config->gpio_rst);
 	else
@@ -73,7 +72,7 @@ static void set_reset(void *hal_config, uint8_t state) {
 static void set_cd(void *hal_config, uint8_t state) {
 	eglib_hal_libopencm3_stm32f4_spi_config_t *config = (eglib_hal_libopencm3_stm32f4_spi_config_t *)hal_config;
 
-	spi_wait_not_busy(config->spi);
+	wait_spi_not_busy(config->spi);
 	if(state)
 		gpio_set(config->port_cd, config->gpio_cd);
 	else
@@ -83,7 +82,7 @@ static void set_cd(void *hal_config, uint8_t state) {
 static void set_cs(void *hal_config, uint8_t state) {
 	eglib_hal_libopencm3_stm32f4_spi_config_t *config = (eglib_hal_libopencm3_stm32f4_spi_config_t *)hal_config;
 
-	spi_wait_not_busy(config->spi);
+	wait_spi_not_busy(config->spi);
 	if(state)
 		gpio_set(config->port_cs, config->gpio_cs);
 	else

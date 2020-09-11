@@ -41,11 +41,15 @@ static void power_up(void *hal_config) {
 static void power_down(void *hal_config) {
 	eglib_hal_libopencm3_stm32f4_spi_config_t *config = (eglib_hal_libopencm3_stm32f4_spi_config_t *)hal_config;
 
+	wait_spi_not_busy(config->spi);
+
 	spi_disable(config->spi);
 }
 
 static void delay_ms(void *hal_config, uint32_t ms) {
-	(void)hal_config;
+	eglib_hal_libopencm3_stm32f4_spi_config_t *config = (eglib_hal_libopencm3_stm32f4_spi_config_t *)hal_config;
+
+	wait_spi_not_busy(config->spi);
 
     ms *= rcc_ahb_frequency / 1000 / 3;
 

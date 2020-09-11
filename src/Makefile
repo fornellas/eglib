@@ -7,7 +7,7 @@ ifdef HAL_DRIVERS
 CFILES += $(HAL_DRIVERS:%=eglib/hal/%.c)
 endif
 OBJS = $(CFILES:%.c=$(BUILD_DIR)/%.o)
-override CFLAGS += -MD -Werror -Wall
+override CFLAGS += -MD -Werror -Wall -O3
 
 .PHONY: all
 all: $(BUILD_DIR)/libeglib.a

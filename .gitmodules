@@ -1,6 +1,6 @@
-[submodule "libopencm3"]
+[submodule "examples/libopencm3/libopencm3"]
 	path = examples/libopencm3/libopencm3
 	url = https://github.com/libopencm3/libopencm3.git
-[submoduile "examples/libopencm3/libopencm3-template"]
+[submodule "examples/libopencm3/libopencm3-template"]
 	path = examples/libopencm3/libopencm3-template
 	url = https://github.com/libopencm3/libopencm3-template.git

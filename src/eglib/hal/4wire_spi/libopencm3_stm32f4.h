@@ -1,7 +1,7 @@
 #ifndef EGLIB_COMM_LIBOPENCM3_STM32F4_H
 #define EGLIB_COMM_LIBOPENCM3_STM32F4_H
 
-#include "../../eglib.h"
+#include "../4wire_spi.h"
 #include <libopencm3/stm32/rcc.h>
 
 typedef struct {
@@ -33,8 +33,8 @@ typedef struct {
 	enum rcc_periph_clken rcc_mosi;
 	uint32_t port_mosi;
 	uint16_t gpio_mosi;
-} eglib_hal_libopencm3_stm32f4_spi_config_t;
+} eglib_hal_4wire_spi_libopencm3_stm32f4_config_t;
 
-extern const eglib_hal_t eglib_hal_libopencm3_stm32f4_spi;
+extern const eglib_hal_4wire_spi_t eglib_hal_4wire_spi_libopencm3_stm32f4;
 
 #endif

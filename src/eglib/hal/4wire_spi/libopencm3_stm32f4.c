@@ -1,4 +1,4 @@
-#include "libopencm3_stm32f4_spi.h"
+#include "libopencm3_stm32f4.h"
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/spi.h>
 
@@ -6,7 +6,7 @@
 
 
 static void power_up(void *hal_config) {
-	eglib_hal_libopencm3_stm32f4_spi_config_t *config = (eglib_hal_libopencm3_stm32f4_spi_config_t *)hal_config;
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
 
 	rcc_periph_clock_enable(config->rcc_rst);
 	gpio_mode_setup(config->port_rst, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, config->gpio_rst);
@@ -39,7 +39,7 @@ static void power_up(void *hal_config) {
 }
 
 static void power_down(void *hal_config) {
-	eglib_hal_libopencm3_stm32f4_spi_config_t *config = (eglib_hal_libopencm3_stm32f4_spi_config_t *)hal_config;
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
 
 	wait_spi_not_busy(config->spi);
 
@@ -47,7 +47,7 @@ static void power_down(void *hal_config) {
 }
 
 static void delay_ms(void *hal_config, uint32_t ms) {
-	eglib_hal_libopencm3_stm32f4_spi_config_t *config = (eglib_hal_libopencm3_stm32f4_spi_config_t *)hal_config;
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
 
 	wait_spi_not_busy(config->spi);
 
@@ -64,7 +64,7 @@ static void delay_ms(void *hal_config, uint32_t ms) {
 }
 
 static void set_reset(void *hal_config, uint8_t state) {
-	eglib_hal_libopencm3_stm32f4_spi_config_t *config = (eglib_hal_libopencm3_stm32f4_spi_config_t *)hal_config;
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
 
 	wait_spi_not_busy(config->spi);
 	if(state)
@@ -74,7 +74,7 @@ static void set_reset(void *hal_config, uint8_t state) {
 }
 
 static void set_cd(void *hal_config, uint8_t state) {
-	eglib_hal_libopencm3_stm32f4_spi_config_t *config = (eglib_hal_libopencm3_stm32f4_spi_config_t *)hal_config;
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
 
 	wait_spi_not_busy(config->spi);
 	if(state)
@@ -84,7 +84,7 @@ static void set_cd(void *hal_config, uint8_t state) {
 }
 
 static void set_cs(void *hal_config, uint8_t state) {
-	eglib_hal_libopencm3_stm32f4_spi_config_t *config = (eglib_hal_libopencm3_stm32f4_spi_config_t *)hal_config;
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
 
 	wait_spi_not_busy(config->spi);
 	if(state)
@@ -94,12 +94,12 @@ static void set_cs(void *hal_config, uint8_t state) {
 }
 
 static void send_byte(void *hal_config, uint8_t byte) {
-	eglib_hal_libopencm3_stm32f4_spi_config_t *config = (eglib_hal_libopencm3_stm32f4_spi_config_t *)hal_config;
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
 
 	spi_send(config->spi, byte);
 }
 
-const eglib_hal_t eglib_hal_libopencm3_stm32f4_spi = {
+const eglib_hal_4wire_spi_t eglib_hal_4wire_spi_libopencm3_stm32f4 = {
 	.power_up = power_up,
 	.power_down = power_down,
 	.delay_ms = delay_ms,

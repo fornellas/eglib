@@ -5,10 +5,10 @@
 
 static uint8_t *tga_data = NULL;
 
-static void power_up(eglib_hal_t *hal, void *hal_config, void *display_config) {
+static void power_up(eglib_hal_4wire_spi_t *hal, void *hal_config, void *display_config) {
   (void)hal;
   (void)hal_config;
-  eglib_display_tga_config_t *config = (eglib_display_tga_config_t *)display_config;
+  eglib_display_4wire_spi_tga_config_t *config = (eglib_display_4wire_spi_tga_config_t *)display_config;
 
   if ( tga_data != NULL )
     free(tga_data);
@@ -17,7 +17,7 @@ static void power_up(eglib_hal_t *hal, void *hal_config, void *display_config) {
     exit(1);
 }
 
-static void power_down(eglib_hal_t *hal, void *hal_config, void *display_config) {
+static void power_down(eglib_hal_4wire_spi_t *hal, void *hal_config, void *display_config) {
   (void)hal;
   (void)hal_config;
   (void)display_config;
@@ -26,19 +26,19 @@ static void power_down(eglib_hal_t *hal, void *hal_config, void *display_config)
     free(tga_data);
 }
 
-static void get_dimension(eglib_hal_t *hal, void *hal_config, void *display_config, eglib_coordinate_t *width, eglib_coordinate_t*height) {
+static void get_dimension(eglib_hal_4wire_spi_t *hal, void *hal_config, void *display_config, eglib_coordinate_t *width, eglib_coordinate_t*height) {
   (void)hal;
   (void)hal_config;
-  eglib_display_tga_config_t *config = (eglib_display_tga_config_t *)display_config;
+  eglib_display_4wire_spi_tga_config_t *config = (eglib_display_4wire_spi_tga_config_t *)display_config;
 
 	*width = config->width;
 	*height = config->height;
 }
 
-static void draw_pixel(eglib_hal_t *hal, void *hal_config, void *display_config, eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color) {
+static void draw_pixel(eglib_hal_4wire_spi_t *hal, void *hal_config, void *display_config, eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color) {
   (void)hal;
   (void)hal_config;
-  eglib_display_tga_config_t *config = (eglib_display_tga_config_t *)display_config;
+  eglib_display_4wire_spi_tga_config_t *config = (eglib_display_4wire_spi_tga_config_t *)display_config;
   uint8_t *p;
 
   if(x >= config->width || y >= config->height || x < 0 || y < 0)
@@ -53,7 +53,7 @@ static void draw_pixel(eglib_hal_t *hal, void *hal_config, void *display_config,
   *p++ = color.r;
 }
 
-const eglib_display_t eglib_display_tga = {
+const eglib_display_4wire_spi_t eglib_display_4wire_spi_tga = {
 	.power_up = power_up,
 	.power_down = power_down,
 	.get_dimension = get_dimension,
@@ -69,7 +69,7 @@ static void tga_write_word(FILE *fp, uint16_t word) {
   tga_write_byte(fp, word>>8);
 }
 
-void eglib_display_tga_save(eglib_display_tga_config_t *config, char *path) {
+void eglib_display_4wire_spi_tga_save(eglib_display_4wire_spi_tga_config_t *config, char *path) {
   FILE *fp;
   fp = fopen(path, "wb");
   if ( fp != NULL )

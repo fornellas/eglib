@@ -32,8 +32,8 @@ $(EGLIB_LIB):
 	$(MAKE) \
 		-C $(EGLIB_PATH) \
 		BUILD_DIR=$(EGLIB_BUILD_DIR) \
-		HAL_DRIVERS=libopencm3_stm32f4_spi \
-		DISPLAY_DRIVERS=st7789
+		HAL_DRIVERS=4wire_spi/libopencm3_stm32f4 \
+		DISPLAY_DRIVERS=4wire_spi/st7789
 
 .PHONY: openocd_program
 openocd_program: ${PROJECT}.bin $(LDSCRIPT)

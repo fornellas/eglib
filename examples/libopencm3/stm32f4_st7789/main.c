@@ -1,6 +1,6 @@
 #include <eglib.h>
-#include <eglib/hal/libopencm3_stm32f4_spi.h>
-#include <eglib/display/st7789.h>
+#include <eglib/hal/4wire_spi/libopencm3_stm32f4.h>
+#include <eglib/display/4wire_spi/st7789.h>
 #include <stdio.h>
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/gpio.h>
@@ -8,7 +8,7 @@
 
 int main(void) {
 	eglib_t eglib;
-	eglib_hal_libopencm3_stm32f4_spi_config_t  eglib_hal_libopencm3_stm32f4_spi_config = {
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t  eglib_hal_4wire_spi_libopencm3_stm32f4_config = {
 		// rst
 		.rcc_rst = RCC_GPIOA,
 		.port_rst = GPIOA,
@@ -38,17 +38,17 @@ int main(void) {
 		.port_mosi = GPIOA,
 		.gpio_mosi = GPIO7,
 	};
-	eglib_display_st7789_config_t eglib_display_st7789_config = {
+	eglib_display_4wire_spi_st7789_config_t eglib_display_4wire_spi_st7789_config = {
 		.width = 240,
 		.height = 240,
 	};
 
 	rcc_clock_setup_pll(&rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_84MHZ]);
 
-	eglib_Init(
+	eglib_Init_4wire_spi(
 		&eglib,
-		&eglib_hal_libopencm3_stm32f4_spi, &eglib_hal_libopencm3_stm32f4_spi_config,
-		&eglib_display_st7789, &eglib_display_st7789_config
+		&eglib_hal_4wire_spi_libopencm3_stm32f4, &eglib_hal_4wire_spi_libopencm3_stm32f4_config,
+		&eglib_display_4wire_spi_st7789, &eglib_display_4wire_spi_st7789_config
 	);
 	eglib_PowerUp(&eglib);
 

@@ -4,133 +4,261 @@
 // HAL
 //
 
-static void default_hal_power_up(void *hal_config) {
-	(void)hal_config;
+// 4-Wire SPI
+
+static void hal_power_up_4wire_spi(eglib_t *eglib) {
+	eglib_hal_4wire_spi_t *hal_4wire_spi;
+
+	hal_4wire_spi = (eglib_hal_4wire_spi_t *)(eglib->hal);
+
+	hal_4wire_spi->power_up(eglib->hal_config);
 }
 
-static void default_hal_power_down(void *hal_config) {
-	(void)hal_config;
+static void hal_power_down_4wire_spi(eglib_t *eglib) {
+	eglib_hal_4wire_spi_t *hal_4wire_spi;
+
+	hal_4wire_spi = (eglib_hal_4wire_spi_t *)(eglib->hal);
+
+	hal_4wire_spi->power_down(eglib->hal_config);
 }
 
-static void default_hal_delay_ms(void *hal_config, uint32_t ms) {
-	(void)hal_config;
-	(void)ms;
+// I2C
+
+static void hal_power_up_i2c(eglib_t *eglib) {
+	eglib_hal_i2c_t *hal_i2c;
+	eglib_display_i2c_t *display_i2c;
+
+	hal_i2c = (eglib_hal_i2c_t *)(eglib->hal);
+	display_i2c = (eglib_display_i2c_t *)(eglib->display);
+
+	display_i2c->power_up(hal_i2c, eglib->hal_config, eglib->display_config);
 }
 
-static void default_hal_set_reset(void *hal_config, uint8_t state) {
-	(void)hal_config;
-	(void)state;
-}
+static void hal_power_down_i2c(eglib_t *eglib) {
+	eglib_hal_i2c_t *hal_i2c;
+	eglib_display_i2c_t *display_i2c;
 
-static void default_hal_set_cd(void *hal_config, uint8_t state) {
-	(void)hal_config;
-	(void)state;
-}
+	hal_i2c = (eglib_hal_i2c_t *)(eglib->hal);
+	display_i2c = (eglib_display_i2c_t *)(eglib->display);
 
-static void default_hal_set_cs(void *hal_config, uint8_t state) {
-	(void)hal_config;
-	(void)state;
-}
-
-static void default_hal_send_byte(void *hal_config, uint8_t state) {
-	(void)hal_config;
-	(void)state;
+	display_i2c->power_down(hal_i2c, eglib->hal_config, eglib->display_config);
 }
 
 //
 // Display
 //
 
-static void default_display_power_up(eglib_hal_t *hal, void *hal_config, void *display_config) {
-	(void)hal;
-	(void)hal_config;
-	(void)display_config;
+// 4-Wire SPI
+
+static void display_power_up_4wire_spi(eglib_t *eglib) {
+	eglib_hal_4wire_spi_t *hal_4wire_spi;
+	eglib_display_4wire_spi_t *display_4wire_spi;
+
+	hal_4wire_spi = (eglib_hal_4wire_spi_t *)eglib->hal;
+	display_4wire_spi = (eglib_display_4wire_spi_t *)eglib->display;
+
+	display_4wire_spi->power_up(
+		hal_4wire_spi, eglib->hal_config,
+		eglib->display_config
+	);
 }
 
-static void default_display_power_down(eglib_hal_t *hal, void *hal_config, void *display_config) {
-	(void)hal;
-	(void)hal_config;
-	(void)display_config;
+static void display_power_down_4wire_spi(eglib_t *eglib) {
+	eglib_hal_4wire_spi_t *hal_4wire_spi;
+	eglib_display_4wire_spi_t *display_4wire_spi;
+
+	hal_4wire_spi = (eglib_hal_4wire_spi_t *)eglib->hal;
+	display_4wire_spi = (eglib_display_4wire_spi_t *)eglib->display;
+
+	display_4wire_spi->power_down(
+		hal_4wire_spi, eglib->hal_config,
+		eglib->display_config
+	);
 }
 
-static void default_display_get_dimension(eglib_hal_t *hal, void *hal_config, void *display_config, eglib_coordinate_t *width, eglib_coordinate_t*height) {
-	(void)hal;
-	(void)hal_config;
-	(void)display_config;
-	(void)width;
-	(void)height;
+static void display_get_dimension_4wire_spi(
+	eglib_t *eglib,
+	eglib_coordinate_t *width,
+	eglib_coordinate_t *height
+) {
+	eglib_hal_4wire_spi_t *hal_4wire_spi;
+	eglib_display_4wire_spi_t *display_4wire_spi;
+
+	hal_4wire_spi = (eglib_hal_4wire_spi_t *)eglib->hal;
+	display_4wire_spi = (eglib_display_4wire_spi_t *)eglib->display;
+
+	display_4wire_spi->get_dimension(
+		hal_4wire_spi, eglib->hal_config,
+		eglib->display_config,
+		width, height
+	);
 }
-static void default_display_draw_pixel(eglib_hal_t *hal, void *hal_config, void *display_config, eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color) {
-	(void)hal;
-	(void)hal_config;
-	(void)display_config;
-	(void)x;
-	(void)y;
-	(void)color;
+
+static void display_draw_pixel_4wire_spi(
+	eglib_t *eglib,
+	eglib_coordinate_t x,
+	eglib_coordinate_t y,
+	eglib_color_t color
+) {
+	eglib_hal_4wire_spi_t *hal_4wire_spi;
+	eglib_display_4wire_spi_t *display_4wire_spi;
+
+	hal_4wire_spi = (eglib_hal_4wire_spi_t *)eglib->hal;
+	display_4wire_spi = (eglib_display_4wire_spi_t *)eglib->display;
+
+	display_4wire_spi->draw_pixel(
+		hal_4wire_spi, eglib->hal_config,
+		eglib->display_config,
+		x, y, color
+	);
+}
+
+// I2C
+
+static void display_power_up_i2c(eglib_t *eglib) {
+	eglib_hal_i2c_t *hal_i2c;
+	eglib_display_i2c_t *display_i2c;
+
+	hal_i2c = (eglib_hal_i2c_t *)eglib->hal;
+	display_i2c = (eglib_display_i2c_t *)eglib->display;
+
+	display_i2c->power_up(
+		hal_i2c, eglib->hal_config,
+		eglib->display_config
+	);
+}
+
+static void display_power_down_i2c(eglib_t *eglib) {
+	eglib_hal_i2c_t *hal_i2c;
+	eglib_display_i2c_t *display_i2c;
+
+	hal_i2c = (eglib_hal_i2c_t *)eglib->hal;
+	display_i2c = (eglib_display_i2c_t *)eglib->display;
+
+	display_i2c->power_down(
+		hal_i2c, eglib->hal_config,
+		eglib->display_config
+	);
+}
+
+static void display_get_dimension_i2c(
+	eglib_t *eglib,
+	eglib_coordinate_t *width,
+	eglib_coordinate_t *height
+) {
+	eglib_hal_i2c_t *hal_i2c;
+	eglib_display_i2c_t *display_i2c;
+
+	hal_i2c = (eglib_hal_i2c_t *)eglib->hal;
+	display_i2c = (eglib_display_i2c_t *)eglib->display;
+
+	display_i2c->get_dimension(
+		hal_i2c, eglib->hal_config,
+		eglib->display_config,
+		width, height
+	);
+}
+
+static void display_draw_pixel_i2c(
+	eglib_t *eglib,
+	eglib_coordinate_t x,
+	eglib_coordinate_t y,
+	eglib_color_t color
+) {
+	eglib_hal_i2c_t *hal_i2c;
+	eglib_display_i2c_t *display_i2c;
+
+	hal_i2c = (eglib_hal_i2c_t *)eglib->hal;
+	display_i2c = (eglib_display_i2c_t *)eglib->display;
+
+	display_i2c->draw_pixel(
+		hal_i2c, eglib->hal_config,
+		eglib->display_config,
+		x, y, color
+	);
 }
 
 //
 // Eglib
 //
 
-void eglib_Init(
-	eglib_t *eglib,
-	const eglib_hal_t *hal, void *hal_config,
-	const eglib_display_t *display, void *display_config
-) {
-	eglib->display = *display;
-	eglib->display_config = display_config;
-	if(NULL == eglib->display.power_up)
-		eglib->display.power_up = default_display_power_up;
-	if(NULL == eglib->display.power_down)
-		eglib->display.power_down = default_display_power_down;
-	if(NULL == eglib->display.get_dimension)
-		eglib->display.get_dimension = default_display_get_dimension;
-	if(NULL == eglib->display.draw_pixel)
-		eglib->display.draw_pixel = default_display_draw_pixel;
-
-	eglib->hal = *hal;
-	eglib->hal_config = hal_config;
-	if(NULL == eglib->hal.power_up)
-		eglib->hal.power_up = default_hal_power_up;
-	if(NULL == eglib->hal.power_down)
-		eglib->hal.power_down = default_hal_power_down;
-	if(NULL == eglib->hal.delay_ms)
-		eglib->hal.delay_ms = default_hal_delay_ms;
-	if(NULL == eglib->hal.set_reset)
-		eglib->hal.set_reset = default_hal_set_reset;
-	if(NULL == eglib->hal.set_cd)
-		eglib->hal.set_cd = default_hal_set_cd;
-	if(NULL == eglib->hal.set_cs)
-		eglib->hal.set_cs = default_hal_set_cs;
-	if(NULL == eglib->hal.send_byte)
-		eglib->hal.send_byte = default_hal_send_byte;
-
+static void eglib_Init(eglib_t *eglib) {
 	eglib->clip.x = 0;
 	eglib->clip.y = 0;
+
 	eglib->clip.width = eglib_GetWidth(eglib);
 	eglib->clip.height = eglib_GetHeight(eglib);
+
+	for(int i=0 ; i < sizeof(eglib->color_index) / sizeof(*eglib->color_index) ; i++) {
+		eglib->color_index[i].r = 0;
+		eglib->color_index[i].g = 0;
+		eglib->color_index[i].b = 0;
+	}
+}
+
+void eglib_Init_4wire_spi(
+	eglib_t *eglib,
+	const eglib_hal_4wire_spi_t *hal_4wire_spi, void *hal_4wire_spi_config,
+	const eglib_display_4wire_spi_t *display_4wire_spi, void *display_4wire_spi_config
+) {
+	eglib->hal = (void *)hal_4wire_spi;
+	eglib->hal_config = hal_4wire_spi_config;
+	eglib->hal_power_up = hal_power_up_4wire_spi;
+	eglib->hal_power_down = hal_power_down_4wire_spi;
+
+	eglib->display = (void *)display_4wire_spi;
+	eglib->display_config = display_4wire_spi_config;
+	eglib->display_power_up = display_power_up_4wire_spi;
+	eglib->display_power_down = display_power_down_4wire_spi;
+	eglib->display_get_dimension = display_get_dimension_4wire_spi;
+	eglib->display_draw_pixel = display_draw_pixel_4wire_spi;
+
+	eglib_Init(eglib);
+}
+
+void eglib_Init_i2c(
+	eglib_t *eglib,
+	const eglib_hal_i2c_t *hal_i2c, void *hal_i2c_config,
+	const eglib_display_i2c_t *display_i2c, void *display_i2c_config
+) {
+	eglib->hal = (void *)hal_i2c;
+	eglib->hal_config = hal_i2c_config;
+	eglib->hal_power_up = hal_power_up_i2c;
+	eglib->hal_power_down = hal_power_down_i2c;
+
+	eglib->display = (void *)display_i2c;
+	eglib->display_config = display_i2c_config;
+	eglib->display_power_up = display_power_up_i2c;
+	eglib->display_power_down = display_power_down_i2c;
+	eglib->display_get_dimension = display_get_dimension_i2c;
+	eglib->display_draw_pixel = display_draw_pixel_i2c;
+
+	eglib_Init(eglib);
 }
 
 void eglib_PowerUp(eglib_t *eglib) {
-	eglib->hal.power_up(eglib->hal_config);
-	eglib->display.power_up(&eglib->hal, eglib->hal_config, eglib->display_config);
+	eglib->hal_power_up(eglib);
+	eglib->display_power_up(eglib);
 }
 
 void eglib_PowerDown(eglib_t *eglib) {
-	eglib->hal.power_down(eglib->hal_config);
-	eglib->display.power_down(&eglib->hal, eglib->hal_config, eglib->display_config);
+	eglib->hal_power_down(eglib);
+	eglib->display_power_down(eglib);
 }
 
 eglib_coordinate_t eglib_GetWidth(eglib_t *eglib) {
 	eglib_coordinate_t width, heigh;
-	eglib->display.get_dimension(&eglib->hal, eglib->hal_config, eglib->display_config, &width, &heigh);
+
+	eglib->display_get_dimension(eglib, &width, &heigh);
+
 	return width;
 }
 
 eglib_coordinate_t eglib_GetHeight(eglib_t *eglib) {
 	eglib_coordinate_t width, heigh;
-	eglib->display.get_dimension(&eglib->hal, eglib->hal_config, eglib->display_config, &width, &heigh);
+
+	eglib->display_get_dimension(eglib, &width, &heigh);
+
 	return heigh;
 }
 
@@ -168,7 +296,8 @@ void eglib_SetColor(
 	size_t idx,
 	eglib_color_channel_t r,
 	eglib_color_channel_t g,
-	eglib_color_channel_t b) {
+	eglib_color_channel_t b
+) {
 	eglib->color_index[idx].r = r;
 	eglib->color_index[idx].g = g;
 	eglib->color_index[idx].b = b;

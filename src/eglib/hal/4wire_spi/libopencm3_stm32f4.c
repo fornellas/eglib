@@ -11,8 +11,8 @@ static void power_up(void *hal_config) {
 	rcc_periph_clock_enable(config->rcc_rst);
 	gpio_mode_setup(config->port_rst, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, config->gpio_rst);
 
-	rcc_periph_clock_enable(config->rcc_cd);
-	gpio_mode_setup(config->port_cd, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, config->gpio_cd);
+	rcc_periph_clock_enable(config->rcc_dc);
+	gpio_mode_setup(config->port_dc, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, config->gpio_dc);
 
 	rcc_periph_clock_enable(config->rcc_cs);
 	gpio_mode_setup(config->port_cs, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, config->gpio_cs);
@@ -73,14 +73,14 @@ static void set_reset(void *hal_config, uint8_t state) {
 		gpio_clear(config->port_rst, config->gpio_rst);
 }
 
-static void set_cd(void *hal_config, uint8_t state) {
+static void set_dc(void *hal_config, uint8_t state) {
 	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
 
 	wait_spi_not_busy(config->spi);
 	if(state)
-		gpio_set(config->port_cd, config->gpio_cd);
+		gpio_set(config->port_dc, config->gpio_dc);
 	else
-		gpio_clear(config->port_cd, config->gpio_cd);
+		gpio_clear(config->port_dc, config->gpio_dc);
 }
 
 static void set_cs(void *hal_config, uint8_t state) {
@@ -104,7 +104,7 @@ const eglib_hal_4wire_spi_t eglib_hal_4wire_spi_libopencm3_stm32f4 = {
 	.power_down = power_down,
 	.delay_ms = delay_ms,
 	.set_reset = set_reset,
-	.set_cd = set_cd,
+	.set_dc = set_dc,
 	.set_cs = set_cs,
 	.send_byte = send_byte,
 };

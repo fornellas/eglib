@@ -14,9 +14,9 @@ int main(void) {
 		.port_rst = GPIOA,
 		.gpio_rst = GPIO4,
 		// cd
-		.rcc_cd = RCC_GPIOA,
-		.port_cd = GPIOA,
-		.gpio_cd = GPIO3,
+		.rcc_dc = RCC_GPIOA,
+		.port_dc = GPIOA,
+		.gpio_dc = GPIO3,
 		// cs
 		.rcc_cs = RCC_GPIOA,
 		.port_cs = GPIOA,

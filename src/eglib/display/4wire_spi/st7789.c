@@ -51,9 +51,9 @@ static void set_column_address(eglib_hal_4wire_spi_t *hal, void *hal_config, uin
 	buff[2] = (x_end&0xFF00)>>8;
 	buff[3] = x_end&0xFF;
 
-	hal->set_cd(hal_config, 0);
+	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_CASET);
-	hal->set_cd(hal_config, 1);
+	hal->set_dc(hal_config, 1);
 	for(uint8_t i=0 ; i < sizeof(buff) ; i++)
 		hal->send_byte(hal_config, buff[i]);
 }
@@ -66,9 +66,9 @@ static void set_row_address(eglib_hal_4wire_spi_t *hal, void *hal_config, uint16
 	buff[2] = (y_end&0xFF00)>>8;
 	buff[3] = y_end&0xFF;
 
-	hal->set_cd(hal_config, 0);
+	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_RASET);
-	hal->set_cd(hal_config, 1);
+	hal->set_dc(hal_config, 1);
 	for(uint8_t i=0 ; i < sizeof(buff) ; i++)
 		hal->send_byte(hal_config, buff[i]);
 }
@@ -97,7 +97,7 @@ static void power_up(eglib_hal_4wire_spi_t *hal, void *hal_config, void *display
 	eglib_display_4wire_spi_st7789_config_t *config = (eglib_display_4wire_spi_st7789_config_t *)display_config;
 
 	hal->set_reset(hal_config, 1);
-	hal->set_cd(hal_config, 1);
+	hal->set_dc(hal_config, 1);
 	hal->set_cs(hal_config, 1);
 
 	// Hardware reset
@@ -108,7 +108,7 @@ static void power_up(eglib_hal_4wire_spi_t *hal, void *hal_config, void *display
 
 	// Software reset
 	hal->set_cs(hal_config, 0);
-	hal->set_cd(hal_config, 0);
+	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_SWRESET);
 	hal->set_cs(hal_config, 1);
 	hal->delay_ms(hal_config, ST7789_SWRESET_DELAY_MS);
@@ -116,20 +116,20 @@ static void power_up(eglib_hal_4wire_spi_t *hal, void *hal_config, void *display
 	hal->set_cs(hal_config, 0);
 
 	// Out of sleep mode
-	hal->set_cd(hal_config, 0);
+	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_SLPOUT);
 	hal->delay_ms(hal_config, ST7789_SLPOUT_DELAY_SLEEP_IN_MS);
 
 	// Set color mode
-	hal->set_cd(hal_config, 0);
+	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_COLMOD);
-	hal->set_cd(hal_config, 1);
+	hal->set_dc(hal_config, 1);
 	hal->send_byte(hal_config, ST7789_COLMOD_COLOR_16BIT_WRITE);
 
 	// Memory Data Access Control
-	hal->set_cd(hal_config, 0);
+	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_MADCTL);
-	hal->set_cd(hal_config, 1);
+	hal->set_dc(hal_config, 1);
 	hal->send_byte(
 		hal_config,
 		ST7789_MADCTL_PAGE_ADDRESS_ORDER_TOP_TO_BOTTOM |
@@ -142,24 +142,24 @@ static void power_up(eglib_hal_4wire_spi_t *hal, void *hal_config, void *display
 
 	// Display inversion in practice works the opposite of what the datasheet
 	// says: on is off and off is on.
-	hal->set_cd(hal_config, 0);
+	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_INVON);
 	// Datasheet states NORON should be the default after sw reset, but unless
 	// we explicitly set it, INVON will have no effect.
-	hal->set_cd(hal_config, 0);
+	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_NORON);
 
 	// Clear RAM
 	set_column_address(hal, hal_config, 0, config->width - 1);
 	set_row_address(hal, hal_config, 0, config->height - 1);
-	hal->set_cd(hal_config, 0);
+	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_RAMWR);
-	hal->set_cd(hal_config, 1);
+	hal->set_dc(hal_config, 1);
 	for(uint32_t i=0, max=config->width * config->height * 2 ; i < max ; i++)
 		hal->send_byte(hal_config, 0x00);
 
 	// Main screen turn on
-	hal->set_cd(hal_config, 0);
+	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_DISPON);
 
 	hal->set_cs(hal_config, 1);
@@ -191,9 +191,9 @@ static void draw_pixel(eglib_hal_4wire_spi_t *hal, void *hal_config, void *displ
 
 	convert_to_16bit(&color, color_16bit);
 
-	hal->set_cd(hal_config, 0);
+	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_RAMWR);
-	hal->set_cd(hal_config, 1);
+	hal->set_dc(hal_config, 1);
 	for(uint8_t i=0 ; i < sizeof(color_16bit) ; i++)
 		hal->send_byte(hal_config, color_16bit[i]);
 

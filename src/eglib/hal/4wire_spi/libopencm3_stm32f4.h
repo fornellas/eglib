@@ -9,10 +9,10 @@ typedef struct {
 	enum rcc_periph_clken rcc_rst;
 	uint32_t port_rst;
 	uint16_t gpio_rst;
-	// cd
-	enum rcc_periph_clken rcc_cd;
-	uint32_t port_cd;
-	uint16_t gpio_cd;
+	// dc
+	enum rcc_periph_clken rcc_dc;
+	uint32_t port_dc;
+	uint16_t gpio_dc;
 	// cs
 	enum rcc_periph_clken rcc_cs;
 	uint32_t port_cs;

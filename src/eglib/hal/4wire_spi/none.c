@@ -16,7 +16,7 @@ static void set_reset(void *hal_4wire_spi_config, uint8_t state) {
 
 }
 
-static void set_cd(void *hal_4wire_spi_config, uint8_t state) {
+static void set_dc(void *hal_4wire_spi_config, uint8_t state) {
 
 }
 
@@ -28,13 +28,12 @@ static void send_byte(void *hal_4wire_spi_config, uint8_t byte) {
 
 }
 
-
 const eglib_hal_4wire_spi_t eglib_hal_4wire_spi_none = {
 	.power_up = power_up,
 	.power_down = power_down,
 	.delay_ms = delay_ms,
 	.set_reset = set_reset,
-	.set_cd = set_cd,
+	.set_dc = set_dc,
 	.set_cs = set_cs,
 	.send_byte = send_byte,
 };

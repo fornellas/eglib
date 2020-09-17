@@ -8,7 +8,7 @@ static void power_down(eglib_hal_4wire_spi_config_t *config) {
 
 }
 
-static void delay_ms(eglib_hal_4wire_spi_config_t *config, uint32_t ms) {
+static void delay_ns(eglib_hal_4wire_spi_config_t *config, uint32_t ns) {
 
 }
 
@@ -31,7 +31,7 @@ static void send_byte(eglib_hal_4wire_spi_config_t *config, uint8_t byte) {
 const eglib_hal_4wire_spi_t eglib_hal_4wire_spi_none = {
 	.power_up = power_up,
 	.power_down = power_down,
-	.delay_ms = delay_ms,
+	.delay_ns = delay_ns,
 	.set_reset = set_reset,
 	.set_dc = set_dc,
 	.set_cs = set_cs,

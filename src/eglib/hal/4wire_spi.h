@@ -45,7 +45,7 @@ typedef struct {
 typedef struct {
 	void (*power_up)(eglib_hal_4wire_spi_config_t *config);
 	void (*power_down)(eglib_hal_4wire_spi_config_t *config);
-	void (*delay_ms)(eglib_hal_4wire_spi_config_t *config, uint32_t ms);
+	void (*delay_ns)(eglib_hal_4wire_spi_config_t *config, uint32_t ns);
 	void (*set_reset)(eglib_hal_4wire_spi_config_t *config, uint8_t state);
 	void (*set_dc)(eglib_hal_4wire_spi_config_t *config, uint8_t state);
 	void (*set_cs)(eglib_hal_4wire_spi_config_t *config, uint8_t state);

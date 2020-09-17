@@ -105,23 +105,23 @@ static void power_up(
 
 	// Hardware reset
 	hal->set_reset(hal_config, 0);
-	hal->delay_ms(hal_config, ST7789_RESX_TRW_MS);
+	hal->delay_ns(hal_config, ST7789_RESX_TRW_MS * 1000 * 1000);
 	hal->set_reset(hal_config, 1);
-	hal->delay_ms(hal_config, ST7789_RESX_TRT_MS);
+	hal->delay_ns(hal_config, ST7789_RESX_TRT_MS * 1000 * 1000);
 
 	// Software reset
 	hal->set_cs(hal_config, 0);
 	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_SWRESET);
 	hal->set_cs(hal_config, 1);
-	hal->delay_ms(hal_config, ST7789_SWRESET_DELAY_MS);
+	hal->delay_ns(hal_config, ST7789_SWRESET_DELAY_MS * 1000 * 1000);
 
 	hal->set_cs(hal_config, 0);
 
 	// Out of sleep mode
 	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_SLPOUT);
-	hal->delay_ms(hal_config, ST7789_SLPOUT_DELAY_SLEEP_IN_MS);
+	hal->delay_ns(hal_config, ST7789_SLPOUT_DELAY_SLEEP_IN_MS * 1000 * 1000);
 
 	// Set color mode
 	hal->set_dc(hal_config, 0);

@@ -5,7 +5,4 @@ compiler: gcc
 before_install:
   sudo apt-get -y install valgrind
 script:
-  make -C tests/
-  git submodule init
-  git submodule update
-  make
+  git submodule init && git submodule update && make

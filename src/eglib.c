@@ -49,6 +49,18 @@ static void display_get_dimension_4wire_spi(
 	);
 }
 
+static void display_get_color_depth_4wire_spi(
+	eglib_t *eglib,
+	eglib_color_depth_t *color_depth
+) {
+	((eglib_display_4wire_spi_t *)eglib->display)->get_color_depth(
+		(eglib_hal_4wire_spi_t *)eglib->hal,
+		&eglib->hal_config.four_wire_spi,
+		eglib->display_config,
+		color_depth
+	);
+}
+
 static void display_draw_pixel_4wire_spi(
 	eglib_t *eglib,
 	eglib_coordinate_t x,
@@ -99,6 +111,7 @@ void eglib_Init_4wire_spi(
 	eglib->display_power_up = display_power_up_4wire_spi;
 	eglib->display_power_down = display_power_down_4wire_spi;
 	eglib->display_get_dimension = display_get_dimension_4wire_spi;
+	eglib->display_get_color_depth = display_get_color_depth_4wire_spi;
 	eglib->display_draw_pixel = display_draw_pixel_4wire_spi;
 
 	eglib_Init(eglib);

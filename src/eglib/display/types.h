@@ -3,6 +3,15 @@
 
 #include <stdint.h>
 
+typedef enum {
+	EGLIB_COLOR_DEPTH_1BIT,
+	EGLIB_COLOR_DEPTH_2BIT,
+	EGLIB_COLOR_DEPTH_12BIT,
+	EGLIB_COLOR_DEPTH_16BIT,
+	EGLIB_COLOR_DEPTH_18BIT,
+	EGLIB_COLOR_DEPTH_24BIT,
+} eglib_color_depth_t;
+
 typedef uint8_t eglib_color_channel_t;
 
 typedef struct {

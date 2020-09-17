@@ -35,6 +35,10 @@ struct eglib_struct_t {
 		eglib_coordinate_t *width,
 		eglib_coordinate_t *height
 	);
+	void (*display_get_color_depth)(
+		struct eglib_struct_t *eglib,
+		eglib_color_depth_t *color_depth
+	);
 	void (*display_draw_pixel)(
 		struct eglib_struct_t *eglib,
 		eglib_coordinate_t x,

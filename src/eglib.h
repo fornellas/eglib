@@ -19,7 +19,9 @@
 struct eglib_struct_t {
 	// HAL
 	const void *hal;
-	void *hal_config_driver;
+	union {
+		eglib_hal_4wire_spi_config_t four_wire_spi;
+	} hal_config;
 	void (*hal_power_up)(struct eglib_struct_t *eglib);
 	void (*hal_power_down)(struct eglib_struct_t *eglib);
 

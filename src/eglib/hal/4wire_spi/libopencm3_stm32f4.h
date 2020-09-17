@@ -20,11 +20,6 @@ typedef struct {
 	// spi
 	enum rcc_periph_clken rcc_spi;
 	uint32_t spi;
-	uint32_t br;
-	uint32_t cpol;
-	uint32_t cpha;
-	uint32_t dff;
-	uint32_t lsbfirst ;
 	// sck
 	enum rcc_periph_clken rcc_sck;
 	uint32_t port_sck;

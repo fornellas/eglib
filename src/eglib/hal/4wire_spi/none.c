@@ -1,30 +1,30 @@
 #include "none.h"
 
-static void power_up(void *hal_4wire_spi_config) {
+static void power_up(eglib_hal_4wire_spi_config_t *config) {
 
 }
 
-static void power_down(void *hal_4wire_spi_config) {
+static void power_down(eglib_hal_4wire_spi_config_t *config) {
 
 }
 
-static void delay_ms(void *hal_4wire_spi_config, uint32_t ms) {
+static void delay_ms(eglib_hal_4wire_spi_config_t *config, uint32_t ms) {
 
 }
 
-static void set_reset(void *hal_4wire_spi_config, uint8_t state) {
+static void set_reset(eglib_hal_4wire_spi_config_t *config, uint8_t state) {
 
 }
 
-static void set_dc(void *hal_4wire_spi_config, uint8_t state) {
+static void set_dc(eglib_hal_4wire_spi_config_t *config, uint8_t state) {
 
 }
 
-static void set_cs(void *hal_4wire_spi_config, uint8_t state) {
+static void set_cs(eglib_hal_4wire_spi_config_t *config, uint8_t state) {
 
 }
 
-static void send_byte(void *hal_4wire_spi_config, uint8_t byte) {
+static void send_byte(eglib_hal_4wire_spi_config_t *config, uint8_t byte) {
 
 }
 

@@ -5,98 +5,185 @@
 #define wait_spi_not_busy(spi) while(SPI_SR((uintptr_t)spi) & SPI_SR_BSY);
 
 
-static void power_up(void *hal_config) {
-	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
+static void power_up(
+	eglib_hal_4wire_spi_config_t *config
+) {
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
+	uint32_t serial_clk_hz;
+	uint32_t br;
+	uint32_t cpol = 0;
+	uint32_t cpha = 0;
+	uint32_t lsbfirst = 0;
 
-	rcc_periph_clock_enable(config->rcc_rst);
-	gpio_mode_setup(config->port_rst, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, config->gpio_rst);
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
 
-	rcc_periph_clock_enable(config->rcc_dc);
-	gpio_mode_setup(config->port_dc, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, config->gpio_dc);
+	rcc_periph_clock_enable(config_driver->rcc_rst);
+	gpio_mode_setup(config_driver->port_rst, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, config_driver->gpio_rst);
 
-	rcc_periph_clock_enable(config->rcc_cs);
-	gpio_mode_setup(config->port_cs, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, config->gpio_cs);
+	rcc_periph_clock_enable(config_driver->rcc_dc);
+	gpio_mode_setup(config_driver->port_dc, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, config_driver->gpio_dc);
 
-	rcc_periph_clock_enable(config->rcc_sck);
-	gpio_mode_setup(config->port_sck, GPIO_MODE_AF, GPIO_PUPD_NONE, config->gpio_sck);
-	gpio_set_af(config->port_sck, GPIO_AF5, config->gpio_sck);
+	rcc_periph_clock_enable(config_driver->rcc_cs);
+	gpio_mode_setup(config_driver->port_cs, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, config_driver->gpio_cs);
 
-	rcc_periph_clock_enable(config->rcc_mosi);
-	gpio_mode_setup(config->port_mosi, GPIO_MODE_AF, GPIO_PUPD_NONE, config->gpio_mosi);
-	gpio_set_af(config->port_mosi, GPIO_AF5, config->gpio_mosi);
+	rcc_periph_clock_enable(config_driver->rcc_sck);
+	gpio_mode_setup(config_driver->port_sck, GPIO_MODE_AF, GPIO_PUPD_NONE, config_driver->gpio_sck);
+	gpio_set_af(config_driver->port_sck, GPIO_AF5, config_driver->gpio_sck);
 
-	rcc_periph_clock_enable(config->rcc_spi);
+	rcc_periph_clock_enable(config_driver->rcc_mosi);
+	gpio_mode_setup(config_driver->port_mosi, GPIO_MODE_AF, GPIO_PUPD_NONE, config_driver->gpio_mosi);
+	gpio_set_af(config_driver->port_mosi, GPIO_AF5, config_driver->gpio_mosi);
+
+	rcc_periph_clock_enable(config_driver->rcc_spi);
+
+	serial_clk_hz = 1000000000UL / (config->base->sck_cycle_ns);
+	if(serial_clk_hz < (rcc_ahb_frequency / 128))
+		br = SPI_CR1_BAUDRATE_FPCLK_DIV_256;
+	else if(serial_clk_hz < (rcc_ahb_frequency / 64))
+		br = SPI_CR1_BAUDRATE_FPCLK_DIV_128;
+	else if(serial_clk_hz < (rcc_ahb_frequency / 32))
+		br = SPI_CR1_BAUDRATE_FPCLK_DIV_64;
+	else if(serial_clk_hz < (rcc_ahb_frequency / 16))
+		br = SPI_CR1_BAUDRATE_FPCLK_DIV_32;
+	else if(serial_clk_hz < (rcc_ahb_frequency / 8))
+		br = SPI_CR1_BAUDRATE_FPCLK_DIV_16;
+	else if(serial_clk_hz < (rcc_ahb_frequency / 4))
+		br = SPI_CR1_BAUDRATE_FPCLK_DIV_8;
+	else if(serial_clk_hz < (rcc_ahb_frequency / 2))
+		br = SPI_CR1_BAUDRATE_FPCLK_DIV_4;
+	else
+		br = SPI_CR1_BAUDRATE_FPCLK_DIV_2;
+
+	switch(config->base->mode) {
+		case 0:
+			cpol = SPI_CR1_CPOL_CLK_TO_0_WHEN_IDLE;
+			cpha = SPI_CR1_CPHA_CLK_TRANSITION_1;
+			break;
+		case 1:
+			cpol = SPI_CR1_CPOL_CLK_TO_0_WHEN_IDLE;
+			cpha = SPI_CR1_CPHA_CLK_TRANSITION_2;
+			break;
+		case 2:
+			cpol = SPI_CR1_CPOL_CLK_TO_1_WHEN_IDLE;
+			cpha = SPI_CR1_CPHA_CLK_TRANSITION_1;
+			break;
+		case 3:
+			cpol = SPI_CR1_CPOL_CLK_TO_1_WHEN_IDLE;
+			cpha = SPI_CR1_CPHA_CLK_TRANSITION_2;
+			break;
+	}
+
+	switch(config->base->bit_numbering) {
+		case EGLIB_HAL_4WIRE_SPI_LSB_FIRST:
+			lsbfirst = SPI_CR1_LSBFIRST;
+			break;
+		case EGLIB_HAL_4WIRE_SPI_MSB_FIRST:
+			lsbfirst = SPI_CR1_MSBFIRST;
+			break;
+	}
 
 	spi_init_master(
-		config->spi,
-		config->br,
-		config->cpol,
-		config->cpha,
-		config->dff,
-		config->lsbfirst
+		config_driver->spi,
+		br,
+		cpol,
+		cpha,
+		SPI_CR1_DFF_8BIT,
+		lsbfirst
 	);
-	spi_enable(config->spi);
+
+	spi_enable(config_driver->spi);
 }
 
-static void power_down(void *hal_config) {
-	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
+static void power_down(
+	eglib_hal_4wire_spi_config_t *config
+) {
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 
-	wait_spi_not_busy(config->spi);
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
 
-	spi_disable(config->spi);
+	wait_spi_not_busy(config_driver->spi);
+
+	spi_disable(config_driver->spi);
 }
 
-static void delay_ms(void *hal_config, uint32_t ms) {
-	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
+static void delay_ms(
+	eglib_hal_4wire_spi_config_t *config,
+	uint32_t ms
+) {
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
+	uint32_t loop_count;
 
-	wait_spi_not_busy(config->spi);
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
+	#define CLOCKS_PER_LOOP 3;
 
-    ms *= rcc_ahb_frequency / 1000 / 3;
+	wait_spi_not_busy(config_driver->spi);
+
+    loop_count = ms * rcc_ahb_frequency / 1000 / CLOCKS_PER_LOOP;
 
     asm volatile(
-		" mov r0, %[ms] \n\t"
+		" mov r0, %[loop_count] \n\t"
 		"1: subs r0, #1 \n\t"
 		" bhi 1b \n\t"
 		:
-		: [ms] "r" (ms)
+		: [loop_count] "r" (loop_count)
 		: "r0"
 	);
 }
 
-static void set_reset(void *hal_config, uint8_t state) {
-	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
+static void set_reset(
+	eglib_hal_4wire_spi_config_t *config,
+	uint8_t state
+) {
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 
-	wait_spi_not_busy(config->spi);
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
+
+	wait_spi_not_busy(config_driver->spi);
 	if(state)
-		gpio_set(config->port_rst, config->gpio_rst);
+		gpio_set(config_driver->port_rst, config_driver->gpio_rst);
 	else
-		gpio_clear(config->port_rst, config->gpio_rst);
+		gpio_clear(config_driver->port_rst, config_driver->gpio_rst);
 }
 
-static void set_dc(void *hal_config, uint8_t state) {
-	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
+static void set_dc(
+	eglib_hal_4wire_spi_config_t *config,
+	uint8_t state
+) {
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 
-	wait_spi_not_busy(config->spi);
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
+
+	wait_spi_not_busy(config_driver->spi);
 	if(state)
-		gpio_set(config->port_dc, config->gpio_dc);
+		gpio_set(config_driver->port_dc, config_driver->gpio_dc);
 	else
-		gpio_clear(config->port_dc, config->gpio_dc);
+		gpio_clear(config_driver->port_dc, config_driver->gpio_dc);
 }
 
-static void set_cs(void *hal_config, uint8_t state) {
-	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
+static void set_cs(
+	eglib_hal_4wire_spi_config_t *config,
+	uint8_t state
+) {
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 
-	wait_spi_not_busy(config->spi);
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
+
+	wait_spi_not_busy(config_driver->spi);
 	if(state)
-		gpio_set(config->port_cs, config->gpio_cs);
+		gpio_set(config_driver->port_cs, config_driver->gpio_cs);
 	else
-		gpio_clear(config->port_cs, config->gpio_cs);
+		gpio_clear(config_driver->port_cs, config_driver->gpio_cs);
 }
 
-static void send_byte(void *hal_config, uint8_t byte) {
-	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)hal_config;
+static void send_byte(
+	eglib_hal_4wire_spi_config_t *config,
+	uint8_t byte
+) {
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 
-	spi_send(config->spi, byte);
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
+
+	spi_send(config_driver->spi, byte);
 }
 
 const eglib_hal_4wire_spi_t eglib_hal_4wire_spi_libopencm3_stm32f4 = {

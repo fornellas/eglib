@@ -8,23 +8,23 @@
 // HAL
 
 #include "eglib/hal/4wire_spi.h"
-#include "eglib/hal/i2c.h"
 
 // Display
 
 #include "eglib/display/types.h"
 #include "eglib/display/4wire_spi.h"
-#include "eglib/display/i2c.h"
 
 // Eglib
 
 struct eglib_struct_t {
-	void *hal;
-	void *hal_config;
+	// HAL
+	const void *hal;
+	void *hal_config_driver;
 	void (*hal_power_up)(struct eglib_struct_t *eglib);
 	void (*hal_power_down)(struct eglib_struct_t *eglib);
 
-	void *display;
+	// Display
+	const void *display;
 	void *display_config;
 	void (*display_power_up)(struct eglib_struct_t *eglib);
 	void (*display_power_down)(struct eglib_struct_t *eglib);
@@ -40,13 +40,13 @@ struct eglib_struct_t {
 		eglib_color_t color
 	);
 
+	// Drawing
 	struct {
 		eglib_coordinate_t x;
 		eglib_coordinate_t y;
 		eglib_coordinate_t width;
 		eglib_coordinate_t height;
 	} clip;
-
 	eglib_color_t color_index[4];
 } eglib_struct_t;
 
@@ -56,14 +56,10 @@ typedef struct eglib_struct_t eglib_t;
 
 void eglib_Init_4wire_spi(
 	eglib_t *eglib,
-	const eglib_hal_4wire_spi_t *hal_4wire_spi, void *hal_4wire_spi_config,
-	const eglib_display_4wire_spi_t *display_4wire_spi, void *display_4wire_spi_config
-);
-
-void eglib_Init_i2c(
-	eglib_t *eglib,
-	const eglib_hal_i2c_t *hal_i2c, void *hal_i2c_config,
-	const eglib_display_i2c_t *display_i2c, void *display_i2c_config
+	const eglib_hal_4wire_spi_t *hal,
+	void *hal_config_driver,
+	const eglib_display_4wire_spi_t *display,
+	void *display_config
 );
 
 // Common

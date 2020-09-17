@@ -93,7 +93,10 @@ static void convert_to_16bit(eglib_color_t *color, uint8_t buff[2]) {
 //
 
 
-static void power_up(eglib_hal_4wire_spi_t *hal, void *hal_config, void *display_config) {
+static void power_up(
+	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	void *display_config
+) {
 	eglib_display_4wire_spi_st7789_config_t *config = (eglib_display_4wire_spi_st7789_config_t *)display_config;
 
 	hal->set_reset(hal_config, 1);
@@ -165,13 +168,20 @@ static void power_up(eglib_hal_4wire_spi_t *hal, void *hal_config, void *display
 	hal->set_cs(hal_config, 1);
 };
 
-static void power_down(eglib_hal_4wire_spi_t *hal, void *hal_config, void *display_config) {
+static void power_down(
+	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	void *display_config
+) {
 	(void)hal;
 	(void)hal_config;
 	(void)display_config;
 };
 
-static void get_dimension(eglib_hal_4wire_spi_t *hal, void *hal_config, void *display_config, eglib_coordinate_t *width, eglib_coordinate_t*height) {
+static void get_dimension(
+	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	void *display_config,
+	eglib_coordinate_t *width, eglib_coordinate_t*height
+) {
 	(void)hal;
 	(void)hal_config;
 	eglib_display_4wire_spi_st7789_config_t *config = (eglib_display_4wire_spi_st7789_config_t *)display_config;
@@ -179,7 +189,11 @@ static void get_dimension(eglib_hal_4wire_spi_t *hal, void *hal_config, void *di
 	*height = config->height;
 };
 
-static void draw_pixel(eglib_hal_4wire_spi_t *hal, void *hal_config, void *display_config, eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color) {
+static void draw_pixel(
+	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	void *display_config,
+	eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color
+) {
 	uint8_t color_16bit[2];
 
 	(void)display_config;
@@ -201,6 +215,18 @@ static void draw_pixel(eglib_hal_4wire_spi_t *hal, void *hal_config, void *displ
 };
 
 const eglib_display_4wire_spi_t eglib_display_4wire_spi_st7789 = {
+	.hal_config_base = {
+	    .mode = 0,
+	    .bit_numbering = EGLIB_HAL_4WIRE_SPI_MSB_FIRST,
+	    .cs_setup_ns = 15,
+	    .cs_hold_ns = 15,
+	    .cs_disable_ns = 40,
+	    .dc_setup_ns = 10,
+	    .dc_hold_ns = 10,
+	    .sck_cycle_ns = 66,
+	    .mosi_setup_ns = 10,
+	    .mosi_hold_ns = 10,
+	},
 	.power_up = power_up,
 	.power_down = power_down,
 	.get_dimension = get_dimension,

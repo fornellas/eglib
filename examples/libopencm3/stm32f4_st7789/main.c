@@ -8,7 +8,7 @@
 
 int main(void) {
 	eglib_t eglib;
-	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t  eglib_hal_4wire_spi_libopencm3_stm32f4_config = {
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t  hal_config_driver = {
 		// rst
 		.rcc_rst = RCC_GPIOA,
 		.port_rst = GPIOA,
@@ -24,11 +24,6 @@ int main(void) {
 		// spi
 		.rcc_spi = RCC_SPI1,
 		.spi = SPI1,
-		.br = SPI_CR1_BAUDRATE_FPCLK_DIV_4,
-		.cpol = SPI_CR1_CPOL_CLK_TO_0_WHEN_IDLE,
-		.cpha = SPI_CR1_CPHA_CLK_TRANSITION_1,
-		.dff = SPI_CR1_DFF_8BIT,
-		.lsbfirst  = SPI_CR1_MSBFIRST,
 		// sck
 		.rcc_sck = RCC_GPIOA,
 		.port_sck = GPIOA,
@@ -38,7 +33,7 @@ int main(void) {
 		.port_mosi = GPIOA,
 		.gpio_mosi = GPIO7,
 	};
-	eglib_display_4wire_spi_st7789_config_t eglib_display_4wire_spi_st7789_config = {
+	eglib_display_4wire_spi_st7789_config_t display_config = {
 		.width = 240,
 		.height = 240,
 	};
@@ -47,12 +42,12 @@ int main(void) {
 
 	eglib_Init_4wire_spi(
 		&eglib,
-		&eglib_hal_4wire_spi_libopencm3_stm32f4, &eglib_hal_4wire_spi_libopencm3_stm32f4_config,
-		&eglib_display_4wire_spi_st7789, &eglib_display_4wire_spi_st7789_config
+		&eglib_hal_4wire_spi_libopencm3_stm32f4, &hal_config_driver,
+		&eglib_display_4wire_spi_st7789, &display_config
 	);
 	eglib_PowerUp(&eglib);
 
-	eglib_SetColor(&eglib, 0, 0, 0, 255);
+	eglib_SetColor(&eglib, 0, 0, 255, 255);
 	// eglib_SetColor(&eglib, 0, 255, 255, 255);
 
 	eglib_DrawLine(&eglib,0, 0, 239, 239);

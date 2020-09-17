@@ -3,10 +3,10 @@
 
 #include <stdint.h>
 
-enum eglib_hal_4wire_spi_bit_numbering {
+typedef enum {
   EGLIB_HAL_4WIRE_SPI_LSB_FIRST,
   EGLIB_HAL_4WIRE_SPI_MSB_FIRST,
-};
+} eglib_hal_4wire_spi_bit_numbering_t;
 
 typedef struct {
 	// SPI Mode
@@ -17,7 +17,7 @@ typedef struct {
 	uint8_t mode;
 
 	// MSB / LSB first
-	enum eglib_hal_4wire_spi_bit_numbering bit_numbering;
+	eglib_hal_4wire_spi_bit_numbering_t bit_numbering;
 
 	// CS Timing
 	uint32_t cs_setup_ns;

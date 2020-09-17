@@ -2,7 +2,7 @@
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/spi.h>
 
-#define CLOCKS_PER_DELAY_LOOP 3;
+#define CLOCKS_PER_DELAY_LOOP 3
 
 #define wait_spi_not_busy(spi) while(SPI_SR((uintptr_t)spi) & SPI_SR_BSY);
 
@@ -109,18 +109,21 @@ static void power_down(
 
 static void delay_ns(
 	eglib_hal_4wire_spi_config_t *config,
-	uint32_t ns
+	volatile uint32_t ns
 ) {
 	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
-	uint32_t loop_count;
+	volatile uint32_t loop_count;
 
 	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
 
 	wait_spi_not_busy(config_driver->spi);
 
-    loop_count = ns * (float)rcc_ahb_frequency / (3 * 1000000000U);
+	loop_count = ns * (float)rcc_ahb_frequency / (CLOCKS_PER_DELAY_LOOP * 1000000000U);
 
-    asm volatile(
+	if(loop_count < 18)
+		return;
+
+	asm volatile(
 		" mov r0, %[loop_count] \n\t"
 		"1: subs r0, #1 \n\t"
 		" bhi 1b \n\t"

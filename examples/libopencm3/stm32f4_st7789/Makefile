@@ -9,8 +9,27 @@ FLASH_BASE = 0x08000000
 OOCD_INTERFACE = stlink-v2
 OOCD_TARGET= stm32f4x
 OPENCM3_DIR=$(abspath ../libopencm3)
+EXPECTED_LIBNAME = opencm3_stm32f4
+LIBDIR = lib/stm32/f4
+
 include $(OPENCM3_DIR)/mk/genlink-config.mk
+# genlink-config.mk does not populate these variables first run,
+# as it depends on opencm3_stm32f4.a existing.
+ifndef LIBNAME
+LIBNAME = $(EXPECTED_LIBNAME)
+LDLIBS += -l$(LIBNAME)
+LIBDEPS += $(OPENCM3_DIR)/lib/lib$(LIBNAME).a
+endif
+ifneq ($(LIBNAME), $(EXPECTED_LIBNAME))
+$(error Unexpected LIBNAME value $(LIBNAME))
+endif
+
 include ../libopencm3-template/rules.mk
+
+.PHONY: $(OPENCM3_DIR)/lib/lib$(LIBNAME).a
+$(OPENCM3_DIR)/lib/lib$(LIBNAME).a:
+	$(MAKE) -C $(OPENCM3_DIR) $(LIBDIR)
+
 include $(OPENCM3_DIR)/mk/genlink-rules.mk
 export CC
 CFLAGS += -Werror

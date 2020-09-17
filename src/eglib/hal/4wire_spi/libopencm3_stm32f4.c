@@ -3,6 +3,7 @@
 #include <libopencm3/stm32/spi.h>
 
 #define CLOCKS_PER_DELAY_LOOP 3
+#define MAX(x,y) ((x) >= (y)) ? (x) : (y)
 
 #define wait_spi_not_busy(spi) while(SPI_SR((uintptr_t)spi) & SPI_SR_BSY);
 
@@ -107,20 +108,12 @@ static void power_down(
 	spi_disable(config_driver->spi);
 }
 
-static void delay_ns(
-	eglib_hal_4wire_spi_config_t *config,
-	volatile uint32_t ns
-) {
-	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
+inline static void _delay_ns(volatile uint32_t ns) {
 	volatile uint32_t loop_count;
-
-	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
-
-	wait_spi_not_busy(config_driver->spi);
 
 	loop_count = ns * (float)rcc_ahb_frequency / (CLOCKS_PER_DELAY_LOOP * 1000000000U);
 
-	if(loop_count < 18)
+	if(loop_count < 14)
 		return;
 
 	asm volatile(
@@ -131,6 +124,19 @@ static void delay_ns(
 		: [loop_count] "r" (loop_count)
 		: "r0"
 	);
+}
+
+static void delay_ns(
+	eglib_hal_4wire_spi_config_t *config,
+	volatile uint32_t ns
+) {
+	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
+
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
+
+	wait_spi_not_busy(config_driver->spi);
+
+	_delay_ns(ns);
 }
 
 static void set_reset(
@@ -161,6 +167,7 @@ static void set_dc(
 		gpio_set(config_driver->port_dc, config_driver->gpio_dc);
 	else
 		gpio_clear(config_driver->port_dc, config_driver->gpio_dc);
+	_delay_ns(config->base->dc_setup_ns);
 }
 
 static void set_cs(
@@ -172,10 +179,14 @@ static void set_cs(
 	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
 
 	wait_spi_not_busy(config_driver->spi);
-	if(state)
+	if(state) {
+		_delay_ns(MAX(config->base->dc_setup_ns, config->base->cs_hold_ns));
 		gpio_set(config_driver->port_cs, config_driver->gpio_cs);
-	else
+		_delay_ns(config->base->cs_disable_ns);
+	} else {
 		gpio_clear(config_driver->port_cs, config_driver->gpio_cs);
+		_delay_ns(config->base->cs_setup_ns);
+	}
 }
 
 static void send_byte(

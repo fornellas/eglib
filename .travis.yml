@@ -3,6 +3,6 @@ os: linux
 dist: focal
 compiler: gcc
 before_install:
-  sudo apt-get -y install valgrind gcc-arm-none-eabi libnewlib-dev
+  sudo apt-get -y install valgrind gcc-arm-none-eabi libnewlib-dev libnewlib-arm-none-eabi
 script:
   git submodule init && git submodule update && make

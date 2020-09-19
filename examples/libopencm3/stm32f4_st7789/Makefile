@@ -1,64 +1,38 @@
-PROJECT = stm32f4_st7789
-BUILD_DIR_PREFIX = bin
-BUILD_DIR = $(BUILD_DIR_PREFIX)/$(PROJECT)
+##
+## Project
+##
 
+PROJECT = stm32f4_st7789
 CFILES = main.c
+
+##
+## Hardware
+##
 
 DEVICE=stm32f411ceu6
 FLASH_BASE = 0x08000000
+USB_DFU_BOOTLOADER_VID=0x0483
+USB_DFU_BOOTLOADER_PID=0xdf11
+
+##
+## openocd
+##
+
 OOCD_INTERFACE = stlink-v2
 OOCD_TARGET= stm32f4x
-OPENCM3_DIR=$(abspath ../libopencm3)
-EXPECTED_LIBNAME = opencm3_stm32f4
-LIBDIR = lib/stm32/f4
 
-include $(OPENCM3_DIR)/mk/genlink-config.mk
-# genlink-config.mk does not populate these variables first run,
-# as it depends on opencm3_stm32f4.a existing.
-ifndef LIBNAME
-LIBNAME = $(EXPECTED_LIBNAME)
-LDLIBS += -l$(LIBNAME)
-LIBDEPS += $(OPENCM3_DIR)/lib/lib$(LIBNAME).a
-endif
-ifneq ($(LIBNAME), $(EXPECTED_LIBNAME))
-$(error Unexpected LIBNAME value $(LIBNAME))
-endif
+##
+## libopencm3
+##
 
-include ../libopencm3-template/rules.mk
+OPENCM3_LIBNAME = opencm3_stm32f4
+OPENCM3_LIBDIR = lib/stm32/f4
 
-.PHONY: $(OPENCM3_DIR)/lib/lib$(LIBNAME).a
-$(OPENCM3_DIR)/lib/lib$(LIBNAME).a:
-	$(MAKE) -C $(OPENCM3_DIR) $(LIBDIR)
+##
+## eglib
+##
 
-include $(OPENCM3_DIR)/mk/genlink-rules.mk
-export CC
-CFLAGS += -Werror
-CFLAGS += $(CPPFLAGS)
-CFLAGS += -I$(OPENCM3_DIR)/include
-CFLAGS += $(ARCH_FLAGS)
-export CFLAGS
+EGLIB_HAL_DRIVERS=4wire_spi/libopencm3_stm32f4
+EGLIB_DISPLAY_DRIVERS=4wire_spi/st7789
 
-EGLIB_PATH = ../../../src/
-INCLUDES += -I$(EGLIB_PATH)
-EGLIB_BUILD_DIR = $(abspath $(BUILD_DIR_PREFIX)/eglib)
-EGLIB_LIB = $(EGLIB_BUILD_DIR)/libeglib.a
-LDLIBS += -leglib -l$(LIBNAME)
-$(PROJECT).elf: $(EGLIB_LIB)
-LDFLAGS += -L$(EGLIB_BUILD_DIR)
-
-.PHONY: $(EGLIB_LIB)
-$(EGLIB_LIB):
-	$(MAKE) \
-		-C $(EGLIB_PATH) \
-		BUILD_DIR=$(EGLIB_BUILD_DIR) \
-		HAL_DRIVERS=4wire_spi/libopencm3_stm32f4 \
-		DISPLAY_DRIVERS=4wire_spi/st7789
-
-.PHONY: openocd_program
-openocd_program: ${PROJECT}.bin $(LDSCRIPT)
-	$(Q)openocd --file interface/$(OOCD_INTERFACE).cfg --file target/$(OOCD_TARGET).cfg --command "program ${PROJECT}.bin verify reset exit $(FLASH_BASE)"
-
-.PHONY: clean-eglib
-clean-eglib:
-	rm -rf $(EGLIB_BUILD_DIR)
-clean: clean-eglib
+include ../common.mk

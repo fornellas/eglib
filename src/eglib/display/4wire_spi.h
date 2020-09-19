@@ -5,29 +5,31 @@
 #include "types.h"
 
 typedef struct {
-	const eglib_hal_4wire_spi_config_base_t hal_config_base;
+	eglib_hal_4wire_spi_config_base_t *(*get_hal_4wire_spi_config_base)(
+		void *display_config_ptr
+	);
 	void (*power_up)(
 		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-		void *display_config
+		void *display_config_ptr
 	);
 	void (*power_down)(
 		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-		void *display_config
+		void *display_config_ptr
 	);
 	void (*get_dimension)(
 		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-		void *display_config,
+		void *display_config_ptr,
 		eglib_coordinate_t *width,
 		eglib_coordinate_t *height
 	);
 	void (*get_color_depth)(
 		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-		void *display_config,
+		void *display_config_ptr,
 		eglib_color_depth_t *color_depth
 	);
 	void (*draw_pixel)(
 		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-		void *display_config,
+		void *display_config_ptr,
 		eglib_coordinate_t x,
 		eglib_coordinate_t y,
 		eglib_color_t color

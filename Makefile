@@ -1,6 +1,6 @@
 MAKEFILES += src/Makefile
 MAKEFILES += $(wildcard examples/*/*/Makefile)
-MAKEFILES += $(wildcard tests/*/Makefile)
+MAKEFILES += $(wildcard tests/Makefile)
 
 MAKE_ALL = $(addsuffix -all,$(MAKEFILES))
 MAKE_CLEAN = $(addsuffix -clean,$(MAKEFILES))

@@ -7,10 +7,10 @@ TEST_BINARIES = $(CFILES:test_%.c=$(BUILD_DIR)/test_%)
 TESTS = $(CFILES:test_%.c=test_%)
 CFLAGS += -MD -Werror -Wall
 
-EGLIB_PATH = ../../src
+EGLIB_PATH = ../src
 INCLUDES += -I$(EGLIB_PATH)
 EGLIB_LIB = $(EGLIB_BUILD_DIR)/libeglib.a
-EGLIB_DISPLAY_DRIVERS=4wire_spi/tga
+EGLIB_DISPLAY_DRIVERS=4wire_spi/tga 4wire_spi/frame_buffer
 EGLIB_HAL_DRIVERS=4wire_spi/none
 
 .PHONY: all
@@ -21,7 +21,7 @@ $(EGLIB_LIB):
 	make \
 		-C $(EGLIB_PATH) \
 		BUILD_DIR=$(EGLIB_BUILD_DIR) \
-		DISPLAY_DRIVERS=$(EGLIB_DISPLAY_DRIVERS) \
+		DISPLAY_DRIVERS="$(EGLIB_DISPLAY_DRIVERS)" \
 		HAL_DRIVERS=$(EGLIB_HAL_DRIVERS) \
 		$@
 

@@ -92,12 +92,31 @@ static void convert_to_16bit(eglib_color_t *color, uint8_t buff[2]) {
 // Display
 //
 
+static eglib_hal_4wire_spi_config_base_t *get_hal_4wire_spi_config_base(
+	void *display_config_ptr
+) {
+	static eglib_hal_4wire_spi_config_base_t hal_config_base = {
+	    .mode = 0,
+	    .bit_numbering = EGLIB_HAL_4WIRE_SPI_MSB_FIRST,
+	    .cs_setup_ns = 15,
+	    .cs_hold_ns = 15,
+	    .cs_disable_ns = 40,
+	    .dc_setup_ns = 10,
+	    .dc_hold_ns = 10,
+	    .sck_cycle_ns = 66,
+	    .mosi_setup_ns = 10,
+	    .mosi_hold_ns = 10,
+	};
+	return &hal_config_base;
+}
 
 static void power_up(
 	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config
+	void *display_config_ptr
 ) {
-	eglib_display_4wire_spi_st7789_config_t *config = (eglib_display_4wire_spi_st7789_config_t *)display_config;
+	eglib_display_4wire_spi_st7789_config_t *display_config;
+
+	display_config = (eglib_display_4wire_spi_st7789_config_t *)display_config_ptr;
 
 	hal->set_reset(hal_config, 1);
 	hal->set_dc(hal_config, 1);
@@ -153,12 +172,12 @@ static void power_up(
 	hal->send_byte(hal_config, ST7789_NORON);
 
 	// Clear RAM
-	set_column_address(hal, hal_config, 0, config->width - 1);
-	set_row_address(hal, hal_config, 0, config->height - 1);
+	set_column_address(hal, hal_config, 0, display_config->width - 1);
+	set_row_address(hal, hal_config, 0, display_config->height - 1);
 	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, ST7789_RAMWR);
 	hal->set_dc(hal_config, 1);
-	for(uint32_t i=0, max=config->width * config->height * 2 ; i < max ; i++)
+	for(uint32_t i=0, max=display_config->width * display_config->height * 2 ; i < max ; i++)
 		hal->send_byte(hal_config, 0x00);
 
 	// Main screen turn on
@@ -170,44 +189,38 @@ static void power_up(
 
 static void power_down(
 	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config
+	void *display_config_ptr
 ) {
-	(void)hal;
-	(void)hal_config;
-	(void)display_config;
+
 };
 
 static void get_dimension(
 	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config,
+	void *display_config_ptr,
 	eglib_coordinate_t *width, eglib_coordinate_t*height
 ) {
-	(void)hal;
-	(void)hal_config;
-	eglib_display_4wire_spi_st7789_config_t *config = (eglib_display_4wire_spi_st7789_config_t *)display_config;
-	*width = config->width;;
-	*height = config->height;
+	eglib_display_4wire_spi_st7789_config_t *display_config;
+
+	display_config = (eglib_display_4wire_spi_st7789_config_t *)display_config_ptr;
+
+	*width = display_config->width;;
+	*height = display_config->height;
 };
 
 static void get_color_depth(
 	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config,
+	void *display_config_ptr,
 	eglib_color_depth_t *color_depth
 ) {
-	(void)hal;
-	(void)hal_config;
-
 	*color_depth = EGLIB_COLOR_DEPTH_16BIT;
 }
 
 static void draw_pixel(
 	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config,
+	void *display_config_ptr,
 	eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color
 ) {
 	uint8_t color_16bit[2];
-
-	(void)display_config;
 
 	hal->set_cs(hal_config, 0);
 
@@ -226,18 +239,7 @@ static void draw_pixel(
 };
 
 const eglib_display_4wire_spi_t eglib_display_4wire_spi_st7789 = {
-	.hal_config_base = {
-	    .mode = 0,
-	    .bit_numbering = EGLIB_HAL_4WIRE_SPI_MSB_FIRST,
-	    .cs_setup_ns = 15,
-	    .cs_hold_ns = 15,
-	    .cs_disable_ns = 40,
-	    .dc_setup_ns = 10,
-	    .dc_hold_ns = 10,
-	    .sck_cycle_ns = 66,
-	    .mosi_setup_ns = 10,
-	    .mosi_hold_ns = 10,
-	},
+	.get_hal_4wire_spi_config_base = get_hal_4wire_spi_config_base,
 	.power_up = power_up,
 	.power_down = power_down,
 	.get_dimension = get_dimension,

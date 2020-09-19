@@ -21,7 +21,7 @@ static void hal_power_down_4wire_spi(eglib_t *eglib) {
 // 4-Wire SPI
 
 static void display_power_up_4wire_spi(eglib_t *eglib) {
-((eglib_display_4wire_spi_t *)eglib->	display)->power_up(
+	((eglib_display_4wire_spi_t *)eglib->	display)->power_up(
 		(eglib_hal_4wire_spi_t *)eglib->hal,
 		&eglib->hal_config.four_wire_spi,
 		eglib->display_config
@@ -101,7 +101,7 @@ void eglib_Init_4wire_spi(
 	void *display_config
 ) {
 	eglib->hal = hal;
-	eglib->hal_config.four_wire_spi.base = &display->hal_config_base;
+	eglib->hal_config.four_wire_spi.base = display->get_hal_4wire_spi_config_base(display_config);
 	eglib->hal_config.four_wire_spi.driver = hal_config_driver;
 	eglib->hal_power_up = hal_power_up_4wire_spi;
 	eglib->hal_power_down = hal_power_down_4wire_spi;

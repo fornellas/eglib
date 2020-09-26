@@ -42,25 +42,44 @@ typedef struct {
 
 	eglib_coordinate_t width;
 	eglib_coordinate_t height;
-	// Mirror horizontally: SH1106_SEGMENT_REMAP_*
+	// Mirror horizontally
+	// SH1106_SEGMENT_REMAP_*
 	uint8_t segment_remap : 1;
+	// How rows (COM) and columns (SEG) are physically connected to the display.
 	// SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_*
 	uint8_t common_pads_hardware_configuration_mode : 1;
-	// Mirror vertically: SH1106_COMMON_OUTPUT_SCAN_DIRECTION_*
+	// Mirror vertically
+	// SH1106_COMMON_OUTPUT_SCAN_DIRECTION_*
 	uint8_t common_output_scan_direction : 1;
 	// Vertical offset
 	uint8_t display_offset : 6;
 	// Horizontal offset
 	uint8_t column_offset;
+
+	//
 	// Change period
+	//
+
 	uint8_t pre_charge_period : 4;
 	uint8_t dis_charge_period : 4;
+
+	//
 	// VCOM deselect
+	//
+
 	uint8_t vcom_deselect_level;  // POR 0x35
+
+	//
 	// Internal display clocks
+	//
+
 	uint8_t clock_divide : 4;  // 1-16
 	uint8_t oscillator_frequency : 4;  // SH1106_OSCILLATOR_FREQUENCY_*
+
+	//
 	// Charge Pump Regulator
+	//
+
 	uint8_t dc_dc_enable : 1;
 	uint8_t dc_dc_voltage : 2;  // SHH1106_DC_DC_*
 } eglib_display_4wire_spi_sh1106_config_t;

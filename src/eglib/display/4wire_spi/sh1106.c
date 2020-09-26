@@ -259,3 +259,78 @@ const eglib_display_4wire_spi_t eglib_display_4wire_spi_sh1106_vdd1_2_4_v = {
 	.get_color_depth = get_color_depth,
 	.draw_pixel = draw_pixel,
 };
+
+//
+// Extra
+//
+
+void eglib_display_4wire_spi_sh1106_set_start_line(
+	eglib_t *eglib,
+	uint8_t line
+) {
+	eglib_hal_4wire_spi_t *hal;
+	eglib_hal_4wire_spi_config_t *hal_config;
+
+	hal = (eglib_hal_4wire_spi_t *)eglib->hal;
+	hal_config = &(eglib->hal_config.four_wire_spi);
+
+	hal->set_cs(hal_config, 0);
+	hal->set_dc(hal_config, 0);
+	hal->send_byte(hal_config, SH1106_SET_DISPLAY_START_LINE(line));
+	hal->set_cs(hal_config, 1);
+}
+
+void eglib_display_4wire_spi_sh1106_set_contrast(
+	eglib_t *eglib,
+	uint8_t contrast
+) {
+	eglib_hal_4wire_spi_t *hal;
+	eglib_hal_4wire_spi_config_t *hal_config;
+
+	hal = (eglib_hal_4wire_spi_t *)eglib->hal;
+	hal_config = &(eglib->hal_config.four_wire_spi);
+
+	hal->set_cs(hal_config, 0);
+	hal->set_dc(hal_config, 0);
+	hal->send_byte(hal_config, SH1106_SET_CONTRAST_CONTROL_REGISTER);
+	hal->send_byte(hal_config, contrast);
+	hal->set_cs(hal_config, 1);
+}
+
+void eglib_display_4wire_spi_sh1106_entire_display_on(
+	eglib_t *eglib,
+	uint8_t entire_display_on
+) {
+	eglib_hal_4wire_spi_t *hal;
+	eglib_hal_4wire_spi_config_t *hal_config;
+
+	hal = (eglib_hal_4wire_spi_t *)eglib->hal;
+	hal_config = &(eglib->hal_config.four_wire_spi);
+
+	hal->set_cs(hal_config, 0);
+	hal->set_dc(hal_config, 0);
+	if(entire_display_on)
+		hal->send_byte(hal_config, SH1106_SET_ENTIRE_DISPLAY_ON);
+	else
+		hal->send_byte(hal_config, SH1106_SET_ENTIRE_DISPLAY_OFF);
+	hal->set_cs(hal_config, 1);
+}
+
+void eglib_display_4wire_spi_sh1106_reverse(
+	eglib_t *eglib,
+	uint8_t reverse
+) {
+	eglib_hal_4wire_spi_t *hal;
+	eglib_hal_4wire_spi_config_t *hal_config;
+
+	hal = (eglib_hal_4wire_spi_t *)eglib->hal;
+	hal_config = &(eglib->hal_config.four_wire_spi);
+
+	hal->set_cs(hal_config, 0);
+	hal->set_dc(hal_config, 0);
+	if(reverse)
+		hal->send_byte(hal_config, SH1106_SET_REVERSE_DISPLAY);
+	else
+		hal->send_byte(hal_config, SH1106_SET_NORMAL_DISPLAY);
+	hal->set_cs(hal_config, 1);
+}

@@ -2,6 +2,7 @@
 #define EGLIB_DISPLAY_4WIRE_SPI_SH1106_H
 
 #include "../4wire_spi.h"
+#include "../../../eglib.h"
 
 #define SH1106_SEGMENT_REMAP_NORMAL 0
 #define SH1106_SEGMENT_REMAP_REVERSE 1
@@ -68,5 +69,10 @@ typedef struct {
 extern const eglib_display_4wire_spi_t eglib_display_4wire_spi_sh1106_vdd1_1_65_v;
 // VDD1 = 2.4 - 3.5V, TA= +25°C
 extern const eglib_display_4wire_spi_t eglib_display_4wire_spi_sh1106_vdd1_2_4_v;
+
+void eglib_display_4wire_spi_sh1106_set_start_line(eglib_t *eglib, uint8_t line);
+void eglib_display_4wire_spi_sh1106_set_contrast(eglib_t *eglib, uint8_t contrast);
+void eglib_display_4wire_spi_sh1106_entire_display_on(eglib_t *eglib, uint8_t entire_display_on);
+void eglib_display_4wire_spi_sh1106_reverse(eglib_t *eglib, uint8_t reverse);
 
 #endif

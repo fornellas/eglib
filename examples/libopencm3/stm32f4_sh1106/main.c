@@ -72,4 +72,8 @@ int main(void) {
 
 	eglib_DrawLine(&eglib,0, 0, 127, 63);
 
+	// eglib_display_4wire_spi_sh1106_set_start_line(&eglib, display_config.height / 2);
+	// eglib_display_4wire_spi_sh1106_set_contrast(&eglib, 255);
+	// eglib_display_4wire_spi_sh1106_entire_display_on(&eglib, true);
+	// eglib_display_4wire_spi_sh1106_reverse(&eglib, true);
 }

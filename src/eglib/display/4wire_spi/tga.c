@@ -23,7 +23,7 @@ static eglib_hal_4wire_spi_config_base_t *get_hal_4wire_spi_config_base(
 	return &hal_config_base;
 }
 
-static void power_up(
+static void init(
 eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr
 ) {
@@ -41,12 +41,18 @@ eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 		exit(1);
 }
 
-static void power_down(
+static void sleep_in(
 	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr
 ) {
-	if(tga_data != NULL)
-		free(tga_data);
+
+}
+
+static void sleep_out(
+	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	void *display_config_ptr
+) {
+
 }
 
 static void get_dimension(
@@ -97,8 +103,9 @@ static void draw_pixel(
 
 const eglib_display_4wire_spi_t eglib_display_4wire_spi_tga = {
 	.get_hal_4wire_spi_config_base = get_hal_4wire_spi_config_base,
-	.power_up = power_up,
-	.power_down = power_down,
+	.init = init,
+	.sleep_in = sleep_in,
+	.sleep_out = sleep_out,
 	.get_dimension = get_dimension,
 	.get_color_depth = get_color_depth,
 	.draw_pixel = draw_pixel,

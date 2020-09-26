@@ -8,11 +8,15 @@ typedef struct {
 	eglib_hal_4wire_spi_config_base_t *(*get_hal_4wire_spi_config_base)(
 		void *display_config_ptr
 	);
-	void (*power_up)(
+	void (*init)(
 		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr
 	);
-	void (*power_down)(
+	void (*sleep_in)(
+		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+		void *display_config_ptr
+	);
+	void (*sleep_out)(
 		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr
 	);

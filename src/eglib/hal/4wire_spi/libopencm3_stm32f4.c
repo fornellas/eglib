@@ -7,7 +7,7 @@
 
 #define wait_spi_not_busy(spi) while(SPI_SR((uintptr_t)spi) & SPI_SR_BSY);
 
-static void power_up(
+static void init(
 	eglib_hal_4wire_spi_config_t *config
 ) {
 	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
@@ -96,7 +96,7 @@ static void power_up(
 	spi_enable(config_driver->spi);
 }
 
-static void power_down(
+static void sleep_in(
 	eglib_hal_4wire_spi_config_t *config
 ) {
 	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
@@ -106,6 +106,12 @@ static void power_down(
 	wait_spi_not_busy(config_driver->spi);
 
 	spi_disable(config_driver->spi);
+}
+
+static void sleep_out(
+	eglib_hal_4wire_spi_config_t *config
+) {
+	init(config);
 }
 
 inline static void _delay_ns(volatile uint32_t ns) {
@@ -201,8 +207,9 @@ static void send_byte(
 }
 
 const eglib_hal_4wire_spi_t eglib_hal_4wire_spi_libopencm3_stm32f4 = {
-	.power_up = power_up,
-	.power_down = power_down,
+	.init = init,
+	.sleep_in = sleep_in,
+	.sleep_out = sleep_out,
 	.delay_ns = delay_ns,
 	.set_reset = set_reset,
 	.set_dc = set_dc,

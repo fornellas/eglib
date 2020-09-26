@@ -6,12 +6,16 @@
 
 // 4-Wire SPI
 
-static void hal_power_up_4wire_spi(eglib_t *eglib) {
-	((eglib_hal_4wire_spi_t *)eglib->hal)->power_up(&eglib->hal_config.four_wire_spi);
+static void hal_init_4wire_spi(eglib_t *eglib) {
+	((eglib_hal_4wire_spi_t *)eglib->hal)->init(&eglib->hal_config.four_wire_spi);
 }
 
-static void hal_power_down_4wire_spi(eglib_t *eglib) {
-	((eglib_hal_4wire_spi_t *)eglib->hal)->power_down(&eglib->hal_config.four_wire_spi);
+static void hal_sleep_in_4wire_spi(eglib_t *eglib) {
+	((eglib_hal_4wire_spi_t *)eglib->hal)->sleep_in(&eglib->hal_config.four_wire_spi);
+}
+
+static void hal_sleep_out_4wire_spi(eglib_t *eglib) {
+	((eglib_hal_4wire_spi_t *)eglib->hal)->sleep_out(&eglib->hal_config.four_wire_spi);
 }
 
 //
@@ -20,16 +24,24 @@ static void hal_power_down_4wire_spi(eglib_t *eglib) {
 
 // 4-Wire SPI
 
-static void display_power_up_4wire_spi(eglib_t *eglib) {
-	((eglib_display_4wire_spi_t *)eglib->	display)->power_up(
+static void display_init_4wire_spi(eglib_t *eglib) {
+	((eglib_display_4wire_spi_t *)eglib->	display)->init(
 		(eglib_hal_4wire_spi_t *)eglib->hal,
 		&eglib->hal_config.four_wire_spi,
 		eglib->display_config
 	);
 }
 
-static void display_power_down_4wire_spi(eglib_t *eglib) {
-	((eglib_display_4wire_spi_t *)eglib->display)->power_down(
+static void display_sleep_in_4wire_spi(eglib_t *eglib) {
+	((eglib_display_4wire_spi_t *)eglib->display)->sleep_in(
+		(eglib_hal_4wire_spi_t *)eglib->hal,
+		&eglib->hal_config.four_wire_spi,
+		eglib->display_config
+	);
+}
+
+static void display_sleep_out_4wire_spi(eglib_t *eglib) {
+	((eglib_display_4wire_spi_t *)eglib->display)->sleep_out(
 		(eglib_hal_4wire_spi_t *)eglib->hal,
 		&eglib->hal_config.four_wire_spi,
 		eglib->display_config
@@ -91,6 +103,9 @@ static void eglib_Init(eglib_t *eglib) {
 		eglib->color_index[i].g = 0;
 		eglib->color_index[i].b = 0;
 	}
+
+	eglib->hal_init(eglib);
+	eglib->display_init(eglib);
 }
 
 void eglib_Init_4wire_spi(
@@ -103,13 +118,15 @@ void eglib_Init_4wire_spi(
 	eglib->hal = hal;
 	eglib->hal_config.four_wire_spi.base = display->get_hal_4wire_spi_config_base(display_config);
 	eglib->hal_config.four_wire_spi.driver = hal_config_driver;
-	eglib->hal_power_up = hal_power_up_4wire_spi;
-	eglib->hal_power_down = hal_power_down_4wire_spi;
+	eglib->hal_init = hal_init_4wire_spi;
+	eglib->hal_sleep_in = hal_sleep_in_4wire_spi;
+	eglib->hal_sleep_out = hal_sleep_out_4wire_spi;
 
 	eglib->display = display;
 	eglib->display_config = display_config;
-	eglib->display_power_up = display_power_up_4wire_spi;
-	eglib->display_power_down = display_power_down_4wire_spi;
+	eglib->display_init = display_init_4wire_spi;
+	eglib->display_sleep_in = display_sleep_in_4wire_spi;
+	eglib->display_sleep_out = display_sleep_out_4wire_spi;
 	eglib->display_get_dimension = display_get_dimension_4wire_spi;
 	eglib->display_get_color_depth = display_get_color_depth_4wire_spi;
 	eglib->display_draw_pixel = display_draw_pixel_4wire_spi;
@@ -117,14 +134,14 @@ void eglib_Init_4wire_spi(
 	eglib_Init(eglib);
 }
 
-void eglib_PowerUp(eglib_t *eglib) {
-	eglib->hal_power_up(eglib);
-	eglib->display_power_up(eglib);
+void eglib_SleepIn(eglib_t *eglib) {
+	eglib->hal_sleep_in(eglib);
+	eglib->display_sleep_in(eglib);
 }
 
-void eglib_PowerDown(eglib_t *eglib) {
-	eglib->hal_power_down(eglib);
-	eglib->display_power_down(eglib);
+void eglib_SleepOut(eglib_t *eglib) {
+	eglib->hal_sleep_out(eglib);
+	eglib->display_sleep_out(eglib);
 }
 
 eglib_coordinate_t eglib_GetWidth(eglib_t *eglib) {

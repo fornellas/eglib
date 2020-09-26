@@ -45,7 +45,6 @@ int main(void) {
 		&eglib_hal_4wire_spi_libopencm3_stm32f4, &hal_config_driver,
 		&eglib_display_4wire_spi_st7789, &display_config
 	);
-	eglib_PowerUp(&eglib);
 
 	eglib_SetColor(&eglib, 0, 0, 255, 255);
 	// eglib_SetColor(&eglib, 0, 255, 255, 255);

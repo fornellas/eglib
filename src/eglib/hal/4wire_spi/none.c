@@ -1,10 +1,14 @@
 #include "none.h"
 
-static void power_up(eglib_hal_4wire_spi_config_t *config) {
+static void init(eglib_hal_4wire_spi_config_t *config) {
 
 }
 
-static void power_down(eglib_hal_4wire_spi_config_t *config) {
+static void sleep_in(eglib_hal_4wire_spi_config_t *config) {
+
+}
+
+static void sleep_out(eglib_hal_4wire_spi_config_t *config) {
 
 }
 
@@ -29,8 +33,9 @@ static void send_byte(eglib_hal_4wire_spi_config_t *config, uint8_t byte) {
 }
 
 const eglib_hal_4wire_spi_t eglib_hal_4wire_spi_none = {
-	.power_up = power_up,
-	.power_down = power_down,
+	.init = init,
+	.sleep_in = sleep_in,
+	.sleep_out = sleep_out,
 	.delay_ns = delay_ns,
 	.set_reset = set_reset,
 	.set_dc = set_dc,

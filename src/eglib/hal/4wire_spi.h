@@ -42,8 +42,9 @@ typedef struct {
 } eglib_hal_4wire_spi_config_t;
 
 typedef struct {
-	void (*power_up)(eglib_hal_4wire_spi_config_t *config);
-	void (*power_down)(eglib_hal_4wire_spi_config_t *config);
+	void (*init)(eglib_hal_4wire_spi_config_t *config);
+	void (*sleep_in)(eglib_hal_4wire_spi_config_t *config);
+	void (*sleep_out)(eglib_hal_4wire_spi_config_t *config);
 	void (*delay_ns)(eglib_hal_4wire_spi_config_t *config, uint32_t ns);
 	void (*set_reset)(eglib_hal_4wire_spi_config_t *config, uint8_t state);
 	void (*set_dc)(eglib_hal_4wire_spi_config_t *config, uint8_t state);

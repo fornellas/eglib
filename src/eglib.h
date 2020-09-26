@@ -22,14 +22,16 @@ struct eglib_struct_t {
 	union {
 		eglib_hal_4wire_spi_config_t four_wire_spi;
 	} hal_config;
-	void (*hal_power_up)(struct eglib_struct_t *eglib);
-	void (*hal_power_down)(struct eglib_struct_t *eglib);
+	void (*hal_init)(struct eglib_struct_t *eglib);
+	void (*hal_sleep_in)(struct eglib_struct_t *eglib);
+	void (*hal_sleep_out)(struct eglib_struct_t *eglib);
 
 	// Display
 	const void *display;
 	void *display_config;
-	void (*display_power_up)(struct eglib_struct_t *eglib);
-	void (*display_power_down)(struct eglib_struct_t *eglib);
+	void (*display_init)(struct eglib_struct_t *eglib);
+	void (*display_sleep_in)(struct eglib_struct_t *eglib);
+	void (*display_sleep_out)(struct eglib_struct_t *eglib);
 	void (*display_get_dimension)(
 		struct eglib_struct_t *eglib,
 		eglib_coordinate_t *width,
@@ -70,8 +72,8 @@ void eglib_Init_4wire_spi(
 
 // Common
 
-void eglib_PowerUp(eglib_t *eglib);
-void eglib_PowerDown(eglib_t *eglib);
+void eglib_SleepIn(eglib_t *eglib);
+void eglib_SleepOut(eglib_t *eglib);
 
 eglib_coordinate_t eglib_GetWidth(eglib_t *eglib);
 eglib_coordinate_t eglib_GetHeight(eglib_t *eglib);

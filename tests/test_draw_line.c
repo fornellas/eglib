@@ -18,7 +18,6 @@ int main(int argc, char *argv[]) {
 		&eglib_hal_4wire_spi_none, NULL,
 		&eglib_display_4wire_spi_tga, &eglib_display_4wire_spi_tga_config
 	);
-	eglib_PowerUp(&eglib);
 
 	width = eglib_GetWidth(&eglib);
 	height = eglib_GetHeight(&eglib);

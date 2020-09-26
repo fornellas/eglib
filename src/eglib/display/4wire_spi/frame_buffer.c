@@ -10,7 +10,7 @@ static eglib_hal_4wire_spi_config_base_t *get_hal_4wire_spi_config_base(
 	return display_config->display->get_hal_4wire_spi_config_base(display_config->display_config);
 }
 
-static void power_up(
+static void init(
 	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr
 ) {
@@ -18,10 +18,10 @@ static void power_up(
 
 	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)display_config_ptr;
 
-	display_config->display->power_up(hal, hal_config, display_config->display_config);
+	display_config->display->init(hal, hal_config, display_config->display_config);
 };
 
-static void power_down(
+static void sleep_in(
 	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr
 ) {
@@ -29,7 +29,18 @@ static void power_down(
 
 	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)display_config_ptr;
 
-	display_config->display->power_down(hal, hal_config, display_config->display_config);
+	display_config->display->sleep_in(hal, hal_config, display_config->display_config);
+};
+
+static void sleep_out(
+	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	void *display_config_ptr
+) {
+	eglib_display_4wire_spi_frame_buffer_config_t *display_config;
+
+	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)display_config_ptr;
+
+	display_config->display->sleep_out(hal, hal_config, display_config->display_config);
 };
 
 static void get_dimension(
@@ -66,8 +77,9 @@ static void draw_pixel(
 
 const eglib_display_4wire_spi_t eglib_display_4wire_spi_frame_buffer = {
 	.get_hal_4wire_spi_config_base = get_hal_4wire_spi_config_base,
-	.power_up = power_up,
-	.power_down = power_down,
+	.init = init,
+	.sleep_in = sleep_in,
+	.sleep_out = sleep_out,
 	.get_dimension = get_dimension,
 	.get_color_depth = get_color_depth,
 	.draw_pixel = draw_pixel,

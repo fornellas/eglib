@@ -17,37 +17,42 @@
 // Eglib
 
 struct eglib_struct_t {
-	// HAL
-	const void *hal;
+	// Drivers
 	union {
-		eglib_hal_4wire_spi_config_t four_wire_spi;
-	} hal_config;
-	void (*hal_init)(struct eglib_struct_t *eglib);
-	void (*hal_sleep_in)(struct eglib_struct_t *eglib);
-	void (*hal_sleep_out)(struct eglib_struct_t *eglib);
-
-	// Display
-	const void *display;
-	void *display_config;
-	void (*display_init)(struct eglib_struct_t *eglib);
-	void (*display_sleep_in)(struct eglib_struct_t *eglib);
-	void (*display_sleep_out)(struct eglib_struct_t *eglib);
-	void (*display_get_dimension)(
-		struct eglib_struct_t *eglib,
-		eglib_coordinate_t *width,
-		eglib_coordinate_t *height
-	);
-	void (*display_get_color_depth)(
-		struct eglib_struct_t *eglib,
-		eglib_color_depth_t *color_depth
-	);
-	void (*display_draw_pixel)(
-		struct eglib_struct_t *eglib,
-		eglib_coordinate_t x,
-		eglib_coordinate_t y,
-		eglib_color_t color
-	);
-
+		struct {
+			const eglib_hal_4wire_spi_t *hal;
+			eglib_hal_4wire_spi_config_t hal_config;
+			const eglib_display_4wire_spi_t *display;
+			void *display_config;
+		} four_wire_spi;
+	} drivers;
+	// Common HAL driver interface
+	struct {
+		void (*init)(struct eglib_struct_t *eglib);
+		void (*sleep_in)(struct eglib_struct_t *eglib);
+		void (*sleep_out)(struct eglib_struct_t *eglib);
+	} hal;
+	// Common Display driver interface
+	struct {
+		void (*init)(struct eglib_struct_t *eglib);
+		void (*sleep_in)(struct eglib_struct_t *eglib);
+		void (*sleep_out)(struct eglib_struct_t *eglib);
+		void (*get_dimension)(
+			struct eglib_struct_t *eglib,
+			eglib_coordinate_t *width,
+			eglib_coordinate_t *height
+		);
+		void (*get_color_depth)(
+			struct eglib_struct_t *eglib,
+			eglib_color_depth_t *color_depth
+		);
+		void (*draw_pixel)(
+			struct eglib_struct_t *eglib,
+			eglib_coordinate_t x,
+			eglib_coordinate_t y,
+			eglib_color_t color
+		);
+	} display;
 	// Drawing
 	struct {
 		eglib_coordinate_t x;

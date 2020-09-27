@@ -3,7 +3,7 @@
 void eglib_DrawPixel(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate_t y) {
   if(eglib_IsPixelClipped(eglib, x, y))
     return;
-	eglib->display_draw_pixel(eglib, x, y, eglib->color_index[0]);
+	eglib->display.draw_pixel(eglib, x, y, eglib->color_index[0]);
 }
 
 void eglib_DrawLine(eglib_t *eglib, eglib_coordinate_t x1, eglib_coordinate_t y1, eglib_coordinate_t x2, eglib_coordinate_t y2) {

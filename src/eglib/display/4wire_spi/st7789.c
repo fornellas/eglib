@@ -43,7 +43,7 @@
 // Helpers
 //
 
-static void set_column_address(eglib_hal_4wire_spi_t *hal, void *hal_config, uint16_t x_start, uint16_t x_end) {
+static void set_column_address(const eglib_hal_4wire_spi_t *hal, void *hal_config, uint16_t x_start, uint16_t x_end) {
 	uint8_t buff[4];
 
 	buff[0] = (x_start&0xFF00)>>8;
@@ -58,7 +58,7 @@ static void set_column_address(eglib_hal_4wire_spi_t *hal, void *hal_config, uin
 		hal->send_byte(hal_config, buff[i]);
 }
 
-static void set_row_address(eglib_hal_4wire_spi_t *hal, void *hal_config, uint16_t y_start, uint16_t y_end) {
+static void set_row_address(const eglib_hal_4wire_spi_t *hal, void *hal_config, uint16_t y_start, uint16_t y_end) {
 	uint8_t buff[4];
 
 	buff[0] = (y_start&0xFF00)>>8;
@@ -111,7 +111,7 @@ static eglib_hal_4wire_spi_config_base_t *get_hal_4wire_spi_config_base(
 }
 
 static void init(
-	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr
 ) {
 	eglib_display_4wire_spi_st7789_config_t *display_config;
@@ -188,21 +188,21 @@ static void init(
 };
 
 static void sleep_in(
-	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr
 ) {
 
 };
 
 static void sleep_out(
-	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr
 ) {
 
 };
 
 static void get_dimension(
-	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr,
 	eglib_coordinate_t *width, eglib_coordinate_t*height
 ) {
@@ -215,15 +215,15 @@ static void get_dimension(
 };
 
 static void get_color_depth(
-	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr,
 	eglib_color_depth_t *color_depth
 ) {
-	*color_depth = EGLIB_COLOR_DEPTH_16BIT;
+	*color_depth = EGLIB_COLOR_DEPTH_18BIT_565_RGB;
 }
 
 static void draw_pixel(
-	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr,
 	eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color
 ) {

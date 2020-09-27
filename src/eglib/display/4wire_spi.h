@@ -9,30 +9,30 @@ typedef struct {
 		void *display_config_ptr
 	);
 	void (*init)(
-		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr
 	);
 	void (*sleep_in)(
-		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr
 	);
 	void (*sleep_out)(
-		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr
 	);
 	void (*get_dimension)(
-		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr,
 		eglib_coordinate_t *width,
 		eglib_coordinate_t *height
 	);
 	void (*get_color_depth)(
-		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr,
 		eglib_color_depth_t *color_depth
 	);
 	void (*draw_pixel)(
-		eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr,
 		eglib_coordinate_t x,
 		eglib_coordinate_t y,

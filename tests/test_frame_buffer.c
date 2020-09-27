@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 	};
 	eglib_display_4wire_spi_frame_buffer_config_t eglib_display_4wire_spi_frame_buffer_config = {
 		.display = &eglib_display_4wire_spi_tga,
-		.display_config = &eglib_display_4wire_spi_tga_config,
+		.display_config_ptr = &eglib_display_4wire_spi_tga_config,
 	};
 
 	setbuf(stdout, NULL);
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 	eglib_SetColor(&eglib, 0, 0, 0, 255);
 	eglib_DrawLine(&eglib, 0, 0, width - 1, height - 1);
 
-	eglib_display_4wire_spi_frame_buffer_draw(&eglib);
+	eglib_display_4wire_spi_frame_buffer_send(&eglib);
 
 	if(argc == 2)
 		eglib_display_4wire_spi_tga_save(&eglib_display_4wire_spi_tga_config, argv[1]);

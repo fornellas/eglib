@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 	eglib_SetColor(&eglib, 0, 0, 0, 255);
 	eglib_DrawLine(&eglib, 0, 0, width - 1, height - 1);
 
-	eglib_display_4wire_spi_frame_buffer_send(&eglib);
+	eglib_display_4wire_spi_frame_send_buffer(&eglib, 0, 0, width - 1, height -1);
 
 	if(argc == 2)
 		eglib_display_4wire_spi_tga_save(&eglib_display_4wire_spi_tga_config, argv[1]);

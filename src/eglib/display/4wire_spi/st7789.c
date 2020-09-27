@@ -1,4 +1,5 @@
 #include "st7789.h"
+#include "frame_buffer.h"
 
 #define ST7789_RESX_TRW_MS 10 // Reset pulse duration
 #define ST7789_RESX_TRT_MS 120 // Reset cancel
@@ -253,4 +254,5 @@ const eglib_display_4wire_spi_t eglib_display_4wire_spi_st7789 = {
 	.get_dimension = get_dimension,
 	.get_color_depth = get_color_depth,
 	.draw_pixel = draw_pixel,
+	.send_buffer = .send_buffer = eglib_display_4wire_spi_frame_buffer_send_draw_pixel_18bit_565_rgb,
 };

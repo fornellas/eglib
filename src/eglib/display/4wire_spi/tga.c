@@ -1,4 +1,5 @@
 #include "tga.h"
+#include "frame_buffer.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -109,6 +110,7 @@ const eglib_display_4wire_spi_t eglib_display_4wire_spi_tga = {
 	.get_dimension = get_dimension,
 	.get_color_depth = get_color_depth,
 	.draw_pixel = draw_pixel,
+	.send_buffer = eglib_display_4wire_spi_frame_buffer_send_draw_pixel_24bit_rgb,
 };
 
 static void tga_write_byte(FILE *fp, uint8_t byte) {

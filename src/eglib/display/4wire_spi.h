@@ -4,7 +4,7 @@
 #include "../hal/4wire_spi.h"
 #include "types.h"
 
-typedef struct {
+struct eglib_display_4wire_spi_struct {
 	eglib_hal_4wire_spi_config_base_t *(*get_hal_4wire_spi_config_base)(
 		void *display_config_ptr
 	);
@@ -38,6 +38,15 @@ typedef struct {
 		eglib_coordinate_t y,
 		eglib_color_t color
 	);
-} eglib_display_4wire_spi_t;
+	void (*send_buffer)(
+		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+		const struct eglib_display_4wire_spi_struct *display, void *display_config_ptr,
+		void *buffer,
+		eglib_coordinate_t x, eglib_coordinate_t y,
+		eglib_coordinate_t width, eglib_coordinate_t height
+	);
+};
+
+typedef struct eglib_display_4wire_spi_struct eglib_display_4wire_spi_t;
 
 #endif

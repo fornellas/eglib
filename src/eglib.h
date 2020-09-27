@@ -16,7 +16,7 @@
 
 // Eglib
 
-struct eglib_struct_t {
+struct eglib_struct {
 	// Drivers
 	union {
 		struct {
@@ -26,28 +26,28 @@ struct eglib_struct_t {
 			void *display_config;
 		} four_wire_spi;
 	} drivers;
-	// Common HAL driver interface
+	// Common HAL driver interface wrappers
 	struct {
-		void (*init)(struct eglib_struct_t *eglib);
-		void (*sleep_in)(struct eglib_struct_t *eglib);
-		void (*sleep_out)(struct eglib_struct_t *eglib);
+		void (*init)(struct eglib_struct *eglib);
+		void (*sleep_in)(struct eglib_struct *eglib);
+		void (*sleep_out)(struct eglib_struct *eglib);
 	} hal;
-	// Common Display driver interface
+	// Common Display driver interface wrappers
 	struct {
-		void (*init)(struct eglib_struct_t *eglib);
-		void (*sleep_in)(struct eglib_struct_t *eglib);
-		void (*sleep_out)(struct eglib_struct_t *eglib);
+		void (*init)(struct eglib_struct *eglib);
+		void (*sleep_in)(struct eglib_struct *eglib);
+		void (*sleep_out)(struct eglib_struct *eglib);
 		void (*get_dimension)(
-			struct eglib_struct_t *eglib,
+			struct eglib_struct *eglib,
 			eglib_coordinate_t *width,
 			eglib_coordinate_t *height
 		);
 		void (*get_color_depth)(
-			struct eglib_struct_t *eglib,
+			struct eglib_struct *eglib,
 			eglib_color_depth_t *color_depth
 		);
 		void (*draw_pixel)(
-			struct eglib_struct_t *eglib,
+			struct eglib_struct *eglib,
 			eglib_coordinate_t x,
 			eglib_coordinate_t y,
 			eglib_color_t color
@@ -61,9 +61,9 @@ struct eglib_struct_t {
 		eglib_coordinate_t height;
 	} clip;
 	eglib_color_t color_index[4];
-} eglib_struct_t;
+} eglib_struct;
 
-typedef struct eglib_struct_t eglib_t;
+typedef struct eglib_struct eglib_t;
 
 // Init
 

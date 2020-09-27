@@ -25,6 +25,12 @@ static void draw_to_buffer_1bit_paged(
 	eglib_coordinate_t x, eglib_coordinate_t y,
 	eglib_color_t color
 ) {
+	(void)buffer_ptr;
+	(void)width;
+	(void)height;
+	(void)x;
+	(void)y;
+	(void)color;
 	// TODO
 }
 
@@ -34,6 +40,12 @@ static void draw_to_buffer_18bit_565_rgb(
 	eglib_coordinate_t x, eglib_coordinate_t y,
 	eglib_color_t color
 ) {
+	(void)buffer_ptr;
+	(void)width;
+	(void)height;
+	(void)x;
+	(void)y;
+	(void)color;
 	// TODO
 }
 
@@ -45,6 +57,8 @@ static void draw_to_buffer_24bit_rgb(
 ) {
 	uint8_t *buffer = (uint8_t *)buffer_ptr;
 
+	(void)height;
+
 	buffer += (width * y + x) * 3;
 	*buffer = color.r;
 	buffer++;
@@ -53,7 +67,7 @@ static void draw_to_buffer_24bit_rgb(
 	*buffer = color.b;
 }
 
-static const void (*draw_to_buffer[EGLIB_COLOR_DEPTH_COUNT])(
+static void (*draw_to_buffer[EGLIB_COLOR_DEPTH_COUNT])(
 	void *buffer_ptr,
 	eglib_coordinate_t width, eglib_coordinate_t height,
 	eglib_coordinate_t x, eglib_coordinate_t y,
@@ -81,6 +95,15 @@ void eglib_display_4wire_spi_frame_buffer_send_draw_pixel_1bit_paged(
 	eglib_coordinate_t x, eglib_coordinate_t y,
 	eglib_coordinate_t width, eglib_coordinate_t height
 ) {
+	(void)hal;
+	(void)hal_config;
+	(void)display;
+	(void)display_config_ptr;
+	(void)buffer_ptr;
+	(void)x;
+	(void)y;
+	(void)width;
+	(void)height;
 	// TODO
 }
 
@@ -91,6 +114,15 @@ void eglib_display_4wire_spi_frame_buffer_send_draw_pixel_18bit_565_rgb(
 	eglib_coordinate_t x, eglib_coordinate_t y,
 	eglib_coordinate_t width, eglib_coordinate_t height
 ) {
+	(void)hal;
+	(void)hal_config;
+	(void)display;
+	(void)display_config_ptr;
+	(void)buffer_ptr;
+	(void)x;
+	(void)y;
+	(void)width;
+	(void)height;
 	// TODO
 }
 
@@ -246,6 +278,15 @@ static void send_buffer(
 	eglib_coordinate_t x, eglib_coordinate_t y,
 	eglib_coordinate_t width, eglib_coordinate_t height
 ) {
+	(void)hal;
+	(void)hal_config;
+	(void)display;
+	(void)display_config_ptr;
+	(void)buffer;
+	(void)x;
+	(void)y;
+	(void)width;
+	(void)height;
 	// TODO
 };
 

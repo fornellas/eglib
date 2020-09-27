@@ -22,11 +22,11 @@ $(OPENCM3_DIR)/lib/lib$(LIBNAME).a:
 
 include $(OPENCM3_DIR)/mk/genlink-rules.mk
 export CC
-CFLAGS += -Werror
-CFLAGS += $(CPPFLAGS)
 CFLAGS += -I$(OPENCM3_DIR)/include
 CFLAGS += $(ARCH_FLAGS)
+CFLAGS += -specs=nano.specs
 export CFLAGS
+export CPPFLAGS
 
 EGLIB_PATH = ../../../src/
 INCLUDES += -I$(EGLIB_PATH)
@@ -35,6 +35,8 @@ EGLIB_LIB = $(EGLIB_BUILD_DIR)/libeglib.a
 LDLIBS += -leglib -l$(LIBNAME)
 $(PROJECT).elf: $(EGLIB_LIB)
 LDFLAGS += -L$(EGLIB_BUILD_DIR)
+# required for malloc()
+LDLIBS += -specs=nosys.specs
 
 .PHONY: $(EGLIB_LIB)
 $(EGLIB_LIB):

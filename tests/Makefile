@@ -10,7 +10,7 @@ CFLAGS += -MD -Werror -Wall
 EGLIB_PATH = ../src
 INCLUDES += -I$(EGLIB_PATH)
 EGLIB_LIB = $(EGLIB_BUILD_DIR)/libeglib.a
-EGLIB_DISPLAY_DRIVERS=4wire_spi/tga 4wire_spi/frame_buffer
+EGLIB_DISPLAY_DRIVERS=4wire_spi/tga
 EGLIB_HAL_DRIVERS=4wire_spi/none
 
 .PHONY: all

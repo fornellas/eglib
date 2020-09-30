@@ -40,15 +40,13 @@ int main(void) {
 
 	rcc_clock_setup_pll(&rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_84MHZ]);
 
-	eglib_Init_4wire_spi(
+	eglib_Init_4WireSPI(
 		&eglib,
 		&eglib_hal_4wire_spi_libopencm3_stm32f4, &hal_config_driver,
 		&eglib_display_4wire_spi_st7789, &display_config
 	);
 
 	eglib_SetColor(&eglib, 0, 0, 255, 255);
-	// eglib_SetColor(&eglib, 0, 255, 255, 255);
 
 	eglib_DrawLine(&eglib,0, 0, 239, 239);
-
 }

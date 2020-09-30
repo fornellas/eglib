@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 
 	setbuf(stdout, NULL);
 
-	eglib_Init_4wire_spi(
+	eglib_Init_4WireSPI(
 		&eglib,
 		&eglib_hal_4wire_spi_none, NULL,
 		&eglib_display_4wire_spi_tga, &eglib_display_4wire_spi_tga_config

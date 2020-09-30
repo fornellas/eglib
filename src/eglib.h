@@ -66,7 +66,7 @@ struct _eglib_struct {
 	eglib_color_t color_index[4];
 };
 
-void eglib_Init_4wire_spi(
+void eglib_Init_4WireSPI(
 	eglib_t *eglib,
 	const eglib_hal_4wire_spi_t *hal,
 	void *hal_config_driver,

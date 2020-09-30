@@ -108,7 +108,7 @@ static void eglib_Init(eglib_t *eglib) {
 	eglib->display.init(eglib);
 }
 
-void eglib_Init_4wire_spi(
+void eglib_Init_4WireSPI(
 	eglib_t *eglib,
 	const eglib_hal_4wire_spi_t *hal,
 	void *hal_config_driver,

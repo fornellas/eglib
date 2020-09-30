@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 
 	setbuf(stdout, NULL);
 
-	eglib_Init_4wire_spi(
+	eglib_Init_4WireSPI(
 		&eglib,
 		&eglib_hal_4wire_spi_none, NULL,
 		&display_frame_buffer, &frame_buffer_config

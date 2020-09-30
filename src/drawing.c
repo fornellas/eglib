@@ -1,9 +1,13 @@
 #include "drawing.h"
 
-void eglib_DrawPixel(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate_t y) {
+void eglib_DrawPixelColor(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color) {
   if(eglib_IsPixelClipped(eglib, x, y))
     return;
-	eglib->display.draw_pixel(eglib, x, y, eglib->color_index[0]);
+  eglib->display.draw_pixel(eglib, x, y, color);
+}
+
+void eglib_DrawPixel(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate_t y) {
+	eglib_DrawPixelColor(eglib, x, y, eglib->color_index[0]);
 }
 
 void eglib_DrawLine(eglib_t *eglib, eglib_coordinate_t x1, eglib_coordinate_t y1, eglib_coordinate_t x2, eglib_coordinate_t y2) {

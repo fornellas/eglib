@@ -79,7 +79,7 @@ static void display_draw_pixel_4wire_spi(
 	eglib_coordinate_t y,
 	eglib_color_t color
 ) {
-	eglib->drivers.four_wire_spi.display->draw_pixel(
+	eglib->drivers.four_wire_spi.display->draw_pixel_color(
 		eglib->drivers.four_wire_spi.hal,
 		&eglib->drivers.four_wire_spi.hal_config,
 		eglib->drivers.four_wire_spi.display_config,
@@ -116,7 +116,7 @@ void eglib_Init_4wire_spi(
 	void *display_config
 ) {
 	eglib->drivers.four_wire_spi.hal = hal;
-	eglib->drivers.four_wire_spi.hal_config.base = display->get_hal_4wire_spi_config_base(display_config);
+	eglib->drivers.four_wire_spi.hal_config.base = &display->hal_4wire_spi_config_comm;
 	eglib->drivers.four_wire_spi.hal_config.driver = hal_config_driver;
 	eglib->hal.init = hal_init_4wire_spi;
 	eglib->hal.sleep_in = hal_sleep_in_4wire_spi;

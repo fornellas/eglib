@@ -93,26 +93,6 @@ static void convert_to_16bit(eglib_color_t *color, uint8_t buff[2]) {
 // Display
 //
 
-static eglib_hal_4wire_spi_config_base_t *get_hal_4wire_spi_config_base(
-	void *display_config_ptr
-) {
-	(void)display_config_ptr;
-
-	static eglib_hal_4wire_spi_config_base_t hal_config_base = {
-	    .mode = 0,
-	    .bit_numbering = EGLIB_HAL_4WIRE_SPI_MSB_FIRST,
-	    .cs_setup_ns = 15,
-	    .cs_hold_ns = 15,
-	    .cs_disable_ns = 40,
-	    .dc_setup_ns = 10,
-	    .dc_hold_ns = 10,
-	    .sck_cycle_ns = 66,
-	    .mosi_setup_ns = 10,
-	    .mosi_hold_ns = 10,
-	};
-	return &hal_config_base;
-}
-
 static void init(
 	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr
@@ -238,7 +218,7 @@ static void get_color_depth(
 	*color_depth = EGLIB_COLOR_DEPTH_18BIT_565_RGB;
 }
 
-static void draw_pixel(
+static void draw_pixel_color(
 	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr,
 	eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color
@@ -264,12 +244,23 @@ static void draw_pixel(
 };
 
 const eglib_display_4wire_spi_t eglib_display_4wire_spi_st7789 = {
-	.get_hal_4wire_spi_config_base = get_hal_4wire_spi_config_base,
+	.hal_4wire_spi_config_comm = {
+	    .mode = 0,
+	    .bit_numbering = EGLIB_HAL_4WIRE_SPI_MSB_FIRST,
+	    .cs_setup_ns = 15,
+	    .cs_hold_ns = 15,
+	    .cs_disable_ns = 40,
+	    .dc_setup_ns = 10,
+	    .dc_hold_ns = 10,
+	    .sck_cycle_ns = 66,
+	    .mosi_setup_ns = 10,
+	    .mosi_hold_ns = 10,
+	},
 	.init = init,
 	.sleep_in = sleep_in,
 	.sleep_out = sleep_out,
 	.get_dimension = get_dimension,
 	.get_color_depth = get_color_depth,
-	.draw_pixel = draw_pixel,
-	.send_buffer = eglib_display_4wire_spi_frame_buffer_send_draw_pixel_18bit_565_rgb,
+	.draw_pixel_color = draw_pixel_color,
+	.send_buffer = eglib_display_4wire_spi_frame_buffer_send_buffer_18bit_565_rgb,
 };

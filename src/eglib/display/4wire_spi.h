@@ -1,52 +1,57 @@
 #ifndef EGLIB_DISPLAY_4WIRE_SPI_H
 #define EGLIB_DISPLAY_4WIRE_SPI_H
 
+struct _eglib_display_4wire_spi_struct;
+typedef struct _eglib_display_4wire_spi_struct eglib_display_4wire_spi_t;
+
+#include "../../eglib.h"
 #include "../hal/4wire_spi.h"
 #include "types.h"
 
-struct eglib_display_4wire_spi_struct {
-	eglib_hal_4wire_spi_config_base_t *(*get_hal_4wire_spi_config_base)(
-		void *display_config_ptr
-	);
+struct _eglib_display_4wire_spi_struct {
+	eglib_hal_4wire_spi_config_comm_t hal_4wire_spi_config_comm;
 	void (*init)(
-		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+		const eglib_hal_4wire_spi_t *hal,
+		eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr
 	);
 	void (*sleep_in)(
-		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+		const eglib_hal_4wire_spi_t *hal,
+		eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr
 	);
 	void (*sleep_out)(
-		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+		const eglib_hal_4wire_spi_t *hal,
+		eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr
 	);
 	void (*get_dimension)(
-		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+		const eglib_hal_4wire_spi_t *hal,
+		eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr,
 		eglib_coordinate_t *width,
 		eglib_coordinate_t *height
 	);
 	void (*get_color_depth)(
-		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+		const eglib_hal_4wire_spi_t *hal,
+		eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr,
 		eglib_color_depth_t *color_depth
 	);
-	void (*draw_pixel)(
-		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	void (*draw_pixel_color)(
+		const eglib_hal_4wire_spi_t *hal,
+		eglib_hal_4wire_spi_config_t *hal_config,
 		void *display_config_ptr,
 		eglib_coordinate_t x,
 		eglib_coordinate_t y,
 		eglib_color_t color
 	);
 	void (*send_buffer)(
-		const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-		const struct eglib_display_4wire_spi_struct *display, void *display_config_ptr,
+		eglib_t *eglib,
 		void *buffer,
 		eglib_coordinate_t x, eglib_coordinate_t y,
 		eglib_coordinate_t width, eglib_coordinate_t height
 	);
 };
-
-typedef struct eglib_display_4wire_spi_struct eglib_display_4wire_spi_t;
 
 #endif

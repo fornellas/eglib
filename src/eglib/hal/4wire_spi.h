@@ -34,10 +34,10 @@ typedef struct {
 	// MOSI timing
 	uint32_t mosi_setup_ns;
 	uint32_t mosi_hold_ns;
-} eglib_hal_4wire_spi_config_base_t;
+} eglib_hal_4wire_spi_config_comm_t;
 
 typedef struct {
-	const eglib_hal_4wire_spi_config_base_t *base;
+	const eglib_hal_4wire_spi_config_comm_t *base;
 	void *driver;
 } eglib_hal_4wire_spi_config_t;
 

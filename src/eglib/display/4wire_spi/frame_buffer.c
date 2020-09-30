@@ -88,17 +88,32 @@ static const uint8_t color_bits[EGLIB_COLOR_DEPTH_COUNT] = {
 // eglib_display_4wire_spi_t send_buffer() helpers
 //
 
-void eglib_display_4wire_spi_frame_buffer_send_draw_pixel_1bit_paged(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	const eglib_display_4wire_spi_t *display, void *display_config_ptr,
+// void eglib_display_4wire_spi_frame_buffer_send_draw_pixel_1bit_paged(
+// 	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+// 	const eglib_display_4wire_spi_t *display, void *display_config_ptr,
+// 	void *buffer_ptr,
+// 	eglib_coordinate_t x, eglib_coordinate_t y,
+// 	eglib_coordinate_t width, eglib_coordinate_t height
+// ) {
+// 	(void)hal;
+// 	(void)hal_config;
+// 	(void)display;
+// 	(void)display_config_ptr;
+// 	(void)buffer_ptr;
+// 	(void)x;
+// 	(void)y;
+// 	(void)width;
+// 	(void)height;
+// 	// TODO
+// }
+
+void eglib_display_4wire_spi_frame_buffer_send_buffer_18bit_565_rgb(
+	eglib_t *eglib,
 	void *buffer_ptr,
 	eglib_coordinate_t x, eglib_coordinate_t y,
 	eglib_coordinate_t width, eglib_coordinate_t height
 ) {
-	(void)hal;
-	(void)hal_config;
-	(void)display;
-	(void)display_config_ptr;
+	(void)eglib;
 	(void)buffer_ptr;
 	(void)x;
 	(void)y;
@@ -107,28 +122,8 @@ void eglib_display_4wire_spi_frame_buffer_send_draw_pixel_1bit_paged(
 	// TODO
 }
 
-void eglib_display_4wire_spi_frame_buffer_send_draw_pixel_18bit_565_rgb(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	const eglib_display_4wire_spi_t *display, void *display_config_ptr,
-	void *buffer_ptr,
-	eglib_coordinate_t x, eglib_coordinate_t y,
-	eglib_coordinate_t width, eglib_coordinate_t height
-) {
-	(void)hal;
-	(void)hal_config;
-	(void)display;
-	(void)display_config_ptr;
-	(void)buffer_ptr;
-	(void)x;
-	(void)y;
-	(void)width;
-	(void)height;
-	// TODO
-}
-
-void eglib_display_4wire_spi_frame_buffer_send_draw_pixel_24bit_rgb(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	const eglib_display_4wire_spi_t *display, void *display_config_ptr,
+void eglib_display_4wire_spi_frame_buffer_send_buffer_24bit_rgb(
+	eglib_t *eglib,
 	void *buffer_ptr,
 	eglib_coordinate_t x, eglib_coordinate_t y,
 	eglib_coordinate_t width, eglib_coordinate_t height
@@ -136,6 +131,9 @@ void eglib_display_4wire_spi_frame_buffer_send_draw_pixel_24bit_rgb(
 	uint8_t *buffer = (uint8_t *)buffer_ptr;
 	eglib_color_t color;
 	eglib_coordinate_t y_start, y_end, x_start, x_end;
+	eglib_display_4wire_spi_frame_buffer_config_t *display_config;
+
+	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)eglib->drivers.four_wire_spi.display_config;
 
 	y_start = x;
 	y_end = y + height;
@@ -150,8 +148,10 @@ void eglib_display_4wire_spi_frame_buffer_send_draw_pixel_24bit_rgb(
 			buffer++;
 			color.b = *buffer;
 			buffer++;
-			display->draw_pixel(
-				hal, hal_config, display_config_ptr,
+			display_config->display->draw_pixel_color(
+				eglib->drivers.four_wire_spi.hal,
+				&eglib->drivers.four_wire_spi.hal_config,
+				display_config->display_config_ptr,
 				x, y,
 				color
 			);
@@ -162,16 +162,6 @@ void eglib_display_4wire_spi_frame_buffer_send_draw_pixel_24bit_rgb(
 //
 // Display
 //
-
-static eglib_hal_4wire_spi_config_base_t *get_hal_4wire_spi_config_base(
-	void *display_config_ptr
-) {
-	eglib_display_4wire_spi_frame_buffer_config_t *display_config;
-
-	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)display_config_ptr;
-
-	return display_config->display->get_hal_4wire_spi_config_base(display_config->display_config_ptr);
-}
 
 static void init(
 	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
@@ -249,7 +239,7 @@ static void get_color_depth(
 	);
 }
 
-static void draw_pixel(
+static void draw_pixel_color(
 	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr,
 	eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color
@@ -272,16 +262,12 @@ static void draw_pixel(
 };
 
 static void send_buffer(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	const eglib_display_4wire_spi_t *display, void *display_config_ptr,
+	eglib_t *eglib,
 	void *buffer,
 	eglib_coordinate_t x, eglib_coordinate_t y,
 	eglib_coordinate_t width, eglib_coordinate_t height
 ) {
-	(void)hal;
-	(void)hal_config;
-	(void)display;
-	(void)display_config_ptr;
+	(void)eglib;
 	(void)buffer;
 	(void)x;
 	(void)y;
@@ -290,22 +276,35 @@ static void send_buffer(
 	// TODO
 };
 
-const eglib_display_4wire_spi_t eglib_display_4wire_spi_frame_buffer = {
-	.get_hal_4wire_spi_config_base = get_hal_4wire_spi_config_base,
-	.init = init,
-	.sleep_in = sleep_in,
-	.sleep_out = sleep_out,
-	.get_dimension = get_dimension,
-	.get_color_depth = get_color_depth,
-	.draw_pixel = draw_pixel,
-	.send_buffer = send_buffer,
-};
-
 //
 // Extra
 //
 
-void eglib_display_4wire_spi_frame_send_buffer(
+void eglib_display_4wire_spi_frame_buffer_display_init(
+	eglib_display_4wire_spi_t *display_frame_buffer,
+	const eglib_display_4wire_spi_t *display
+) {
+	display_frame_buffer->hal_4wire_spi_config_comm = display->hal_4wire_spi_config_comm;
+	display_frame_buffer->init = init;
+	display_frame_buffer->sleep_in = sleep_in;
+	display_frame_buffer->sleep_out = sleep_out;
+	display_frame_buffer->get_dimension = get_dimension;
+	display_frame_buffer->get_color_depth = get_color_depth;
+	display_frame_buffer->draw_pixel_color = draw_pixel_color;
+	display_frame_buffer->send_buffer = send_buffer;
+}
+
+void eglib_display_4wire_spi_frame_buffer_config_init(
+	eglib_display_4wire_spi_frame_buffer_config_t *frame_buffer_config,
+	const eglib_display_4wire_spi_t *display,
+	void *display_config_ptr
+) {
+	frame_buffer_config->display = display;
+	frame_buffer_config->display_config_ptr = display_config_ptr;
+	frame_buffer_config->buffer = NULL;
+}
+
+void eglib_display_4wire_spi_frame_buffer_send(
 	eglib_t *eglib,
 	eglib_coordinate_t x, eglib_coordinate_t y,
 	eglib_coordinate_t width, eglib_coordinate_t height
@@ -315,10 +314,7 @@ void eglib_display_4wire_spi_frame_send_buffer(
 	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)eglib->drivers.four_wire_spi.display_config;
 
 	display_config->display->send_buffer(
-		eglib->drivers.four_wire_spi.hal,
-		&eglib->drivers.four_wire_spi.hal_config,
-		display_config->display,
-		display_config->display_config_ptr,
+		eglib,
 		display_config->buffer,
 		x, y,
 		width, height

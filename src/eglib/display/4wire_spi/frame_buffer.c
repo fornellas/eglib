@@ -25,13 +25,21 @@ static void draw_to_buffer_1bit_paged(
 	eglib_coordinate_t x, eglib_coordinate_t y,
 	eglib_color_t color
 ) {
-	(void)buffer_ptr;
-	(void)width;
+	uint8_t *buffer;
+	uint8_t page;
+	uint8_t bit;
+	uint8_t *byte;
+
 	(void)height;
-	(void)x;
-	(void)y;
-	(void)color;
-	// TODO
+
+	buffer = (uint8_t *)buffer_ptr;
+
+	page = y / 8;
+	bit = y % 8;
+
+	byte = buffer + width * page + x;
+
+	*byte = ((*byte)&~(1<<bit)) | (((color.r|color.g|color.b)&0x01)<<bit);
 }
 
 static void draw_to_buffer_18bit_565_rgb(

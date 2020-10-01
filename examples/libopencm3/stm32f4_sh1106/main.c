@@ -1,5 +1,6 @@
 #include <eglib.h>
 #include <eglib/hal/4wire_spi/libopencm3_stm32f4.h>
+#include <eglib/display/4wire_spi/frame_buffer.h>
 #include <eglib/display/4wire_spi/sh1106.h>
 #include <stdio.h>
 #include <libopencm3/stm32/rcc.h>
@@ -33,7 +34,7 @@ int main(void) {
 		.port_mosi = GPIOA,
 		.gpio_mosi = GPIO7,
 	};
-	eglib_display_4wire_spi_sh1106_config_t display_config = {
+	eglib_display_4wire_spi_sh1106_config_t sh1106_config = {
 		// Display physical construction
 		.width = 128,
 		.height = 64,
@@ -51,29 +52,38 @@ int main(void) {
 		.vcom_deselect_level = 0x35,
 
 		// Internal display clocks
-		.clock_divide = 1,
+		.clock_divide = 0,
 		.oscillator_frequency = SH1106_OSCILLATOR_FREQUENCY_PLUS_50_PCT,
 
 		// Charge Pump Regulator
 		.dc_dc_enable = true,
 		.dc_dc_voltage = SHH1106_DC_DC_8_0_V,
 	};
+	eglib_display_4wire_spi_frame_buffer_config_t frame_buffer_config;
+	eglib_display_4wire_spi_t display_frame_buffer;
 
 	rcc_clock_setup_pll(&rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_84MHZ]);
 
-	eglib_Init_4wire_spi(
+	eglib_display_4wire_spi_frame_buffer_display_init(
+		&display_frame_buffer,
+		&eglib_display_4wire_spi_sh1106_vdd1_2_4_v
+	);
+
+	eglib_display_4wire_spi_frame_buffer_config_init(
+		&frame_buffer_config,
+		&eglib_display_4wire_spi_sh1106_vdd1_2_4_v,
+		&sh1106_config
+	);
+
+	eglib_Init_4WireSPI(
 		&eglib,
 		&eglib_hal_4wire_spi_libopencm3_stm32f4, &hal_config_driver,
-		&eglib_display_4wire_spi_sh1106_vdd1_2_4_v, &display_config
+		&display_frame_buffer, &frame_buffer_config
 	);
-	eglib_PowerUp(&eglib);
 
-	eglib_SetColor(&eglib, 0, 255, 255, 255);
+	eglib_SetColor(&eglib, 0, 0xFF, 0xFF, 0xFF);
 
-	eglib_DrawLine(&eglib,0, 0, 127, 63);
+	eglib_DrawLine(&eglib,0, 0, sh1106_config.width-1, sh1106_config.height-1);
 
-	// eglib_display_4wire_spi_sh1106_set_start_line(&eglib, display_config.height / 2);
-	// eglib_display_4wire_spi_sh1106_set_contrast(&eglib, 255);
-	// eglib_display_4wire_spi_sh1106_entire_display_on(&eglib, true);
-	// eglib_display_4wire_spi_sh1106_reverse(&eglib, true);
+	eglib_display_4wire_spi_frame_buffer_send(&eglib, 0, 0, sh1106_config.width-1, sh1106_config.height-1);
 }

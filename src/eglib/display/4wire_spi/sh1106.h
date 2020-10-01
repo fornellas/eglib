@@ -3,6 +3,7 @@
 
 #include "../4wire_spi.h"
 #include "../../../eglib.h"
+#include <stdbool.h>
 
 #define SH1106_SEGMENT_REMAP_NORMAL 0
 #define SH1106_SEGMENT_REMAP_REVERSE 1
@@ -67,21 +68,25 @@ typedef struct {
 	// VCOM deselect
 	//
 
-	uint8_t vcom_deselect_level;  // POR 0x35
+	// POR: 0x35 (B=0x770)
+	uint8_t vcom_deselect_level;
 
 	//
 	// Internal display clocks
 	//
 
-	uint8_t clock_divide : 4;  // 1-16
-	uint8_t oscillator_frequency : 4;  // SH1106_OSCILLATOR_FREQUENCY_*
+	// POR: 0x0 (divide ratio = 1)
+	uint8_t clock_divide : 4;
+	// POR: SH1106_OSCILLATOR_FREQUENCY__0_PCT
+	uint8_t oscillator_frequency : 4;
 
 	//
 	// Charge Pump Regulator
 	//
 
-	uint8_t dc_dc_enable : 1;
-	uint8_t dc_dc_voltage : 2;  // SHH1106_DC_DC_*
+	bool dc_dc_enable : 1;
+	// SHH1106_DC_DC_*
+	uint8_t dc_dc_voltage : 2;
 } eglib_display_4wire_spi_sh1106_config_t;
 
 // VDD1 = 1.65 - 3.5V, TA= +25°C

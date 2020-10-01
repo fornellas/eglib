@@ -71,20 +71,23 @@
 //
 
 static inline void set_column_address(
-	eglib_hal_4wire_spi_t *hal,
+	const eglib_hal_4wire_spi_t *hal,
 	eglib_hal_4wire_spi_config_t *hal_config,
-	eglib_display_4wire_spi_sh1106_config_t * display_config,
+	void *display_config_ptr,
 	eglib_coordinate_t column
 ) {
+	eglib_display_4wire_spi_sh1106_config_t *display_config;
+
+	display_config = (eglib_display_4wire_spi_sh1106_config_t *)display_config_ptr;
+
 	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, SH1106_SET_HIGHER_COLUMN_ADDRESS(column + display_config->column_offset));
 	hal->send_byte(hal_config, SH1106_SET_LOWER_COLUMN_ADDRESS(column + display_config->column_offset));
 }
 
 static inline void display_on(
-	eglib_hal_4wire_spi_t *hal,
-	eglib_hal_4wire_spi_config_t *hal_config,
-	eglib_display_4wire_spi_sh1106_config_t * display_config
+	const eglib_hal_4wire_spi_t *hal,
+	eglib_hal_4wire_spi_config_t *hal_config
 ) {
 	hal->set_dc(hal_config, 0);
 	hal->send_byte(hal_config, SH1106_DISPLAY_ON);
@@ -95,9 +98,8 @@ static inline void display_on(
 // Display
 //
 
-
-static void power_up(
-	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+static void init(
+	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr
 ) {
 	eglib_display_4wire_spi_sh1106_config_t *display_config = (eglib_display_4wire_spi_sh1106_config_t *)display_config_ptr;
@@ -169,20 +171,33 @@ static void power_up(
 	}
 
 	// Set display on
-	display_on(hal, hal_config, display_config);
+	display_on(hal, hal_config);
 
 	hal->set_cs(hal_config, 1);
 };
 
-static void power_down(
-	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+static void sleep_in(
+	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr
 ) {
+	(void)hal;
+	(void)hal_config;
+	(void)display_config_ptr;
+	// TODO
+};
 
+static void sleep_out(
+	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	void *display_config_ptr
+) {
+	(void)hal;
+	(void)hal_config;
+	(void)display_config_ptr;
+	// TODO
 };
 
 static void get_dimension(
-	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr,
 	eglib_coordinate_t *width, eglib_coordinate_t*height
 ) {
@@ -196,32 +211,71 @@ static void get_dimension(
 };
 
 static void get_color_depth(
-	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr,
 	eglib_color_depth_t *color_depth
 ) {
 	(void)hal;
 	(void)hal_config;
+	(void)display_config_ptr;
 
-	*color_depth = EGLIB_COLOR_DEPTH_1BIT;
+	*color_depth = EGLIB_COLOR_DEPTH_1BIT_PAGED;
 }
 
-static void draw_pixel(
-	eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
+static void draw_pixel_color(
+	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
 	void *display_config_ptr,
 	eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color
 ) {
-	// // NO auto increment
-	// #define SH1106_SET_PAGE_ADDRESS(addr) (0xB0&(adddr&0x0F))
-
-	// // auto increment
-	// // must specify reset to 0
-	// #define SH1106_SET_LOWER_COLUMN_START_ADDRESS(addr) (0x00&((addr)&0x0F))
-	// #define SH1106_SET_HIGHER_COLUMN_START_ADDRESS(addr) (0x10&((addr)&0x0F))
+	(void)hal;
+	(void)hal_config;
+	(void)display_config_ptr;
+	(void)x;
+	(void)y;
+	(void)color;
 };
 
+static void send_buffer(
+	eglib_t *eglib,
+	void *buffer_ptr,
+	eglib_coordinate_t x, eglib_coordinate_t y,
+	eglib_coordinate_t width, eglib_coordinate_t height
+) {
+	uint8_t *buffer;
+	const eglib_hal_4wire_spi_t *hal;
+	eglib_hal_4wire_spi_config_t *hal_config;
+	const eglib_display_4wire_spi_t *display;
+	void *display_config_ptr;
+	eglib_coordinate_t display_width, display_height;
+
+	buffer = (uint8_t *)buffer_ptr;
+	hal = eglib->drivers.four_wire_spi.hal;
+	hal_config = &eglib->drivers.four_wire_spi.hal_config;
+	display = eglib->drivers.four_wire_spi.display;
+	display_config_ptr = eglib->drivers.four_wire_spi.display_config_ptr;
+
+	display->get_dimension(
+		hal, hal_config, display_config_ptr,
+		&display_width, &display_height
+	);
+
+	hal->set_cs(hal_config, 0);
+	for(uint8_t page=y/8 ; page < ((y+height)/8+1) ; page++) {
+		hal->set_dc(hal_config, 0);
+		hal->send_byte(hal_config, SH1106_SET_PAGE_ADDRESS(page));
+		set_column_address(hal, hal_config, display_config_ptr, 0);
+		hal->set_dc(hal_config, 1);
+		for(eglib_coordinate_t column=x ; column < (x+width) ; column ++)
+			hal->send_byte(
+				hal_config,
+				*(buffer + page * display_width + column)
+			);
+	}
+	hal->set_cs(hal_config, 1);
+}
+
 const eglib_display_4wire_spi_t eglib_display_4wire_spi_sh1106_vdd1_1_65_v = {
-	.hal_config_base = {
+	.hal_4wire_spi_config_comm = {
 	    .mode = 0,
 	    .bit_numbering = EGLIB_HAL_4WIRE_SPI_MSB_FIRST,
 	    .cs_setup_ns = 240,
@@ -233,15 +287,17 @@ const eglib_display_4wire_spi_t eglib_display_4wire_spi_sh1106_vdd1_1_65_v = {
 	    .mosi_setup_ns = 200,
 	    .mosi_hold_ns = 200,
 	},
-	.power_up = power_up,
-	.power_down = power_down,
+	.init = init,
+	.sleep_in = sleep_in,
+	.sleep_out = sleep_out,
 	.get_dimension = get_dimension,
 	.get_color_depth = get_color_depth,
-	.draw_pixel = draw_pixel,
+	.draw_pixel_color = draw_pixel_color,
+	.send_buffer = send_buffer,
 };
 
 const eglib_display_4wire_spi_t eglib_display_4wire_spi_sh1106_vdd1_2_4_v = {
-	.hal_config_base = {
+	.hal_4wire_spi_config_comm = {
 	    .mode = 0,
 	    .bit_numbering = EGLIB_HAL_4WIRE_SPI_MSB_FIRST,
 	    .cs_setup_ns = 120,
@@ -253,11 +309,13 @@ const eglib_display_4wire_spi_t eglib_display_4wire_spi_sh1106_vdd1_2_4_v = {
 	    .mosi_setup_ns = 100,
 	    .mosi_hold_ns = 100,
 	},
-	.power_up = power_up,
-	.power_down = power_down,
+	.init = init,
+	.sleep_in = sleep_in,
+	.sleep_out = sleep_out,
 	.get_dimension = get_dimension,
 	.get_color_depth = get_color_depth,
-	.draw_pixel = draw_pixel,
+	.draw_pixel_color = draw_pixel_color,
+	.send_buffer = send_buffer,
 };
 
 //
@@ -268,11 +326,11 @@ void eglib_display_4wire_spi_sh1106_set_start_line(
 	eglib_t *eglib,
 	uint8_t line
 ) {
-	eglib_hal_4wire_spi_t *hal;
+	const eglib_hal_4wire_spi_t *hal;
 	eglib_hal_4wire_spi_config_t *hal_config;
 
-	hal = (eglib_hal_4wire_spi_t *)eglib->hal;
-	hal_config = &(eglib->hal_config.four_wire_spi);
+	hal = (eglib_hal_4wire_spi_t *)eglib->drivers.four_wire_spi.hal;
+	hal_config = &(eglib->drivers.four_wire_spi.hal_config);
 
 	hal->set_cs(hal_config, 0);
 	hal->set_dc(hal_config, 0);
@@ -284,11 +342,11 @@ void eglib_display_4wire_spi_sh1106_set_contrast(
 	eglib_t *eglib,
 	uint8_t contrast
 ) {
-	eglib_hal_4wire_spi_t *hal;
+	const eglib_hal_4wire_spi_t *hal;
 	eglib_hal_4wire_spi_config_t *hal_config;
 
-	hal = (eglib_hal_4wire_spi_t *)eglib->hal;
-	hal_config = &(eglib->hal_config.four_wire_spi);
+	hal = (eglib_hal_4wire_spi_t *)eglib->drivers.four_wire_spi.hal;
+	hal_config = &(eglib->drivers.four_wire_spi.hal_config);
 
 	hal->set_cs(hal_config, 0);
 	hal->set_dc(hal_config, 0);
@@ -301,11 +359,11 @@ void eglib_display_4wire_spi_sh1106_entire_display_on(
 	eglib_t *eglib,
 	uint8_t entire_display_on
 ) {
-	eglib_hal_4wire_spi_t *hal;
+	const eglib_hal_4wire_spi_t *hal;
 	eglib_hal_4wire_spi_config_t *hal_config;
 
-	hal = (eglib_hal_4wire_spi_t *)eglib->hal;
-	hal_config = &(eglib->hal_config.four_wire_spi);
+	hal = (eglib_hal_4wire_spi_t *)eglib->drivers.four_wire_spi.hal;
+	hal_config = &(eglib->drivers.four_wire_spi.hal_config);
 
 	hal->set_cs(hal_config, 0);
 	hal->set_dc(hal_config, 0);
@@ -320,11 +378,11 @@ void eglib_display_4wire_spi_sh1106_reverse(
 	eglib_t *eglib,
 	uint8_t reverse
 ) {
-	eglib_hal_4wire_spi_t *hal;
+	const eglib_hal_4wire_spi_t *hal;
 	eglib_hal_4wire_spi_config_t *hal_config;
 
-	hal = (eglib_hal_4wire_spi_t *)eglib->hal;
-	hal_config = &(eglib->hal_config.four_wire_spi);
+	hal = (eglib_hal_4wire_spi_t *)eglib->drivers.four_wire_spi.hal;
+	hal_config = &(eglib->drivers.four_wire_spi.hal_config);
 
 	hal->set_cs(hal_config, 0);
 	hal->set_dc(hal_config, 0);

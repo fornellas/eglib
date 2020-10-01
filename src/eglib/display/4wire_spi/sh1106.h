@@ -61,7 +61,9 @@ typedef struct {
 	// Change period
 	//
 
+	// 1-15 DCLKs ; POR: 2 CLKs
 	uint8_t pre_charge_period : 4;
+	// 1-15 DCLKs ; POR: 2 CLKs
 	uint8_t dis_charge_period : 4;
 
 	//
@@ -85,9 +87,13 @@ typedef struct {
 	//
 
 	bool dc_dc_enable : 1;
-	// SHH1106_DC_DC_*
+	// POR: SHH1106_DC_DC_8_0_V
 	uint8_t dc_dc_voltage : 2;
 } eglib_display_4wire_spi_sh1106_config_t;
+
+// https://www.sparkfun.com/products/13003
+// Values from https://github.com/sparkfun/SparkFun_Micro_OLED_Arduino_Library/blob/master/src/SFE_MicroOLED.cpp
+extern const eglib_display_4wire_spi_sh1106_config_t eglib_display_4wire_spi_sh1106_config_sparkfun_micro_oled;
 
 // VDD1 = 1.65 - 3.5V, TA= +25°C
 extern const eglib_display_4wire_spi_t eglib_display_4wire_spi_sh1106_vdd1_1_65_v;

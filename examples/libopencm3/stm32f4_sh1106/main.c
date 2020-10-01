@@ -84,6 +84,7 @@ int main(void) {
 	eglib_SetColor(&eglib, 0, 0xFF, 0xFF, 0xFF);
 
 	eglib_DrawLine(&eglib,0, 0, sh1106_config.width-1, sh1106_config.height-1);
+	eglib_DrawLine(&eglib,0, sh1106_config.height-1, sh1106_config.width-1, 0);
 
 	eglib_display_4wire_spi_frame_buffer_send(&eglib, 0, 0, sh1106_config.width-1, sh1106_config.height-1);
 }

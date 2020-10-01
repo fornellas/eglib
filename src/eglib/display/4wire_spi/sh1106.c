@@ -67,6 +67,36 @@
 #define SH1106_NOP 0xE3
 
 //
+// Config
+//
+
+const eglib_display_4wire_spi_sh1106_config_t eglib_display_4wire_spi_sh1106_config_sparkfun_micro_oled = {
+	// Display physical construction
+	.width = 64,
+	.height = 48,
+	.segment_remap = SH1106_SEGMENT_REMAP_REVERSE,
+	.common_pads_hardware_configuration_mode = SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_ALTERNATIVE,
+	.common_output_scan_direction = SH1106_COMMON_OUTPUT_SCAN_DIRECTION_ASC,
+	.display_offset = 0,
+	.column_offset = 0,
+
+	// Change period
+	.pre_charge_period = 1,
+	.dis_charge_period = 15,
+
+	// VCOM deselect
+	.vcom_deselect_level = 0x40,
+
+	// Internal display clocks
+	.clock_divide = 0,
+	.oscillator_frequency = SH1106_OSCILLATOR_FREQUENCY_PLUS_15_PCT,
+
+	// Charge Pump Regulator
+	.dc_dc_enable = true,
+	.dc_dc_voltage = SHH1106_DC_DC_8_0_V,
+};
+
+//
 // Helpers
 //
 

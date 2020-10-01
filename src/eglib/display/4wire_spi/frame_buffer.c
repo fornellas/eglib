@@ -133,7 +133,7 @@ void eglib_display_4wire_spi_frame_buffer_send_buffer_24bit_rgb(
 	eglib_coordinate_t y_start, y_end, x_start, x_end;
 	eglib_display_4wire_spi_frame_buffer_config_t *display_config;
 
-	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)eglib->drivers.four_wire_spi.display_config;
+	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)eglib->drivers.four_wire_spi.display_config_ptr;
 
 	y_start = x;
 	y_end = y + height;
@@ -311,7 +311,7 @@ void eglib_display_4wire_spi_frame_buffer_send(
 ) {
 	eglib_display_4wire_spi_frame_buffer_config_t *display_config;
 
-	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)eglib->drivers.four_wire_spi.display_config;
+	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)eglib->drivers.four_wire_spi.display_config_ptr;
 
 	display_config->display->send_buffer(
 		eglib,

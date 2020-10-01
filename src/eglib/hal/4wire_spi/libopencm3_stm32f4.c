@@ -17,7 +17,7 @@ static void init(
 	uint32_t cpha = 0;
 	uint32_t lsbfirst = 0;
 
-	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver_ptr;
 
 	rcc_periph_clock_enable(config_driver->rcc_rst);
 	gpio_mode_setup(config_driver->port_rst, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, config_driver->gpio_rst);
@@ -101,7 +101,7 @@ static void sleep_in(
 ) {
 	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 
-	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver_ptr;
 
 	wait_spi_not_busy(config_driver->spi);
 
@@ -138,7 +138,7 @@ static void delay_ns(
 ) {
 	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 
-	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver_ptr;
 
 	wait_spi_not_busy(config_driver->spi);
 
@@ -151,7 +151,7 @@ static void set_reset(
 ) {
 	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 
-	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver_ptr;
 
 	wait_spi_not_busy(config_driver->spi);
 	if(state)
@@ -166,7 +166,7 @@ static void set_dc(
 ) {
 	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 
-	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver_ptr;
 
 	wait_spi_not_busy(config_driver->spi);
 	if(state)
@@ -182,7 +182,7 @@ static void set_cs(
 ) {
 	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 
-	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver_ptr;
 
 	wait_spi_not_busy(config_driver->spi);
 	if(state) {
@@ -201,7 +201,7 @@ static void send_byte(
 ) {
 	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 
-	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver;
+	config_driver = (eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *)config->driver_ptr;
 
 	spi_send(config_driver->spi, byte);
 }

@@ -26,7 +26,7 @@ struct _eglib_struct {
 			const eglib_hal_4wire_spi_t *hal;
 			eglib_hal_4wire_spi_config_t hal_config;
 			const eglib_display_4wire_spi_t *display;
-			void *display_config;
+			void *display_config_ptr;
 		} four_wire_spi;
 	} drivers;
 	// Common HAL driver interface wrappers
@@ -69,9 +69,9 @@ struct _eglib_struct {
 void eglib_Init_4WireSPI(
 	eglib_t *eglib,
 	const eglib_hal_4wire_spi_t *hal,
-	void *hal_config_driver,
+	void *hal_config_driver_ptr,
 	const eglib_display_4wire_spi_t *display,
-	void *display_config
+	void *display_config_ptr
 );
 
 void eglib_SleepIn(eglib_t *eglib);

@@ -156,10 +156,10 @@ void eglib_display_4wire_spi_frame_buffer_send_buffer_24bit_rgb(
 			buffer++;
 			color.b = *buffer;
 			buffer++;
-			display_config->display->draw_pixel_color(
+			display_config->buffered_display->draw_pixel_color(
 				eglib->drivers.four_wire_spi.hal,
 				&eglib->drivers.four_wire_spi.hal_config,
-				display_config->display_config_ptr,
+				display_config->buffered_display_config_ptr,
 				x, y,
 				color
 			);
@@ -190,7 +190,7 @@ static void init(
 		// FIXME error reporting
 		while(1);
 
-	display_config->display->init(hal, hal_config, display_config->display_config_ptr);
+	display_config->buffered_display->init(hal, hal_config, display_config->buffered_display_config_ptr);
 };
 
 static void sleep_in(
@@ -201,7 +201,7 @@ static void sleep_in(
 
 	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)display_config_ptr;
 
-	display_config->display->sleep_in(hal, hal_config, display_config->display_config_ptr);
+	display_config->buffered_display->sleep_in(hal, hal_config, display_config->buffered_display_config_ptr);
 };
 
 static void sleep_out(
@@ -212,7 +212,7 @@ static void sleep_out(
 
 	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)display_config_ptr;
 
-	display_config->display->sleep_out(hal, hal_config, display_config->display_config_ptr);
+	display_config->buffered_display->sleep_out(hal, hal_config, display_config->buffered_display_config_ptr);
 };
 
 static void get_dimension(
@@ -224,9 +224,9 @@ static void get_dimension(
 
 	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)display_config_ptr;
 
-	display_config->display->get_dimension(
+	display_config->buffered_display->get_dimension(
 		hal, hal_config,
-		display_config->display_config_ptr,
+		display_config->buffered_display_config_ptr,
 		width, height
 	);
 };
@@ -240,9 +240,9 @@ static void get_color_depth(
 
 	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)display_config_ptr;
 
-	display_config->display->get_color_depth(
+	display_config->buffered_display->get_color_depth(
 		hal, hal_config,
-		display_config->display_config_ptr,
+		display_config->buffered_display_config_ptr,
 		color_depth
 	);
 }
@@ -290,9 +290,9 @@ static void send_buffer(
 
 void eglib_display_4wire_spi_frame_buffer_display_init(
 	eglib_display_4wire_spi_t *display_frame_buffer,
-	const eglib_display_4wire_spi_t *display
+	const eglib_display_4wire_spi_t *buffered_display
 ) {
-	display_frame_buffer->hal_4wire_spi_config_comm = display->hal_4wire_spi_config_comm;
+	display_frame_buffer->hal_4wire_spi_config_comm = buffered_display->hal_4wire_spi_config_comm;
 	display_frame_buffer->init = init;
 	display_frame_buffer->sleep_in = sleep_in;
 	display_frame_buffer->sleep_out = sleep_out;
@@ -304,11 +304,11 @@ void eglib_display_4wire_spi_frame_buffer_display_init(
 
 void eglib_display_4wire_spi_frame_buffer_config_init(
 	eglib_display_4wire_spi_frame_buffer_config_t *frame_buffer_config,
-	const eglib_display_4wire_spi_t *display,
-	void *display_config_ptr
+	const eglib_display_4wire_spi_t *buffered_display,
+	void *buffered_display_config_ptr
 ) {
-	frame_buffer_config->display = display;
-	frame_buffer_config->display_config_ptr = display_config_ptr;
+	frame_buffer_config->buffered_display = buffered_display;
+	frame_buffer_config->buffered_display_config_ptr = buffered_display_config_ptr;
 	frame_buffer_config->buffer = NULL;
 }
 
@@ -321,7 +321,7 @@ void eglib_display_4wire_spi_frame_buffer_send(
 
 	display_config = (eglib_display_4wire_spi_frame_buffer_config_t *)eglib->drivers.four_wire_spi.display_config_ptr;
 
-	display_config->display->send_buffer(
+	display_config->buffered_display->send_buffer(
 		eglib,
 		display_config->buffer,
 		x, y,

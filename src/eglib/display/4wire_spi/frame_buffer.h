@@ -27,21 +27,21 @@ void eglib_display_4wire_spi_frame_buffer_send_buffer_24bit_rgb(
 
 typedef struct {
 	// The display driver to frame buffer
-	const eglib_display_4wire_spi_t *display;
-	void *display_config_ptr;
+	const eglib_display_4wire_spi_t *buffered_display;
+	void *buffered_display_config_ptr;
 	// Pointer to buffer, set to NULL
 	void *buffer;
 } eglib_display_4wire_spi_frame_buffer_config_t;
 
 void eglib_display_4wire_spi_frame_buffer_display_init(
 	eglib_display_4wire_spi_t *display_frame_buffer,
-	const eglib_display_4wire_spi_t *display
+	const eglib_display_4wire_spi_t *buffered_display
 );
 
 void eglib_display_4wire_spi_frame_buffer_config_init(
 	eglib_display_4wire_spi_frame_buffer_config_t *frame_buffer_config,
-	const eglib_display_4wire_spi_t *display,
-	void *display_config_ptr
+	const eglib_display_4wire_spi_t *buffered_display,
+	void *buffered_display_config_ptr
 );
 
 void eglib_display_4wire_spi_frame_buffer_send(

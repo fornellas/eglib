@@ -17,17 +17,17 @@ static void delay_ns(eglib_hal_4wire_spi_config_t *config, uint32_t ns) {
 	(void)ns;
 }
 
-static void set_reset(eglib_hal_4wire_spi_config_t *config, uint8_t state) {
+static void set_reset(eglib_hal_4wire_spi_config_t *config, bool state) {
 	(void)config;
 	(void)state;
 }
 
-static void set_dc(eglib_hal_4wire_spi_config_t *config, uint8_t state) {
+static void set_dc(eglib_hal_4wire_spi_config_t *config, bool state) {
 	(void)config;
 	(void)state;
 }
 
-static void set_cs(eglib_hal_4wire_spi_config_t *config, uint8_t state) {
+static void set_cs(eglib_hal_4wire_spi_config_t *config, bool state) {
 	(void)config;
 	(void)state;
 }

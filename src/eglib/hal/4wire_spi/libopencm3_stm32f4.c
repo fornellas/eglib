@@ -147,7 +147,7 @@ static void delay_ns(
 
 static void set_reset(
 	eglib_hal_4wire_spi_config_t *config,
-	uint8_t state
+	bool state
 ) {
 	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 
@@ -162,7 +162,7 @@ static void set_reset(
 
 static void set_dc(
 	eglib_hal_4wire_spi_config_t *config,
-	uint8_t state
+	bool state
 ) {
 	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 
@@ -178,7 +178,7 @@ static void set_dc(
 
 static void set_cs(
 	eglib_hal_4wire_spi_config_t *config,
-	uint8_t state
+	bool state
 ) {
 	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t *config_driver;
 

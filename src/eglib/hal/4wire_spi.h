@@ -2,6 +2,7 @@
 #define EGLIB_HAL_4WIRE_SPI_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 typedef enum {
   EGLIB_HAL_4WIRE_SPI_LSB_FIRST,
@@ -46,10 +47,18 @@ typedef struct {
 	void (*sleep_in)(eglib_hal_4wire_spi_config_t *config);
 	void (*sleep_out)(eglib_hal_4wire_spi_config_t *config);
 	void (*delay_ns)(eglib_hal_4wire_spi_config_t *config, uint32_t ns);
-	void (*set_reset)(eglib_hal_4wire_spi_config_t *config, uint8_t state);
-	void (*set_dc)(eglib_hal_4wire_spi_config_t *config, uint8_t state);
-	void (*set_cs)(eglib_hal_4wire_spi_config_t *config, uint8_t state);
+	void (*set_reset)(eglib_hal_4wire_spi_config_t *config, bool state);
+	void (*set_dc)(eglib_hal_4wire_spi_config_t *config, bool state);
+	void (*set_cs)(eglib_hal_4wire_spi_config_t *config, bool state);
 	void (*send_byte)(eglib_hal_4wire_spi_config_t *config, uint8_t byte);
 } eglib_hal_4wire_spi_t;
+
+#include "../../eglib.h"
+
+void eglib_hal_4wire_spi_delay_ns(eglib_t *eglib, uint32_t ns);
+void eglib_hal_4wire_spi_set_reset(eglib_t *eglib, bool state);
+void eglib_hal_4wire_spi_set_dc(eglib_t *eglib, bool state);
+void eglib_hal_4wire_spi_set_cs(eglib_t *eglib, bool state);
+void eglib_hal_4wire_spi_send_byte(eglib_t *eglib, uint8_t state);
 
 #endif

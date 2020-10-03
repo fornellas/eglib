@@ -356,69 +356,45 @@ void eglib_display_4wire_spi_sh1106_set_start_line(
 	eglib_t *eglib,
 	uint8_t line
 ) {
-	const eglib_hal_4wire_spi_t *hal;
-	eglib_hal_4wire_spi_config_t *hal_config;
-
-	hal = (eglib_hal_4wire_spi_t *)eglib->drivers.four_wire_spi.hal;
-	hal_config = &(eglib->drivers.four_wire_spi.hal_config);
-
-	hal->set_cs(hal_config, 0);
-	hal->set_dc(hal_config, 0);
-	hal->send_byte(hal_config, SH1106_SET_DISPLAY_START_LINE(line));
-	hal->set_cs(hal_config, 1);
+	eglib_hal_4wire_spi_set_cs(eglib, 0);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
+	eglib_hal_4wire_spi_send_byte(eglib, SH1106_SET_DISPLAY_START_LINE(line));
+	eglib_hal_4wire_spi_set_cs(eglib, 1);
 }
 
 void eglib_display_4wire_spi_sh1106_set_contrast(
 	eglib_t *eglib,
 	uint8_t contrast
 ) {
-	const eglib_hal_4wire_spi_t *hal;
-	eglib_hal_4wire_spi_config_t *hal_config;
-
-	hal = (eglib_hal_4wire_spi_t *)eglib->drivers.four_wire_spi.hal;
-	hal_config = &(eglib->drivers.four_wire_spi.hal_config);
-
-	hal->set_cs(hal_config, 0);
-	hal->set_dc(hal_config, 0);
-	hal->send_byte(hal_config, SH1106_SET_CONTRAST_CONTROL_REGISTER);
-	hal->send_byte(hal_config, contrast);
-	hal->set_cs(hal_config, 1);
+	eglib_hal_4wire_spi_set_cs(eglib, 0);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
+	eglib_hal_4wire_spi_send_byte(eglib, SH1106_SET_CONTRAST_CONTROL_REGISTER);
+	eglib_hal_4wire_spi_send_byte(eglib, contrast);
+	eglib_hal_4wire_spi_set_cs(eglib, 1);
 }
 
 void eglib_display_4wire_spi_sh1106_entire_display_on(
 	eglib_t *eglib,
 	uint8_t entire_display_on
 ) {
-	const eglib_hal_4wire_spi_t *hal;
-	eglib_hal_4wire_spi_config_t *hal_config;
-
-	hal = (eglib_hal_4wire_spi_t *)eglib->drivers.four_wire_spi.hal;
-	hal_config = &(eglib->drivers.four_wire_spi.hal_config);
-
-	hal->set_cs(hal_config, 0);
-	hal->set_dc(hal_config, 0);
+	eglib_hal_4wire_spi_set_cs(eglib, 0);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
 	if(entire_display_on)
-		hal->send_byte(hal_config, SH1106_SET_ENTIRE_DISPLAY_ON);
+		eglib_hal_4wire_spi_send_byte(eglib, SH1106_SET_ENTIRE_DISPLAY_ON);
 	else
-		hal->send_byte(hal_config, SH1106_SET_ENTIRE_DISPLAY_OFF);
-	hal->set_cs(hal_config, 1);
+		eglib_hal_4wire_spi_send_byte(eglib, SH1106_SET_ENTIRE_DISPLAY_OFF);
+	eglib_hal_4wire_spi_set_cs(eglib, 1);
 }
 
 void eglib_display_4wire_spi_sh1106_reverse(
 	eglib_t *eglib,
 	uint8_t reverse
 ) {
-	const eglib_hal_4wire_spi_t *hal;
-	eglib_hal_4wire_spi_config_t *hal_config;
-
-	hal = (eglib_hal_4wire_spi_t *)eglib->drivers.four_wire_spi.hal;
-	hal_config = &(eglib->drivers.four_wire_spi.hal_config);
-
-	hal->set_cs(hal_config, 0);
-	hal->set_dc(hal_config, 0);
+	eglib_hal_4wire_spi_set_cs(eglib, 0);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
 	if(reverse)
-		hal->send_byte(hal_config, SH1106_SET_REVERSE_DISPLAY);
+		eglib_hal_4wire_spi_send_byte(eglib, SH1106_SET_REVERSE_DISPLAY);
 	else
-		hal->send_byte(hal_config, SH1106_SET_NORMAL_DISPLAY);
-	hal->set_cs(hal_config, 1);
+		eglib_hal_4wire_spi_send_byte(eglib, SH1106_SET_NORMAL_DISPLAY);
+	eglib_hal_4wire_spi_set_cs(eglib, 1);
 }

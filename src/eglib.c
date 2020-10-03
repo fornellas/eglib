@@ -25,27 +25,15 @@ static void hal_sleep_out_4wire_spi(eglib_t *eglib) {
 // 4-Wire SPI
 
 static void display_init_4wire_spi(eglib_t *eglib) {
-	eglib->drivers.four_wire_spi.display->init(
-		eglib->drivers.four_wire_spi.hal,
-		&eglib->drivers.four_wire_spi.hal_config,
-		eglib->drivers.four_wire_spi.display_config_ptr
-	);
+	eglib->drivers.four_wire_spi.display->init(eglib);
 }
 
 static void display_sleep_in_4wire_spi(eglib_t *eglib) {
-	eglib->drivers.four_wire_spi.display->sleep_in(
-		eglib->drivers.four_wire_spi.hal,
-		&eglib->drivers.four_wire_spi.hal_config,
-		eglib->drivers.four_wire_spi.display_config_ptr
-	);
+	eglib->drivers.four_wire_spi.display->sleep_in(eglib);
 }
 
 static void display_sleep_out_4wire_spi(eglib_t *eglib) {
-	eglib->drivers.four_wire_spi.display->sleep_out(
-		eglib->drivers.four_wire_spi.hal,
-		&eglib->drivers.four_wire_spi.hal_config,
-		eglib->drivers.four_wire_spi.display_config_ptr
-	);
+	eglib->drivers.four_wire_spi.display->sleep_out(eglib);
 }
 
 static void display_get_dimension_4wire_spi(
@@ -53,24 +41,14 @@ static void display_get_dimension_4wire_spi(
 	eglib_coordinate_t *width,
 	eglib_coordinate_t *height
 ) {
-	eglib->drivers.four_wire_spi.display->get_dimension(
-		eglib->drivers.four_wire_spi.hal,
-		&eglib->drivers.four_wire_spi.hal_config,
-		eglib->drivers.four_wire_spi.display_config_ptr,
-		width, height
-	);
+	eglib->drivers.four_wire_spi.display->get_dimension(eglib, width, height);
 }
 
 static void display_get_color_depth_4wire_spi(
 	eglib_t *eglib,
 	eglib_color_depth_t *color_depth
 ) {
-	eglib->drivers.four_wire_spi.display->get_color_depth(
-		eglib->drivers.four_wire_spi.hal,
-		&eglib->drivers.four_wire_spi.hal_config,
-		eglib->drivers.four_wire_spi.display_config_ptr,
-		color_depth
-	);
+	eglib->drivers.four_wire_spi.display->get_color_depth(eglib, color_depth);
 }
 
 static void display_draw_pixel_4wire_spi(
@@ -79,12 +57,7 @@ static void display_draw_pixel_4wire_spi(
 	eglib_coordinate_t y,
 	eglib_color_t color
 ) {
-	eglib->drivers.four_wire_spi.display->draw_pixel_color(
-		eglib->drivers.four_wire_spi.hal,
-		&eglib->drivers.four_wire_spi.hal_config,
-		eglib->drivers.four_wire_spi.display_config_ptr,
-		x, y, color
-	);
+	eglib->drivers.four_wire_spi.display->draw_pixel_color(eglib, x, y, color);
 }
 
 //
@@ -108,6 +81,8 @@ static void eglib_Init(eglib_t *eglib) {
 	eglib->display.init(eglib);
 }
 
+// 4 Wire SPI
+
 void eglib_Init_4WireSPI(
 	eglib_t *eglib,
 	const eglib_hal_4wire_spi_t *hal,
@@ -117,7 +92,7 @@ void eglib_Init_4WireSPI(
 ) {
 	eglib->drivers.four_wire_spi.hal = hal;
 	eglib->drivers.four_wire_spi.hal_config.base = &display->hal_4wire_spi_config_comm;
-	eglib->drivers.four_wire_spi.hal_config.driver_ptr = hal_config_driver_ptr;
+	eglib->drivers.four_wire_spi.hal_config.config_ptr = hal_config_driver_ptr;
 	eglib->hal.init = hal_init_4wire_spi;
 	eglib->hal.sleep_in = hal_sleep_in_4wire_spi;
 	eglib->hal.sleep_out = hal_sleep_out_4wire_spi;
@@ -133,6 +108,24 @@ void eglib_Init_4WireSPI(
 
 	eglib_Init(eglib);
 }
+
+const eglib_hal_4wire_spi_t *eglib_Get4WireSPIHAL(eglib_t *eglib) {
+	return eglib->drivers.four_wire_spi.hal;
+}
+
+eglib_hal_4wire_spi_config_t *eglib_Get4WireSPIHALConfig(eglib_t *eglib) {
+	return &eglib->drivers.four_wire_spi.hal_config;
+}
+
+const eglib_display_4wire_spi_t *eglib_Get4WireSPIDisplay(eglib_t *eglib) {
+	return eglib->drivers.four_wire_spi.display;
+}
+
+void *eglib_Get4WireSPIDisplayConfig(eglib_t *eglib) {
+	return eglib->drivers.four_wire_spi.display_config_ptr;
+}
+
+// Common
 
 void eglib_SleepIn(eglib_t *eglib) {
 	eglib->hal.sleep_in(eglib);

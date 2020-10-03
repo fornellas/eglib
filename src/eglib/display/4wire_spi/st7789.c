@@ -44,7 +44,7 @@
 // Helpers
 //
 
-static void set_column_address(const eglib_hal_4wire_spi_t *hal, void *hal_config, uint16_t x_start, uint16_t x_end) {
+static void set_column_address(eglib_t *eglib, uint16_t x_start, uint16_t x_end) {
 	uint8_t buff[4];
 
 	buff[0] = (x_start&0xFF00)>>8;
@@ -52,14 +52,14 @@ static void set_column_address(const eglib_hal_4wire_spi_t *hal, void *hal_confi
 	buff[2] = (x_end&0xFF00)>>8;
 	buff[3] = x_end&0xFF;
 
-	hal->set_dc(hal_config, 0);
-	hal->send_byte(hal_config, ST7789_CASET);
-	hal->set_dc(hal_config, 1);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
+	eglib_hal_4wire_spi_send_byte(eglib, ST7789_CASET);
+	eglib_hal_4wire_spi_set_dc(eglib, 1);
 	for(uint8_t i=0 ; i < sizeof(buff) ; i++)
-		hal->send_byte(hal_config, buff[i]);
+		eglib_hal_4wire_spi_send_byte(eglib, buff[i]);
 }
 
-static void set_row_address(const eglib_hal_4wire_spi_t *hal, void *hal_config, uint16_t y_start, uint16_t y_end) {
+static void set_row_address(eglib_t *eglib, uint16_t y_start, uint16_t y_end) {
 	uint8_t buff[4];
 
 	buff[0] = (y_start&0xFF00)>>8;
@@ -67,11 +67,11 @@ static void set_row_address(const eglib_hal_4wire_spi_t *hal, void *hal_config, 
 	buff[2] = (y_end&0xFF00)>>8;
 	buff[3] = y_end&0xFF;
 
-	hal->set_dc(hal_config, 0);
-	hal->send_byte(hal_config, ST7789_RASET);
-	hal->set_dc(hal_config, 1);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
+	eglib_hal_4wire_spi_send_byte(eglib, ST7789_RASET);
+	eglib_hal_4wire_spi_set_dc(eglib, 1);
 	for(uint8_t i=0 ; i < sizeof(buff) ; i++)
-		hal->send_byte(hal_config, buff[i]);
+		eglib_hal_4wire_spi_send_byte(eglib, buff[i]);
 }
 
 static void convert_to_16bit(eglib_color_t *color, uint8_t buff[2]) {
@@ -93,50 +93,47 @@ static void convert_to_16bit(eglib_color_t *color, uint8_t buff[2]) {
 // Display
 //
 
-static void init(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config_ptr
-) {
+static void init(eglib_t *eglib) {
 	eglib_display_4wire_spi_st7789_config_t *display_config;
 
-	display_config = (eglib_display_4wire_spi_st7789_config_t *)display_config_ptr;
+	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
 
-	hal->set_reset(hal_config, 1);
-	hal->set_dc(hal_config, 1);
-	hal->set_cs(hal_config, 1);
+	eglib_hal_4wire_spi_set_reset(eglib, 1);
+	eglib_hal_4wire_spi_set_dc(eglib, 1);
+	eglib_hal_4wire_spi_set_cs(eglib, 1);
 
 	// Hardware reset
-	hal->set_reset(hal_config, 0);
-	hal->delay_ns(hal_config, ST7789_RESX_TRW_MS * 1000 * 1000);
-	hal->set_reset(hal_config, 1);
-	hal->delay_ns(hal_config, ST7789_RESX_TRT_MS * 1000 * 1000);
+	eglib_hal_4wire_spi_set_reset(eglib, 0);
+	eglib_hal_4wire_spi_delay_ns(eglib, ST7789_RESX_TRW_MS * 1000 * 1000);
+	eglib_hal_4wire_spi_set_reset(eglib, 1);
+	eglib_hal_4wire_spi_delay_ns(eglib, ST7789_RESX_TRT_MS * 1000 * 1000);
 
 	// Software reset
-	hal->set_cs(hal_config, 0);
-	hal->set_dc(hal_config, 0);
-	hal->send_byte(hal_config, ST7789_SWRESET);
-	hal->set_cs(hal_config, 1);
-	hal->delay_ns(hal_config, ST7789_SWRESET_DELAY_MS * 1000 * 1000);
+	eglib_hal_4wire_spi_set_cs(eglib, 0);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
+	eglib_hal_4wire_spi_send_byte(eglib, ST7789_SWRESET);
+	eglib_hal_4wire_spi_set_cs(eglib, 1);
+	eglib_hal_4wire_spi_delay_ns(eglib, ST7789_SWRESET_DELAY_MS * 1000 * 1000);
 
-	hal->set_cs(hal_config, 0);
+	eglib_hal_4wire_spi_set_cs(eglib, 0);
 
 	// Out of sleep mode
-	hal->set_dc(hal_config, 0);
-	hal->send_byte(hal_config, ST7789_SLPOUT);
-	hal->delay_ns(hal_config, ST7789_SLPOUT_DELAY_SLEEP_IN_MS * 1000 * 1000);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
+	eglib_hal_4wire_spi_send_byte(eglib, ST7789_SLPOUT);
+	eglib_hal_4wire_spi_delay_ns(eglib, ST7789_SLPOUT_DELAY_SLEEP_IN_MS * 1000 * 1000);
 
 	// Set color mode
-	hal->set_dc(hal_config, 0);
-	hal->send_byte(hal_config, ST7789_COLMOD);
-	hal->set_dc(hal_config, 1);
-	hal->send_byte(hal_config, ST7789_COLMOD_COLOR_16BIT_WRITE);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
+	eglib_hal_4wire_spi_send_byte(eglib, ST7789_COLMOD);
+	eglib_hal_4wire_spi_set_dc(eglib, 1);
+	eglib_hal_4wire_spi_send_byte(eglib, ST7789_COLMOD_COLOR_16BIT_WRITE);
 
 	// Memory Data Access Control
-	hal->set_dc(hal_config, 0);
-	hal->send_byte(hal_config, ST7789_MADCTL);
-	hal->set_dc(hal_config, 1);
-	hal->send_byte(
-		hal_config,
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
+	eglib_hal_4wire_spi_send_byte(eglib, ST7789_MADCTL);
+	eglib_hal_4wire_spi_set_dc(eglib, 1);
+	eglib_hal_4wire_spi_send_byte(
+		eglib,
 		ST7789_MADCTL_PAGE_ADDRESS_ORDER_TOP_TO_BOTTOM |
 		ST7789_MADCTL_COLUMN_ADDRESS_ORDER_LEFT_TO_RIGHT |
 		ST7789_MADCTL_PAGE_COLUMN_ORDER_NORMAL |
@@ -147,100 +144,77 @@ static void init(
 
 	// Display inversion in practice works the opposite of what the datasheet
 	// says: on is off and off is on.
-	hal->set_dc(hal_config, 0);
-	hal->send_byte(hal_config, ST7789_INVON);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
+	eglib_hal_4wire_spi_send_byte(eglib, ST7789_INVON);
 	// Datasheet states NORON should be the default after sw reset, but unless
 	// we explicitly set it, INVON will have no effect.
-	hal->set_dc(hal_config, 0);
-	hal->send_byte(hal_config, ST7789_NORON);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
+	eglib_hal_4wire_spi_send_byte(eglib, ST7789_NORON);
 
 	// Clear RAM
-	set_column_address(hal, hal_config, 0, display_config->width - 1);
-	set_row_address(hal, hal_config, 0, display_config->height - 1);
-	hal->set_dc(hal_config, 0);
-	hal->send_byte(hal_config, ST7789_RAMWR);
-	hal->set_dc(hal_config, 1);
+	set_column_address(eglib, 0, display_config->width - 1);
+	set_row_address(eglib, 0, display_config->height - 1);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
+	eglib_hal_4wire_spi_send_byte(eglib, ST7789_RAMWR);
+	eglib_hal_4wire_spi_set_dc(eglib, 1);
 	for(uint32_t i=0, max=display_config->width * display_config->height * 2 ; i < max ; i++)
-		hal->send_byte(hal_config, 0x00);
+		eglib_hal_4wire_spi_send_byte(eglib, 0x00);
 
 	// Main screen turn on
-	hal->set_dc(hal_config, 0);
-	hal->send_byte(hal_config, ST7789_DISPON);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
+	eglib_hal_4wire_spi_send_byte(eglib, ST7789_DISPON);
 
-	hal->set_cs(hal_config, 1);
+	eglib_hal_4wire_spi_set_cs(eglib, 1);
 };
 
-static void sleep_in(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config_ptr
-) {
+static void sleep_in(eglib_t *eglib) {
 	// TODO
-	(void)hal;
-	(void)hal_config;
-	(void)display_config_ptr;
+	(void)eglib;
 };
 
-static void sleep_out(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config_ptr
-) {
+static void sleep_out(eglib_t *eglib) {
 	// TODO
-	(void)hal;
-	(void)hal_config;
-	(void)display_config_ptr;
+	(void)eglib;
 };
 
 static void get_dimension(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config_ptr,
+	eglib_t *eglib,
 	eglib_coordinate_t *width, eglib_coordinate_t*height
 ) {
 	eglib_display_4wire_spi_st7789_config_t *display_config;
 
-	(void)hal;
-	(void)hal_config;
-
-	display_config = (eglib_display_4wire_spi_st7789_config_t *)display_config_ptr;
+	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
 
 	*width = display_config->width;;
 	*height = display_config->height;
 };
 
-static void get_color_depth(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config_ptr,
-	eglib_color_depth_t *color_depth
-) {
-	(void)hal;
-	(void)hal_config;
-	(void)display_config_ptr;
+static void get_color_depth(eglib_t *eglib, eglib_color_depth_t *color_depth) {
+	(void)eglib;
 
 	*color_depth = EGLIB_COLOR_DEPTH_18BIT_565_RGB;
 }
 
 static void draw_pixel_color(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config_ptr,
+	eglib_t *eglib,
 	eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color
 ) {
 	uint8_t color_16bit[2];
 
-	(void)display_config_ptr;
+	eglib_hal_4wire_spi_set_cs(eglib, 0);
 
-	hal->set_cs(hal_config, 0);
-
-	set_column_address(hal, hal_config, x, x);
-	set_row_address(hal, hal_config, y, y);
+	set_column_address(eglib, x, x);
+	set_row_address(eglib, y, y);
 
 	convert_to_16bit(&color, color_16bit);
 
-	hal->set_dc(hal_config, 0);
-	hal->send_byte(hal_config, ST7789_RAMWR);
-	hal->set_dc(hal_config, 1);
+	eglib_hal_4wire_spi_set_dc(eglib, 0);
+	eglib_hal_4wire_spi_send_byte(eglib, ST7789_RAMWR);
+	eglib_hal_4wire_spi_set_dc(eglib, 1);
 	for(uint8_t i=0 ; i < sizeof(color_16bit) ; i++)
-		hal->send_byte(hal_config, color_16bit[i]);
+		eglib_hal_4wire_spi_send_byte(eglib, color_16bit[i]);
 
-	hal->set_cs(hal_config, 1);
+	eglib_hal_4wire_spi_set_cs(eglib, 1);
 };
 
 const eglib_display_4wire_spi_t eglib_display_4wire_spi_st7789 = {

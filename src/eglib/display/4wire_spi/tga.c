@@ -6,16 +6,10 @@
 
 static uint8_t *tga_data = NULL;
 
-static void init(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config_ptr
-) {
+static void init(eglib_t *eglib) {
 	eglib_display_4wire_spi_tga_config_t *display_config;
 
-	(void)hal;
-	(void)hal_config;
-
-	display_config = (eglib_display_4wire_spi_tga_config_t *)display_config_ptr;
+	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
 
 	if ( tga_data != NULL )
 		free(tga_data);
@@ -27,56 +21,35 @@ static void init(
 		exit(1);
 }
 
-static void sleep_in(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config_ptr
-) {
-	(void)hal;
-	(void)hal_config;
-	(void)display_config_ptr;
+static void sleep_in(eglib_t *eglib) {
+	(void)eglib;
 }
 
-static void sleep_out(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config_ptr
-) {
-	(void)hal;
-	(void)hal_config;
-	(void)display_config_ptr;
+static void sleep_out(eglib_t *eglib) {
+	(void)eglib;
 }
 
 static void get_dimension(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config_ptr,
+	eglib_t *eglib,
 	eglib_coordinate_t *width,
 	eglib_coordinate_t *height
 ) {
 	eglib_display_4wire_spi_tga_config_t *display_config;
 
-	(void)hal;
-	(void)hal_config;
-
-	display_config = (eglib_display_4wire_spi_tga_config_t *)display_config_ptr;
+	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
 
 	*width = display_config->width;
 	*height = display_config->height;
 }
 
-static void get_color_depth(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config_ptr,
-	eglib_color_depth_t *color_depth
-) {
-	(void)hal;
-	(void)hal_config;
-	(void)display_config_ptr;
+static void get_color_depth(eglib_t *eglib, eglib_color_depth_t *color_depth) {
+	(void)eglib;
 
 	*color_depth = EGLIB_COLOR_DEPTH_24BIT_RGB;
 }
 
 static void draw_pixel_color(
-	const eglib_hal_4wire_spi_t *hal, eglib_hal_4wire_spi_config_t *hal_config,
-	void *display_config_ptr,
+	eglib_t *eglib,
 	eglib_coordinate_t x,
 	eglib_coordinate_t y,
 	eglib_color_t color
@@ -84,10 +57,7 @@ static void draw_pixel_color(
 	eglib_display_4wire_spi_tga_config_t *display_config;
 	uint8_t *p;
 
-	(void)hal;
-	(void)hal_config;
-
-	display_config  = (eglib_display_4wire_spi_tga_config_t *)display_config_ptr;
+	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
 
 	if(x >= display_config->width || y >= display_config->height || x < 0 || y < 0)
 		return;

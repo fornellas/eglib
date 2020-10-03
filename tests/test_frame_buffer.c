@@ -5,33 +5,31 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
+	eglib_t eglib_tga;
+	eglib_display_4wire_spi_tga_config_t tga_config = {
+		.width = 100,
+		.height = 100,
+	};
+
 	eglib_t eglib;
-	eglib_coordinate_t width, height;
-	eglib_display_4wire_spi_tga_config_t tga_config;
+	eglib_display_4wire_spi_t frame_buffer;
 	eglib_display_4wire_spi_frame_buffer_config_t frame_buffer_config;
-	eglib_display_4wire_spi_t display_frame_buffer;
 
-	tga_config.width = 100;
-	tga_config.height = 100;
+	eglib_coordinate_t width, height;
 
-	eglib_display_4wire_spi_frame_buffer_display_init(
-		&display_frame_buffer,
-		&eglib_display_4wire_spi_tga
+	eglib_Init_4WireSPI(
+		&eglib_tga,
+		&eglib_hal_4wire_spi_none, NULL,
+		&eglib_display_4wire_spi_tga, &tga_config
 	);
 
-	eglib_display_4wire_spi_frame_buffer_config_init(
-		&frame_buffer_config,
-		&eglib_display_4wire_spi_tga,
-		&tga_config
+	eglib_4WireSPI_FrameBuffer_Init(
+		&eglib,
+		&frame_buffer, &frame_buffer_config,
+		&eglib_tga
 	);
 
 	setbuf(stdout, NULL);
-
-	eglib_Init_4WireSPI(
-		&eglib,
-		&eglib_hal_4wire_spi_none, NULL,
-		&display_frame_buffer, &frame_buffer_config
-	);
 
 	width = eglib_GetWidth(&eglib);
 	height = eglib_GetHeight(&eglib);
@@ -51,7 +49,7 @@ int main(int argc, char *argv[]) {
 	eglib_SetColor(&eglib, 0, 0, 0, 255);
 	eglib_DrawLine(&eglib, 0, 0, width - 1, height - 1);
 
-	eglib_display_4wire_spi_frame_buffer_send(&eglib, 0, 0, width - 1, height -1);
+	eglib_4WireSPI_FrameBuffer_Send(&eglib, 0, 0, width - 1, height -1);
 
 	if(argc == 2)
 		eglib_display_4wire_spi_tga_save(&tga_config, argv[1]);

@@ -66,6 +66,8 @@ struct _eglib_struct {
 	eglib_color_t color_index[4];
 };
 
+//  4WireSPI
+
 void eglib_Init_4WireSPI(
 	eglib_t *eglib,
 	const eglib_hal_4wire_spi_t *hal,
@@ -73,6 +75,14 @@ void eglib_Init_4WireSPI(
 	const eglib_display_4wire_spi_t *display,
 	void *display_config_ptr
 );
+
+const eglib_hal_4wire_spi_t *eglib_Get4WireSPIHAL(eglib_t *eglib);
+eglib_hal_4wire_spi_config_t *eglib_Get4WireSPIHALConfig(eglib_t *eglib);
+
+const eglib_display_4wire_spi_t *eglib_Get4WireSPIDisplay(eglib_t *eglib);
+void *eglib_Get4WireSPIDisplayConfig(eglib_t *eglib);
+
+// Common
 
 void eglib_SleepIn(eglib_t *eglib);
 void eglib_SleepOut(eglib_t *eglib);

@@ -145,8 +145,6 @@ static void init(eglib_t *eglib) {
 
 	eglib_hal_4wire_spi_send_byte(eglib, SH1106_SET_SEGMENT_REMAP(display_config->segment_remap));
 
-	// eglib_hal_4wire_spi_send_byte(eglib, SH1106_SET_DISPLAY_START_LINE(display_config->display_start_line));
-
 	eglib_hal_4wire_spi_send_byte(eglib, SH1106_SET_MULTIPLEX_RATIO);
 	eglib_hal_4wire_spi_send_byte(eglib, SH1106_SET_MULTIPLEX_RATIO_ARG(display_config->height-1));
 

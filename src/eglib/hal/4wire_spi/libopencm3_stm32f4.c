@@ -119,9 +119,6 @@ inline static void _delay_ns(volatile uint32_t ns) {
 
 	loop_count = ns * (float)rcc_ahb_frequency / (CLOCKS_PER_DELAY_LOOP * 1000000000U);
 
-	if(loop_count < 14)
-		return;
-
 	__asm__ volatile(
 		" mov r0, %[loop_count] \n\t"
 		"1: subs r0, #1 \n\t"

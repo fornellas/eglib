@@ -86,13 +86,13 @@ static void eglib_Init(eglib_t *eglib) {
 void eglib_Init_4WireSPI(
 	eglib_t *eglib,
 	const eglib_hal_4wire_spi_t *hal,
-	void *hal_config_driver_ptr,
+	void *hal_driver_config_ptr,
 	const eglib_display_4wire_spi_t *display,
 	void *display_config_ptr
 ) {
 	eglib->drivers.four_wire_spi.hal = hal;
-	eglib->drivers.four_wire_spi.hal_config.base = &display->hal_4wire_spi_config_comm;
-	eglib->drivers.four_wire_spi.hal_config.config_ptr = hal_config_driver_ptr;
+	eglib->drivers.four_wire_spi.hal_config.comm = &display->hal_4wire_spi_config_comm;
+	eglib->drivers.four_wire_spi.hal_config.driver_config_ptr = hal_driver_config_ptr;
 	eglib->hal.init = hal_init_4wire_spi;
 	eglib->hal.sleep_in = hal_sleep_in_4wire_spi;
 	eglib->hal.sleep_out = hal_sleep_out_4wire_spi;

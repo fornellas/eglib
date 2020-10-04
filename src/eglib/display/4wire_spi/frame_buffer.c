@@ -262,7 +262,7 @@ void eglib_4WireSPI_FrameBuffer_Init(
 	eglib_Init_4WireSPI(
 		eglib_frame_buffer,
 		eglib_Get4WireSPIHAL(eglib_buffered),
-		eglib_Get4WireSPIHALConfig(eglib_buffered)->config_ptr,
+		eglib_Get4WireSPIHALConfig(eglib_buffered)->driver_config_ptr,
 		frame_buffer,
 		frame_buffer_config
 	);

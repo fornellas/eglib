@@ -38,8 +38,8 @@ typedef struct {
 } eglib_hal_4wire_spi_config_comm_t;
 
 typedef struct {
-	const eglib_hal_4wire_spi_config_comm_t *base;
-	void *config_ptr;
+	const eglib_hal_4wire_spi_config_comm_t *comm;
+	void *driver_config_ptr;
 } eglib_hal_4wire_spi_config_t;
 
 typedef struct {

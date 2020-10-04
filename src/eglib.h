@@ -71,7 +71,7 @@ struct _eglib_struct {
 void eglib_Init_4WireSPI(
 	eglib_t *eglib,
 	const eglib_hal_4wire_spi_t *hal,
-	void *hal_config_driver_ptr,
+	void *hal_driver_config_ptr,
 	const eglib_display_4wire_spi_t *display,
 	void *display_config_ptr
 );

@@ -18,7 +18,7 @@ include ../libopencm3-template/rules.mk
 
 .PHONY: $(OPENCM3_DIR)/lib/lib$(LIBNAME).a
 $(OPENCM3_DIR)/lib/lib$(LIBNAME).a:
-	$(MAKE) -C $(OPENCM3_DIR) $(OPENCM3_LIBDIR)
+	$(MAKE) -j -C $(OPENCM3_DIR) $(OPENCM3_LIBDIR)
 
 include $(OPENCM3_DIR)/mk/genlink-rules.mk
 export CC

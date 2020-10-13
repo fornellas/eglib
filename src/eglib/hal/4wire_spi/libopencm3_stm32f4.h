@@ -1,5 +1,5 @@
-#ifndef EGLIB_COMM_LIBOPENCM3_STM32F4_H
-#define EGLIB_COMM_LIBOPENCM3_STM32F4_H
+#ifndef EGLIB_HAL_4WIRE_SPI_LIBOPENCM3_STM32F4_H
+#define EGLIB_HAL_4WIRE_SPI_LIBOPENCM3_STM32F4_H
 
 #include "../4wire_spi.h"
 #include <libopencm3/stm32/rcc.h>

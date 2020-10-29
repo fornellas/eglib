@@ -1,7 +1,7 @@
 BUILD_DIR ?= bin
 CFILES += $(wildcard *.c)
-CFILES += $(wildcard eglib/hal/*.c)
-CFILES += eglib/display/4wire_spi/frame_buffer.c
+CFILES += $(wildcard eglib/*.c)
+CFILES += eglib/display/frame_buffer.c
 ifdef DISPLAY_DRIVERS
 CFILES += $(DISPLAY_DRIVERS:%=eglib/display/%.c)
 endif
@@ -21,7 +21,8 @@ override CFLAGS += \
 	-Wundef \
 	-Wshadow \
 	-Wstrict-prototypes \
-	-Werror
+	-Werror \
+	-Wfatal-errors
 
 .PHONY: all
 all: $(BUILD_DIR)/libeglib.a

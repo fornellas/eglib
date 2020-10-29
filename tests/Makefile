@@ -5,13 +5,26 @@ CFILES = $(wildcard *.c)
 OBJS = $(CFILES:test_%.c=$(BUILD_DIR)/test_%.o)
 TEST_BINARIES = $(CFILES:test_%.c=$(BUILD_DIR)/test_%)
 TESTS = $(CFILES:test_%.c=test_%)
-CFLAGS += -MD -Werror -Wall
+CFLAGS += \
+	-MD \
+	-O3 \
+	-Wall \
+	-Wextra \
+	-Wimplicit-function-declaration \
+	-Wredundant-decls \
+	-Wmissing-prototypes \
+	-Wstrict-prototypes \
+	-Wundef \
+	-Wshadow \
+	-Wstrict-prototypes \
+	-Werror \
+	-Wfatal-errors
 
 EGLIB_PATH = ../src
 INCLUDES += -I$(EGLIB_PATH)
 EGLIB_LIB = $(EGLIB_BUILD_DIR)/libeglib.a
-EGLIB_DISPLAY_DRIVERS=4wire_spi/tga
-EGLIB_HAL_DRIVERS=4wire_spi/none
+EGLIB_HAL_DRIVERS=four_wire_spi/none
+EGLIB_DISPLAY_DRIVERS=tga
 
 .PHONY: all
 all: $(TESTS)

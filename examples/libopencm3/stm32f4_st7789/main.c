@@ -1,6 +1,6 @@
 #include <eglib.h>
-#include <eglib/hal/4wire_spi/libopencm3_stm32f4.h>
-#include <eglib/display/4wire_spi/st7789.h>
+#include <eglib/hal/four_wire_spi/libopencm3_stm32f4.h>
+#include <eglib/display/st7789.h>
 #include <stdio.h>
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/gpio.h>
@@ -8,7 +8,7 @@
 
 int main(void) {
 	eglib_t eglib;
-	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t  hal_config_driver = {
+	eglib_hal_four_wire_spi_libopencm3_stm32f4_config_t  hal_config_driver = {
 		// rst
 		.rcc_rst = RCC_GPIOA,
 		.port_rst = GPIOA,
@@ -33,17 +33,17 @@ int main(void) {
 		.port_mosi = GPIOA,
 		.gpio_mosi = GPIO7,
 	};
-	eglib_display_4wire_spi_st7789_config_t display_config = {
+	eglib_display_st7789_config_t display_config = {
 		.width = 240,
 		.height = 240,
 	};
 
 	rcc_clock_setup_pll(&rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_84MHZ]);
 
-	eglib_Init_4WireSPI(
+	eglib_Init(
 		&eglib,
-		&eglib_hal_4wire_spi_libopencm3_stm32f4, &hal_config_driver,
-		&eglib_display_4wire_spi_st7789, &display_config
+		&eglib_hal_four_wire_spi_libopencm3_stm32f4, &hal_config_driver,
+		&eglib_display_st7789, &display_config
 	);
 
 	eglib_SetColor(&eglib, 0, 0, 255, 255);

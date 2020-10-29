@@ -1,15 +1,18 @@
-#ifndef EGLIB_DISPLAY_4WIRE_SPI_H
-#define EGLIB_DISPLAY_4WIRE_SPI_H
+#ifndef EGLIB_DISPLAY_H
+#define EGLIB_DISPLAY_H
 
-struct _eglib_display_4wire_spi_struct;
-typedef struct _eglib_display_4wire_spi_struct eglib_display_4wire_spi_t;
+struct _eglib_display_struct;
+typedef struct _eglib_display_struct eglib_display_t;
 
-#include "../../eglib.h"
-#include "../hal/4wire_spi.h"
+#include "../eglib.h"
+#include "hal.h"
 #include "types.h"
 
-struct _eglib_display_4wire_spi_struct {
-	eglib_hal_4wire_spi_config_comm_t hal_4wire_spi_config_comm;
+struct _eglib_display_struct {
+	struct {
+		eglib_hal_four_wire_spi_config_comm_t *four_wire_spi;
+		eglib_hal_i2c_config_comm_t *i2c;
+	} comm;
 	void (*init)(eglib_t *eglib);
 	void (*sleep_in)(eglib_t *eglib);
 	void (*sleep_out)(eglib_t *eglib);

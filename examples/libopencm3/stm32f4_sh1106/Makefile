@@ -32,7 +32,7 @@ OPENCM3_LIBDIR = lib/stm32/f4
 ## eglib
 ##
 
-EGLIB_HAL_DRIVERS=4wire_spi/libopencm3_stm32f4
-EGLIB_DISPLAY_DRIVERS=4wire_spi/sh1106
+EGLIB_HAL_DRIVERS=four_wire_spi/libopencm3_stm32f4
+EGLIB_DISPLAY_DRIVERS=sh1106
 
 include ../common.mk

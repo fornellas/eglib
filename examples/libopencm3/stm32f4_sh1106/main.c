@@ -1,7 +1,7 @@
 #include <eglib.h>
-#include <eglib/hal/4wire_spi/libopencm3_stm32f4.h>
-#include <eglib/display/4wire_spi/frame_buffer.h>
-#include <eglib/display/4wire_spi/sh1106.h>
+#include <eglib/hal/four_wire_spi/libopencm3_stm32f4.h>
+#include <eglib/display/frame_buffer.h>
+#include <eglib/display/sh1106.h>
 #include <stdio.h>
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/gpio.h>
@@ -9,7 +9,7 @@
 
 int main(void) {
 	eglib_t eglib_sh1106;
-	eglib_display_4wire_spi_sh1106_config_t sh1106_config = {
+	eglib_display_sh1106_config_t sh1106_config = {
 		// Display physical construction
 		.width = 128,
 		.height = 64,
@@ -36,10 +36,10 @@ int main(void) {
 	};
 
 	eglib_t eglib;
-	eglib_display_4wire_spi_t frame_buffer;
-	eglib_display_4wire_spi_frame_buffer_config_t frame_buffer_config;
+	eglib_display_t frame_buffer;
+	eglib_display_frame_buffer_config_t frame_buffer_config;
 
-	eglib_hal_4wire_spi_libopencm3_stm32f4_config_t  hal_config_driver = {
+	eglib_hal_four_wire_spi_libopencm3_stm32f4_config_t  hal_config_driver = {
 		// rst
 		.rcc_rst = RCC_GPIOA,
 		.port_rst = GPIOA,
@@ -67,13 +67,13 @@ int main(void) {
 
 	rcc_clock_setup_pll(&rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_84MHZ]);
 
-	eglib_Init_4WireSPI(
+	eglib_Init(
 		&eglib_sh1106,
-		&eglib_hal_4wire_spi_libopencm3_stm32f4, &hal_config_driver,
-		&eglib_display_4wire_spi_sh1106_vdd1_2_4_v, &sh1106_config
+		&eglib_hal_four_wire_spi_libopencm3_stm32f4, &hal_config_driver,
+		&eglib_display_sh1106_vdd1_2_4_v, &sh1106_config
 	);
 
-	eglib_4WireSPI_FrameBuffer_Init(
+	eglib_Init_FrameBuffer(
 		&eglib,
 		&frame_buffer, &frame_buffer_config,
 		&eglib_sh1106
@@ -84,5 +84,5 @@ int main(void) {
 	eglib_DrawLine(&eglib,0, 0, sh1106_config.width-1, sh1106_config.height-1);
 	eglib_DrawLine(&eglib,0, sh1106_config.height-1, sh1106_config.width-1, 0);
 
-	eglib_4WireSPI_FrameBuffer_Send(&eglib, 0, 0, sh1106_config.width-1, sh1106_config.height-1);
+	eglib_FrameBuffer_Send(&eglib, 0, 0, sh1106_config.width-1, sh1106_config.height-1);
 }

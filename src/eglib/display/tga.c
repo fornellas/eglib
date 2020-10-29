@@ -7,9 +7,9 @@
 static uint8_t *tga_data = NULL;
 
 static void init(eglib_t *eglib) {
-	eglib_display_4wire_spi_tga_config_t *display_config;
+	eglib_display_tga_config_t *display_config;
 
-	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
+	display_config = eglib->display_config_ptr;
 
 	if ( tga_data != NULL )
 		free(tga_data);
@@ -34,9 +34,9 @@ static void get_dimension(
 	eglib_coordinate_t *width,
 	eglib_coordinate_t *height
 ) {
-	eglib_display_4wire_spi_tga_config_t *display_config;
+	eglib_display_tga_config_t *display_config;
 
-	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
+	display_config = eglib->display_config_ptr;
 
 	*width = display_config->width;
 	*height = display_config->height;
@@ -54,10 +54,10 @@ static void draw_pixel_color(
 	eglib_coordinate_t y,
 	eglib_color_t color
 ) {
-	eglib_display_4wire_spi_tga_config_t *display_config;
+	eglib_display_tga_config_t *display_config;
 	uint8_t *p;
 
-	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
+	display_config = eglib->display_config_ptr;
 
 	if(x >= display_config->width || y >= display_config->height || x < 0 || y < 0)
 		return;
@@ -71,10 +71,9 @@ static void draw_pixel_color(
 	*p++ = color.r;
 }
 
-const eglib_display_4wire_spi_t eglib_display_4wire_spi_tga = {
-	.hal_4wire_spi_config_comm = {
+static eglib_hal_four_wire_spi_config_comm_t four_wire_spi_config = {
 		.mode = 0,
-		.bit_numbering = EGLIB_HAL_4WIRE_SPI_LSB_FIRST,
+		.bit_numbering = EGLIB_HAL_FOUR_WIRE_SPI_LSB_FIRST,
 		.cs_setup_ns = 0,
 		.cs_hold_ns = 0,
 		.cs_disable_ns = 0,
@@ -83,14 +82,17 @@ const eglib_display_4wire_spi_t eglib_display_4wire_spi_tga = {
 		.sck_cycle_ns = 0,
 		.mosi_setup_ns = 0,
 		.mosi_hold_ns = 0,
-	},
+};
+
+const eglib_display_t eglib_display_tga = {
+	.comm.four_wire_spi = &four_wire_spi_config,
 	.init = init,
 	.sleep_in = sleep_in,
 	.sleep_out = sleep_out,
 	.get_dimension = get_dimension,
 	.get_color_depth = get_color_depth,
 	.draw_pixel_color = draw_pixel_color,
-	.send_buffer = eglib_display_4wire_spi_frame_buffer_send_buffer_24bit_rgb,
+	.send_buffer = eglib_display_frame_buffer_send_buffer_24bit_rgb,
 };
 
 static void tga_write_byte(FILE *fp, uint8_t byte) {
@@ -102,7 +104,7 @@ static void tga_write_word(FILE *fp, uint16_t word) {
 	tga_write_byte(fp, word>>8);
 }
 
-void eglib_display_4wire_spi_tga_save(eglib_display_4wire_spi_tga_config_t *display_config, char *path) {
+void eglib_display_tga_save(eglib_display_tga_config_t *display_config, char *path) {
 	FILE *fp;
 	fp = fopen(path, "wb");
 	if ( fp != NULL )

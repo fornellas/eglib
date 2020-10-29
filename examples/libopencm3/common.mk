@@ -25,6 +25,20 @@ export CC
 CFLAGS += -I$(OPENCM3_DIR)/include
 CFLAGS += $(ARCH_FLAGS)
 CFLAGS += -specs=nano.specs
+CFLAGS += \
+	-MD \
+	-O3 \
+	-Wall \
+	-Wextra \
+	-Wimplicit-function-declaration \
+	-Wredundant-decls \
+	-Wmissing-prototypes \
+	-Wstrict-prototypes \
+	-Wundef \
+	-Wshadow \
+	-Wstrict-prototypes \
+	-Werror \
+	-Wfatal-errors
 export CFLAGS
 export CPPFLAGS
 

@@ -88,10 +88,10 @@ static const uint8_t color_bits[EGLIB_COLOR_DEPTH_COUNT] = {
 };
 
 //
-// eglib_display_4wire_spi_t send_buffer() helpers
+// eglib_display_t send_buffer() helpers
 //
 
-void eglib_display_4wire_spi_frame_buffer_send_buffer_18bit_565_rgb(
+void eglib_display_frame_buffer_send_buffer_18bit_565_rgb(
 	eglib_t *eglib,
 	void *buffer_ptr,
 	eglib_coordinate_t x, eglib_coordinate_t y,
@@ -106,7 +106,7 @@ void eglib_display_4wire_spi_frame_buffer_send_buffer_18bit_565_rgb(
 	// TODO
 }
 
-void eglib_display_4wire_spi_frame_buffer_send_buffer_24bit_rgb(
+void eglib_display_frame_buffer_send_buffer_24bit_rgb(
 	eglib_t *eglib,
 	void *buffer_ptr,
 	eglib_coordinate_t x, eglib_coordinate_t y,
@@ -129,7 +129,7 @@ void eglib_display_4wire_spi_frame_buffer_send_buffer_24bit_rgb(
 			buffer++;
 			color.b = *buffer;
 			buffer++;
-			eglib_Get4WireSPIDisplay(eglib)->draw_pixel_color(
+			eglib->display->draw_pixel_color(
 				eglib,
 				x, y,
 				color
@@ -143,11 +143,11 @@ void eglib_display_4wire_spi_frame_buffer_send_buffer_24bit_rgb(
 //
 
 static void init(eglib_t *eglib) {
-	eglib_display_4wire_spi_frame_buffer_config_t *display_config;
+	eglib_display_frame_buffer_config_t *display_config;
 	eglib_color_depth_t color_depth;
 	eglib_coordinate_t width, height;
 
-	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
+	display_config = eglib->display_config_ptr;
 
 	get_color_depth(eglib, &color_depth);
 	get_dimension(eglib, &width, &height);
@@ -160,21 +160,21 @@ static void init(eglib_t *eglib) {
 };
 
 static void sleep_in(eglib_t *eglib) {
-	eglib_display_4wire_spi_frame_buffer_config_t *display_config;
+	eglib_display_frame_buffer_config_t *display_config;
 
-	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
+	display_config = eglib->display_config_ptr;
 
-	eglib_Get4WireSPIDisplay(display_config->eglib_buffered)->sleep_in(
+	display_config->eglib_buffered->display->sleep_in(
 		display_config->eglib_buffered
 	);
 };
 
 static void sleep_out(eglib_t *eglib) {
-	eglib_display_4wire_spi_frame_buffer_config_t *display_config;
+	eglib_display_frame_buffer_config_t *display_config;
 
-	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
+	display_config = eglib->display_config_ptr;
 
-	eglib_Get4WireSPIDisplay(display_config->eglib_buffered)->sleep_out(
+	display_config->eglib_buffered->display->sleep_out(
 		display_config->eglib_buffered
 	);
 };
@@ -183,21 +183,21 @@ static void get_dimension(
 	eglib_t *eglib,
 	eglib_coordinate_t *width, eglib_coordinate_t*height
 ) {
-	eglib_display_4wire_spi_frame_buffer_config_t *display_config;
+	eglib_display_frame_buffer_config_t *display_config;
 
-	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
+	display_config = eglib->display_config_ptr;
 
-	eglib_Get4WireSPIDisplay(display_config->eglib_buffered)->get_dimension(
+	display_config->eglib_buffered->display->get_dimension(
 		display_config->eglib_buffered, width, height
 	);
 };
 
 static void get_color_depth(eglib_t *eglib, eglib_color_depth_t *color_depth) {
-	eglib_display_4wire_spi_frame_buffer_config_t *display_config;
+	eglib_display_frame_buffer_config_t *display_config;
 
-	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
+	display_config = eglib->display_config_ptr;
 
-	eglib_Get4WireSPIDisplay(display_config->eglib_buffered)->get_color_depth(
+	display_config->eglib_buffered->display->get_color_depth(
 		display_config->eglib_buffered, color_depth
 	);
 }
@@ -206,11 +206,11 @@ static void draw_pixel_color(
 	eglib_t *eglib,
 	eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color
 ) {
-	eglib_display_4wire_spi_frame_buffer_config_t *display_config;
+	eglib_display_frame_buffer_config_t *display_config;
 	eglib_color_depth_t color_depth;
 	eglib_coordinate_t width, height;
 
-	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
+	display_config = eglib->display_config_ptr;
 
 	get_color_depth(eglib, &color_depth);
 	get_dimension(eglib, &width, &height);
@@ -241,13 +241,13 @@ static void send_buffer(
 // Extra
 //
 
-void eglib_4WireSPI_FrameBuffer_Init(
+void eglib_Init_FrameBuffer(
 	eglib_t *eglib_frame_buffer,
-	eglib_display_4wire_spi_t *frame_buffer,
-	eglib_display_4wire_spi_frame_buffer_config_t *frame_buffer_config,
+	eglib_display_t *frame_buffer,
+	eglib_display_frame_buffer_config_t *frame_buffer_config,
 	eglib_t *eglib_buffered
 ) {
-	frame_buffer->hal_4wire_spi_config_comm = eglib_Get4WireSPIDisplay(eglib_buffered)->hal_4wire_spi_config_comm;
+	frame_buffer->comm = eglib_buffered->display->comm;
 	frame_buffer->init = init;
 	frame_buffer->sleep_in = sleep_in;
 	frame_buffer->sleep_out = sleep_out;
@@ -259,25 +259,25 @@ void eglib_4WireSPI_FrameBuffer_Init(
 	frame_buffer_config->eglib_buffered = eglib_buffered;
 	frame_buffer_config->buffer = NULL;
 
-	eglib_Init_4WireSPI(
+	eglib_Init(
 		eglib_frame_buffer,
-		eglib_Get4WireSPIHAL(eglib_buffered),
-		eglib_Get4WireSPIHALConfig(eglib_buffered)->driver_config_ptr,
+		eglib_buffered->hal,
+		eglib_buffered->hal_config.driver_config_ptr,
 		frame_buffer,
 		frame_buffer_config
 	);
 }
 
-void eglib_4WireSPI_FrameBuffer_Send(
+void eglib_FrameBuffer_Send(
 	eglib_t *eglib,
 	eglib_coordinate_t x, eglib_coordinate_t y,
 	eglib_coordinate_t width, eglib_coordinate_t height
 ) {
-	eglib_display_4wire_spi_frame_buffer_config_t *display_config;
+	eglib_display_frame_buffer_config_t *display_config;
 
-	display_config = eglib_Get4WireSPIDisplayConfig(eglib);
+	display_config = eglib->display_config_ptr;
 
-	eglib_Get4WireSPIDisplay(display_config->eglib_buffered)->send_buffer(
+	display_config->eglib_buffered->display->send_buffer(
 		display_config->eglib_buffered,
 		display_config->buffer,
 		x, y,

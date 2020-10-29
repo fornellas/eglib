@@ -1,22 +1,22 @@
 #include <eglib.h>
-#include <eglib/hal/4wire_spi/none.h>
-#include <eglib/display/4wire_spi/tga.h>
+#include <eglib/hal/four_wire_spi/none.h>
+#include <eglib/display/tga.h>
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
 	eglib_t eglib;
 	eglib_coordinate_t width, height;
-	eglib_display_4wire_spi_tga_config_t eglib_display_4wire_spi_tga_config = {
+	eglib_display_tga_config_t eglib_display_tga_config = {
 		.width = 100,
 		.height = 100,
 	};
 
 	setbuf(stdout, NULL);
 
-	eglib_Init_4WireSPI(
+	eglib_Init(
 		&eglib,
-		&eglib_hal_4wire_spi_none, NULL,
-		&eglib_display_4wire_spi_tga, &eglib_display_4wire_spi_tga_config
+		&eglib_hal_four_wire_spi_none, NULL,
+		&eglib_display_tga, &eglib_display_tga_config
 	);
 
 	width = eglib_GetWidth(&eglib);
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	eglib_DrawLine(&eglib, 0, 0, width - 1, height - 1);
 
 	if(argc == 2)
-		eglib_display_4wire_spi_tga_save(&eglib_display_4wire_spi_tga_config, argv[1]);
+		eglib_display_tga_save(&eglib_display_tga_config, argv[1]);
 	else
 		return 1;
 }

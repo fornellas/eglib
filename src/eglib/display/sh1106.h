@@ -1,8 +1,8 @@
-#ifndef EGLIB_DISPLAY_4WIRE_SPI_SH1106_H
-#define EGLIB_DISPLAY_4WIRE_SPI_SH1106_H
+#ifndef EGLIB_DISPLAY_SH1106_H
+#define EGLIB_DISPLAY_SH1106_H
 
-#include "../4wire_spi.h"
-#include "../../../eglib.h"
+#include "../hal.h"
+#include "../../eglib.h"
 #include <stdbool.h>
 
 #define SH1106_SEGMENT_REMAP_NORMAL 0
@@ -89,20 +89,20 @@ typedef struct {
 	bool dc_dc_enable : 1;
 	// POR: SHH1106_DC_DC_8_0_V
 	uint8_t dc_dc_voltage : 2;
-} eglib_display_4wire_spi_sh1106_config_t;
+} eglib_display_sh1106_config_t;
 
 // https://www.sparkfun.com/products/13003
 // Values from https://github.com/sparkfun/SparkFun_Micro_OLED_Arduino_Library/blob/master/src/SFE_MicroOLED.cpp
-extern const eglib_display_4wire_spi_sh1106_config_t eglib_display_4wire_spi_sh1106_config_sparkfun_micro_oled;
+extern const eglib_display_sh1106_config_t eglib_display_sh1106_config_sparkfun_micro_oled;
 
 // VDD1 = 1.65 - 3.5V, TA= +25°C
-extern const eglib_display_4wire_spi_t eglib_display_4wire_spi_sh1106_vdd1_1_65_v;
+extern const eglib_display_t eglib_display_sh1106_vdd1_1_65_v;
 // VDD1 = 2.4 - 3.5V, TA= +25°C
-extern const eglib_display_4wire_spi_t eglib_display_4wire_spi_sh1106_vdd1_2_4_v;
+extern const eglib_display_t eglib_display_sh1106_vdd1_2_4_v;
 
-void eglib_display_4wire_spi_sh1106_set_start_line(eglib_t *eglib, uint8_t line);
-void eglib_display_4wire_spi_sh1106_set_contrast(eglib_t *eglib, uint8_t contrast);
-void eglib_display_4wire_spi_sh1106_entire_display_on(eglib_t *eglib, uint8_t entire_display_on);
-void eglib_display_4wire_spi_sh1106_reverse(eglib_t *eglib, uint8_t reverse);
+void eglib_display_sh1106_set_start_line(eglib_t *eglib, uint8_t line);
+void eglib_display_sh1106_set_contrast(eglib_t *eglib, uint8_t contrast);
+void eglib_display_sh1106_entire_display_on(eglib_t *eglib, uint8_t entire_display_on);
+void eglib_display_sh1106_reverse(eglib_t *eglib, uint8_t reverse);
 
 #endif

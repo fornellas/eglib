@@ -1,5 +1,5 @@
-#ifndef EGLIB_DISPLAY_TYPES_H
-#define EGLIB_DISPLAY_TYPES_H
+#ifndef EGLIB_TYPES_H
+#define EGLIB_TYPES_H
 
 #include <stdint.h>
 

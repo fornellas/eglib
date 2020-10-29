@@ -3,7 +3,7 @@
 void eglib_DrawPixelColor(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color) {
   if(eglib_IsPixelClipped(eglib, x, y))
     return;
-  eglib->display.draw_pixel(eglib, x, y, color);
+  eglib->display->draw_pixel_color(eglib, x, y, color);
 }
 
 void eglib_DrawPixel(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate_t y) {

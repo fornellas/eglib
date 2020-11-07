@@ -1,5 +1,9 @@
 #include "sh1106.h"
 
+//
+// Defines from Datasheet
+//
+
 #define SH1106_RESET_LOW_MS 10
 #define SH1106_RESET_HIGH_MS 2
 
@@ -67,38 +71,10 @@
 #define SH1106_NOP 0xE3
 
 //
-// Config
+// Functions
 //
 
-const eglib_display_sh1106_config_t eglib_display_sh1106_config_sparkfun_micro_oled = {
-	// Display physical construction
-	.width = 64,
-	.height = 48,
-	.segment_remap = SH1106_SEGMENT_REMAP_REVERSE,
-	.common_pads_hardware_configuration_mode = SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_ALTERNATIVE,
-	.common_output_scan_direction = SH1106_COMMON_OUTPUT_SCAN_DIRECTION_ASC,
-	.display_offset = 0,
-	.column_offset = 0,
-
-	// Change period
-	.pre_charge_period = 1,
-	.dis_charge_period = 15,
-
-	// VCOM deselect
-	.vcom_deselect_level = 0x40,
-
-	// Internal display clocks
-	.clock_divide = 0,
-	.oscillator_frequency = SH1106_OSCILLATOR_FREQUENCY_PLUS_15_PCT,
-
-	// Charge Pump Regulator
-	.dc_dc_enable = true,
-	.dc_dc_voltage = SHH1106_DC_DC_8_0_V,
-};
-
-//
 // Helpers
-//
 
 static inline void set_column_address(
 	eglib_t *eglib,
@@ -123,9 +99,7 @@ static inline void display_on(eglib_t *eglib) {
 	eglib_hal_delay_ms(eglib, SH1106_DISPLAY_ON_MS);
 }
 
-//
-// Display
-//
+// eglib_display_t
 
 static void init(eglib_t *eglib) {
 	eglib_display_sh1106_config_t *display_config;
@@ -269,59 +243,7 @@ static void send_buffer(
 	eglib_hal_comm_end(eglib);
 }
 
-const eglib_display_t eglib_display_sh1106_vdd1_1_65_v = {
-	.comm = {
-		.four_wire_spi = &((eglib_hal_four_wire_spi_config_comm_t){
-			.mode = 0,
-			.bit_numbering = EGLIB_HAL_FOUR_WIRE_SPI_MSB_FIRST,
-			.cs_setup_ns = 240,
-			.cs_hold_ns = 120,
-			.cs_disable_ns = 0,
-			.dc_setup_ns = 300,
-			.dc_hold_ns = 300,
-			.sck_cycle_ns = 500,
-			.mosi_setup_ns = 200,
-			.mosi_hold_ns = 200,
-		}),
-		.i2c = NULL,
-	},
-	.init = init,
-	.sleep_in = sleep_in,
-	.sleep_out = sleep_out,
-	.get_dimension = get_dimension,
-	.get_color_depth = get_color_depth,
-	.draw_pixel_color = draw_pixel_color,
-	.send_buffer = send_buffer,
-};
-
-const eglib_display_t eglib_display_sh1106_vdd1_2_4_v = {
-	.comm = {
-		.four_wire_spi = &((eglib_hal_four_wire_spi_config_comm_t){
-			.mode = 0,
-			.bit_numbering = EGLIB_HAL_FOUR_WIRE_SPI_MSB_FIRST,
-			.cs_setup_ns = 120,
-			.cs_hold_ns = 60,
-			.cs_disable_ns = 0,
-			.dc_setup_ns = 150,
-			.dc_hold_ns = 150,
-			.sck_cycle_ns = 250,
-			.mosi_setup_ns = 100,
-			.mosi_hold_ns = 100,
-		}),
-		.i2c = NULL,
-	},
-	.init = init,
-	.sleep_in = sleep_in,
-	.sleep_out = sleep_out,
-	.get_dimension = get_dimension,
-	.get_color_depth = get_color_depth,
-	.draw_pixel_color = draw_pixel_color,
-	.send_buffer = send_buffer,
-};
-
-//
-// Extra
-//
+// Custom Functions
 
 void eglib_display_sh1106_set_start_line(
 	eglib_t *eglib,
@@ -365,3 +287,91 @@ void eglib_display_sh1106_reverse(
 		eglib_hal_send_command_literal(eglib, SH1106_SET_NORMAL_DISPLAY);
 	eglib_hal_comm_end(eglib);
 }
+
+//
+// eglib_display_t
+//
+
+static eglib_hal_i2c_config_comm_t eglib_hal_i2c_config_comm = {
+	.speed = EGLIB_HAL_I2C_400KHZ,
+};
+
+const eglib_display_t eglib_display_sh1106_vdd1_1_65_v = {
+	.comm = {
+		.four_wire_spi = &((eglib_hal_four_wire_spi_config_comm_t){
+			.mode = 0,
+			.bit_numbering = EGLIB_HAL_FOUR_WIRE_SPI_MSB_FIRST,
+			.cs_setup_ns = 240,
+			.cs_hold_ns = 120,
+			.cs_disable_ns = 0,
+			.dc_setup_ns = 300,
+			.dc_hold_ns = 300,
+			.sck_cycle_ns = 500,
+			.mosi_setup_ns = 200,
+			.mosi_hold_ns = 200,
+		}),
+		.i2c = &eglib_hal_i2c_config_comm,
+	},
+	.init = init,
+	.sleep_in = sleep_in,
+	.sleep_out = sleep_out,
+	.get_dimension = get_dimension,
+	.get_color_depth = get_color_depth,
+	.draw_pixel_color = draw_pixel_color,
+	.send_buffer = send_buffer,
+};
+
+const eglib_display_t eglib_display_sh1106_vdd1_2_4_v = {
+	.comm = {
+		.four_wire_spi = &((eglib_hal_four_wire_spi_config_comm_t){
+			.mode = 0,
+			.bit_numbering = EGLIB_HAL_FOUR_WIRE_SPI_MSB_FIRST,
+			.cs_setup_ns = 120,
+			.cs_hold_ns = 60,
+			.cs_disable_ns = 0,
+			.dc_setup_ns = 150,
+			.dc_hold_ns = 150,
+			.sck_cycle_ns = 250,
+			.mosi_setup_ns = 100,
+			.mosi_hold_ns = 100,
+		}),
+		.i2c = &eglib_hal_i2c_config_comm,
+	},
+	.init = init,
+	.sleep_in = sleep_in,
+	.sleep_out = sleep_out,
+	.get_dimension = get_dimension,
+	.get_color_depth = get_color_depth,
+	.draw_pixel_color = draw_pixel_color,
+	.send_buffer = send_buffer,
+};
+
+//
+// eglib_display_sh1106_config_t
+//
+
+const eglib_display_sh1106_config_t eglib_display_sh1106_config_sparkfun_micro_oled = {
+	// Display physical construction
+	.width = 64,
+	.height = 48,
+	.segment_remap = SH1106_SEGMENT_REMAP_REVERSE,
+	.common_pads_hardware_configuration_mode = SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_ALTERNATIVE,
+	.common_output_scan_direction = SH1106_COMMON_OUTPUT_SCAN_DIRECTION_ASC,
+	.display_offset = 0,
+	.column_offset = 0,
+
+	// Change period
+	.pre_charge_period = 1,
+	.dis_charge_period = 15,
+
+	// VCOM deselect
+	.vcom_deselect_level = 0x40,
+
+	// Internal display clocks
+	.clock_divide = 0,
+	.oscillator_frequency = SH1106_OSCILLATOR_FREQUENCY_PLUS_15_PCT,
+
+	// Charge Pump Regulator
+	.dc_dc_enable = true,
+	.dc_dc_voltage = SHH1106_DC_DC_8_0_V,
+};

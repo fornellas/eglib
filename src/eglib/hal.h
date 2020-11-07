@@ -49,7 +49,6 @@ typedef struct {
 typedef enum {
   EGLIB_HAL_I2C_100KHZ,
   EGLIB_HAL_I2C_400KHZ,
-  EGLIB_HAL_I2C_1MHZ,
 } eglib_hal_i2c_speed_t;
 
 typedef struct {

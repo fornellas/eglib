@@ -311,13 +311,14 @@ void eglib_display_sh1106_reverse(
 // eglib_display_t
 //
 
-static void send(
+static void i2c_send(
 	eglib_t *eglib,
 	void (*i2c_write)(eglib_t *eglib, uint8_t byte),
 	eglib_hal_dc_t dc,
 	uint8_t *bytes,
 	uint16_t length
 ) {
+	// For more than 2 bytes it is more efficient to use Co=0
 	if(length > 2) {
 		// Control byte
 		i2c_write(eglib, (0<<SH1106_I2C_CO) | (dc<<SH1106_I2C_DC));
@@ -325,6 +326,7 @@ static void send(
 			// Data byte
 			i2c_write(eglib, bytes[i]);
 		}
+		// ReStart
 		eglib_hal_comm_begin(eglib);
 	} else {
 		for (uint16_t i = 0; i < length; i++){
@@ -339,7 +341,7 @@ static void send(
 static eglib_hal_i2c_config_comm_t eglib_hal_i2c_config_comm = {
 	.speed = EGLIB_HAL_I2C_400KHZ,
 	.get_7bit_slave_addr = get_7bit_slave_addr,
-	.send = send,
+	.send = i2c_send,
 };
 
 const eglib_display_t eglib_display_sh1106_vdd1_1_65_v = {

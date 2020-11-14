@@ -7,11 +7,6 @@
 #include <stdbool.h>
 
 typedef enum {
-  EGLIB_HAL_BUS_FOUR_WIRE_SPI,
-  EGLIB_HAL_BUS_I2C,
-} eglib_hal_bus_t;
-
-typedef enum {
   EGLIB_HAL_COMMAND,
   EGLIB_HAL_DATA,
 } eglib_hal_dc_t;
@@ -78,7 +73,6 @@ typedef struct _eglib_hal eglib_hal_t;
 #include "../eglib.h"
 
 struct _eglib_hal {
-	eglib_hal_bus_t bus;
 	void (*init)(eglib_t *eglib);
 	void (*sleep_in)(eglib_t *eglib);
 	void (*sleep_out)(eglib_t *eglib);

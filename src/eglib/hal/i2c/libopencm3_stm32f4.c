@@ -220,7 +220,6 @@ static void comm_end(eglib_t *eglib) {
 }
 
 const eglib_hal_t eglib_hal_i2c_libopencm3_stm32f4 = {
-	.bus = EGLIB_HAL_BUS_I2C,
 	.init = init,
 	.sleep_in = sleep_in,
 	.sleep_out = sleep_out,

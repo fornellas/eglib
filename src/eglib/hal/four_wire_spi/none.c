@@ -44,7 +44,6 @@ static void comm_end(eglib_t *eglib) {
 
 
 const eglib_hal_t eglib_hal_four_wire_spi_none = {
-	.bus = EGLIB_HAL_BUS_FOUR_WIRE_SPI,
 	.init = init,
 	.sleep_in = sleep_in,
 	.sleep_out = sleep_out,

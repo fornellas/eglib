@@ -164,8 +164,8 @@ static void sleep_in(eglib_t *eglib) {
 
 	display_config = eglib->display_config_ptr;
 
-	display_config->eglib_buffered->display->sleep_in(
-		display_config->eglib_buffered
+	display_config->eglib_buffered.display->sleep_in(
+		&display_config->eglib_buffered
 	);
 };
 
@@ -174,8 +174,8 @@ static void sleep_out(eglib_t *eglib) {
 
 	display_config = eglib->display_config_ptr;
 
-	display_config->eglib_buffered->display->sleep_out(
-		display_config->eglib_buffered
+	display_config->eglib_buffered.display->sleep_out(
+		&display_config->eglib_buffered
 	);
 };
 
@@ -187,8 +187,8 @@ static void get_dimension(
 
 	display_config = eglib->display_config_ptr;
 
-	display_config->eglib_buffered->display->get_dimension(
-		display_config->eglib_buffered, width, height
+	display_config->eglib_buffered.display->get_dimension(
+		&display_config->eglib_buffered, width, height
 	);
 };
 
@@ -197,8 +197,8 @@ static void get_color_depth(eglib_t *eglib, eglib_color_depth_t *color_depth) {
 
 	display_config = eglib->display_config_ptr;
 
-	display_config->eglib_buffered->display->get_color_depth(
-		display_config->eglib_buffered, color_depth
+	display_config->eglib_buffered.display->get_color_depth(
+		&display_config->eglib_buffered, color_depth
 	);
 }
 
@@ -242,12 +242,19 @@ static void send_buffer(
 //
 
 void eglib_Init_FrameBuffer(
-	eglib_t *eglib_frame_buffer,
+	eglib_t *eglib,
 	eglib_display_t *frame_buffer,
 	eglib_display_frame_buffer_config_t *frame_buffer_config,
-	eglib_t *eglib_buffered
+	const eglib_hal_t *hal, void *hal_config_ptr,
+	const eglib_display_t *display, void *display_config_ptr
 ) {
-	frame_buffer->comm = eglib_buffered->display->comm;
+	eglib_Init(
+		&frame_buffer_config->eglib_buffered,
+		hal, hal_config_ptr,
+		display, display_config_ptr
+	);
+
+	frame_buffer->comm = frame_buffer_config->eglib_buffered.display->comm;
 	frame_buffer->init = init;
 	frame_buffer->sleep_in = sleep_in;
 	frame_buffer->sleep_out = sleep_out;
@@ -256,13 +263,12 @@ void eglib_Init_FrameBuffer(
 	frame_buffer->draw_pixel_color = draw_pixel_color;
 	frame_buffer->send_buffer = send_buffer;
 
-	frame_buffer_config->eglib_buffered = eglib_buffered;
 	frame_buffer_config->buffer = NULL;
 
 	eglib_Init(
-		eglib_frame_buffer,
-		eglib_buffered->hal,
-		eglib_buffered->hal_config_ptr,
+		eglib,
+		frame_buffer_config->eglib_buffered.hal,
+		frame_buffer_config->eglib_buffered.hal_config_ptr,
 		frame_buffer,
 		frame_buffer_config
 	);
@@ -277,8 +283,8 @@ void eglib_FrameBuffer_Send(
 
 	display_config = eglib->display_config_ptr;
 
-	display_config->eglib_buffered->display->send_buffer(
-		display_config->eglib_buffered,
+	display_config->eglib_buffered.display->send_buffer(
+		&display_config->eglib_buffered,
 		display_config->buffer,
 		x, y,
 		width, height

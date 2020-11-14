@@ -8,7 +8,6 @@
 #include <libopencm3/stm32/spi.h>
 
 int main(void) {
-	eglib_t eglib_sh1106;
 	eglib_display_sh1106_config_t sh1106_config = {
 		// Display physical construction
 		.width = 128,
@@ -67,16 +66,11 @@ int main(void) {
 
 	rcc_clock_setup_pll(&rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_84MHZ]);
 
-	eglib_Init(
-		&eglib_sh1106,
-		&eglib_hal_four_wire_spi_libopencm3_stm32f4, &hal_config_driver,
-		&eglib_display_sh1106_vdd1_2_4_v, &sh1106_config
-	);
-
 	eglib_Init_FrameBuffer(
 		&eglib,
 		&frame_buffer, &frame_buffer_config,
-		&eglib_sh1106
+		&eglib_hal_four_wire_spi_libopencm3_stm32f4, &hal_config_driver,
+		&eglib_display_sh1106_vdd1_2_4_v, &sh1106_config
 	);
 
 	eglib_SetColor(&eglib, 0, 0xFF, 0xFF, 0xFF);

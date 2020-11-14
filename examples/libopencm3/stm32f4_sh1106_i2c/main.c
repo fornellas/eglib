@@ -7,7 +7,6 @@
 #include <libopencm3/stm32/i2c.h>
 
 int main(void) {
-	eglib_t eglib_sh1106;
 	eglib_t eglib;
 	eglib_display_t frame_buffer;
 	eglib_display_frame_buffer_config_t frame_buffer_config;
@@ -56,17 +55,11 @@ int main(void) {
 		.sa0 = 0,
 	};
 
-	eglib_Init(
-		&eglib_sh1106,
-		&eglib_hal_i2c_libopencm3_stm32f4, &hal_config_driver,
-		&eglib_display_sh1106_vdd1_2_4_v, &sh1106_config
-	);
-
-
 	eglib_Init_FrameBuffer(
 		&eglib,
 		&frame_buffer, &frame_buffer_config,
-		&eglib_sh1106
+		&eglib_hal_i2c_libopencm3_stm32f4, &hal_config_driver,
+		&eglib_display_sh1106_vdd1_2_4_v, &sh1106_config
 	);
 
 	eglib_SetColor(&eglib, 0, 0xFF, 0xFF, 0xFF);

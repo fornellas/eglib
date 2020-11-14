@@ -5,7 +5,6 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-	eglib_t eglib_tga;
 	eglib_display_tga_config_t tga_config = {
 		.width = 100,
 		.height = 100,
@@ -17,16 +16,11 @@ int main(int argc, char *argv[]) {
 
 	eglib_coordinate_t width, height;
 
-	eglib_Init(
-		&eglib_tga,
-		&eglib_hal_four_wire_spi_none, NULL,
-		&eglib_display_tga, &tga_config
-	);
-
 	eglib_Init_FrameBuffer(
 		&eglib,
 		&frame_buffer, &frame_buffer_config,
-		&eglib_tga
+		&eglib_hal_four_wire_spi_none, NULL,
+		&eglib_display_tga, &tga_config
 	);
 
 	setbuf(stdout, NULL);

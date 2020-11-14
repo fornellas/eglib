@@ -19,15 +19,18 @@ void eglib_display_frame_buffer_send_buffer_24bit_rgb(
 );
 
 typedef struct {
-	eglib_t *eglib_buffered;
+	eglib_t eglib_buffered;
 	void *buffer;
 } eglib_display_frame_buffer_config_t;
 
 void eglib_Init_FrameBuffer(
-	eglib_t *eglib_frame_buffer,
+	eglib_t *eglib,
 	eglib_display_t *frame_buffer,
 	eglib_display_frame_buffer_config_t *frame_buffer_config,
-	eglib_t *eglib_buffered
+	const eglib_hal_t *hal,
+	void *hal_config_ptr,
+	const eglib_display_t *display,
+	void *display_config_ptr
 );
 
 void eglib_FrameBuffer_Send(

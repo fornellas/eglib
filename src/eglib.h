@@ -15,11 +15,12 @@ typedef struct _eglib_struct eglib_t;
 // Eglib
 
 struct _eglib_struct {
-	// Drivers
+	// HAL
 	const eglib_hal_t *hal;
 	void *hal_config_ptr;
 	bool hal_comm_active : 1;
 	uint8_t hal_i2c_send_slave_addr : 2;
+	// Display
 	const eglib_display_t *display;
 	void *display_config_ptr;
 	// Drawing

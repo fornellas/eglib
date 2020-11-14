@@ -11,14 +11,12 @@ int main(int argc, char *argv[]) {
 	};
 
 	eglib_t eglib;
-	eglib_display_t frame_buffer;
 	eglib_display_frame_buffer_config_t frame_buffer_config;
 
 	eglib_coordinate_t width, height;
 
 	eglib_Init_FrameBuffer(
-		&eglib,
-		&frame_buffer, &frame_buffer_config,
+		&eglib, &frame_buffer_config,
 		&eglib_hal_four_wire_spi_none, NULL,
 		&eglib_display_tga, &tga_config
 	);

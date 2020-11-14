@@ -262,7 +262,7 @@ void eglib_Init_FrameBuffer(
 	eglib_Init(
 		eglib_frame_buffer,
 		eglib_buffered->hal,
-		eglib_buffered->hal_config.driver_config_ptr,
+		eglib_buffered->hal_config_ptr,
 		frame_buffer,
 		frame_buffer_config
 	);

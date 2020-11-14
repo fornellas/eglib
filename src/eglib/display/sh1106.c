@@ -39,7 +39,7 @@
 
 #define SH1106_SET_COMMON_OUTPUT_SCAN_DIRECTION(dir) (0xC0|(((dir)&0x1)<<3))
 
-#define SH1106_SET_DISPLAY_OFFSET(value) (0xD3|((value)&0x3F))
+#define SH1106_SET_DISPLAY_OFFSET 0xD3
 
 #define SH1106_SET_DISPLAY_CLOCK_DIVIDE_RATIO_OSCILLATOR_FREQUENCY 0xD5
 #define SH1106_SET_DISPLAY_CLOCK_DIVIDE_RATIO_OSCILLATOR_FREQUENCY_ARG( \
@@ -69,6 +69,9 @@
 #define SH1106_END 0xEE
 
 #define SH1106_NOP 0xE3
+
+#define SH1106_I2C_CO 7
+#define SH1106_I2C_DC 6
 
 //
 // Functions
@@ -101,6 +104,15 @@ static inline void display_on(eglib_t *eglib) {
 
 // eglib_display_t
 
+static uint8_t get_7bit_slave_addr(eglib_t *eglib, eglib_hal_dc_t dc) {
+	eglib_display_sh1106_config_t *display_config;
+
+	(void)dc;
+	display_config = eglib->display_config_ptr;
+
+	return 0x3C | (display_config->sa0);
+}
+
 static void init(eglib_t *eglib) {
 	eglib_display_sh1106_config_t *display_config;
 
@@ -127,16 +139,24 @@ static void init(eglib_t *eglib) {
 		SH1106_SET_MULTIPLEX_RATIO_ARG(display_config->height-1),
 
 		SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_MODE_SET,
-		SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_MODE_SET_ARG(display_config->common_pads_hardware_configuration_mode),
+		SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_MODE_SET_ARG(
+			display_config->common_pads_hardware_configuration_mode
+		),
 
-		SH1106_SET_COMMON_OUTPUT_SCAN_DIRECTION(display_config->common_output_scan_direction),	
+		SH1106_SET_COMMON_OUTPUT_SCAN_DIRECTION(
+			display_config->common_output_scan_direction
+		),
 
-		SH1106_SET_DISPLAY_OFFSET(display_config->display_offset),
+		SH1106_SET_DISPLAY_OFFSET,
+		display_config->display_offset,
 
 		// Change period
 
 		SH1106_DISCHARGE_PRECHARGE_PERIOD_MODE_SET,
-		SH1106_DISCHARGE_PRECHARGE_PERIOD_MODE_SET_ARG(display_config->dis_charge_period, display_config->pre_charge_period),	
+		SH1106_DISCHARGE_PRECHARGE_PERIOD_MODE_SET_ARG(
+			display_config->dis_charge_period,
+			display_config->pre_charge_period
+		),
 
 		// VCOM deselect
 
@@ -146,7 +166,10 @@ static void init(eglib_t *eglib) {
 		// Internal display clocks
 
 		SH1106_SET_DISPLAY_CLOCK_DIVIDE_RATIO_OSCILLATOR_FREQUENCY,
-		SH1106_SET_DISPLAY_CLOCK_DIVIDE_RATIO_OSCILLATOR_FREQUENCY_ARG(display_config->oscillator_frequency, display_config->clock_divide),	
+		SH1106_SET_DISPLAY_CLOCK_DIVIDE_RATIO_OSCILLATOR_FREQUENCY_ARG(
+			display_config->oscillator_frequency,
+			display_config->clock_divide
+		),
 	};
 
 	eglib_hal_send_command(eglib, commands_init, sizeof(commands_init));
@@ -234,11 +257,7 @@ static void send_buffer(
 	for(uint8_t page=y/8 ; page < ((y+height)/8+1) ; page++) {
 		eglib_hal_send_command_literal(eglib, SH1106_SET_PAGE_ADDRESS(page));
 		set_column_address(eglib, 0);
-		for(eglib_coordinate_t column=x ; column < (x+width) ; column ++)
-			eglib_hal_send_data_literal(
-				eglib,
-				*(buffer + page * display_width + column)
-			);
+		eglib_hal_send_data(eglib, (buffer + page * display_width + x), width);
 	}
 	eglib_hal_comm_end(eglib);
 }
@@ -292,8 +311,35 @@ void eglib_display_sh1106_reverse(
 // eglib_display_t
 //
 
+static void send(
+	eglib_t *eglib,
+	void (*i2c_write)(eglib_t *eglib, uint8_t byte),
+	eglib_hal_dc_t dc,
+	uint8_t *bytes,
+	uint16_t length
+) {
+	if(length > 2) {
+		// Control byte
+		i2c_write(eglib, (0<<SH1106_I2C_CO) | (dc<<SH1106_I2C_DC));
+		for (uint16_t i = 0; i < length; i++){
+			// Data byte
+			i2c_write(eglib, bytes[i]);
+		}
+		eglib_hal_comm_begin(eglib);
+	} else {
+		for (uint16_t i = 0; i < length; i++){
+			// Control byte
+			i2c_write(eglib, (1<<SH1106_I2C_CO) | (dc<<SH1106_I2C_DC));
+			// Data byte
+			i2c_write(eglib, bytes[i]);
+		}
+	}
+}
+
 static eglib_hal_i2c_config_comm_t eglib_hal_i2c_config_comm = {
 	.speed = EGLIB_HAL_I2C_400KHZ,
+	.get_7bit_slave_addr = get_7bit_slave_addr,
+	.send = send,
 };
 
 const eglib_display_t eglib_display_sh1106_vdd1_1_65_v = {

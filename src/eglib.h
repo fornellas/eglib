@@ -17,7 +17,8 @@ typedef struct _eglib_struct eglib_t;
 struct _eglib_struct {
 	// Drivers
 	const eglib_hal_t *hal;
-	eglib_hal_config_t hal_config;
+	void *hal_config_ptr;
+	uint8_t hal_i2c_send_slave_addr;
 	const eglib_display_t *display;
 	void *display_config_ptr;
 	// Drawing

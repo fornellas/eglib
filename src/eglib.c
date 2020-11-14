@@ -8,15 +8,8 @@ void eglib_Init(
 	void *display_config_ptr
 ) {
 	eglib->hal = hal;
-	switch(hal->bus) {
-		case EGLIB_HAL_BUS_FOUR_WIRE_SPI:
-			eglib->hal_config.comm.four_wire_spi = display->comm.four_wire_spi;
-			break;
-		case EGLIB_HAL_BUS_I2C:
-			eglib->hal_config.comm.i2c = display->comm.i2c;
-			break;
-	}
-	eglib->hal_config.driver_config_ptr = hal_driver_config_ptr;
+	eglib->hal_config_ptr = hal_driver_config_ptr;
+	eglib->hal_i2c_send_slave_addr = 0;
 
 	eglib->display = display;
 	eglib->display_config_ptr = display_config_ptr;

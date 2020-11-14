@@ -97,6 +97,13 @@ typedef struct {
 	bool dc_dc_enable : 1;
 	// POR: SHH1106_DC_DC_8_0_V
 	uint8_t dc_dc_voltage : 2;
+
+	//
+	// I2C
+	//
+
+	// Least significant bit of 7-bit slave address: 011110(sa0)
+	bool sa0 : 1;
 } eglib_display_sh1106_config_t;
 
 // https://www.sparkfun.com/products/13003

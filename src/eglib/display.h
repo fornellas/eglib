@@ -36,4 +36,7 @@ struct _eglib_display_struct {
 	);
 };
 
+#define eglib_display_i2c_get_7bit_slave_addr(eglib, dc) \
+	(eglib->display->comm.i2c->get_7bit_slave_addr(eglib, dc))
+
 #endif

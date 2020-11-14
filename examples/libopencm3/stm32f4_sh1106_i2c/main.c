@@ -1,14 +1,32 @@
 #include <eglib.h>
-#include <eglib/hal/four_wire_spi/libopencm3_stm32f4.h>
+#include <eglib/hal/i2c/libopencm3_stm32f4.h>
 #include <eglib/display/frame_buffer.h>
 #include <eglib/display/sh1106.h>
 #include <stdio.h>
-#include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/gpio.h>
-#include <libopencm3/stm32/spi.h>
+#include <libopencm3/stm32/i2c.h>
 
 int main(void) {
 	eglib_t eglib_sh1106;
+	eglib_t eglib;
+	eglib_display_t frame_buffer;
+	eglib_display_frame_buffer_config_t frame_buffer_config;
+
+	rcc_clock_setup_pll(&rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_84MHZ]);
+
+	eglib_hal_i2c_libopencm3_stm32f4_config_t  hal_config_driver = {
+		.rcc_rst = RCC_GPIOA,
+		.port_rst = GPIOA,
+		.gpio_rst = GPIO4,
+		.rcc_gpio_i2c = RCC_GPIOB,
+		.port_i2c = GPIOB,
+		.gpio_scl = GPIO8,
+		.gpio_sda = GPIO9,
+		.rcc_i2c = RCC_I2C1,
+		.i2c = I2C1,
+		.peripheral_clock_mhz = rcc_apb1_frequency / 1e6,
+	};
+
 	eglib_display_sh1106_config_t sh1106_config = {
 		// Display physical construction
 		.width = 128,
@@ -33,45 +51,17 @@ int main(void) {
 		// Charge Pump Regulator
 		.dc_dc_enable = true,
 		.dc_dc_voltage = SHH1106_DC_DC_8_0_V,
+
+		// I2C
+		.sa0 = 0,
 	};
-
-	eglib_t eglib;
-	eglib_display_t frame_buffer;
-	eglib_display_frame_buffer_config_t frame_buffer_config;
-
-	eglib_hal_four_wire_spi_libopencm3_stm32f4_config_t  hal_config_driver = {
-		// rst
-		.rcc_rst = RCC_GPIOA,
-		.port_rst = GPIOA,
-		.gpio_rst = GPIO4,
-		// cd
-		.rcc_dc = RCC_GPIOA,
-		.port_dc = GPIOA,
-		.gpio_dc = GPIO3,
-		// cs
-		.rcc_cs = RCC_GPIOA,
-		.port_cs = GPIOA,
-		.gpio_cs = GPIO2,
-		// spi
-		.rcc_spi = RCC_SPI1,
-		.spi = SPI1,
-		// sck
-		.rcc_sck = RCC_GPIOA,
-		.port_sck = GPIOA,
-		.gpio_sck = GPIO5,
-		// mosi
-		.rcc_mosi = RCC_GPIOA,
-		.port_mosi = GPIOA,
-		.gpio_mosi = GPIO7,
-	};
-
-	rcc_clock_setup_pll(&rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_84MHZ]);
 
 	eglib_Init(
 		&eglib_sh1106,
-		&eglib_hal_four_wire_spi_libopencm3_stm32f4, &hal_config_driver,
+		&eglib_hal_i2c_libopencm3_stm32f4, &hal_config_driver,
 		&eglib_display_sh1106_vdd1_2_4_v, &sh1106_config
 	);
+
 
 	eglib_Init_FrameBuffer(
 		&eglib,

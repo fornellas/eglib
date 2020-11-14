@@ -1,3 +1,5 @@
+#include "../eglib.h"
+
 #ifndef EGLIB_HAL_H
 #define EGLIB_HAL_H
 
@@ -8,6 +10,11 @@ typedef enum {
   EGLIB_HAL_BUS_FOUR_WIRE_SPI,
   EGLIB_HAL_BUS_I2C,
 } eglib_hal_bus_t;
+
+typedef enum {
+  EGLIB_HAL_COMMAND,
+  EGLIB_HAL_DATA,
+} eglib_hal_dc_t;
 
 // 4-Wire SPI
 
@@ -53,22 +60,17 @@ typedef enum {
 
 typedef struct {
 	eglib_hal_i2c_speed_t speed;
+	uint8_t (*get_7bit_slave_addr)(eglib_t *eglib, eglib_hal_dc_t dc);
+	void (*send)(
+		eglib_t *eglib,
+		void (*i2c_write)(eglib_t *eglib, uint8_t byte),
+		eglib_hal_dc_t dc,
+		uint8_t *bytes,
+		uint16_t length
+	);
 } eglib_hal_i2c_config_comm_t;
 
 // Common
-
-typedef struct {
-	union {
-		eglib_hal_four_wire_spi_config_comm_t *four_wire_spi;
-		eglib_hal_i2c_config_comm_t *i2c;
-	} comm;
-	void *driver_config_ptr;
-} eglib_hal_config_t;
-
-typedef enum {
-  EGLIB_HAL_COMMAND,
-  EGLIB_HAL_DATA,
-} eglib_hal_dc_t;
 
 struct _eglib_hal;
 typedef struct _eglib_hal eglib_hal_t;
@@ -98,22 +100,25 @@ struct _eglib_hal {
 #define eglib_hal_delay_ns(eglib, ns) (eglib->hal->delay_ns(eglib, ns))
 #define eglib_hal_delay_ms(eglib, ns) (eglib->hal->delay_ns(eglib, ns * 1000 * 1000))
 #define eglib_hal_set_reset(eglib, state) (eglib->hal->set_reset(eglib, state))
-#define eglib_hal_comm_begin(eglib) (eglib->hal->comm_begin(eglib))
-#define eglib_hal_send(eglib, dc, bytes, length) (\
-	eglib->hal->send(eglib, dc, bytes, length)\
-)
+void eglib_hal_comm_begin(eglib_t *eglib);
+void eglib_hal_send(
+	eglib_t *eglib,
+	eglib_hal_dc_t dc,
+	uint8_t *bytes,
+	uint8_t length
+);
 #define eglib_hal_send_data(eglib, bytes, length) (\
-	eglib->hal->send(eglib, EGLIB_HAL_DATA, bytes, length)\
+	eglib_hal_send(eglib, EGLIB_HAL_DATA, bytes, length)\
 )
 #define eglib_hal_send_data_literal(eglib, bytes) (\
-	eglib->hal->send(eglib, EGLIB_HAL_DATA, &((uint8_t){bytes}), 1)\
+	eglib_hal_send_data(eglib, &((uint8_t){bytes}), 1)\
 )
 #define eglib_hal_send_command(eglib, bytes, length) (\
-	eglib->hal->send(eglib, EGLIB_HAL_COMMAND, bytes, length)\
+	eglib_hal_send(eglib, EGLIB_HAL_COMMAND, bytes, length)\
 )
 #define eglib_hal_send_command_literal(eglib, bytes) (\
-	eglib->hal->send(eglib, EGLIB_HAL_COMMAND, &((uint8_t){bytes}), 1)\
+	eglib_hal_send_command(eglib, &((uint8_t){bytes}), 1)\
 )
-#define eglib_hal_comm_end(eglib) eglib->hal->comm_end(eglib)
+void eglib_hal_comm_end(eglib_t *eglib);
 
 #endif

@@ -11,6 +11,7 @@ typedef struct _eglib_display_struct eglib_display_t;
 struct _eglib_display_struct {
 	struct {
 		eglib_hal_four_wire_spi_config_comm_t *four_wire_spi;
+		eglib_hal_three_wire_spi_config_comm_t *three_wire_spi;
 		eglib_hal_i2c_config_comm_t *i2c;
 	} comm;
 	void (*init)(eglib_t *eglib);

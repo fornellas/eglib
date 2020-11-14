@@ -164,10 +164,10 @@ static void init(
 	}
 
 	switch(eglib->display->comm.four_wire_spi->bit_numbering) {
-		case EGLIB_HAL_FOUR_WIRE_SPI_LSB_FIRST:
+		case EGLIB_HAL_LSB_FIRST:
 			lsbfirst = SPI_CR1_LSBFIRST;
 			break;
-		case EGLIB_HAL_FOUR_WIRE_SPI_MSB_FIRST:
+		case EGLIB_HAL_MSB_FIRST:
 			lsbfirst = SPI_CR1_MSBFIRST;
 			break;
 	}

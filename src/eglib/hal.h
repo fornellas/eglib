@@ -11,12 +11,12 @@ typedef enum {
   EGLIB_HAL_DATA,
 } eglib_hal_dc_t;
 
-// 4-Wire SPI
-
 typedef enum {
-  EGLIB_HAL_FOUR_WIRE_SPI_LSB_FIRST,
-  EGLIB_HAL_FOUR_WIRE_SPI_MSB_FIRST,
-} eglib_hal_four_wire_spi_bit_numbering_t;
+  EGLIB_HAL_LSB_FIRST,
+  EGLIB_HAL_MSB_FIRST,
+} eglib_hal_bit_numbering_t;
+
+// 4-Wire SPI
 
 typedef struct {
 	// SPI Mode
@@ -27,7 +27,7 @@ typedef struct {
 	uint8_t mode;
 
 	// MSB / LSB first
-	eglib_hal_four_wire_spi_bit_numbering_t bit_numbering;
+	eglib_hal_bit_numbering_t bit_numbering;
 
 	// CS Timing
 	uint32_t cs_setup_ns;
@@ -45,6 +45,32 @@ typedef struct {
 	uint32_t mosi_setup_ns;
 	uint32_t mosi_hold_ns;
 } eglib_hal_four_wire_spi_config_comm_t;
+
+// 3-Wire SPI
+
+typedef struct {
+	// SPI Mode
+	// 0: CPOL=0, CPHA=0
+	// 1: CPOL=0, CPHA=1
+	// 2: CPOL=1, CPHA=0
+	// 3: CPOL=1, CPHA=1
+	uint8_t mode;
+
+	// MSB / LSB first
+	eglib_hal_bit_numbering_t bit_numbering;
+
+	// CS Timing
+	uint32_t cs_setup_ns;
+	uint32_t cs_hold_ns;
+	uint32_t cs_disable_ns;
+
+	// SCK Timing
+	uint32_t sck_cycle_ns;
+
+	// MOSI timing
+	uint32_t mosi_setup_ns;
+	uint32_t mosi_hold_ns;
+} eglib_hal_three_wire_spi_config_comm_t;
 
 // I2C
 

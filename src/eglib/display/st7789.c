@@ -196,7 +196,7 @@ static void draw_pixel_color(
 const eglib_display_t eglib_display_st7789 = {
 	.comm = {
 		.four_wire_spi = &((eglib_hal_four_wire_spi_config_comm_t){
-	    .bit_numbering = EGLIB_HAL_FOUR_WIRE_SPI_MSB_FIRST,
+	    .bit_numbering = EGLIB_HAL_MSB_FIRST,
 	    .cs_setup_ns = 15,
 	    .cs_hold_ns = 15,
 	    .cs_disable_ns = 40,

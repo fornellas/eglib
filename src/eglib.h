@@ -18,7 +18,8 @@ struct _eglib_struct {
 	// Drivers
 	const eglib_hal_t *hal;
 	void *hal_config_ptr;
-	uint8_t hal_i2c_send_slave_addr;
+	bool hal_comm_active : 1;
+	uint8_t hal_i2c_send_slave_addr : 2;
 	const eglib_display_t *display;
 	void *display_config_ptr;
 	// Drawing

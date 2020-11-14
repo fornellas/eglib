@@ -181,9 +181,10 @@ static void comm_begin(eglib_t *eglib) {
 	// Setting the START bit
 	i2c_send_start(config->i2c);
 	// when the BUSY bit is cleared
-	// while((I2C_SR2(config->i2c) & I2C_SR2_BUSY))  // Fails on restart
-	// 	if(i2c_has_error(eglib))
-	// 		return;
+	if(!eglib->hal_comm_active)
+		while((I2C_SR2(config->i2c) & I2C_SR2_BUSY))
+			if(i2c_has_error(eglib))
+				return;
 	// causes the interface to switch to Master mode (MSL bit set)
 	while(!(I2C_SR2(config->i2c) & I2C_SR2_MSL))
 		if(i2c_has_error(eglib))

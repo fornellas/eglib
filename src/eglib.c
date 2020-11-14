@@ -9,6 +9,7 @@ void eglib_Init(
 ) {
 	eglib->hal = hal;
 	eglib->hal_config_ptr = hal_driver_config_ptr;
+	eglib->hal_comm_active = false;
 	eglib->hal_i2c_send_slave_addr = 0;
 
 	eglib->display = display;

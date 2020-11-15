@@ -32,6 +32,9 @@ void hal_send(
 }
 
 void hal_comm_end(eglib_t *eglib) {
+	// Send pending I2C Slave address
+	if(eglib->hal_i2c_send_slave_addr)
+		eglib->hal->send(eglib, 0, NULL, 0);
 	eglib->hal->comm_end(eglib);
 	eglib->hal_comm_active = false;
 	eglib->hal_i2c_send_slave_addr = 0;

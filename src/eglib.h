@@ -18,11 +18,15 @@ struct _eglib_struct {
 	// HAL
 	const hal_t *hal;
 	void *hal_config_ptr;
+	// Set in between hal_begin and hal_end
 	bool hal_comm_active : 1;
+	// Whether hal_t send() must send slave address for I2C
 	uint8_t hal_i2c_send_slave_addr : 2;
+
 	// Display
 	const display_t *display;
 	void *display_config_ptr;
+
 	// Drawing
 	struct {
 		coordinate_t x;

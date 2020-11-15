@@ -42,6 +42,10 @@ static void comm_end(eglib_t *eglib) {
 	(void)eglib;
 }
 
+static bool busy(eglib_t *eglib) {
+  (void)eglib;
+  return false;
+}
 
 const hal_t four_wire_spi_none = {
 	.init = init,
@@ -52,4 +56,5 @@ const hal_t four_wire_spi_none = {
 	.comm_begin = comm_begin,
 	.send = send,
 	.comm_end = comm_end,
+	.busy = busy,
 };

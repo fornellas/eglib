@@ -5,10 +5,16 @@
 #include <libopencm3/stm32/rcc.h>
 
 typedef struct {
-	// rst
+	// rst: optional
 	enum rcc_periph_clken rcc_rst;
 	uint32_t port_rst;
 	uint16_t gpio_rst;
+
+	// busy: optional
+	enum rcc_periph_clken rcc_busy;
+	uint32_t port_busy;
+	uint16_t gpio_busy;
+
 	// i2c
 	enum rcc_periph_clken rcc_gpio_i2c;
 	uint32_t port_i2c;
@@ -17,7 +23,6 @@ typedef struct {
 	enum rcc_periph_clken rcc_i2c;
 	uint32_t i2c;
 	uint32_t peripheral_clock_mhz;
-
 	// TODO I2C Filter
 } i2c_libopencm3_stm32f4_config_t;
 

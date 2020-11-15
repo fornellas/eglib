@@ -112,7 +112,7 @@ struct _hal {
 		uint16_t length
 	);
 	void (*comm_end)(eglib_t *eglib);
-	void (*busy)(eglib_t *eglib);
+	bool (*busy)(eglib_t *eglib);
 };
 
 #define hal_get_config(eglib) (eglib->hal_config_ptr)
@@ -143,5 +143,7 @@ void hal_send(
 	hal_send_command(eglib, &((uint8_t){bytes}), 1)\
 )
 void hal_comm_end(eglib_t *eglib);
+#define hal_busy(eglib) (eglib->hal->busy(eglib))
+#define hal_wait_not_busy(eglib) (while(eglib->hal->busy(eglib));)
 
 #endif

@@ -5,14 +5,21 @@
 #include <libopencm3/stm32/rcc.h>
 
 typedef struct {
-	// rst
+	// rst: optional
 	enum rcc_periph_clken rcc_rst;
 	uint32_t port_rst;
 	uint16_t gpio_rst;
+
+	// busy: optional
+	enum rcc_periph_clken rcc_busy;
+	uint32_t port_busy;
+	uint16_t gpio_busy;
+
 	// dc
 	enum rcc_periph_clken rcc_dc;
 	uint32_t port_dc;
 	uint16_t gpio_dc;
+
 	// cs
 	enum rcc_periph_clken rcc_cs;
 	uint32_t port_cs;

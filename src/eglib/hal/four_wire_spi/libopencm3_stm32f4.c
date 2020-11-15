@@ -93,6 +93,16 @@ static void init(
 		config->gpio_rst
 	);
 
+	if(config->rcc_busy) {
+		rcc_periph_clock_enable(config->rcc_busy);
+		gpio_mode_setup(
+			config->port_busy,
+			GPIO_MODE_INPUT,
+			GPIO_PUPD_NONE,
+			config->gpio_busy
+		);
+	}
+
 	rcc_periph_clock_enable(config->rcc_dc);
 	gpio_mode_setup(
 		config->port_dc,
@@ -228,16 +238,13 @@ static void set_reset(
 
 	config = hal_get_config(eglib);
 
+	if(!(config->rcc_rst))
+		return;
+
 	if(state)
-		gpio_set(
-			config->port_rst,
-			config->gpio_rst
-		);
+		gpio_set(config->port_rst, config->gpio_rst);
 	else
-		gpio_clear(
-			config->port_rst,
-			config->gpio_rst
-		);
+		gpio_clear(config->port_rst, config->gpio_rst);
 }
 
 static void comm_begin(eglib_t *eglib) {
@@ -270,6 +277,14 @@ static void comm_end(eglib_t *eglib) {
 	set_cs(eglib, true);
 }
 
+static bool busy(eglib_t *eglib) {
+	four_wire_spi_libopencm3_stm32f4_config_t *config;
+
+	config = hal_get_config(eglib);
+
+	return gpio_get(config->port_busy, config->gpio_busy);
+}
+
 const hal_t four_wire_spi_libopencm3_stm32f4 = {
 	.init = init,
 	.sleep_in = sleep_in,
@@ -279,4 +294,5 @@ const hal_t four_wire_spi_libopencm3_stm32f4 = {
 	.comm_begin = comm_begin,
 	.send = send,
 	.comm_end = comm_end,
+	.busy = busy,
 };

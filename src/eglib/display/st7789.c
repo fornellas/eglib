@@ -47,7 +47,7 @@
 static void set_column_address(eglib_t *eglib, uint16_t x_start, uint16_t x_end) {
 	uint8_t buff[4];
 
-	hal_send_command_literal(eglib, ST7789_CASET);
+	hal_send_command_byte(eglib, ST7789_CASET);
 	buff[0] = (x_start&0xFF00)>>8;
 	buff[1] = x_start&0xFF;
 	buff[2] = (x_end&0xFF00)>>8;
@@ -58,7 +58,7 @@ static void set_column_address(eglib_t *eglib, uint16_t x_start, uint16_t x_end)
 static void set_row_address(eglib_t *eglib, uint16_t y_start, uint16_t y_end) {
 	uint8_t buff[4];
 
-	hal_send_command_literal(eglib, ST7789_RASET);
+	hal_send_command_byte(eglib, ST7789_RASET);
 	buff[0] = (y_start&0xFF00)>>8;
 	buff[1] = y_start&0xFF;
 	buff[2] = (y_end&0xFF00)>>8;
@@ -98,7 +98,7 @@ static void init(eglib_t *eglib) {
 
 	// Software reset
 	hal_comm_begin(eglib);
-	hal_send_command_literal(eglib, ST7789_SWRESET);
+	hal_send_command_byte(eglib, ST7789_SWRESET);
 	hal_comm_end(eglib);
 	hal_delay_ms(eglib, ST7789_SWRESET_DELAY_MS);
 
@@ -106,16 +106,16 @@ static void init(eglib_t *eglib) {
 	hal_comm_begin(eglib);
 
 	// Out of sleep mode
-	hal_send_command_literal(eglib, ST7789_SLPOUT);
+	hal_send_command_byte(eglib, ST7789_SLPOUT);
 	hal_delay_ms(eglib, ST7789_SLPOUT_DELAY_SLEEP_IN_MS);
 
 	// Set color mode
-	hal_send_command_literal(eglib, ST7789_COLMOD);
-	hal_send_data_literal(eglib, ST7789_COLMOD_COLOR_16BIT_WRITE);
+	hal_send_command_byte(eglib, ST7789_COLMOD);
+	hal_send_data_byte(eglib, ST7789_COLMOD_COLOR_16BIT_WRITE);
 
 	// Memory Data Access Control
-	hal_send_command_literal(eglib, ST7789_MADCTL);
-	hal_send_data_literal(
+	hal_send_command_byte(eglib, ST7789_MADCTL);
+	hal_send_data_byte(
 		eglib,
 		ST7789_MADCTL_PAGE_ADDRESS_ORDER_TOP_TO_BOTTOM |
 		ST7789_MADCTL_COLUMN_ADDRESS_ORDER_LEFT_TO_RIGHT |
@@ -127,20 +127,20 @@ static void init(eglib_t *eglib) {
 
 	// Display inversion in practice works the opposite of what the datasheet
 	// says: on is off and off is on.
-	hal_send_command_literal(eglib, ST7789_INVON);
+	hal_send_command_byte(eglib, ST7789_INVON);
 	// Datasheet states NORON should be the default after sw reset, but unless
 	// we explicitly set it, INVON will have no effect.
-	hal_send_command_literal(eglib, ST7789_NORON);
+	hal_send_command_byte(eglib, ST7789_NORON);
 
 	// Clear RAM
 	set_column_address(eglib, 0, display_config->width - 1);
 	set_row_address(eglib, 0, display_config->height - 1);
-	hal_send_command_literal(eglib, ST7789_RAMWR);
+	hal_send_command_byte(eglib, ST7789_RAMWR);
 	for(uint32_t i=0, max=display_config->width * display_config->height * 2 ; i < max ; i++)
-		hal_send_data_literal(eglib, 0x00);
+		hal_send_data_byte(eglib, 0x00);
 
 	// Main screen turn on
-	hal_send_command_literal(eglib, ST7789_DISPON);
+	hal_send_command_byte(eglib, ST7789_DISPON);
 
 	hal_comm_end(eglib);
 };
@@ -186,9 +186,9 @@ static void draw_pixel_color(
 
 	convert_to_16bit(&color, color_16bit);
 
-	hal_send_command_literal(eglib, ST7789_RAMWR);
+	hal_send_command_byte(eglib, ST7789_RAMWR);
 	for(uint8_t i=0 ; i < sizeof(color_16bit) ; i++)
-		hal_send_data_literal(eglib, color_16bit[i]);
+		hal_send_data_byte(eglib, color_16bit[i]);
 
 	hal_comm_end(eglib);
 };

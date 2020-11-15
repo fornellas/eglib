@@ -133,14 +133,14 @@ void hal_send(
 #define hal_send_data(eglib, bytes, length) (\
 	hal_send(eglib, EGLIB_HAL_DATA, bytes, length)\
 )
-#define hal_send_data_literal(eglib, bytes) (\
+#define hal_send_data_byte(eglib, bytes) (\
 	hal_send_data(eglib, &((uint8_t){bytes}), 1)\
 )
-#define hal_send_command(eglib, bytes, length) (\
+#define hal_send_commands(eglib, bytes, length) (\
 	hal_send(eglib, EGLIB_HAL_COMMAND, bytes, length)\
 )
-#define hal_send_command_literal(eglib, bytes) (\
-	hal_send_command(eglib, &((uint8_t){bytes}), 1)\
+#define hal_send_command_byte(eglib, bytes) (\
+	hal_send_commands(eglib, &((uint8_t){bytes}), 1)\
 )
 void hal_comm_end(eglib_t *eglib);
 #define hal_busy(eglib) (eglib->hal->busy(eglib))

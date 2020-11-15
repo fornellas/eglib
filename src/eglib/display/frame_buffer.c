@@ -129,7 +129,7 @@ void frame_buffer_send_24bit_rgb(
 			buffer++;
 			color.b = *buffer;
 			buffer++;
-			eglib->display->draw_pixel_color(
+			display_draw_pixel_color(
 				eglib,
 				x, y,
 				color
@@ -147,7 +147,7 @@ static void init(eglib_t *eglib) {
 	color_depth_t color_depth;
 	coordinate_t width, height;
 
-	display_config = eglib->display_config_ptr;
+	display_config = display_get_config(eglib);
 
 	get_color_depth(eglib, &color_depth);
 	get_dimension(eglib, &width, &height);
@@ -162,7 +162,7 @@ static void init(eglib_t *eglib) {
 static void sleep_in(eglib_t *eglib) {
 	frame_buffer_config_t *display_config;
 
-	display_config = eglib->display_config_ptr;
+	display_config = display_get_config(eglib);
 
 	display_config->eglib_buffered.display->sleep_in(
 		&display_config->eglib_buffered
@@ -172,7 +172,7 @@ static void sleep_in(eglib_t *eglib) {
 static void sleep_out(eglib_t *eglib) {
 	frame_buffer_config_t *display_config;
 
-	display_config = eglib->display_config_ptr;
+	display_config = display_get_config(eglib);
 
 	display_config->eglib_buffered.display->sleep_out(
 		&display_config->eglib_buffered
@@ -185,7 +185,7 @@ static void get_dimension(
 ) {
 	frame_buffer_config_t *display_config;
 
-	display_config = eglib->display_config_ptr;
+	display_config = display_get_config(eglib);
 
 	display_config->eglib_buffered.display->get_dimension(
 		&display_config->eglib_buffered, width, height
@@ -195,7 +195,7 @@ static void get_dimension(
 static void get_color_depth(eglib_t *eglib, color_depth_t *color_depth) {
 	frame_buffer_config_t *display_config;
 
-	display_config = eglib->display_config_ptr;
+	display_config = display_get_config(eglib);
 
 	display_config->eglib_buffered.display->get_color_depth(
 		&display_config->eglib_buffered, color_depth
@@ -210,7 +210,7 @@ static void draw_pixel_color(
 	color_depth_t color_depth;
 	coordinate_t width, height;
 
-	display_config = eglib->display_config_ptr;
+	display_config = display_get_config(eglib);
 
 	get_color_depth(eglib, &color_depth);
 	get_dimension(eglib, &width, &height);
@@ -280,7 +280,7 @@ void eglib_FrameBuffer_Send(
 ) {
 	frame_buffer_config_t *display_config;
 
-	display_config = eglib->display_config_ptr;
+	display_config = display_get_config(eglib);
 
 	display_config->eglib_buffered.display->send_buffer(
 		&display_config->eglib_buffered,

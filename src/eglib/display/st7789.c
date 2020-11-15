@@ -88,7 +88,7 @@ static void convert_to_16bit(color_t *color, uint8_t buff[2]) {
 static void init(eglib_t *eglib) {
 	st7789_config_t *display_config;
 
-	display_config = display_config(eglib);
+	display_config = display_get_config(eglib);
 
 	// Hardware reset
 	hal_set_reset(eglib, 0);
@@ -161,7 +161,7 @@ static void get_dimension(
 ) {
 	st7789_config_t *display_config;
 
-	display_config = display_config(eglib);
+	display_config = display_get_config(eglib);
 
 	*width = display_config->width;;
 	*height = display_config->height;

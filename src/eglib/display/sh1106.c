@@ -86,7 +86,7 @@ static inline void set_column_address(
 	sh1106_config_t *display_config;
 	uint8_t buff[2];
 
-	display_config = display_config(eglib);
+	display_config = display_get_config(eglib);
 
 	buff[0] = SH1106_SET_HIGHER_COLUMN_ADDRESS(column + display_config->column_offset);
 	buff[1] = SH1106_SET_LOWER_COLUMN_ADDRESS(column + display_config->column_offset);
@@ -108,7 +108,7 @@ static uint8_t get_7bit_slave_addr(eglib_t *eglib, hal_dc_t dc) {
 	sh1106_config_t *display_config;
 
 	(void)dc;
-	display_config = display_config(eglib);
+	display_config = display_get_config(eglib);
 
 	return 0x3C | (display_config->sa0);
 }
@@ -116,7 +116,7 @@ static uint8_t get_7bit_slave_addr(eglib_t *eglib, hal_dc_t dc) {
 static void init(eglib_t *eglib) {
 	sh1106_config_t *display_config;
 
-	display_config = display_config(eglib);
+	display_config = display_get_config(eglib);
 
 	// Hardware reset
 
@@ -215,7 +215,7 @@ static void get_dimension(
 ) {
 	sh1106_config_t *display_config;
 
-	display_config = display_config(eglib);
+	display_config = display_get_config(eglib);
 
 	*width = display_config->width;;
 	*height = display_config->height;
@@ -248,7 +248,7 @@ static void send_buffer(
 
 	buffer = (uint8_t *)buffer_ptr;
 
-	eglib->display->get_dimension(
+	display_get_dimension(
 		eglib,
 		&display_width, &display_height
 	);

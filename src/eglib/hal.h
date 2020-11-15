@@ -115,6 +115,11 @@ struct _hal {
 	void (*busy)(eglib_t *eglib);
 };
 
+#define hal_get_config(eglib) (eglib->hal_config_ptr)
+
+#define hal_comm_active(eglib) (eglib->hal_comm_active)
+#define hal_i2c_send_slave_addr(eglib) (eglib->hal_i2c_send_slave_addr)
+
 #define hal_delay_ns(eglib, ns) (eglib->hal->delay_ns(eglib, ns))
 #define hal_delay_ms(eglib, ns) (eglib->hal->delay_ns(eglib, ns * 1000 * 1000))
 #define hal_set_reset(eglib, state) (eglib->hal->set_reset(eglib, state))

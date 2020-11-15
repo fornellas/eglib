@@ -28,8 +28,8 @@ typedef struct {
 	enum rcc_periph_clken rcc_mosi;
 	uint32_t port_mosi;
 	uint16_t gpio_mosi;
-} eglib_hal_four_wire_spi_libopencm3_stm32f4_config_t;
+} four_wire_spi_libopencm3_stm32f4_config_t;
 
-extern const eglib_hal_t eglib_hal_four_wire_spi_libopencm3_stm32f4;
+extern const hal_t four_wire_spi_libopencm3_stm32f4;
 
 #endif

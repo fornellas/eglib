@@ -8,7 +8,7 @@
 //
 
 static void init_io(eglib_t *eglib) {
-	eglib_hal_i2c_libopencm3_stm32f4_config_t *config;
+	i2c_libopencm3_stm32f4_config_t *config;
 
 	config = eglib->hal_config_ptr;
 
@@ -34,7 +34,7 @@ static void init_io(eglib_t *eglib) {
 }
 
 static void init_peripheral(eglib_t *eglib) {
-	eglib_hal_i2c_libopencm3_stm32f4_config_t *config;
+	i2c_libopencm3_stm32f4_config_t *config;
 	enum i2c_speeds speed = i2c_speed_sm_100k;
 
 	config = eglib->hal_config_ptr;
@@ -63,7 +63,7 @@ static void init_peripheral(eglib_t *eglib) {
 }
 
 static bool i2c_has_error(eglib_t *eglib) {
-	eglib_hal_i2c_libopencm3_stm32f4_config_t *config;
+	i2c_libopencm3_stm32f4_config_t *config;
 
 	config = eglib->hal_config_ptr;
 
@@ -84,14 +84,14 @@ static bool i2c_has_error(eglib_t *eglib) {
 	return false;
 }
 
-static void send_slave_address(eglib_t *eglib, eglib_hal_dc_t dc) {
-	eglib_hal_i2c_libopencm3_stm32f4_config_t *config;
+static void send_slave_address(eglib_t *eglib, hal_dc_t dc) {
+	i2c_libopencm3_stm32f4_config_t *config;
 	uint8_t seven_bit_slave_addr;
 
 	config = eglib->hal_config_ptr;
 
 	// write in the DR register with the Slave address
-	seven_bit_slave_addr = eglib_display_i2c_get_7bit_slave_addr(eglib, dc);
+	seven_bit_slave_addr = display_get_i2c_7bit_slave_addr(eglib, dc);
 	i2c_send_7bit_address(config->i2c, seven_bit_slave_addr, I2C_WRITE);
 
 	// As soon as the address byte is sent
@@ -107,7 +107,7 @@ static void send_slave_address(eglib_t *eglib, eglib_hal_dc_t dc) {
 }
 
 static void i2c_write(eglib_t *eglib, uint8_t byte) {
-	eglib_hal_i2c_libopencm3_stm32f4_config_t *config;
+	i2c_libopencm3_stm32f4_config_t *config;
 
 	config = eglib->hal_config_ptr;
 
@@ -131,7 +131,7 @@ static void init(
 static void sleep_in(
 	eglib_t *eglib
 ) {
-	eglib_hal_i2c_libopencm3_stm32f4_config_t *config;
+	i2c_libopencm3_stm32f4_config_t *config;
 
 	config = eglib->hal_config_ptr;
 
@@ -157,7 +157,7 @@ static void set_reset(
 	eglib_t *eglib,
 	bool state
 ) {
-	eglib_hal_i2c_libopencm3_stm32f4_config_t *config;
+	i2c_libopencm3_stm32f4_config_t *config;
 
 	config = eglib->hal_config_ptr;
 
@@ -174,7 +174,7 @@ static void set_reset(
 }
 
 static void comm_begin(eglib_t *eglib) {
-	eglib_hal_i2c_libopencm3_stm32f4_config_t *config;
+	i2c_libopencm3_stm32f4_config_t *config;
 
 	config = eglib->hal_config_ptr;
 
@@ -198,7 +198,7 @@ static void comm_begin(eglib_t *eglib) {
 
 static void send(
 	eglib_t *eglib,
-	eglib_hal_dc_t dc,
+	hal_dc_t dc,
 	uint8_t *bytes,
 	uint16_t length
 ) {
@@ -209,7 +209,7 @@ static void send(
 }
 
 static void comm_end(eglib_t *eglib) {
-	eglib_hal_i2c_libopencm3_stm32f4_config_t *config;
+	i2c_libopencm3_stm32f4_config_t *config;
 
 	config = eglib->hal_config_ptr;
 
@@ -219,7 +219,7 @@ static void comm_end(eglib_t *eglib) {
 	i2c_send_stop(config->i2c);
 }
 
-const eglib_hal_t eglib_hal_i2c_libopencm3_stm32f4 = {
+const hal_t i2c_libopencm3_stm32f4 = {
 	.init = init,
 	.sleep_in = sleep_in,
 	.sleep_out = sleep_out,

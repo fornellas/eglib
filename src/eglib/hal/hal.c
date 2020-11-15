@@ -2,15 +2,15 @@
 
 #include <stdio.h>
 
-void eglib_hal_comm_begin(eglib_t *eglib) {
+void hal_comm_begin(eglib_t *eglib) {
 	eglib->hal_comm_active = true;
 	eglib->hal_i2c_send_slave_addr++;
 	eglib->hal->comm_begin(eglib);
 }
 
-void eglib_hal_send(
+void hal_send(
 	eglib_t *eglib,
-	eglib_hal_dc_t dc,
+	hal_dc_t dc,
 	uint8_t *bytes,
 	uint8_t length
 ) {
@@ -31,7 +31,7 @@ void eglib_hal_send(
 	}
 }
 
-void eglib_hal_comm_end(eglib_t *eglib) {
+void hal_comm_end(eglib_t *eglib) {
 	eglib->hal->comm_end(eglib);
 	eglib->hal_comm_active = false;
 	eglib->hal_i2c_send_slave_addr = 0;

@@ -2,9 +2,9 @@
 
 void eglib_Init(
 	eglib_t *eglib,
-	const eglib_hal_t *hal,
+	const hal_t *hal,
 	void *hal_driver_config_ptr,
-	const eglib_display_t *display,
+	const display_t *display,
 	void *display_config_ptr
 ) {
 	eglib->hal = hal;
@@ -41,16 +41,16 @@ void eglib_SleepOut(eglib_t *eglib) {
 	eglib->display->sleep_out(eglib);
 }
 
-eglib_coordinate_t eglib_GetWidth(eglib_t *eglib) {
-	eglib_coordinate_t width, heigh;
+coordinate_t eglib_GetWidth(eglib_t *eglib) {
+	coordinate_t width, heigh;
 
 	eglib->display->get_dimension(eglib, &width, &heigh);
 
 	return width;
 }
 
-eglib_coordinate_t eglib_GetHeight(eglib_t *eglib) {
-	eglib_coordinate_t width, heigh;
+coordinate_t eglib_GetHeight(eglib_t *eglib) {
+	coordinate_t width, heigh;
 
 	eglib->display->get_dimension(eglib, &width, &heigh);
 
@@ -59,10 +59,10 @@ eglib_coordinate_t eglib_GetHeight(eglib_t *eglib) {
 
 void eglib_SetClipRange(
 	eglib_t *eglib,
-	eglib_coordinate_t x,
-	eglib_coordinate_t y,
-	eglib_coordinate_t width,
-	eglib_coordinate_t height
+	coordinate_t x,
+	coordinate_t y,
+	coordinate_t width,
+	coordinate_t height
 ) {
 	eglib->clip.x = x;
 	eglib->clip.y = y;
@@ -72,8 +72,8 @@ void eglib_SetClipRange(
 
 bool eglib_IsPixelClipped(
 	eglib_t *eglib,
-	eglib_coordinate_t x,
-	eglib_coordinate_t y
+	coordinate_t x,
+	coordinate_t y
 ) {
 	if(x < eglib->clip.x)
 		return true;
@@ -89,9 +89,9 @@ bool eglib_IsPixelClipped(
 void eglib_SetColor(
 	eglib_t *eglib,
 	size_t idx,
-	eglib_color_channel_t r,
-	eglib_color_channel_t g,
-	eglib_color_channel_t b
+	color_channel_t r,
+	color_channel_t g,
+	color_channel_t b
 ) {
 	eglib->color_index[idx].r = r;
 	eglib->color_index[idx].g = g;

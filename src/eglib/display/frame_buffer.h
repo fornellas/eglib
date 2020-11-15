@@ -4,39 +4,39 @@
 #include "../hal.h"
 #include "../../eglib.h"
 
-void eglib_display_frame_buffer_send_buffer_18bit_565_rgb(
+void frame_buffer_send_18bit_565_rgb(
 	eglib_t *eglib,
 	void *buffer_ptr,
-	eglib_coordinate_t x, eglib_coordinate_t y,
-	eglib_coordinate_t width, eglib_coordinate_t height
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
 );
 
-void eglib_display_frame_buffer_send_buffer_24bit_rgb(
+void frame_buffer_send_24bit_rgb(
 	eglib_t *eglib,
 	void *buffer_ptr,
-	eglib_coordinate_t x, eglib_coordinate_t y,
-	eglib_coordinate_t width, eglib_coordinate_t height
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
 );
 
 typedef struct {
-	eglib_display_t frame_buffer;
+	display_t frame_buffer;
 	eglib_t eglib_buffered;
 	void *buffer;
-} eglib_display_frame_buffer_config_t;
+} frame_buffer_config_t;
 
 void eglib_Init_FrameBuffer(
 	eglib_t *eglib,
-	eglib_display_frame_buffer_config_t *frame_buffer_config,
-	const eglib_hal_t *hal,
+	frame_buffer_config_t *frame_buffer_config,
+	const hal_t *hal,
 	void *hal_config_ptr,
-	const eglib_display_t *display,
+	const display_t *display,
 	void *display_config_ptr
 );
 
 void eglib_FrameBuffer_Send(
 	eglib_t *eglib,
-	eglib_coordinate_t x, eglib_coordinate_t y,
-	eglib_coordinate_t width, eglib_coordinate_t height
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
 );
 
 #endif

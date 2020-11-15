@@ -5,8 +5,8 @@
 
 int main(int argc, char *argv[]) {
 	eglib_t eglib;
-	eglib_coordinate_t width, height;
-	eglib_display_tga_config_t eglib_display_tga_config = {
+	coordinate_t width, height;
+	tga_config_t tga_config = {
 		.width = 100,
 		.height = 100,
 	};
@@ -15,15 +15,15 @@ int main(int argc, char *argv[]) {
 
 	eglib_Init(
 		&eglib,
-		&eglib_hal_four_wire_spi_none, NULL,
-		&eglib_display_tga, &eglib_display_tga_config
+		&four_wire_spi_none, NULL,
+		&tga, &tga_config
 	);
 
 	width = eglib_GetWidth(&eglib);
 	height = eglib_GetHeight(&eglib);
 
 	eglib_SetColor(&eglib, 0, 0, 0, 0);
-	for(eglib_coordinate_t v=0 ; (v < width) && (v < height) ; v++ )
+	for(coordinate_t v=0 ; (v < width) && (v < height) ; v++ )
 		eglib_DrawPixel(&eglib, v, v);
 
 	eglib_SetClipRange(&eglib, 0, 0, width / 2, height / 2);
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	eglib_DrawLine(&eglib, 0, 0, width - 1, height - 1);
 
 	if(argc == 2)
-		eglib_display_tga_save(&eglib_display_tga_config, argv[1]);
+		tga_save(&tga_config, argv[1]);
 	else
 		return 1;
 }

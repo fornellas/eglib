@@ -28,7 +28,7 @@ static void comm_begin(eglib_t *eglib) {
 
 static void send(
 	eglib_t *eglib,
-	eglib_hal_dc_t dc,
+	hal_dc_t dc,
 	uint8_t *bytes,
 	uint16_t length
 ) {
@@ -43,7 +43,7 @@ static void comm_end(eglib_t *eglib) {
 }
 
 
-const eglib_hal_t eglib_hal_four_wire_spi_none = {
+const hal_t four_wire_spi_none = {
 	.init = init,
 	.sleep_in = sleep_in,
 	.sleep_out = sleep_out,

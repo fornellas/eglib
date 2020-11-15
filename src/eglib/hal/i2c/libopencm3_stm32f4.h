@@ -19,8 +19,8 @@ typedef struct {
 	uint32_t peripheral_clock_mhz;
 
 	// TODO I2C Filter
-} eglib_hal_i2c_libopencm3_stm32f4_config_t;
+} i2c_libopencm3_stm32f4_config_t;
 
-extern const eglib_hal_t eglib_hal_i2c_libopencm3_stm32f4;
+extern const hal_t i2c_libopencm3_stm32f4;
 
 #endif

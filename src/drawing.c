@@ -1,22 +1,22 @@
 #include "drawing.h"
 
-void eglib_DrawPixelColor(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color) {
+void eglib_DrawPixelColor(eglib_t *eglib, coordinate_t x, coordinate_t y, color_t color) {
   if(eglib_IsPixelClipped(eglib, x, y))
     return;
   eglib->display->draw_pixel_color(eglib, x, y, color);
 }
 
-void eglib_DrawPixel(eglib_t *eglib, eglib_coordinate_t x, eglib_coordinate_t y) {
+void eglib_DrawPixel(eglib_t *eglib, coordinate_t x, coordinate_t y) {
 	eglib_DrawPixelColor(eglib, x, y, eglib->color_index[0]);
 }
 
-void eglib_DrawLine(eglib_t *eglib, eglib_coordinate_t x1, eglib_coordinate_t y1, eglib_coordinate_t x2, eglib_coordinate_t y2) {
-  eglib_coordinate_t tmp;
-  eglib_coordinate_t x,y;
-  eglib_coordinate_t dx, dy;
-  eglib_coordinate_t err;
-  eglib_coordinate_t ystep;
-  eglib_coordinate_t x_arg, y_arg;
+void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate_t x2, coordinate_t y2) {
+  coordinate_t tmp;
+  coordinate_t x,y;
+  coordinate_t dx, dy;
+  coordinate_t err;
+  coordinate_t ystep;
+  coordinate_t x_arg, y_arg;
   uint8_t swapxy = 0;
    
   if ( x1 > x2 ) dx = x1-x2; else dx = x2-x1;

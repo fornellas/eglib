@@ -81,16 +81,16 @@
 
 static inline void set_column_address(
 	eglib_t *eglib,
-	eglib_coordinate_t column
+	coordinate_t column
 ) {
-	eglib_display_sh1106_config_t *display_config;
+	sh1106_config_t *display_config;
 	uint8_t buff[2];
 
-	display_config = eglib->display_config_ptr;
+	display_config = display_config(eglib);
 
 	buff[0] = SH1106_SET_HIGHER_COLUMN_ADDRESS(column + display_config->column_offset);
 	buff[1] = SH1106_SET_LOWER_COLUMN_ADDRESS(column + display_config->column_offset);
-	eglib_hal_send_command(eglib, buff, sizeof(buff));
+	hal_send_command(eglib, buff, sizeof(buff));
 }
 
 static inline void display_on(eglib_t *eglib) {
@@ -98,36 +98,36 @@ static inline void display_on(eglib_t *eglib) {
 		SH1106_DISPLAY_ON,
 	};
 
-	eglib_hal_send_command(eglib, buff, sizeof(buff));
-	eglib_hal_delay_ms(eglib, SH1106_DISPLAY_ON_MS);
+	hal_send_command(eglib, buff, sizeof(buff));
+	hal_delay_ms(eglib, SH1106_DISPLAY_ON_MS);
 }
 
-// eglib_display_t
+// display_t
 
-static uint8_t get_7bit_slave_addr(eglib_t *eglib, eglib_hal_dc_t dc) {
-	eglib_display_sh1106_config_t *display_config;
+static uint8_t get_7bit_slave_addr(eglib_t *eglib, hal_dc_t dc) {
+	sh1106_config_t *display_config;
 
 	(void)dc;
-	display_config = eglib->display_config_ptr;
+	display_config = display_config(eglib);
 
 	return 0x3C | (display_config->sa0);
 }
 
 static void init(eglib_t *eglib) {
-	eglib_display_sh1106_config_t *display_config;
+	sh1106_config_t *display_config;
 
-	display_config = eglib->display_config_ptr;
+	display_config = display_config(eglib);
 
 	// Hardware reset
 
-	eglib_hal_set_reset(eglib, 0);
-	eglib_hal_delay_ms(eglib, SH1106_RESET_LOW_MS);
-	eglib_hal_set_reset(eglib, 1);
-	eglib_hal_delay_ms(eglib, SH1106_RESET_HIGH_MS);
+	hal_set_reset(eglib, 0);
+	hal_delay_ms(eglib, SH1106_RESET_LOW_MS);
+	hal_set_reset(eglib, 1);
+	hal_delay_ms(eglib, SH1106_RESET_HIGH_MS);
 
 	// comm begin
 
-	eglib_hal_comm_begin(eglib);
+	hal_comm_begin(eglib);
 
 
 	uint8_t commands_init[] = {
@@ -172,31 +172,31 @@ static void init(eglib_t *eglib) {
 		),
 	};
 
-	eglib_hal_send_command(eglib, commands_init, sizeof(commands_init));
+	hal_send_command(eglib, commands_init, sizeof(commands_init));
 
 
 	// Charge Pump Regulator
 	if(display_config->dc_dc_enable) {
-		eglib_hal_send_command_literal(eglib, SH1106_DC_DC_CONTROL_MODE_SET);
-		eglib_hal_send_command_literal(eglib, SH1106_DC_DC_ON);
-		eglib_hal_send_command_literal(eglib, SHH1106_SET_PUMP_VOLTAGE(display_config->dc_dc_voltage));
+		hal_send_command_literal(eglib, SH1106_DC_DC_CONTROL_MODE_SET);
+		hal_send_command_literal(eglib, SH1106_DC_DC_ON);
+		hal_send_command_literal(eglib, SHH1106_SET_PUMP_VOLTAGE(display_config->dc_dc_voltage));
 	} else {
-		eglib_hal_send_command_literal(eglib, SH1106_DC_DC_CONTROL_MODE_SET);
-		eglib_hal_send_command_literal(eglib, SH1106_DC_DC_OFF);
+		hal_send_command_literal(eglib, SH1106_DC_DC_CONTROL_MODE_SET);
+		hal_send_command_literal(eglib, SH1106_DC_DC_OFF);
 	}
 
 	// Clear RAM
 	for(uint8_t page=0 ; page < (display_config->height / 8) ; page++) {
-		eglib_hal_send_command_literal(eglib, SH1106_SET_PAGE_ADDRESS(page));
+		hal_send_command_literal(eglib, SH1106_SET_PAGE_ADDRESS(page));
 		set_column_address(eglib, 0);
-		for(eglib_coordinate_t column=0 ; column < display_config->width ; column ++)
-			eglib_hal_send_data_literal(eglib, 0x00);
+		for(coordinate_t column=0 ; column < display_config->width ; column ++)
+			hal_send_data_literal(eglib, 0x00);
 	}
 
 	// Set display on
 	display_on(eglib);
 
-	eglib_hal_comm_end(eglib);
+	hal_comm_end(eglib);
 };
 
 static void sleep_in(eglib_t *eglib) {
@@ -211,17 +211,17 @@ static void sleep_out(eglib_t *eglib) {
 
 static void get_dimension(
 	eglib_t *eglib,
-	eglib_coordinate_t *width, eglib_coordinate_t*height
+	coordinate_t *width, coordinate_t*height
 ) {
-	eglib_display_sh1106_config_t *display_config;
+	sh1106_config_t *display_config;
 
-	display_config = eglib->display_config_ptr;
+	display_config = display_config(eglib);
 
 	*width = display_config->width;;
 	*height = display_config->height;
 };
 
-static void get_color_depth(eglib_t *eglib, eglib_color_depth_t *color_depth) {
+static void get_color_depth(eglib_t *eglib, color_depth_t *color_depth) {
 	(void)eglib;
 
 	*color_depth = EGLIB_COLOR_DEPTH_1BIT_PAGED;
@@ -229,7 +229,7 @@ static void get_color_depth(eglib_t *eglib, eglib_color_depth_t *color_depth) {
 
 static void draw_pixel_color(
 	eglib_t *eglib,
-	eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color
+	coordinate_t x, coordinate_t y, color_t color
 ) {
 	(void)eglib;
 	(void)x;
@@ -240,11 +240,11 @@ static void draw_pixel_color(
 static void send_buffer(
 	eglib_t *eglib,
 	void *buffer_ptr,
-	eglib_coordinate_t x, eglib_coordinate_t y,
-	eglib_coordinate_t width, eglib_coordinate_t height
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
 ) {
 	uint8_t *buffer;
-	eglib_coordinate_t display_width, display_height;
+	coordinate_t display_width, display_height;
 
 	buffer = (uint8_t *)buffer_ptr;
 
@@ -253,68 +253,68 @@ static void send_buffer(
 		&display_width, &display_height
 	);
 
-	eglib_hal_comm_begin(eglib);
+	hal_comm_begin(eglib);
 	for(uint8_t page=y/8 ; page < ((y+height)/8+1) ; page++) {
-		eglib_hal_send_command_literal(eglib, SH1106_SET_PAGE_ADDRESS(page));
+		hal_send_command_literal(eglib, SH1106_SET_PAGE_ADDRESS(page));
 		set_column_address(eglib, 0);
-		eglib_hal_send_data(eglib, (buffer + page * display_width + x), width);
+		hal_send_data(eglib, (buffer + page * display_width + x), width);
 	}
-	eglib_hal_comm_end(eglib);
+	hal_comm_end(eglib);
 }
 
 // Custom Functions
 
-void eglib_display_sh1106_set_start_line(
+void sh1106_set_start_line(
 	eglib_t *eglib,
 	uint8_t line
 ) {
-	eglib_hal_comm_begin(eglib);
-	eglib_hal_send_command_literal(eglib, SH1106_SET_DISPLAY_START_LINE(line));
-	eglib_hal_comm_end(eglib);
+	hal_comm_begin(eglib);
+	hal_send_command_literal(eglib, SH1106_SET_DISPLAY_START_LINE(line));
+	hal_comm_end(eglib);
 }
 
-void eglib_display_sh1106_set_contrast(
+void sh1106_set_contrast(
 	eglib_t *eglib,
 	uint8_t contrast
 ) {
-	eglib_hal_comm_begin(eglib);
-	eglib_hal_send_command_literal(eglib, SH1106_SET_CONTRAST_CONTROL_REGISTER);
-	eglib_hal_send_command_literal(eglib, contrast);
-	eglib_hal_comm_end(eglib);
+	hal_comm_begin(eglib);
+	hal_send_command_literal(eglib, SH1106_SET_CONTRAST_CONTROL_REGISTER);
+	hal_send_command_literal(eglib, contrast);
+	hal_comm_end(eglib);
 }
 
-void eglib_display_sh1106_entire_display_on(
+void sh1106_entire_display_on(
 	eglib_t *eglib,
 	uint8_t entire_display_on
 ) {
-	eglib_hal_comm_begin(eglib);
+	hal_comm_begin(eglib);
 	if(entire_display_on)
-		eglib_hal_send_command_literal(eglib, SH1106_SET_ENTIRE_DISPLAY_ON);
+		hal_send_command_literal(eglib, SH1106_SET_ENTIRE_DISPLAY_ON);
 	else
-		eglib_hal_send_command_literal(eglib, SH1106_SET_ENTIRE_DISPLAY_OFF);
-	eglib_hal_comm_end(eglib);
+		hal_send_command_literal(eglib, SH1106_SET_ENTIRE_DISPLAY_OFF);
+	hal_comm_end(eglib);
 }
 
-void eglib_display_sh1106_reverse(
+void sh1106_reverse(
 	eglib_t *eglib,
 	uint8_t reverse
 ) {
-	eglib_hal_comm_begin(eglib);
+	hal_comm_begin(eglib);
 	if(reverse)
-		eglib_hal_send_command_literal(eglib, SH1106_SET_REVERSE_DISPLAY);
+		hal_send_command_literal(eglib, SH1106_SET_REVERSE_DISPLAY);
 	else
-		eglib_hal_send_command_literal(eglib, SH1106_SET_NORMAL_DISPLAY);
-	eglib_hal_comm_end(eglib);
+		hal_send_command_literal(eglib, SH1106_SET_NORMAL_DISPLAY);
+	hal_comm_end(eglib);
 }
 
 //
-// eglib_display_t
+// display_t
 //
 
 static void i2c_send(
 	eglib_t *eglib,
 	void (*i2c_write)(eglib_t *eglib, uint8_t byte),
-	eglib_hal_dc_t dc,
+	hal_dc_t dc,
 	uint8_t *bytes,
 	uint16_t length
 ) {
@@ -327,7 +327,7 @@ static void i2c_send(
 			i2c_write(eglib, bytes[i]);
 		}
 		// ReStart
-		eglib_hal_comm_begin(eglib);
+		hal_comm_begin(eglib);
 	} else {
 		for (uint16_t i = 0; i < length; i++){
 			// Control byte
@@ -338,15 +338,15 @@ static void i2c_send(
 	}
 }
 
-static eglib_hal_i2c_config_comm_t eglib_hal_i2c_config_comm = {
+static hal_i2c_config_comm_t hal_i2c_config_comm = {
 	.speed = EGLIB_HAL_I2C_400KHZ,
 	.get_7bit_slave_addr = get_7bit_slave_addr,
 	.send = i2c_send,
 };
 
-const eglib_display_t eglib_display_sh1106_vdd1_1_65_v = {
+const display_t sh1106_vdd1_1_65_v = {
 	.comm = {
-		.four_wire_spi = &((eglib_hal_four_wire_spi_config_comm_t){
+		.four_wire_spi = &((hal_four_wire_spi_config_comm_t){
 			.mode = 0,
 			.bit_numbering = EGLIB_HAL_MSB_FIRST,
 			.cs_setup_ns = 240,
@@ -358,7 +358,7 @@ const eglib_display_t eglib_display_sh1106_vdd1_1_65_v = {
 			.mosi_setup_ns = 200,
 			.mosi_hold_ns = 200,
 		}),
-		.i2c = &eglib_hal_i2c_config_comm,
+		.i2c = &hal_i2c_config_comm,
 	},
 	.init = init,
 	.sleep_in = sleep_in,
@@ -369,9 +369,9 @@ const eglib_display_t eglib_display_sh1106_vdd1_1_65_v = {
 	.send_buffer = send_buffer,
 };
 
-const eglib_display_t eglib_display_sh1106_vdd1_2_4_v = {
+const display_t sh1106_vdd1_2_4_v = {
 	.comm = {
-		.four_wire_spi = &((eglib_hal_four_wire_spi_config_comm_t){
+		.four_wire_spi = &((hal_four_wire_spi_config_comm_t){
 			.mode = 0,
 			.bit_numbering = EGLIB_HAL_MSB_FIRST,
 			.cs_setup_ns = 120,
@@ -383,7 +383,7 @@ const eglib_display_t eglib_display_sh1106_vdd1_2_4_v = {
 			.mosi_setup_ns = 100,
 			.mosi_hold_ns = 100,
 		}),
-		.i2c = &eglib_hal_i2c_config_comm,
+		.i2c = &hal_i2c_config_comm,
 	},
 	.init = init,
 	.sleep_in = sleep_in,
@@ -395,10 +395,10 @@ const eglib_display_t eglib_display_sh1106_vdd1_2_4_v = {
 };
 
 //
-// eglib_display_sh1106_config_t
+// sh1106_config_t
 //
 
-const eglib_display_sh1106_config_t eglib_display_sh1106_config_sparkfun_micro_oled = {
+const sh1106_config_t sh1106_config_sparkfun_micro_oled = {
 	// Display physical construction
 	.width = 64,
 	.height = 48,

@@ -15,7 +15,7 @@ static void set_dc(
 	eglib_t *eglib,
 	bool state
 ) {
-	eglib_hal_four_wire_spi_libopencm3_stm32f4_config_t *config;
+	four_wire_spi_libopencm3_stm32f4_config_t *config;
 
 	config = eglib->hal_config_ptr;
 
@@ -37,7 +37,7 @@ static void set_cs(
 	eglib_t *eglib,
 	bool state
 ) {
-	eglib_hal_four_wire_spi_libopencm3_stm32f4_config_t *config;
+	four_wire_spi_libopencm3_stm32f4_config_t *config;
 
 	config = eglib->hal_config_ptr;
 
@@ -65,7 +65,7 @@ static void set_cs(
 static void init(
 	eglib_t *eglib
 ) {
-	eglib_hal_four_wire_spi_libopencm3_stm32f4_config_t *config;
+	four_wire_spi_libopencm3_stm32f4_config_t *config;
 	uint32_t serial_clk_hz;
 	uint32_t br;
 	uint32_t cpol = 0;
@@ -187,7 +187,7 @@ static void init(
 static void sleep_in(
 	eglib_t *eglib
 ) {
-	eglib_hal_four_wire_spi_libopencm3_stm32f4_config_t *config;
+	four_wire_spi_libopencm3_stm32f4_config_t *config;
 
 	config = eglib->hal_config_ptr;
 
@@ -213,7 +213,7 @@ static void set_reset(
 	eglib_t *eglib,
 	bool state
 ) {
-	eglib_hal_four_wire_spi_libopencm3_stm32f4_config_t *config;
+	four_wire_spi_libopencm3_stm32f4_config_t *config;
 
 	config = eglib->hal_config_ptr;
 
@@ -235,11 +235,11 @@ static void comm_begin(eglib_t *eglib) {
 
 static void send(
 	eglib_t *eglib,
-	eglib_hal_dc_t dc,
+	hal_dc_t dc,
 	uint8_t *bytes,
 	uint16_t length
 ) {
-	eglib_hal_four_wire_spi_libopencm3_stm32f4_config_t *config;
+	four_wire_spi_libopencm3_stm32f4_config_t *config;
 
 	config = eglib->hal_config_ptr;
 
@@ -251,7 +251,7 @@ static void send(
 }
 
 static void comm_end(eglib_t *eglib) {
-	eglib_hal_four_wire_spi_libopencm3_stm32f4_config_t *config;
+	four_wire_spi_libopencm3_stm32f4_config_t *config;
 
 	config = eglib->hal_config_ptr;
 
@@ -259,7 +259,7 @@ static void comm_end(eglib_t *eglib) {
 	set_cs(eglib, true);
 }
 
-const eglib_hal_t eglib_hal_four_wire_spi_libopencm3_stm32f4 = {
+const hal_t four_wire_spi_libopencm3_stm32f4 = {
 	.init = init,
 	.sleep_in = sleep_in,
 	.sleep_out = sleep_out,

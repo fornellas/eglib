@@ -47,26 +47,26 @@
 static void set_column_address(eglib_t *eglib, uint16_t x_start, uint16_t x_end) {
 	uint8_t buff[4];
 
-	eglib_hal_send_command_literal(eglib, ST7789_CASET);
+	hal_send_command_literal(eglib, ST7789_CASET);
 	buff[0] = (x_start&0xFF00)>>8;
 	buff[1] = x_start&0xFF;
 	buff[2] = (x_end&0xFF00)>>8;
 	buff[3] = x_end&0xFF;
-	eglib_hal_send_data(eglib, buff, sizeof(buff));
+	hal_send_data(eglib, buff, sizeof(buff));
 }
 
 static void set_row_address(eglib_t *eglib, uint16_t y_start, uint16_t y_end) {
 	uint8_t buff[4];
 
-	eglib_hal_send_command_literal(eglib, ST7789_RASET);
+	hal_send_command_literal(eglib, ST7789_RASET);
 	buff[0] = (y_start&0xFF00)>>8;
 	buff[1] = y_start&0xFF;
 	buff[2] = (y_end&0xFF00)>>8;
 	buff[3] = y_end&0xFF;
-	eglib_hal_send_data(eglib, buff, sizeof(buff));
+	hal_send_data(eglib, buff, sizeof(buff));
 }
 
-static void convert_to_16bit(eglib_color_t *color, uint8_t buff[2]) {
+static void convert_to_16bit(color_t *color, uint8_t buff[2]) {
 	uint8_t r, g, b;
 
 	// 16 bit: RRRRRGGG GGGBBBBB
@@ -86,36 +86,36 @@ static void convert_to_16bit(eglib_color_t *color, uint8_t buff[2]) {
 //
 
 static void init(eglib_t *eglib) {
-	eglib_display_st7789_config_t *display_config;
+	st7789_config_t *display_config;
 
-	display_config = eglib->display_config_ptr;
+	display_config = display_config(eglib);
 
 	// Hardware reset
-	eglib_hal_set_reset(eglib, 0);
-	eglib_hal_delay_ms(eglib, ST7789_RESX_TRW_MS);
-	eglib_hal_set_reset(eglib, 1);
-	eglib_hal_delay_ms(eglib, ST7789_RESX_TRT_MS);
+	hal_set_reset(eglib, 0);
+	hal_delay_ms(eglib, ST7789_RESX_TRW_MS);
+	hal_set_reset(eglib, 1);
+	hal_delay_ms(eglib, ST7789_RESX_TRT_MS);
 
 	// Software reset
-	eglib_hal_comm_begin(eglib);
-	eglib_hal_send_command_literal(eglib, ST7789_SWRESET);
-	eglib_hal_comm_end(eglib);
-	eglib_hal_delay_ms(eglib, ST7789_SWRESET_DELAY_MS);
+	hal_comm_begin(eglib);
+	hal_send_command_literal(eglib, ST7789_SWRESET);
+	hal_comm_end(eglib);
+	hal_delay_ms(eglib, ST7789_SWRESET_DELAY_MS);
 
 	// comm begin
-	eglib_hal_comm_begin(eglib);
+	hal_comm_begin(eglib);
 
 	// Out of sleep mode
-	eglib_hal_send_command_literal(eglib, ST7789_SLPOUT);
-	eglib_hal_delay_ms(eglib, ST7789_SLPOUT_DELAY_SLEEP_IN_MS);
+	hal_send_command_literal(eglib, ST7789_SLPOUT);
+	hal_delay_ms(eglib, ST7789_SLPOUT_DELAY_SLEEP_IN_MS);
 
 	// Set color mode
-	eglib_hal_send_command_literal(eglib, ST7789_COLMOD);
-	eglib_hal_send_data_literal(eglib, ST7789_COLMOD_COLOR_16BIT_WRITE);
+	hal_send_command_literal(eglib, ST7789_COLMOD);
+	hal_send_data_literal(eglib, ST7789_COLMOD_COLOR_16BIT_WRITE);
 
 	// Memory Data Access Control
-	eglib_hal_send_command_literal(eglib, ST7789_MADCTL);
-	eglib_hal_send_data_literal(
+	hal_send_command_literal(eglib, ST7789_MADCTL);
+	hal_send_data_literal(
 		eglib,
 		ST7789_MADCTL_PAGE_ADDRESS_ORDER_TOP_TO_BOTTOM |
 		ST7789_MADCTL_COLUMN_ADDRESS_ORDER_LEFT_TO_RIGHT |
@@ -127,22 +127,22 @@ static void init(eglib_t *eglib) {
 
 	// Display inversion in practice works the opposite of what the datasheet
 	// says: on is off and off is on.
-	eglib_hal_send_command_literal(eglib, ST7789_INVON);
+	hal_send_command_literal(eglib, ST7789_INVON);
 	// Datasheet states NORON should be the default after sw reset, but unless
 	// we explicitly set it, INVON will have no effect.
-	eglib_hal_send_command_literal(eglib, ST7789_NORON);
+	hal_send_command_literal(eglib, ST7789_NORON);
 
 	// Clear RAM
 	set_column_address(eglib, 0, display_config->width - 1);
 	set_row_address(eglib, 0, display_config->height - 1);
-	eglib_hal_send_command_literal(eglib, ST7789_RAMWR);
+	hal_send_command_literal(eglib, ST7789_RAMWR);
 	for(uint32_t i=0, max=display_config->width * display_config->height * 2 ; i < max ; i++)
-		eglib_hal_send_data_literal(eglib, 0x00);
+		hal_send_data_literal(eglib, 0x00);
 
 	// Main screen turn on
-	eglib_hal_send_command_literal(eglib, ST7789_DISPON);
+	hal_send_command_literal(eglib, ST7789_DISPON);
 
-	eglib_hal_comm_end(eglib);
+	hal_comm_end(eglib);
 };
 
 static void sleep_in(eglib_t *eglib) {
@@ -157,17 +157,17 @@ static void sleep_out(eglib_t *eglib) {
 
 static void get_dimension(
 	eglib_t *eglib,
-	eglib_coordinate_t *width, eglib_coordinate_t*height
+	coordinate_t *width, coordinate_t*height
 ) {
-	eglib_display_st7789_config_t *display_config;
+	st7789_config_t *display_config;
 
-	display_config = eglib->display_config_ptr;
+	display_config = display_config(eglib);
 
 	*width = display_config->width;;
 	*height = display_config->height;
 };
 
-static void get_color_depth(eglib_t *eglib, eglib_color_depth_t *color_depth) {
+static void get_color_depth(eglib_t *eglib, color_depth_t *color_depth) {
 	(void)eglib;
 
 	*color_depth = EGLIB_COLOR_DEPTH_18BIT_565_RGB;
@@ -175,27 +175,27 @@ static void get_color_depth(eglib_t *eglib, eglib_color_depth_t *color_depth) {
 
 static void draw_pixel_color(
 	eglib_t *eglib,
-	eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color
+	coordinate_t x, coordinate_t y, color_t color
 ) {
 	uint8_t color_16bit[2];
 
-	eglib_hal_comm_begin(eglib);
+	hal_comm_begin(eglib);
 
 	set_column_address(eglib, x, x);
 	set_row_address(eglib, y, y);
 
 	convert_to_16bit(&color, color_16bit);
 
-	eglib_hal_send_command_literal(eglib, ST7789_RAMWR);
+	hal_send_command_literal(eglib, ST7789_RAMWR);
 	for(uint8_t i=0 ; i < sizeof(color_16bit) ; i++)
-		eglib_hal_send_data_literal(eglib, color_16bit[i]);
+		hal_send_data_literal(eglib, color_16bit[i]);
 
-	eglib_hal_comm_end(eglib);
+	hal_comm_end(eglib);
 };
 
-const eglib_display_t eglib_display_st7789 = {
+const display_t st7789 = {
 	.comm = {
-		.four_wire_spi = &((eglib_hal_four_wire_spi_config_comm_t){
+		.four_wire_spi = &((hal_four_wire_spi_config_comm_t){
 	    .bit_numbering = EGLIB_HAL_MSB_FIRST,
 	    .cs_setup_ns = 15,
 	    .cs_hold_ns = 15,
@@ -214,5 +214,5 @@ const eglib_display_t eglib_display_st7789 = {
 	.get_dimension = get_dimension,
 	.get_color_depth = get_color_depth,
 	.draw_pixel_color = draw_pixel_color,
-	.send_buffer = eglib_display_frame_buffer_send_buffer_18bit_565_rgb,
+	.send_buffer = frame_buffer_send_18bit_565_rgb,
 };

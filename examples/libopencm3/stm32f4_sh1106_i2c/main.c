@@ -8,11 +8,11 @@
 
 int main(void) {
 	eglib_t eglib;
-	eglib_display_frame_buffer_config_t frame_buffer_config;
+	frame_buffer_config_t frame_buffer_config;
 
 	rcc_clock_setup_pll(&rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_84MHZ]);
 
-	eglib_hal_i2c_libopencm3_stm32f4_config_t  hal_config_driver = {
+	i2c_libopencm3_stm32f4_config_t  i2c_libopencm3_stm32f4_config = {
 		.rcc_rst = RCC_GPIOA,
 		.port_rst = GPIOA,
 		.gpio_rst = GPIO4,
@@ -25,7 +25,7 @@ int main(void) {
 		.peripheral_clock_mhz = rcc_apb1_frequency / 1e6,
 	};
 
-	eglib_display_sh1106_config_t sh1106_config = {
+	sh1106_config_t sh1106_config = {
 		// Display physical construction
 		.width = 128,
 		.height = 64,
@@ -56,8 +56,8 @@ int main(void) {
 
 	eglib_Init_FrameBuffer(
 		&eglib, &frame_buffer_config,
-		&eglib_hal_i2c_libopencm3_stm32f4, &hal_config_driver,
-		&eglib_display_sh1106_vdd1_2_4_v, &sh1106_config
+		&i2c_libopencm3_stm32f4, &i2c_libopencm3_stm32f4_config,
+		&sh1106_vdd1_2_4_v, &sh1106_config
 	);
 
 	eglib_SetColor(&eglib, 0, 0xFF, 0xFF, 0xFF);

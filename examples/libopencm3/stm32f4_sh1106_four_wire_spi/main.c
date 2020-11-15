@@ -8,7 +8,7 @@
 #include <libopencm3/stm32/spi.h>
 
 int main(void) {
-	eglib_display_sh1106_config_t sh1106_config = {
+	sh1106_config_t sh1106_config = {
 		// Display physical construction
 		.width = 128,
 		.height = 64,
@@ -35,9 +35,9 @@ int main(void) {
 	};
 
 	eglib_t eglib;
-	eglib_display_frame_buffer_config_t frame_buffer_config;
+	frame_buffer_config_t frame_buffer_config;
 
-	eglib_hal_four_wire_spi_libopencm3_stm32f4_config_t  hal_config_driver = {
+	four_wire_spi_libopencm3_stm32f4_config_t  four_wire_spi_libopencm3_stm32f4_config = {
 		// rst
 		.rcc_rst = RCC_GPIOA,
 		.port_rst = GPIOA,
@@ -67,8 +67,8 @@ int main(void) {
 
 	eglib_Init_FrameBuffer(
 		&eglib, &frame_buffer_config,
-		&eglib_hal_four_wire_spi_libopencm3_stm32f4, &hal_config_driver,
-		&eglib_display_sh1106_vdd1_2_4_v, &sh1106_config
+		&four_wire_spi_libopencm3_stm32f4, &four_wire_spi_libopencm3_stm32f4_config,
+		&sh1106_vdd1_2_4_v, &sh1106_config
 	);
 
 	eglib_SetColor(&eglib, 0, 0xFF, 0xFF, 0xFF);

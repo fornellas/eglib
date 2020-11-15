@@ -1,11 +1,11 @@
 #include "frame_buffer.h"
 #include <stdlib.h>
 
-static void get_color_depth(eglib_t *eglib, eglib_color_depth_t *color_depth);
+static void get_color_depth(eglib_t *eglib, color_depth_t *color_depth);
 
 static void get_dimension(
 	eglib_t *eglib,
-	eglib_coordinate_t *width, eglib_coordinate_t*height
+	coordinate_t *width, coordinate_t*height
 );
 
 //
@@ -16,9 +16,9 @@ static void get_dimension(
 
 static void draw_to_buffer_1bit_paged(
 	void *buffer_ptr,
-	eglib_coordinate_t width, eglib_coordinate_t height,
-	eglib_coordinate_t x, eglib_coordinate_t y,
-	eglib_color_t color
+	coordinate_t width, coordinate_t height,
+	coordinate_t x, coordinate_t y,
+	color_t color
 ) {
 	uint8_t *buffer;
 	uint8_t page;
@@ -39,9 +39,9 @@ static void draw_to_buffer_1bit_paged(
 
 static void draw_to_buffer_18bit_565_rgb(
 	void *buffer_ptr,
-	eglib_coordinate_t width, eglib_coordinate_t height,
-	eglib_coordinate_t x, eglib_coordinate_t y,
-	eglib_color_t color
+	coordinate_t width, coordinate_t height,
+	coordinate_t x, coordinate_t y,
+	color_t color
 ) {
 	(void)buffer_ptr;
 	(void)width;
@@ -54,9 +54,9 @@ static void draw_to_buffer_18bit_565_rgb(
 
 static void draw_to_buffer_24bit_rgb(
 	void *buffer_ptr,
-	eglib_coordinate_t width, eglib_coordinate_t height,
-	eglib_coordinate_t x, eglib_coordinate_t y,
-	eglib_color_t color
+	coordinate_t width, coordinate_t height,
+	coordinate_t x, coordinate_t y,
+	color_t color
 ) {
 	uint8_t *buffer = (uint8_t *)buffer_ptr;
 
@@ -72,9 +72,9 @@ static void draw_to_buffer_24bit_rgb(
 
 static void (*draw_to_buffer[EGLIB_COLOR_DEPTH_COUNT])(
 	void *buffer_ptr,
-	eglib_coordinate_t width, eglib_coordinate_t height,
-	eglib_coordinate_t x, eglib_coordinate_t y,
-	eglib_color_t color
+	coordinate_t width, coordinate_t height,
+	coordinate_t x, coordinate_t y,
+	color_t color
 ) = {
 	[EGLIB_COLOR_DEPTH_1BIT_PAGED] = &draw_to_buffer_1bit_paged,
 	[EGLIB_COLOR_DEPTH_18BIT_565_RGB] = &draw_to_buffer_18bit_565_rgb,
@@ -88,33 +88,33 @@ static const uint8_t color_bits[EGLIB_COLOR_DEPTH_COUNT] = {
 };
 
 //
-// eglib_display_t send_buffer() helpers
+// display_t send_buffer() helpers
 //
 
-void eglib_display_frame_buffer_send_buffer_18bit_565_rgb(
-	eglib_t *eglib,
-	void *buffer_ptr,
-	eglib_coordinate_t x, eglib_coordinate_t y,
-	eglib_coordinate_t width, eglib_coordinate_t height
+void frame_buffer_send_18bit_565_rgb(
+       eglib_t *eglib,
+       void *buffer_ptr,
+       coordinate_t x, coordinate_t y,
+       coordinate_t width, coordinate_t height
 ) {
-	(void)eglib;
-	(void)buffer_ptr;
-	(void)x;
-	(void)y;
-	(void)width;
-	(void)height;
-	// TODO
+       (void)eglib;
+       (void)buffer_ptr;
+       (void)x;
+       (void)y;
+       (void)width;
+       (void)height;
+       // TODO
 }
 
-void eglib_display_frame_buffer_send_buffer_24bit_rgb(
+void frame_buffer_send_24bit_rgb(
 	eglib_t *eglib,
 	void *buffer_ptr,
-	eglib_coordinate_t x, eglib_coordinate_t y,
-	eglib_coordinate_t width, eglib_coordinate_t height
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
 ) {
 	uint8_t *buffer = (uint8_t *)buffer_ptr;
-	eglib_color_t color;
-	eglib_coordinate_t y_start, y_end, x_start, x_end;
+	color_t color;
+	coordinate_t y_start, y_end, x_start, x_end;
 
 	y_start = x;
 	y_end = y + height;
@@ -143,9 +143,9 @@ void eglib_display_frame_buffer_send_buffer_24bit_rgb(
 //
 
 static void init(eglib_t *eglib) {
-	eglib_display_frame_buffer_config_t *display_config;
-	eglib_color_depth_t color_depth;
-	eglib_coordinate_t width, height;
+	frame_buffer_config_t *display_config;
+	color_depth_t color_depth;
+	coordinate_t width, height;
 
 	display_config = eglib->display_config_ptr;
 
@@ -160,7 +160,7 @@ static void init(eglib_t *eglib) {
 };
 
 static void sleep_in(eglib_t *eglib) {
-	eglib_display_frame_buffer_config_t *display_config;
+	frame_buffer_config_t *display_config;
 
 	display_config = eglib->display_config_ptr;
 
@@ -170,7 +170,7 @@ static void sleep_in(eglib_t *eglib) {
 };
 
 static void sleep_out(eglib_t *eglib) {
-	eglib_display_frame_buffer_config_t *display_config;
+	frame_buffer_config_t *display_config;
 
 	display_config = eglib->display_config_ptr;
 
@@ -181,9 +181,9 @@ static void sleep_out(eglib_t *eglib) {
 
 static void get_dimension(
 	eglib_t *eglib,
-	eglib_coordinate_t *width, eglib_coordinate_t*height
+	coordinate_t *width, coordinate_t*height
 ) {
-	eglib_display_frame_buffer_config_t *display_config;
+	frame_buffer_config_t *display_config;
 
 	display_config = eglib->display_config_ptr;
 
@@ -192,8 +192,8 @@ static void get_dimension(
 	);
 };
 
-static void get_color_depth(eglib_t *eglib, eglib_color_depth_t *color_depth) {
-	eglib_display_frame_buffer_config_t *display_config;
+static void get_color_depth(eglib_t *eglib, color_depth_t *color_depth) {
+	frame_buffer_config_t *display_config;
 
 	display_config = eglib->display_config_ptr;
 
@@ -204,11 +204,11 @@ static void get_color_depth(eglib_t *eglib, eglib_color_depth_t *color_depth) {
 
 static void draw_pixel_color(
 	eglib_t *eglib,
-	eglib_coordinate_t x, eglib_coordinate_t y, eglib_color_t color
+	coordinate_t x, coordinate_t y, color_t color
 ) {
-	eglib_display_frame_buffer_config_t *display_config;
-	eglib_color_depth_t color_depth;
-	eglib_coordinate_t width, height;
+	frame_buffer_config_t *display_config;
+	color_depth_t color_depth;
+	coordinate_t width, height;
 
 	display_config = eglib->display_config_ptr;
 
@@ -226,8 +226,8 @@ static void draw_pixel_color(
 static void send_buffer(
 	eglib_t *eglib,
 	void *buffer,
-	eglib_coordinate_t x, eglib_coordinate_t y,
-	eglib_coordinate_t width, eglib_coordinate_t height
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
 ) {
 	(void)eglib;
 	(void)buffer;
@@ -243,9 +243,9 @@ static void send_buffer(
 
 void eglib_Init_FrameBuffer(
 	eglib_t *eglib,
-	eglib_display_frame_buffer_config_t *frame_buffer_config,
-	const eglib_hal_t *hal, void *hal_config_ptr,
-	const eglib_display_t *display, void *display_config_ptr
+	frame_buffer_config_t *frame_buffer_config,
+	const hal_t *hal, void *hal_config_ptr,
+	const display_t *display, void *display_config_ptr
 ) {
 	eglib_Init(
 		&frame_buffer_config->eglib_buffered,
@@ -275,10 +275,10 @@ void eglib_Init_FrameBuffer(
 
 void eglib_FrameBuffer_Send(
 	eglib_t *eglib,
-	eglib_coordinate_t x, eglib_coordinate_t y,
-	eglib_coordinate_t width, eglib_coordinate_t height
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
 ) {
-	eglib_display_frame_buffer_config_t *display_config;
+	frame_buffer_config_t *display_config;
 
 	display_config = eglib->display_config_ptr;
 

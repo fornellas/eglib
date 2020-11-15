@@ -6,7 +6,7 @@
 #include <stdbool.h>
 
 //
-// Defines for eglib_display_sh1106_config_t
+// Defines for sh1106_config_t
 //
 
 #define SH1106_SEGMENT_REMAP_NORMAL 0
@@ -41,7 +41,7 @@
 #define SHH1106_DC_DC_9_0_V 0x3
 
 //
-// eglib_display_sh1106_config_t
+// sh1106_config_t
 //
 
 typedef struct {
@@ -49,8 +49,8 @@ typedef struct {
 	// Display physical construction
 	//
 
-	eglib_coordinate_t width;
-	eglib_coordinate_t height;
+	coordinate_t width;
+	coordinate_t height;
 	// Mirror horizontally
 	// SH1106_SEGMENT_REMAP_*
 	uint8_t segment_remap : 1;
@@ -104,28 +104,28 @@ typedef struct {
 
 	// Least significant bit of 7-bit slave address: 011110(sa0)
 	bool sa0 : 1;
-} eglib_display_sh1106_config_t;
+} sh1106_config_t;
 
 // https://www.sparkfun.com/products/13003
 // Values from https://github.com/sparkfun/SparkFun_Micro_OLED_Arduino_Library/blob/master/src/SFE_MicroOLED.cpp
-extern const eglib_display_sh1106_config_t eglib_display_sh1106_config_sparkfun_micro_oled;
+extern const sh1106_config_t sh1106_config_sparkfun_micro_oled;
 
 //
-// eglib_display_t
+// display_t
 //
 
 // VDD1 = 1.65 - 3.5V, TA= +25°C
-extern const eglib_display_t eglib_display_sh1106_vdd1_1_65_v;
+extern const display_t sh1106_vdd1_1_65_v;
 // VDD1 = 2.4 - 3.5V, TA= +25°C
-extern const eglib_display_t eglib_display_sh1106_vdd1_2_4_v;
+extern const display_t sh1106_vdd1_2_4_v;
 
 //
 // Custom Functions
 //
 
-void eglib_display_sh1106_set_start_line(eglib_t *eglib, uint8_t line);
-void eglib_display_sh1106_set_contrast(eglib_t *eglib, uint8_t contrast);
-void eglib_display_sh1106_entire_display_on(eglib_t *eglib, uint8_t entire_display_on);
-void eglib_display_sh1106_reverse(eglib_t *eglib, uint8_t reverse);
+void sh1106_set_start_line(eglib_t *eglib, uint8_t line);
+void sh1106_set_contrast(eglib_t *eglib, uint8_t contrast);
+void sh1106_entire_display_on(eglib_t *eglib, uint8_t entire_display_on);
+void sh1106_reverse(eglib_t *eglib, uint8_t reverse);
 
 #endif

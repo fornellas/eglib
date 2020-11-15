@@ -3,6 +3,6 @@
 
 #include "../../hal.h"
 
-extern const eglib_hal_t eglib_hal_four_wire_spi_none;
+extern const hal_t four_wire_spi_none;
 
 #endif

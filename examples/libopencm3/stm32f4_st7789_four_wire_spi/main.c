@@ -8,7 +8,7 @@
 
 int main(void) {
 	eglib_t eglib;
-	eglib_hal_four_wire_spi_libopencm3_stm32f4_config_t  hal_config_driver = {
+	four_wire_spi_libopencm3_stm32f4_config_t  four_wire_spi_libopencm3_stm32f4_config = {
 		// rst
 		.rcc_rst = RCC_GPIOA,
 		.port_rst = GPIOA,
@@ -33,7 +33,7 @@ int main(void) {
 		.port_mosi = GPIOA,
 		.gpio_mosi = GPIO7,
 	};
-	eglib_display_st7789_config_t display_config = {
+	st7789_config_t st7789_config = {
 		.width = 240,
 		.height = 240,
 	};
@@ -42,8 +42,8 @@ int main(void) {
 
 	eglib_Init(
 		&eglib,
-		&eglib_hal_four_wire_spi_libopencm3_stm32f4, &hal_config_driver,
-		&eglib_display_st7789, &display_config
+		&four_wire_spi_libopencm3_stm32f4, &four_wire_spi_libopencm3_stm32f4_config,
+		&st7789, &st7789_config
 	);
 
 	eglib_SetColor(&eglib, 0, 0, 255, 255);

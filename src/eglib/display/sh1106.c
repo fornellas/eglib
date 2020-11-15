@@ -285,7 +285,7 @@ void sh1106_set_contrast(
 
 void sh1106_entire_display_on(
 	eglib_t *eglib,
-	uint8_t entire_display_on
+	bool entire_display_on
 ) {
 	hal_comm_begin(eglib);
 	if(entire_display_on)
@@ -297,7 +297,7 @@ void sh1106_entire_display_on(
 
 void sh1106_reverse(
 	eglib_t *eglib,
-	uint8_t reverse
+	bool reverse
 ) {
 	hal_comm_begin(eglib);
 	if(reverse)

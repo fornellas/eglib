@@ -256,7 +256,7 @@ static void send_buffer(
 	hal_comm_begin(eglib);
 	for(uint8_t page=y/8 ; page < ((y+height)/8+1) ; page++) {
 		hal_send_command_literal(eglib, SH1106_SET_PAGE_ADDRESS(page));
-		set_column_address(eglib, 0);
+		set_column_address(eglib, x);
 		hal_send_data(eglib, (buffer + page * display_width + x), width);
 	}
 	hal_comm_end(eglib);

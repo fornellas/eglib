@@ -42,10 +42,10 @@ static void get_dimension(
 	*height = display_config->height;
 }
 
-static void get_color_depth(eglib_t *eglib, color_depth_t *color_depth) {
+static void get_pixel_format(eglib_t *eglib, pixel_format_t *pixel_format) {
 	(void)eglib;
 
-	*color_depth = EGLIB_COLOR_DEPTH_24BIT_RGB;
+	*pixel_format = PIXEL_FORMAT_24BIT_RGB;
 }
 
 static void draw_pixel_color(
@@ -71,6 +71,38 @@ static void draw_pixel_color(
 	*p++ = color.r;
 }
 
+static void send_buffer(
+       eglib_t *eglib,
+       void *buffer_ptr,
+       coordinate_t x, coordinate_t y,
+       coordinate_t width, coordinate_t height
+) {
+       uint8_t *buffer = (uint8_t *)buffer_ptr;
+       color_t color;
+       coordinate_t y_start, y_end, x_start, x_end;
+
+       y_start = x;
+       y_end = y + height;
+       x_start = x;
+       x_end = x + width;
+
+       for(y = y_start; y <= y_end ; y++) {
+               for(x = x_start; x <= x_end ; x++) {
+                       color.r = *buffer;
+                       buffer++;
+                       color.g = *buffer;
+                       buffer++;
+                       color.b = *buffer;
+                       buffer++;
+                       display_draw_pixel_color(
+                               eglib,
+                               x, y,
+                               color
+                       );
+               }
+       }
+}
+
 static bool refresh(eglib_t *eglib) {
 	(void)eglib;
 	return false;
@@ -93,9 +125,9 @@ const display_t tga = {
 	.sleep_in = sleep_in,
 	.sleep_out = sleep_out,
 	.get_dimension = get_dimension,
-	.get_color_depth = get_color_depth,
+	.get_pixel_format = get_pixel_format,
 	.draw_pixel_color = draw_pixel_color,
-	.send_buffer = frame_buffer_send_24bit_rgb,
+	.send_buffer = send_buffer,
 	.refresh = refresh,
 };
 

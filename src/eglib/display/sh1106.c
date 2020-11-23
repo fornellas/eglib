@@ -221,10 +221,10 @@ static void get_dimension(
 	*height = display_config->height;
 };
 
-static void get_color_depth(eglib_t *eglib, color_depth_t *color_depth) {
+static void get_pixel_format(eglib_t *eglib, pixel_format_t *pixel_format) {
 	(void)eglib;
 
-	*color_depth = EGLIB_COLOR_DEPTH_1BIT_PAGED;
+	*pixel_format = PIXEL_FORMAT_1BIT_BW_PAGED;
 }
 
 static void draw_pixel_color(
@@ -364,7 +364,7 @@ const display_t sh1106_vdd1_1_65_v = {
 	.sleep_in = sleep_in,
 	.sleep_out = sleep_out,
 	.get_dimension = get_dimension,
-	.get_color_depth = get_color_depth,
+	.get_pixel_format = get_pixel_format,
 	.draw_pixel_color = draw_pixel_color,
 	.send_buffer = send_buffer,
 	.refresh = refresh,
@@ -388,7 +388,7 @@ const display_t sh1106_vdd1_2_4_v = {
 	.sleep_in = sleep_in,
 	.sleep_out = sleep_out,
 	.get_dimension = get_dimension,
-	.get_color_depth = get_color_depth,
+	.get_pixel_format = get_pixel_format,
 	.draw_pixel_color = draw_pixel_color,
 	.send_buffer = send_buffer,
 	.refresh = refresh,

@@ -80,8 +80,6 @@ static hal_four_wire_spi_config_comm_t four_wire_spi_config = {
 		.dc_setup_ns = 0,
 		.dc_hold_ns = 0,
 		.sck_cycle_ns = 0,
-		.mosi_setup_ns = 0,
-		.mosi_hold_ns = 0,
 };
 
 const display_t tga = {

@@ -319,13 +319,17 @@ static void init(eglib_t *eglib) {
 };
 
 static void sleep_in(eglib_t *eglib) {
-	// TODO
-	(void)eglib;
+	hal_comm_begin(eglib);
+	hal_send_command_byte(eglib, ST7789_SLEEP_IN);
+	hal_comm_end(eglib);
+	hal_delay_ms(eglib, ST7789_SLEEP_IN_DELAY_MS);
 };
 
 static void sleep_out(eglib_t *eglib) {
-	// TODO
-	(void)eglib;
+	hal_comm_begin(eglib);
+	hal_send_command_byte(eglib, ST7789_SLEEP_OUT);
+	hal_comm_end(eglib);
+	hal_delay_ms(eglib, ST7789_SLEEP_OUT_DELAY_MS);
 };
 
 static void get_dimension(

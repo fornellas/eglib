@@ -29,21 +29,20 @@ typedef struct {
 	// MSB / LSB first
 	hal_bit_numbering_t bit_numbering;
 
-	// CS Timing
+	// Delay after CS asserted
 	uint32_t cs_setup_ns;
+	// Delay before de-asserting CS
 	uint32_t cs_hold_ns;
+	// Delay after de-asserting CS
 	uint32_t cs_disable_ns;
 
-	// DC Timing
+	// Delay before changing DC
 	uint32_t dc_setup_ns;
+	// Delay after changing DC
 	uint32_t dc_hold_ns;
 
-	// SCK Timing
+	// SCK Period (1/frequency*10^9)
 	uint32_t sck_cycle_ns;
-
-	// MOSI timing
-	uint32_t mosi_setup_ns;
-	uint32_t mosi_hold_ns;
 } hal_four_wire_spi_config_comm_t;
 
 // 3-Wire SPI
@@ -59,17 +58,15 @@ typedef struct {
 	// MSB / LSB first
 	hal_bit_numbering_t bit_numbering;
 
-	// CS Timing
+	// Delay after CS asserted
 	uint32_t cs_setup_ns;
+	// Delay before de-asserting CS
 	uint32_t cs_hold_ns;
+	// Delay after de-asserting CS
 	uint32_t cs_disable_ns;
 
-	// SCK Timing
+	// SCK Period (1/frequency)
 	uint32_t sck_cycle_ns;
-
-	// MOSI timing
-	uint32_t mosi_setup_ns;
-	uint32_t mosi_hold_ns;
 } hal_three_wire_spi_config_comm_t;
 
 // I2C
@@ -144,6 +141,6 @@ void hal_send(
 )
 void hal_comm_end(eglib_t *eglib);
 #define hal_busy(eglib) (eglib->hal->busy(eglib))
-#define hal_wait_not_busy(eglib) (while(eglib->hal->busy(eglib));)
+#define hal_wait_not_busy(eglib) while(!(hal_busy(eglib)))
 
 #endif

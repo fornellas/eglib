@@ -203,8 +203,6 @@ const display_t st7789 = {
 	    .dc_setup_ns = 10,
 	    .dc_hold_ns = 10,
 	    .sck_cycle_ns = 66,
-	    .mosi_setup_ns = 10,
-	    .mosi_hold_ns = 10,
 		}),
 		.i2c = NULL,
 	},

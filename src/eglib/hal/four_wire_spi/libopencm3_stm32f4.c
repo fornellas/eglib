@@ -22,6 +22,7 @@ static void set_dc(
 	four_wire_spi_config_comm = display_get_hal_four_wire_spi_config_comm(eglib);
 
 	wait_spi_not_busy(config->spi);
+	_delay_ns(four_wire_spi_config_comm->dc_setup_ns);
 	if(state)
 		gpio_set(
 			config->port_dc,
@@ -32,7 +33,7 @@ static void set_dc(
 			config->port_dc,
 			config->gpio_dc
 		);
-	_delay_ns(four_wire_spi_config_comm->dc_setup_ns);
+	_delay_ns(four_wire_spi_config_comm->dc_hold_ns);
 }
 
 static void set_cs(
@@ -47,12 +48,7 @@ static void set_cs(
 
 	wait_spi_not_busy(config->spi);
 	if(state) {
-		_delay_ns(
-			MAX(
-				four_wire_spi_config_comm->dc_setup_ns,
-				four_wire_spi_config_comm->cs_hold_ns
-			)
-		);
+		_delay_ns(four_wire_spi_config_comm->cs_hold_ns);
 		gpio_set(
 			config->port_cs,
 			config->gpio_cs

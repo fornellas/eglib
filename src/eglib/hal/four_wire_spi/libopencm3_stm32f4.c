@@ -273,7 +273,7 @@ static void comm_end(eglib_t *eglib) {
 	set_cs(eglib, true);
 }
 
-static bool busy(eglib_t *eglib) {
+static bool get_busy(eglib_t *eglib) {
 	four_wire_spi_libopencm3_stm32f4_config_t *config;
 
 	config = hal_get_config(eglib);
@@ -290,5 +290,5 @@ const hal_t four_wire_spi_libopencm3_stm32f4 = {
 	.comm_begin = comm_begin,
 	.send = send,
 	.comm_end = comm_end,
-	.busy = busy,
+	.get_busy = get_busy,
 };

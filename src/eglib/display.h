@@ -35,18 +35,19 @@ struct _display_struct {
 		coordinate_t x, coordinate_t y,
 		coordinate_t width, coordinate_t height
 	);
+	bool (*refresh)(eglib_t *eglib);
 };
 
-#define display_get_config(eglib) (eglib->display_config_ptr)
+#define display_get_config(eglib) ((eglib)->display_config_ptr)
 
 #define display_get_hal_four_wire_spi_config_comm(eglib) (\
-	eglib->display->comm.four_wire_spi \
+	(eglib)->display->comm.four_wire_spi \
 )
 #define display_get_hal_three_wire_spi_config_comm(eglib) (\
-	eglib->display->comm.three_wire_spi \
+	(eglib)->display->comm.three_wire_spi \
 )
 #define display_get_hal_i2c_config_comm(eglib) (\
-	eglib->display->comm.i2c \
+	(eglib)->display->comm.i2c \
 )
 
 #define display_get_i2c_7bit_slave_addr(eglib, dc) \
@@ -56,10 +57,12 @@ struct _display_struct {
 	(display_get_hal_i2c_config_comm(eglib)->send(eglib, i2c_write, dc, bytes, length))
 
 #define display_get_dimension(eglib, width, height) ( \
-	eglib->display->get_dimension(eglib, width, height) \
+	(eglib)->display->get_dimension(eglib, width, height) \
 )
 #define display_draw_pixel_color(eglib, x, y, color) ( \
-	eglib->display->draw_pixel_color(eglib, x, y, color) \
+	(eglib)->display->draw_pixel_color(eglib, x, y, color) \
 )
+
+#define eglib_Refresh(eglib) ((eglib)->display->refresh(eglib))
 
 #endif

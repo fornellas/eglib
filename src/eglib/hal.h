@@ -109,17 +109,17 @@ struct _hal {
 		uint16_t length
 	);
 	void (*comm_end)(eglib_t *eglib);
-	bool (*busy)(eglib_t *eglib);
+	bool (*get_busy)(eglib_t *eglib);
 };
 
-#define hal_get_config(eglib) (eglib->hal_config_ptr)
+#define hal_get_config(eglib) ((eglib)->hal_config_ptr)
 
-#define hal_comm_active(eglib) (eglib->hal_comm_active)
-#define hal_i2c_send_slave_addr(eglib) (eglib->hal_i2c_send_slave_addr)
+#define hal_comm_active(eglib) ((eglib)->hal_comm_active)
+#define hal_i2c_send_slave_addr(eglib) ((eglib)->hal_i2c_send_slave_addr)
 
-#define hal_delay_ns(eglib, ns) (eglib->hal->delay_ns(eglib, ns))
-#define hal_delay_ms(eglib, ns) (eglib->hal->delay_ns(eglib, ns * 1000 * 1000))
-#define hal_set_reset(eglib, state) (eglib->hal->set_reset(eglib, state))
+#define hal_delay_ns(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns))
+#define hal_delay_ms(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns * 1000 * 1000))
+#define hal_set_reset(eglib, state) ((eglib)->hal->set_reset(eglib, state))
 void hal_comm_begin(eglib_t *eglib);
 void hal_send(
 	eglib_t *eglib,
@@ -140,7 +140,7 @@ void hal_send(
 	hal_send_commands(eglib, &((uint8_t){bytes}), 1)\
 )
 void hal_comm_end(eglib_t *eglib);
-#define hal_busy(eglib) (eglib->hal->busy(eglib))
-#define hal_wait_not_busy(eglib) while(!(hal_busy(eglib)))
+#define hal_get_busy(eglib) ((eglib)->hal->get_busy(eglib))
+#define hal_wait_not_busy(eglib) while(!(hal_get_busy(eglib)))
 
 #endif

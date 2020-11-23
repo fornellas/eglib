@@ -193,6 +193,11 @@ static void draw_pixel_color(
 	hal_comm_end(eglib);
 };
 
+static bool refresh(eglib_t *eglib) {
+	(void)eglib;
+	return false;
+}
+
 const display_t st7789 = {
 	.comm = {
 		.four_wire_spi = &((hal_four_wire_spi_config_comm_t){
@@ -213,4 +218,5 @@ const display_t st7789 = {
 	.get_color_depth = get_color_depth,
 	.draw_pixel_color = draw_pixel_color,
 	.send_buffer = frame_buffer_send_18bit_565_rgb,
+	.refresh = refresh,
 };

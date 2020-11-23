@@ -71,6 +71,11 @@ static void draw_pixel_color(
 	*p++ = color.r;
 }
 
+static bool refresh(eglib_t *eglib) {
+	(void)eglib;
+	return false;
+}
+
 static hal_four_wire_spi_config_comm_t four_wire_spi_config = {
 		.mode = 0,
 		.bit_numbering = EGLIB_HAL_MSB_FIRST,
@@ -91,6 +96,7 @@ const display_t tga = {
 	.get_color_depth = get_color_depth,
 	.draw_pixel_color = draw_pixel_color,
 	.send_buffer = frame_buffer_send_24bit_rgb,
+	.refresh = refresh,
 };
 
 static void tga_write_byte(FILE *fp, uint8_t byte) {

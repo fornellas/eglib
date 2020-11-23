@@ -259,6 +259,11 @@ static void send_buffer(
 	hal_comm_end(eglib);
 }
 
+static bool refresh(eglib_t *eglib) {
+	(void)eglib;
+	return false;
+}
+
 // Custom Functions
 
 void sh1106_set_start_line(
@@ -362,6 +367,7 @@ const display_t sh1106_vdd1_1_65_v = {
 	.get_color_depth = get_color_depth,
 	.draw_pixel_color = draw_pixel_color,
 	.send_buffer = send_buffer,
+	.refresh = refresh,
 };
 
 const display_t sh1106_vdd1_2_4_v = {
@@ -385,6 +391,7 @@ const display_t sh1106_vdd1_2_4_v = {
 	.get_color_depth = get_color_depth,
 	.draw_pixel_color = draw_pixel_color,
 	.send_buffer = send_buffer,
+	.refresh = refresh,
 };
 
 //

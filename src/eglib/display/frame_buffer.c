@@ -237,6 +237,16 @@ static void send_buffer(
 	(void)height;
 };
 
+static bool refresh(eglib_t *eglib) {
+	frame_buffer_config_t *display_config;
+
+	display_config = display_get_config(eglib);
+
+	return display_config->eglib_buffered.display->refresh(
+		&display_config->eglib_buffered
+	);
+}
+
 //
 // Extra
 //
@@ -265,6 +275,7 @@ void eglib_Init_FrameBuffer(
 	frame_buffer->get_color_depth = get_color_depth;
 	frame_buffer->draw_pixel_color = draw_pixel_color;
 	frame_buffer->send_buffer = send_buffer;
+	frame_buffer->refresh = refresh;
 
 	frame_buffer_config->buffer = NULL;
 

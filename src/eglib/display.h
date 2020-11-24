@@ -6,7 +6,6 @@ typedef struct _display_struct display_t;
 
 #include "../eglib.h"
 #include "hal.h"
-#include "types.h"
 
 struct _display_struct {
 	struct {

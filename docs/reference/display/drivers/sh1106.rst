@@ -1,0 +1,4 @@
+eglib/display/sh1106.h
+======================
+
+.. c:autodoc:: eglib/display/sh1106.h

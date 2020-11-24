@@ -140,7 +140,7 @@ static void init(eglib_t *eglib) {
 
 		SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_MODE_SET,
 		SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_MODE_SET_ARG(
-			display_config->common_pads_hardware_configuration_mode
+			display_config->common_pads_hardware_configuration
 		),
 
 		SH1106_SET_COMMON_OUTPUT_SCAN_DIRECTION(
@@ -403,7 +403,7 @@ const sh1106_config_t sh1106_config_sparkfun_micro_oled = {
 	.width = 64,
 	.height = 48,
 	.segment_remap = SH1106_SEGMENT_REMAP_REVERSE,
-	.common_pads_hardware_configuration_mode = SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_ALTERNATIVE,
+	.common_pads_hardware_configuration = SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_ALTERNATIVE,
 	.common_output_scan_direction = SH1106_COMMON_OUTPUT_SCAN_DIRECTION_ASC,
 	.display_offset = 0,
 	.column_offset = 0,

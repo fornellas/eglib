@@ -11,7 +11,7 @@ int main(void) {
 		.width = 128,
 		.height = 64,
 		.segment_remap = SH1106_SEGMENT_REMAP_REVERSE,
-		.common_pads_hardware_configuration_mode = SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_ALTERNATIVE,
+		.common_pads_hardware_configuration = SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_ALTERNATIVE,
 		.common_output_scan_direction = SH1106_COMMON_OUTPUT_SCAN_DIRECTION_DESC,
 		.display_offset = 0,
 		.column_offset = 2,

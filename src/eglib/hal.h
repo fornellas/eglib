@@ -84,7 +84,7 @@ typedef struct {
 		void (*i2c_write)(eglib_t *eglib, uint8_t byte),
 		hal_dc_t dc,
 		uint8_t *bytes,
-		uint16_t length
+		uint32_t length
 	);
 } hal_i2c_config_comm_t;
 
@@ -102,12 +102,7 @@ struct _hal {
 	void (*delay_ns)(eglib_t *eglib, uint32_t ns);
 	void (*set_reset)(eglib_t *eglib, bool state);
 	void (*comm_begin)(eglib_t *eglib);
-	void (*send)(
-		eglib_t *eglib,
-		hal_dc_t dc,
-		uint8_t *bytes,
-		uint16_t length
-	);
+	void (*send)(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
 	void (*comm_end)(eglib_t *eglib);
 	bool (*get_busy)(eglib_t *eglib);
 };
@@ -121,12 +116,7 @@ struct _hal {
 #define hal_delay_ms(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns * 1000 * 1000))
 #define hal_set_reset(eglib, state) ((eglib)->hal->set_reset(eglib, state))
 void hal_comm_begin(eglib_t *eglib);
-void hal_send(
-	eglib_t *eglib,
-	hal_dc_t dc,
-	uint8_t *bytes,
-	uint8_t length
-);
+void hal_send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
 #define hal_send_data(eglib, bytes, length) (\
 	hal_send(eglib, EGLIB_HAL_DATA, bytes, length)\
 )

@@ -4,20 +4,6 @@
 #include "../hal.h"
 #include "../../eglib.h"
 
-void frame_buffer_send_18bit_565_rgb(
-	eglib_t *eglib,
-	void *buffer_ptr,
-	coordinate_t x, coordinate_t y,
-	coordinate_t width, coordinate_t height
-);
-
-void frame_buffer_send_24bit_rgb(
-	eglib_t *eglib,
-	void *buffer_ptr,
-	coordinate_t x, coordinate_t y,
-	coordinate_t width, coordinate_t height
-);
-
 typedef struct {
 	display_t frame_buffer;
 	eglib_t eglib_buffered;

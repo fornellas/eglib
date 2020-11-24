@@ -22,7 +22,7 @@ struct _display_struct {
 		coordinate_t *width,
 		coordinate_t *height
 	);
-	void (*get_color_depth)(eglib_t *eglib, color_depth_t *color_depth);
+	void (*get_pixel_format)(eglib_t *eglib, pixel_format_t *pixel_format);
 	void (*draw_pixel_color)(
 		eglib_t *eglib,
 		coordinate_t x,

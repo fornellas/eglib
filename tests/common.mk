@@ -20,11 +20,9 @@ CFLAGS += \
 	-Werror \
 	-Wfatal-errors
 
-EGLIB_PATH = ../src
+EGLIB_PATH = ../../src
 INCLUDES += -I$(EGLIB_PATH)
 EGLIB_LIB = $(EGLIB_BUILD_DIR)/libeglib.a
-EGLIB_HAL_DRIVERS=four_wire_spi/none
-EGLIB_DISPLAY_DRIVERS=tga
 
 .PHONY: all
 all: $(TESTS)
@@ -47,11 +45,6 @@ $(BUILD_DIR)/%.o: %.c
 $(BUILD_DIR)/test_%: $(BUILD_DIR)/test_%.o $(EGLIB_LIB)
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
-
-.PHONY: test_*
-test_%: $(BUILD_DIR)/test_%
-	valgrind -q $< $<.tga
-	cmp $<.tga $(@:test_%=test_%.tga)
 
 .PHONY: clean
 clean:

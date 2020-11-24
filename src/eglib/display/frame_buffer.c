@@ -18,7 +18,7 @@ static void draw_to_buffer_1bit_paged(
 	void *buffer_ptr,
 	coordinate_t width, coordinate_t height,
 	coordinate_t x, coordinate_t y,
-	color_t color
+	color_t *color
 ) {
 	uint8_t *buffer;
 	uint8_t page;
@@ -34,82 +34,100 @@ static void draw_to_buffer_1bit_paged(
 
 	byte = buffer + width * page + x;
 
-	*byte = ((*byte)&~(1<<bit)) | (((color.r|color.g|color.b)&0x01)<<bit);
+	*byte = ((*byte)&~(1<<bit)) | (((color->r|color->g|color->b)&0x01)<<bit);
 }
 
 static void draw_to_buffer_12bit(
 	void *buffer_ptr,
 	coordinate_t width, coordinate_t height,
 	coordinate_t x, coordinate_t y,
-	color_t color
+	color_t *color
 ) {
-	(void)buffer_ptr;
-	(void)width;
+	uint8_t *buffer = (uint8_t *)buffer_ptr;
+	uint32_t bit;
+
 	(void)height;
-	(void)x;
-	(void)y;
-	(void)color;
-	// TODO
+
+	bit = ((uint32_t)width * y + x) * 12;
+	buffer += bit / 8;
+
+	if(bit % 8) {
+		*buffer = (*buffer & 0xf0) | (color->r & 0xf0) >> 4;
+		buffer++;
+		*buffer = color->g & 0xf0;
+		*buffer |= (color->b & 0xf0) >> 4;
+	} else {
+		*buffer = color->r & 0xf0;
+		*buffer |= (color->g & 0xf0) >> 4;
+		buffer++;
+		*buffer = (color->b & 0xf0) | (*buffer & 0x0f);
+	}
 }
 
 static void draw_to_buffer_16bit(
 	void *buffer_ptr,
 	coordinate_t width, coordinate_t height,
 	coordinate_t x, coordinate_t y,
-	color_t color
+	color_t *color
 ) {
-	(void)buffer_ptr;
-	(void)width;
+	uint8_t *buffer = (uint8_t *)buffer_ptr;
+
 	(void)height;
-	(void)x;
-	(void)y;
-	(void)color;
-	// TODO
+
+	buffer += (width * y + x) * 2;
+	*buffer = color->r & 0xf8;
+	*buffer |= color->g >> 5;
+	buffer++;
+	*buffer = (color->g >> 2) << 5;
+	*buffer |= color->b >> 3;
 }
 
-static void draw_to_buffer_18bit_565_rgb(
+static void draw_to_buffer_18bit_rgb_24bit(
 	void *buffer_ptr,
 	coordinate_t width, coordinate_t height,
 	coordinate_t x, coordinate_t y,
-	color_t color
-) {
-	(void)buffer_ptr;
-	(void)width;
-	(void)height;
-	(void)x;
-	(void)y;
-	(void)color;
-	// TODO
-}
-
-static void draw_to_buffer_24bit_rgb(
-	void *buffer_ptr,
-	coordinate_t width, coordinate_t height,
-	coordinate_t x, coordinate_t y,
-	color_t color
+	color_t *color
 ) {
 	uint8_t *buffer = (uint8_t *)buffer_ptr;
 
 	(void)height;
 
 	buffer += (width * y + x) * 3;
-	*buffer = color.r;
+	*buffer = color->r & ~0x03;
 	buffer++;
-	*buffer = color.g;
+	*buffer = color->g & ~0x03;
 	buffer++;
-	*buffer = color.b;
+	*buffer = color->b & ~0x03;
+}
+
+static void draw_to_buffer_24bit_rgb(
+	void *buffer_ptr,
+	coordinate_t width, coordinate_t height,
+	coordinate_t x, coordinate_t y,
+	color_t *color
+) {
+	uint8_t *buffer = (uint8_t *)buffer_ptr;
+
+	(void)height;
+
+	buffer += (width * y + x) * 3;
+	*buffer = color->r;
+	buffer++;
+	*buffer = color->g;
+	buffer++;
+	*buffer = color->b;
 }
 
 static void (*draw_to_buffer[PIXEL_FORMAT_COUNT])(
 	void *buffer_ptr,
 	coordinate_t width, coordinate_t height,
 	coordinate_t x, coordinate_t y,
-	color_t color
+	color_t *color
 ) = {
 	[PIXEL_FORMAT_1BIT_BW_PAGED] = &draw_to_buffer_1bit_paged,
 	[PIXEL_FORMAT_12BIT_RGB] = &draw_to_buffer_12bit,
 	[PIXEL_FORMAT_16BIT_RGB] = &draw_to_buffer_16bit,
-	[PIXEL_FORMAT_18BIT_RGB_24BIT] = &draw_to_buffer_18bit_565_rgb,
+	[PIXEL_FORMAT_18BIT_RGB_24BIT] = &draw_to_buffer_18bit_rgb_24bit,
 	[PIXEL_FORMAT_24BIT_RGB] = &draw_to_buffer_24bit_rgb,
 };
 
@@ -135,10 +153,9 @@ static void init(eglib_t *eglib) {
 	get_pixel_format(eglib, &pixel_format);
 	get_dimension(eglib, &width, &height);
 
-	display_config->buffer = calloc(1, color_bits[pixel_format] * width * height / 8 );
+	display_config->buffer = calloc(1, (uint32_t)color_bits[pixel_format] * width * height / 8 );
 
 	if(display_config->buffer == NULL)
-		// FIXME error reporting
 		while(1);
 };
 
@@ -202,7 +219,7 @@ static void draw_pixel_color(
 		display_config->buffer,
 		width, height,
 		x, y,
-		color
+		&color
 	);
 };
 

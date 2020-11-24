@@ -318,7 +318,7 @@ static void i2c_send(
 	void (*i2c_write)(eglib_t *eglib, uint8_t byte),
 	hal_dc_t dc,
 	uint8_t *bytes,
-	uint16_t length
+	uint32_t length
 ) {
 	// For more than 2 bytes it is more efficient to use Co=0
 	if(length > 2) {

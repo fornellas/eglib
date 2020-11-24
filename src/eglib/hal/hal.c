@@ -12,7 +12,7 @@ void hal_send(
 	eglib_t *eglib,
 	hal_dc_t dc,
 	uint8_t *bytes,
-	uint8_t length
+	uint32_t length
 ) {
 	uint8_t prev_hal_i2c_send_slave_addr;
 

@@ -241,28 +241,33 @@ static void set_row_address(eglib_t *eglib, uint16_t y_start, uint16_t y_end) {
 	hal_send_data(eglib, buff, sizeof(buff));
 }
 
-static void clear_memory(eglib_t *eglib) {
+static uint8_t get_bits_per_pixel(eglib_t *eglib) {
 	st7789_config_t *display_config;
-	uint32_t memory_size;
-	uint8_t bits_per_pixel;
 
 	display_config = display_get_config(eglib);
 
 	switch(display_config->color) {
 		case ST7789_COLOR_12_BIT:
-			bits_per_pixel = 12;
+			return 12;
 			break;
 		case ST7789_COLOR_16_BIT:
-			bits_per_pixel = 16;
+			return 16;
 			break;
 		case ST7789_COLOR_18_BIT:
-			bits_per_pixel = 24;
+			return 24;
 			break;
 		default:
 			while(true);
 	}
+}
 
-	memory_size = display_config->width * display_config->height * bits_per_pixel / 8;
+static void clear_memory(eglib_t *eglib) {
+	st7789_config_t *display_config;
+	uint32_t memory_size;
+
+	display_config = display_get_config(eglib);
+
+	memory_size = display_config->width * display_config->height * get_bits_per_pixel(eglib) / 8;
 
 	set_column_address(eglib, 0, display_config->width - 1);
 	set_row_address(eglib, 0, display_config->height - 1);
@@ -412,17 +417,32 @@ static void draw_pixel_color(
 
 static void send_buffer(
 	eglib_t *eglib,
-	void *buffer,
+	void *buffer_ptr,
 	coordinate_t x, coordinate_t y,
 	coordinate_t width, coordinate_t height
 ) {
-	(void)eglib;
-	(void)buffer;
-	(void)x;
-	(void)y;
-	(void)width;
-	(void)height;
-	// TODO
+	st7789_config_t *display_config;
+	uint8_t *buffer = (uint8_t *)buffer_ptr;
+
+	display_config = display_get_config(eglib);
+
+	if((uint32_t)x * get_bits_per_pixel(eglib) % 8)
+		x -= 1;
+
+	hal_comm_begin(eglib);
+	set_column_address(eglib, x, x + width);
+	for(coordinate_t v=y ; v < y + height ; v++) {
+		set_row_address(eglib, v, v);
+		hal_send_command_byte(eglib, ST7789_MEMORY_WRITE);
+		hal_send_data(
+			eglib,
+			buffer + (
+				display_config->width * v + x
+			) * get_bits_per_pixel(eglib) / 8,
+			(uint32_t)width * get_bits_per_pixel(eglib) / 8
+		);
+	}
+	hal_comm_end(eglib);
 }
 
 static bool refresh(eglib_t *eglib) {
@@ -433,13 +453,14 @@ static bool refresh(eglib_t *eglib) {
 const display_t st7789 = {
 	.comm = {
 		.four_wire_spi = &((hal_four_wire_spi_config_comm_t){
-	    .bit_numbering = EGLIB_HAL_MSB_FIRST,
-	    .cs_setup_ns = 15,
-	    .cs_hold_ns = 15,
-	    .cs_disable_ns = 40,
-	    .dc_setup_ns = 10,
-	    .dc_hold_ns = 10,
-	    .sck_cycle_ns = 66,
+		    .bit_numbering = EGLIB_HAL_MSB_FIRST,
+		    .cs_setup_ns = 15,
+		    .cs_hold_ns = 15,
+		    .cs_disable_ns = 40,
+		    .dc_setup_ns = 10,
+		    .dc_hold_ns = 10,
+		    .sck_cycle_ns = 66,  // 15.1MHz Datasheet
+		    // .sck_cycle_ns = 47, // 21.2MHz Overclock
 		}),
 		.i2c = NULL,
 	},

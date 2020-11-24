@@ -30,7 +30,7 @@ static void send(
 	eglib_t *eglib,
 	hal_dc_t dc,
 	uint8_t *bytes,
-	uint16_t length
+	uint32_t length
 ) {
 	(void)eglib;
 	(void)dc;

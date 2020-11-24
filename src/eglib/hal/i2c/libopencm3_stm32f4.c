@@ -64,10 +64,10 @@ static void init_peripheral(eglib_t *eglib) {
 	i2c_reset(config->i2c);
 
 	switch(display_GetHalI2cConfigComm(eglib)->speed) {
-		case EGLIB_HAL_I2C_100KHZ:
+		case HAL_I2C_100KHZ:
 			speed = i2c_speed_sm_100k;
 			break;
-		case EGLIB_HAL_I2C_400KHZ:
+		case HAL_I2C_400KHZ:
 			speed = i2c_speed_fm_400k;
 			break;
 	}

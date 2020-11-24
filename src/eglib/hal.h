@@ -7,13 +7,13 @@
 #include <stdbool.h>
 
 typedef enum {
-  EGLIB_HAL_COMMAND,
-  EGLIB_HAL_DATA,
+  HAL_COMMAND,
+  HAL_DATA,
 } hal_dc_t;
 
 typedef enum {
-  EGLIB_HAL_LSB_FIRST,
-  EGLIB_HAL_MSB_FIRST,
+  HAL_LSB_FIRST,
+  HAL_MSB_FIRST,
 } hal_bit_numbering_t;
 
 // 4-Wire SPI
@@ -48,8 +48,8 @@ typedef struct {
 // I2C
 
 typedef enum {
-  EGLIB_HAL_I2C_100KHZ,
-  EGLIB_HAL_I2C_400KHZ,
+  HAL_I2C_100KHZ,
+  HAL_I2C_400KHZ,
 } hal_i2c_speed_t;
 
 typedef struct {
@@ -94,13 +94,13 @@ struct _hal {
 void hal_CommBegin(eglib_t *eglib);
 void hal_Send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
 #define hal_SendData(eglib, bytes, length) (\
-	hal_Send(eglib, EGLIB_HAL_DATA, bytes, length)\
+	hal_Send(eglib, HAL_DATA, bytes, length)\
 )
 #define hal_SendDataByte(eglib, bytes) (\
 	hal_SendData(eglib, &((uint8_t){bytes}), 1)\
 )
 #define hal_SendCommands(eglib, bytes, length) (\
-	hal_Send(eglib, EGLIB_HAL_COMMAND, bytes, length)\
+	hal_Send(eglib, HAL_COMMAND, bytes, length)\
 )
 #define hal_SendCommandByte(eglib, bytes) (\
 	hal_SendCommands(eglib, &((uint8_t){bytes}), 1)\

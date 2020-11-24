@@ -182,10 +182,10 @@ static void init(
 	}
 
 	switch(four_wire_spi_config_comm->bit_numbering) {
-		case EGLIB_HAL_LSB_FIRST:
+		case HAL_LSB_FIRST:
 			lsbfirst = SPI_CR1_LSBFIRST;
 			break;
-		case EGLIB_HAL_MSB_FIRST:
+		case HAL_MSB_FIRST:
 			lsbfirst = SPI_CR1_MSBFIRST;
 			break;
 	}

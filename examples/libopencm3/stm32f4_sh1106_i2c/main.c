@@ -67,5 +67,5 @@ int main(void) {
 
 	eglib_FrameBuffer_Send(&eglib, 0, 0, sh1106_config.width-1, sh1106_config.height-1);
 
-	sh1106_reverse(&eglib, true);
+	sh1106_Reverse(&eglib, true);
 }

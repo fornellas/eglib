@@ -9,7 +9,7 @@ static uint8_t *tga_data = NULL;
 static void init(eglib_t *eglib) {
 	tga_config_t *display_config;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	if ( tga_data != NULL )
 		free(tga_data);
@@ -36,7 +36,7 @@ static void get_dimension(
 ) {
 	tga_config_t *display_config;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	*width = display_config->width;
 	*height = display_config->height;
@@ -57,7 +57,7 @@ static void draw_pixel_color(
 	tga_config_t *display_config;
 	uint8_t *p;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	if(x >= display_config->width || y >= display_config->height || x < 0 || y < 0)
 		return;
@@ -94,7 +94,7 @@ static void send_buffer(
                        buffer++;
                        color.b = *buffer;
                        buffer++;
-                       display_draw_pixel_color(
+                       display_DrawPixelColor(
                                eglib,
                                x, y,
                                color
@@ -140,7 +140,7 @@ static void tga_write_word(FILE *fp, uint16_t word) {
 	tga_write_byte(fp, word>>8);
 }
 
-void tga_save(tga_config_t *display_config, char *path) {
+void tga_Save(tga_config_t *display_config, char *path) {
 	FILE *fp;
 	fp = fopen(path, "wb");
 	if ( fp != NULL )

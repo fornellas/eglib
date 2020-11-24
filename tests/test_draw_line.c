@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	eglib_DrawLine(&eglib, 0, 0, width - 1, height - 1);
 
 	if(argc == 2)
-		tga_save(&tga_config, argv[1]);
+		tga_Save(&tga_config, argv[1]);
 	else
 		return 1;
 }

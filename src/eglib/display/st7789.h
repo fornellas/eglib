@@ -60,8 +60,8 @@ extern const display_t st7789;
 // Custom functions
 //
 
-void st7789_set_display_inversion(eglib_t *eglib, bool inversion);
+void st7789_SetDisplayInversion(eglib_t *eglib, bool inversion);
 
-void st7789_set_idle_mode(eglib_t *eglib, bool idle);
+void st7789_SetIdleMode(eglib_t *eglib, bool idle);
 
 #endif

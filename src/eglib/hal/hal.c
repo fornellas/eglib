@@ -2,13 +2,13 @@
 
 #include <stdio.h>
 
-void hal_comm_begin(eglib_t *eglib) {
+void hal_CommBegin(eglib_t *eglib) {
 	eglib->hal_comm_active = true;
 	eglib->hal_i2c_send_slave_addr++;
 	eglib->hal->comm_begin(eglib);
 }
 
-void hal_send(
+void hal_Send(
 	eglib_t *eglib,
 	hal_dc_t dc,
 	uint8_t *bytes,
@@ -31,7 +31,7 @@ void hal_send(
 	}
 }
 
-void hal_comm_end(eglib_t *eglib) {
+void hal_CommEnd(eglib_t *eglib) {
 	// Send pending I2C Slave address
 	if(eglib->hal_i2c_send_slave_addr)
 		eglib->hal->send(eglib, 0, NULL, 0);

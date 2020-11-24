@@ -37,25 +37,25 @@ struct _display_struct {
 	bool (*refresh)(eglib_t *eglib);
 };
 
-#define display_get_config(eglib) ((eglib)->display_config_ptr)
+#define display_GetConfig(eglib) ((eglib)->display_config_ptr)
 
-#define display_get_hal_four_wire_spi_config_comm(eglib) (\
+#define display_GetHalFourWireSpiConfigComm(eglib) (\
 	(eglib)->display->comm.four_wire_spi \
 )
-#define display_get_hal_i2c_config_comm(eglib) (\
+#define display_GetHalI2cConfigComm(eglib) (\
 	(eglib)->display->comm.i2c \
 )
 
-#define display_get_i2c_7bit_slave_addr(eglib, dc) \
-	(display_get_hal_i2c_config_comm(eglib)->get_7bit_slave_addr(eglib, dc))
+#define display_GetI2c7bitSlaveAddr(eglib, dc) \
+	(display_GetHalI2cConfigComm(eglib)->get_7bit_slave_addr(eglib, dc))
 
-#define display_i2c_send(eglib, i2c_write, dc, bytes, length) \
-	(display_get_hal_i2c_config_comm(eglib)->send(eglib, i2c_write, dc, bytes, length))
+#define display_I2cSend(eglib, i2c_write, dc, bytes, length) \
+	(display_GetHalI2cConfigComm(eglib)->send(eglib, i2c_write, dc, bytes, length))
 
-#define display_get_dimension(eglib, width, height) ( \
+#define display_GetDimension(eglib, width, height) ( \
 	(eglib)->display->get_dimension(eglib, width, height) \
 )
-#define display_draw_pixel_color(eglib, x, y, color) ( \
+#define display_DrawPixelColor(eglib, x, y, color) ( \
 	(eglib)->display->draw_pixel_color(eglib, x, y, color) \
 )
 

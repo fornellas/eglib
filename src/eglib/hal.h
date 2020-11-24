@@ -83,30 +83,30 @@ struct _hal {
 	bool (*get_busy)(eglib_t *eglib);
 };
 
-#define hal_get_config(eglib) ((eglib)->hal_config_ptr)
+#define hal_GetConfig(eglib) ((eglib)->hal_config_ptr)
 
-#define hal_comm_active(eglib) ((eglib)->hal_comm_active)
-#define hal_i2c_send_slave_addr(eglib) ((eglib)->hal_i2c_send_slave_addr)
+#define hal_IsCommActive(eglib) ((eglib)->hal_comm_active)
+#define hal_ShouldSendI2cSlaveAddr(eglib) ((eglib)->hal_i2c_send_slave_addr)
 
-#define hal_delay_ns(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns))
-#define hal_delay_ms(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns * 1000 * 1000))
-#define hal_set_reset(eglib, state) ((eglib)->hal->set_reset(eglib, state))
-void hal_comm_begin(eglib_t *eglib);
-void hal_send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
-#define hal_send_data(eglib, bytes, length) (\
-	hal_send(eglib, EGLIB_HAL_DATA, bytes, length)\
+#define hal_DelayNs(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns))
+#define hal_DelayMs(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns * 1000 * 1000))
+#define hal_SetReset(eglib, state) ((eglib)->hal->set_reset(eglib, state))
+void hal_CommBegin(eglib_t *eglib);
+void hal_Send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
+#define hal_SendData(eglib, bytes, length) (\
+	hal_Send(eglib, EGLIB_HAL_DATA, bytes, length)\
 )
-#define hal_send_data_byte(eglib, bytes) (\
-	hal_send_data(eglib, &((uint8_t){bytes}), 1)\
+#define hal_SendDataByte(eglib, bytes) (\
+	hal_SendData(eglib, &((uint8_t){bytes}), 1)\
 )
-#define hal_send_commands(eglib, bytes, length) (\
-	hal_send(eglib, EGLIB_HAL_COMMAND, bytes, length)\
+#define hal_SendCommands(eglib, bytes, length) (\
+	hal_Send(eglib, EGLIB_HAL_COMMAND, bytes, length)\
 )
-#define hal_send_command_byte(eglib, bytes) (\
-	hal_send_commands(eglib, &((uint8_t){bytes}), 1)\
+#define hal_SendCommandByte(eglib, bytes) (\
+	hal_SendCommands(eglib, &((uint8_t){bytes}), 1)\
 )
-void hal_comm_end(eglib_t *eglib);
-#define hal_get_busy(eglib) ((eglib)->hal->get_busy(eglib))
-#define hal_wait_not_busy(eglib) while(!(hal_get_busy(eglib)))
+void hal_CommEnd(eglib_t *eglib);
+#define hal_GetBusy(eglib) ((eglib)->hal->get_busy(eglib))
+#define hal_WaitNotBusy(eglib) while(!(hal_GetBusy(eglib)))
 
 #endif

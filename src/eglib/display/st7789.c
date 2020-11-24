@@ -149,7 +149,7 @@ static void set_interface_pixel_format(eglib_t *eglib) {
 	st7789_config_t *display_config;
 	uint8_t interface_pixel_format;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	interface_pixel_format = 0;
 	switch(display_config->color) {
@@ -163,15 +163,15 @@ static void set_interface_pixel_format(eglib_t *eglib) {
 			interface_pixel_format |= ST7789_INTERFACE_PIXEL_FORMAT_COLOR_18BIT;
 			break;
 	}
-	hal_send_command_byte(eglib, ST7789_INTERFACE_PIXEL_FORMAT);
-	hal_send_data_byte(eglib, interface_pixel_format);
+	hal_SendCommandByte(eglib, ST7789_INTERFACE_PIXEL_FORMAT);
+	hal_SendDataByte(eglib, interface_pixel_format);
 }
 
 static void set_memory_data_access_control(eglib_t *eglib) {
 	st7789_config_t *display_config;
 	uint8_t memory_data_access_control;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	memory_data_access_control = 0;
 	switch(display_config->page_address) {
@@ -215,36 +215,36 @@ static void set_memory_data_access_control(eglib_t *eglib) {
 			memory_data_access_control |= ST7789_MEMORY_DATA_ACCESS_CONTROL_DISPLAY_DATA_LATCH_DATA_ORDER_LCD_REFRESH_RIGHT_TO_LEFT;
 			break;
 	}
-	hal_send_command_byte(eglib, ST7789_MEMORY_DATA_ACCESS_CONTROL);
-	hal_send_data_byte(eglib, memory_data_access_control);
+	hal_SendCommandByte(eglib, ST7789_MEMORY_DATA_ACCESS_CONTROL);
+	hal_SendDataByte(eglib, memory_data_access_control);
 }
 
 static void set_column_address(eglib_t *eglib, uint16_t x_start, uint16_t x_end) {
 	uint8_t buff[4];
 
-	hal_send_command_byte(eglib, ST7789_COLUMN_ADDRESS_SET);
+	hal_SendCommandByte(eglib, ST7789_COLUMN_ADDRESS_SET);
 	buff[0] = (x_start&0xFF00)>>8;
 	buff[1] = x_start&0xFF;
 	buff[2] = (x_end&0xFF00)>>8;
 	buff[3] = x_end&0xFF;
-	hal_send_data(eglib, buff, sizeof(buff));
+	hal_SendData(eglib, buff, sizeof(buff));
 }
 
 static void set_row_address(eglib_t *eglib, uint16_t y_start, uint16_t y_end) {
 	uint8_t buff[4];
 
-	hal_send_command_byte(eglib, ST7789_ROW_ADDRESS_SET);
+	hal_SendCommandByte(eglib, ST7789_ROW_ADDRESS_SET);
 	buff[0] = (y_start&0xFF00)>>8;
 	buff[1] = y_start&0xFF;
 	buff[2] = (y_end&0xFF00)>>8;
 	buff[3] = y_end&0xFF;
-	hal_send_data(eglib, buff, sizeof(buff));
+	hal_SendData(eglib, buff, sizeof(buff));
 }
 
 static uint8_t get_bits_per_pixel(eglib_t *eglib) {
 	st7789_config_t *display_config;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	switch(display_config->color) {
 		case ST7789_COLOR_12_BIT:
@@ -265,15 +265,15 @@ static void clear_memory(eglib_t *eglib) {
 	st7789_config_t *display_config;
 	uint32_t memory_size;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	memory_size = display_config->width * display_config->height * get_bits_per_pixel(eglib) / 8;
 
 	set_column_address(eglib, 0, display_config->width - 1);
 	set_row_address(eglib, 0, display_config->height - 1);
-	hal_send_command_byte(eglib, ST7789_MEMORY_WRITE);
+	hal_SendCommandByte(eglib, ST7789_MEMORY_WRITE);
 	for(uint32_t addr=0 ; addr < memory_size ; addr++)
-		hal_send_data_byte(eglib, 0x00);
+		hal_SendDataByte(eglib, 0x00);
 }
 
 //
@@ -282,23 +282,23 @@ static void clear_memory(eglib_t *eglib) {
 
 static void init(eglib_t *eglib) {
 	// Hardware reset
-	hal_set_reset(eglib, 0);
-	hal_delay_ms(eglib, ST7789_RESX_PULSE_MS);
-	hal_set_reset(eglib, 1);
-	hal_delay_ms(eglib, ST7789_RESX_CANCEL_MS);
+	hal_SetReset(eglib, 0);
+	hal_DelayMs(eglib, ST7789_RESX_PULSE_MS);
+	hal_SetReset(eglib, 1);
+	hal_DelayMs(eglib, ST7789_RESX_CANCEL_MS);
 
 	// Software reset
-	hal_comm_begin(eglib);
-	hal_send_command_byte(eglib, ST7789_SOFTWARE_RESET);
-	hal_comm_end(eglib);
-	hal_delay_ms(eglib, ST7789_SOFTWARE_RESET_DELAY_MS);
+	hal_CommBegin(eglib);
+	hal_SendCommandByte(eglib, ST7789_SOFTWARE_RESET);
+	hal_CommEnd(eglib);
+	hal_DelayMs(eglib, ST7789_SOFTWARE_RESET_DELAY_MS);
 
 	// comm begin
-	hal_comm_begin(eglib);
+	hal_CommBegin(eglib);
 
 	// Out of sleep mode
-	hal_send_command_byte(eglib, ST7789_SLEEP_OUT);
-	hal_delay_ms(eglib, ST7789_SLEEP_OUT_DELAY_MS);
+	hal_SendCommandByte(eglib, ST7789_SLEEP_OUT);
+	hal_DelayMs(eglib, ST7789_SLEEP_OUT_DELAY_MS);
 
 	// Set color mode
 	set_interface_pixel_format(eglib);
@@ -308,33 +308,33 @@ static void init(eglib_t *eglib) {
 
 	// Display inversion in practice works the opposite of what the datasheet
 	// says: on is off and off is on.
-	hal_send_command_byte(eglib, ST7789_DISPLAY_INVERSION_ON);
+	hal_SendCommandByte(eglib, ST7789_DISPLAY_INVERSION_ON);
 	// Datasheet states ST7789_NORMAL_DISPLAY_MODE_ON should be the default
 	// after sw reset, but unless we explicitly set it,
 	// ST7789_DISPLAY_INVERSION_ON will have no effect.
-	hal_send_command_byte(eglib, ST7789_NORMAL_DISPLAY_MODE_ON);
+	hal_SendCommandByte(eglib, ST7789_NORMAL_DISPLAY_MODE_ON);
 
 	// Clear RAM
 	clear_memory(eglib);
 
 	// Main screen turn on
-	hal_send_command_byte(eglib, ST7789_DISPLAY_ON);
+	hal_SendCommandByte(eglib, ST7789_DISPLAY_ON);
 
-	hal_comm_end(eglib);
+	hal_CommEnd(eglib);
 };
 
 static void sleep_in(eglib_t *eglib) {
-	hal_comm_begin(eglib);
-	hal_send_command_byte(eglib, ST7789_SLEEP_IN);
-	hal_comm_end(eglib);
-	hal_delay_ms(eglib, ST7789_SLEEP_IN_DELAY_MS);
+	hal_CommBegin(eglib);
+	hal_SendCommandByte(eglib, ST7789_SLEEP_IN);
+	hal_CommEnd(eglib);
+	hal_DelayMs(eglib, ST7789_SLEEP_IN_DELAY_MS);
 };
 
 static void sleep_out(eglib_t *eglib) {
-	hal_comm_begin(eglib);
-	hal_send_command_byte(eglib, ST7789_SLEEP_OUT);
-	hal_comm_end(eglib);
-	hal_delay_ms(eglib, ST7789_SLEEP_OUT_DELAY_MS);
+	hal_CommBegin(eglib);
+	hal_SendCommandByte(eglib, ST7789_SLEEP_OUT);
+	hal_CommEnd(eglib);
+	hal_DelayMs(eglib, ST7789_SLEEP_OUT_DELAY_MS);
 };
 
 static void get_dimension(
@@ -343,7 +343,7 @@ static void get_dimension(
 ) {
 	st7789_config_t *display_config;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	*width = display_config->width;;
 	*height = display_config->height;
@@ -352,7 +352,7 @@ static void get_dimension(
 static void get_pixel_format(eglib_t *eglib, pixel_format_t *pixel_format) {
 	st7789_config_t *display_config;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	switch(display_config->color) {
 		case ST7789_COLOR_12_BIT:
@@ -376,14 +376,14 @@ static void draw_pixel_color(
 	st7789_config_t *display_config;
 	uint8_t buff[3];
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
-	hal_comm_begin(eglib);
+	hal_CommBegin(eglib);
 
 	set_column_address(eglib, x, x);
 	set_row_address(eglib, y, y);
 
-	hal_send_command_byte(eglib, ST7789_MEMORY_WRITE);
+	hal_SendCommandByte(eglib, ST7789_MEMORY_WRITE);
 
 	switch(display_config->color) {
 		case ST7789_COLOR_12_BIT:
@@ -391,7 +391,7 @@ static void draw_pixel_color(
 			buff[0] |= (color.g & 0xf0) >> 4;
 			buff[1] = color.b & 0xf0;
 			for(uint8_t i=0 ; i < 2 ; i++)
-				hal_send_data_byte(eglib, buff[i]);
+				hal_SendDataByte(eglib, buff[i]);
 			break;
 		case ST7789_COLOR_16_BIT:
 			buff[0] = color.r & 0xf8;
@@ -399,20 +399,20 @@ static void draw_pixel_color(
 			buff[1] = (color.g >> 2) << 5;
 			buff[1] |= color.b >> 3;
 			for(uint8_t i=0 ; i < 2 ; i++)
-				hal_send_data_byte(eglib, buff[i]);
+				hal_SendDataByte(eglib, buff[i]);
 			break;
 		case ST7789_COLOR_18_BIT:
 			buff[0] = color.r & ~0x03;
 			buff[1] = color.g & ~0x03;
 			buff[2] = color.b & ~0x03;
 			for(uint8_t i=0 ; i < 3 ; i++)
-				hal_send_data_byte(eglib, buff[i]);
+				hal_SendDataByte(eglib, buff[i]);
 			break;
 		default:
 			while(true);
 	}
 
-	hal_comm_end(eglib);
+	hal_CommEnd(eglib);
 };
 
 static void send_buffer(
@@ -424,17 +424,17 @@ static void send_buffer(
 	st7789_config_t *display_config;
 	uint8_t *buffer = (uint8_t *)buffer_ptr;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	if((uint32_t)x * get_bits_per_pixel(eglib) % 8)
 		x -= 1;
 
-	hal_comm_begin(eglib);
+	hal_CommBegin(eglib);
 	set_column_address(eglib, x, x + width);
 	for(coordinate_t v=y ; v < y + height ; v++) {
 		set_row_address(eglib, v, v);
-		hal_send_command_byte(eglib, ST7789_MEMORY_WRITE);
-		hal_send_data(
+		hal_SendCommandByte(eglib, ST7789_MEMORY_WRITE);
+		hal_SendData(
 			eglib,
 			buffer + (
 				display_config->width * v + x
@@ -442,7 +442,7 @@ static void send_buffer(
 			(uint32_t)width * get_bits_per_pixel(eglib) / 8
 		);
 	}
-	hal_comm_end(eglib);
+	hal_CommEnd(eglib);
 }
 
 static bool refresh(eglib_t *eglib) {
@@ -478,22 +478,22 @@ const display_t st7789 = {
 // Custom functions
 //
 
-void st7789_set_display_inversion(eglib_t *eglib, bool inversion) {
-	hal_comm_begin(eglib);
+void st7789_SetDisplayInversion(eglib_t *eglib, bool inversion) {
+	hal_CommBegin(eglib);
 	if(inversion)
-		hal_send_command_byte(eglib, ST7789_DISPLAY_INVERSION_OFF);
+		hal_SendCommandByte(eglib, ST7789_DISPLAY_INVERSION_OFF);
 	else
-		hal_send_command_byte(eglib, ST7789_DISPLAY_INVERSION_ON);
-	hal_comm_end(eglib);
+		hal_SendCommandByte(eglib, ST7789_DISPLAY_INVERSION_ON);
+	hal_CommEnd(eglib);
 }
 
-void st7789_set_idle_mode(eglib_t *eglib, bool idle) {
-	hal_comm_begin(eglib);
+void st7789_SetIdleMode(eglib_t *eglib, bool idle) {
+	hal_CommBegin(eglib);
 	if(idle)
-		hal_send_command_byte(eglib, ST7789_IDLE_MODE_ON);
+		hal_SendCommandByte(eglib, ST7789_IDLE_MODE_ON);
 	else
-		hal_send_command_byte(eglib, ST7789_IDLE_MODE_OFF);
-	hal_comm_end(eglib);
+		hal_SendCommandByte(eglib, ST7789_IDLE_MODE_OFF);
+	hal_CommEnd(eglib);
 }
 
 // ST7789_WRITE_DISPLAY_BRIGHTNESS

@@ -148,7 +148,7 @@ static void init(eglib_t *eglib) {
 	pixel_format_t pixel_format;
 	coordinate_t width, height;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	get_pixel_format(eglib, &pixel_format);
 	get_dimension(eglib, &width, &height);
@@ -162,7 +162,7 @@ static void init(eglib_t *eglib) {
 static void sleep_in(eglib_t *eglib) {
 	frame_buffer_config_t *display_config;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	display_config->eglib_buffered.display->sleep_in(
 		&display_config->eglib_buffered
@@ -172,7 +172,7 @@ static void sleep_in(eglib_t *eglib) {
 static void sleep_out(eglib_t *eglib) {
 	frame_buffer_config_t *display_config;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	display_config->eglib_buffered.display->sleep_out(
 		&display_config->eglib_buffered
@@ -185,7 +185,7 @@ static void get_dimension(
 ) {
 	frame_buffer_config_t *display_config;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	display_config->eglib_buffered.display->get_dimension(
 		&display_config->eglib_buffered, width, height
@@ -195,7 +195,7 @@ static void get_dimension(
 static void get_pixel_format(eglib_t *eglib, pixel_format_t *pixel_format) {
 	frame_buffer_config_t *display_config;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	display_config->eglib_buffered.display->get_pixel_format(
 		&display_config->eglib_buffered, pixel_format
@@ -210,7 +210,7 @@ static void draw_pixel_color(
 	pixel_format_t pixel_format;
 	coordinate_t width, height;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	get_pixel_format(eglib, &pixel_format);
 	get_dimension(eglib, &width, &height);
@@ -240,7 +240,7 @@ static void send_buffer(
 static bool refresh(eglib_t *eglib) {
 	frame_buffer_config_t *display_config;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	return display_config->eglib_buffered.display->refresh(
 		&display_config->eglib_buffered
@@ -293,7 +293,7 @@ void eglib_FrameBuffer_Send(
 ) {
 	frame_buffer_config_t *display_config;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	display_config->eglib_buffered.display->send_buffer(
 		&display_config->eglib_buffered,

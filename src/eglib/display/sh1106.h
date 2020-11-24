@@ -123,9 +123,12 @@ extern const display_t sh1106_vdd1_2_4_v;
 // Custom Functions
 //
 
-void sh1106_set_start_line(eglib_t *eglib, uint8_t line);
-void sh1106_set_contrast(eglib_t *eglib, uint8_t contrast);
-void sh1106_entire_display_on(eglib_t *eglib, bool entire_display_on);
-void sh1106_reverse(eglib_t *eglib, bool reverse);
+void sh1106_SetStartLine(eglib_t *eglib, uint8_t line);
+
+void sh1106_SetContrast(eglib_t *eglib, uint8_t contrast);
+
+void sh1106_EntireDisplayOn(eglib_t *eglib, bool entire_display_on);
+
+void sh1106_Reverse(eglib_t *eglib, bool reverse);
 
 #endif

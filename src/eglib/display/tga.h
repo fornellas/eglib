@@ -10,6 +10,6 @@ typedef struct {
 
 extern const display_t tga;
 
-void tga_save(tga_config_t *config, char *path);
+void tga_Save(tga_config_t *config, char *path);
 
 #endif

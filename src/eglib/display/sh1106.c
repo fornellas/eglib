@@ -86,11 +86,11 @@ static inline void set_column_address(
 	sh1106_config_t *display_config;
 	uint8_t buff[2];
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	buff[0] = SH1106_SET_HIGHER_COLUMN_ADDRESS(column + display_config->column_offset);
 	buff[1] = SH1106_SET_LOWER_COLUMN_ADDRESS(column + display_config->column_offset);
-	hal_send_commands(eglib, buff, sizeof(buff));
+	hal_SendCommands(eglib, buff, sizeof(buff));
 }
 
 static inline void display_on(eglib_t *eglib) {
@@ -98,8 +98,8 @@ static inline void display_on(eglib_t *eglib) {
 		SH1106_DISPLAY_ON,
 	};
 
-	hal_send_commands(eglib, buff, sizeof(buff));
-	hal_delay_ms(eglib, SH1106_DISPLAY_ON_MS);
+	hal_SendCommands(eglib, buff, sizeof(buff));
+	hal_DelayMs(eglib, SH1106_DISPLAY_ON_MS);
 }
 
 // display_t
@@ -108,7 +108,7 @@ static uint8_t get_7bit_slave_addr(eglib_t *eglib, hal_dc_t dc) {
 	sh1106_config_t *display_config;
 
 	(void)dc;
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	return 0x3C | (display_config->sa0);
 }
@@ -116,18 +116,18 @@ static uint8_t get_7bit_slave_addr(eglib_t *eglib, hal_dc_t dc) {
 static void init(eglib_t *eglib) {
 	sh1106_config_t *display_config;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	// Hardware reset
 
-	hal_set_reset(eglib, 0);
-	hal_delay_ms(eglib, SH1106_RESET_LOW_MS);
-	hal_set_reset(eglib, 1);
-	hal_delay_ms(eglib, SH1106_RESET_HIGH_MS);
+	hal_SetReset(eglib, 0);
+	hal_DelayMs(eglib, SH1106_RESET_LOW_MS);
+	hal_SetReset(eglib, 1);
+	hal_DelayMs(eglib, SH1106_RESET_HIGH_MS);
 
 	// comm begin
 
-	hal_comm_begin(eglib);
+	hal_CommBegin(eglib);
 
 
 	uint8_t commands_init[] = {
@@ -172,31 +172,31 @@ static void init(eglib_t *eglib) {
 		),
 	};
 
-	hal_send_commands(eglib, commands_init, sizeof(commands_init));
+	hal_SendCommands(eglib, commands_init, sizeof(commands_init));
 
 
 	// Charge Pump Regulator
 	if(display_config->dc_dc_enable) {
-		hal_send_command_byte(eglib, SH1106_DC_DC_CONTROL_MODE_SET);
-		hal_send_command_byte(eglib, SH1106_DC_DC_ON);
-		hal_send_command_byte(eglib, SHH1106_SET_PUMP_VOLTAGE(display_config->dc_dc_voltage));
+		hal_SendCommandByte(eglib, SH1106_DC_DC_CONTROL_MODE_SET);
+		hal_SendCommandByte(eglib, SH1106_DC_DC_ON);
+		hal_SendCommandByte(eglib, SHH1106_SET_PUMP_VOLTAGE(display_config->dc_dc_voltage));
 	} else {
-		hal_send_command_byte(eglib, SH1106_DC_DC_CONTROL_MODE_SET);
-		hal_send_command_byte(eglib, SH1106_DC_DC_OFF);
+		hal_SendCommandByte(eglib, SH1106_DC_DC_CONTROL_MODE_SET);
+		hal_SendCommandByte(eglib, SH1106_DC_DC_OFF);
 	}
 
 	// Clear RAM
 	for(uint8_t page=0 ; page < (display_config->height / 8) ; page++) {
-		hal_send_command_byte(eglib, SH1106_SET_PAGE_ADDRESS(page));
+		hal_SendCommandByte(eglib, SH1106_SET_PAGE_ADDRESS(page));
 		set_column_address(eglib, 0);
 		for(coordinate_t column=0 ; column < display_config->width ; column ++)
-			hal_send_data_byte(eglib, 0x00);
+			hal_SendDataByte(eglib, 0x00);
 	}
 
 	// Set display on
 	display_on(eglib);
 
-	hal_comm_end(eglib);
+	hal_CommEnd(eglib);
 };
 
 static void sleep_in(eglib_t *eglib) {
@@ -215,7 +215,7 @@ static void get_dimension(
 ) {
 	sh1106_config_t *display_config;
 
-	display_config = display_get_config(eglib);
+	display_config = display_GetConfig(eglib);
 
 	*width = display_config->width;;
 	*height = display_config->height;
@@ -248,15 +248,15 @@ static void send_buffer(
 
 	buffer = (uint8_t *)buffer_ptr;
 
-	display_get_dimension(eglib, &display_width, &display_height);
+	display_GetDimension(eglib, &display_width, &display_height);
 
-	hal_comm_begin(eglib);
+	hal_CommBegin(eglib);
 	for(uint8_t page=y/8 ; page < ((y+height)/8+1) ; page++) {
-		hal_send_command_byte(eglib, SH1106_SET_PAGE_ADDRESS(page));
+		hal_SendCommandByte(eglib, SH1106_SET_PAGE_ADDRESS(page));
 		set_column_address(eglib, x);
-		hal_send_data(eglib, (buffer + page * display_width + x), width);
+		hal_SendData(eglib, (buffer + page * display_width + x), width);
 	}
-	hal_comm_end(eglib);
+	hal_CommEnd(eglib);
 }
 
 static bool refresh(eglib_t *eglib) {
@@ -266,47 +266,47 @@ static bool refresh(eglib_t *eglib) {
 
 // Custom Functions
 
-void sh1106_set_start_line(
+void sh1106_SetStartLine(
 	eglib_t *eglib,
 	uint8_t line
 ) {
-	hal_comm_begin(eglib);
-	hal_send_command_byte(eglib, SH1106_SET_DISPLAY_START_LINE(line));
-	hal_comm_end(eglib);
+	hal_CommBegin(eglib);
+	hal_SendCommandByte(eglib, SH1106_SET_DISPLAY_START_LINE(line));
+	hal_CommEnd(eglib);
 }
 
-void sh1106_set_contrast(
+void sh1106_SetContrast(
 	eglib_t *eglib,
 	uint8_t contrast
 ) {
-	hal_comm_begin(eglib);
-	hal_send_command_byte(eglib, SH1106_SET_CONTRAST_CONTROL_REGISTER);
-	hal_send_command_byte(eglib, contrast);
-	hal_comm_end(eglib);
+	hal_CommBegin(eglib);
+	hal_SendCommandByte(eglib, SH1106_SET_CONTRAST_CONTROL_REGISTER);
+	hal_SendCommandByte(eglib, contrast);
+	hal_CommEnd(eglib);
 }
 
-void sh1106_entire_display_on(
+void sh1106_EntireDisplayOn(
 	eglib_t *eglib,
 	bool entire_display_on
 ) {
-	hal_comm_begin(eglib);
+	hal_CommBegin(eglib);
 	if(entire_display_on)
-		hal_send_command_byte(eglib, SH1106_SET_ENTIRE_DISPLAY_ON);
+		hal_SendCommandByte(eglib, SH1106_SET_ENTIRE_DISPLAY_ON);
 	else
-		hal_send_command_byte(eglib, SH1106_SET_ENTIRE_DISPLAY_OFF);
-	hal_comm_end(eglib);
+		hal_SendCommandByte(eglib, SH1106_SET_ENTIRE_DISPLAY_OFF);
+	hal_CommEnd(eglib);
 }
 
-void sh1106_reverse(
+void sh1106_Reverse(
 	eglib_t *eglib,
 	bool reverse
 ) {
-	hal_comm_begin(eglib);
+	hal_CommBegin(eglib);
 	if(reverse)
-		hal_send_command_byte(eglib, SH1106_SET_REVERSE_DISPLAY);
+		hal_SendCommandByte(eglib, SH1106_SET_REVERSE_DISPLAY);
 	else
-		hal_send_command_byte(eglib, SH1106_SET_NORMAL_DISPLAY);
-	hal_comm_end(eglib);
+		hal_SendCommandByte(eglib, SH1106_SET_NORMAL_DISPLAY);
+	hal_CommEnd(eglib);
 }
 
 //
@@ -329,7 +329,7 @@ static void i2c_send(
 			i2c_write(eglib, bytes[i]);
 		}
 		// ReStart
-		hal_comm_begin(eglib);
+		hal_CommBegin(eglib);
 	} else {
 		for (uint16_t i = 0; i < length; i++){
 			// Control byte

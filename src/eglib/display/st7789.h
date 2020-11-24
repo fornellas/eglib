@@ -64,31 +64,4 @@ void st7789_set_display_inversion(eglib_t *eglib, bool inversion);
 
 void st7789_set_idle_mode(eglib_t *eglib, bool idle);
 
-// void st7789_write_display_brightness(eglib_t *eglib, uint8_t brightness);
-// #define ST7789_WRITE_DISPLAY_BRIGHTNESS 0x51
-
-// void st7789_set_brightness_control(
-// 	eglib_t *eglib,
-// 	bool brightness_control_block,
-// 	bool display_dimming,
-// 	bool backlight_control
-// );
-// #define ST7789_WRITE_CTRL_DISPLAY 0x53
-
-// #define ST7789_WRITE_CONTENT_ADAPTIVE_BRIGHTNESS_CONTROL_AND_COLOR_ENHANCEMENT 0x55
-// #define ST7789_WRITE_CABC_MINIMUM_BRIGHTNESS 0x5e
-
-// #define ST7789_PARTIAL_DISPLAY_MODE_ON 0x12
-// #define ST7789_NORMAL_DISPLAY_MODE_ON 0x13  // partial mode off
-// #define ST7789_PARTIAL_AREA 0x30
-
-// #define ST7789_VERTICAL_SCROLLING_DEFINITION 0x33
-// #define ST7789_VERTICAL_SCROLL_START_ADDRESS_OF_RAM 0x37
-
-// #define ST7789_TEARING_EFFECT_LINE_OFF 0x34
-// #define ST7789_TEARING_EFFECT_LINE_ON 0x35
-// #define ST7789_SET_TEAR_SCANLINE 0x44
-
-// #define ST7789_GAMMA_SET 0x26
-
 #endif

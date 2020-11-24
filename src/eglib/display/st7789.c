@@ -496,37 +496,22 @@ void st7789_set_idle_mode(eglib_t *eglib, bool idle) {
 	hal_comm_end(eglib);
 }
 
-// void st7789_write_display_brightness(eglib_t *eglib, uint8_t brightness) {
-// 	hal_comm_begin(eglib);
-// 	hal_send_command_byte(eglib, ST7789_WRITE_DISPLAY_BRIGHTNESS);
-// 	hal_send_data_byte(eglib, brightness);
-// 	hal_comm_end(eglib);
-// }
+// ST7789_WRITE_DISPLAY_BRIGHTNESS
 
-// void st7789_set_brightness_control(
-// 	eglib_t *eglib,
-// 	bool brightness_control_block,
-// 	bool display_dimming,
-// 	bool backlight_control
-// ) {
-// 	uint8_t ctrl_display=0;
+// ST7789_WRITE_CTRL_DISPLAY
 
-// 	if(brightness_control_block)
-// 		ctrl_display |= ST7789_WRITE_CTRL_DISPLAY_BRIGHTNESS_CONTROL_BLOCK_ON;
-// 	else
-// 		ctrl_display |= ST7789_WRITE_CTRL_DISPLAY_BRIGHTNESS_CONTROL_BLOCK_OFF;
-// 	if(display_dimming)
-// 		ctrl_display |= ST7789_WRITE_CTRL_DISPLAY_DIMMING_ON;
-// 	else
-// 		ctrl_display |= ST7789_WRITE_CTRL_DISPLAY_DIMMING_OFF;
-// 	if(backlight_control)
-// 		ctrl_display |= ST7789_WRITE_CTRL_DISPLAY_BACKLIGHT_CONTROL_ON;
-// 	else
-// 		ctrl_display |= ST7789_WRITE_CTRL_DISPLAY_BACKLIGHT_CONTROL_OFF;
+// ST7789_WRITE_CONTENT_ADAPTIVE_BRIGHTNESS_CONTROL_AND_COLOR_ENHANCEMENT
+// ST7789_WRITE_CABC_MINIMUM_BRIGHTNESS
 
-// 	hal_comm_begin(eglib);
-// 	hal_send_command_byte(eglib, ST7789_WRITE_CTRL_DISPLAY);
-// 	hal_send_data_byte(eglib, ctrl_display);
-// 	hal_comm_end(eglib);
-// }
-// #define ST7789_WRITE_CTRL_DISPLAY 0x53
+// ST7789_PARTIAL_DISPLAY_MODE_ON
+// ST7789_NORMAL_DISPLAY_MODE_ON
+// ST7789_PARTIAL_AREA
+
+// ST7789_VERTICAL_SCROLLING_DEFINITION
+// ST7789_VERTICAL_SCROLL_START_ADDRESS_OF_RAM
+
+// ST7789_TEARING_EFFECT_LINE_OFF
+// ST7789_TEARING_EFFECT_LINE_ON
+// ST7789_SET_TEAR_SCANLINE
+
+// ST7789_GAMMA_SET

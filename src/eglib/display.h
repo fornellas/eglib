@@ -11,7 +11,6 @@ typedef struct _display_struct display_t;
 struct _display_struct {
 	struct {
 		hal_four_wire_spi_config_comm_t *four_wire_spi;
-		hal_three_wire_spi_config_comm_t *three_wire_spi;
 		hal_i2c_config_comm_t *i2c;
 	} comm;
 	void (*init)(eglib_t *eglib);
@@ -42,9 +41,6 @@ struct _display_struct {
 
 #define display_get_hal_four_wire_spi_config_comm(eglib) (\
 	(eglib)->display->comm.four_wire_spi \
-)
-#define display_get_hal_three_wire_spi_config_comm(eglib) (\
-	(eglib)->display->comm.three_wire_spi \
 )
 #define display_get_hal_i2c_config_comm(eglib) (\
 	(eglib)->display->comm.i2c \

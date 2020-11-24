@@ -144,19 +144,20 @@ static void init(
 	rcc_periph_clock_enable(config->rcc_spi);
 
 	serial_clk_hz = 1000000000UL / (four_wire_spi_config_comm->sck_cycle_ns);
-	if(serial_clk_hz < (rcc_ahb_frequency / 128))
+
+	if(serial_clk_hz < (rcc_apb2_frequency / 128))
 		br = SPI_CR1_BAUDRATE_FPCLK_DIV_256;
-	else if(serial_clk_hz < (rcc_ahb_frequency / 64))
+	else if(serial_clk_hz < (rcc_apb2_frequency / 64))
 		br = SPI_CR1_BAUDRATE_FPCLK_DIV_128;
-	else if(serial_clk_hz < (rcc_ahb_frequency / 32))
+	else if(serial_clk_hz < (rcc_apb2_frequency / 32))
 		br = SPI_CR1_BAUDRATE_FPCLK_DIV_64;
-	else if(serial_clk_hz < (rcc_ahb_frequency / 16))
+	else if(serial_clk_hz < (rcc_apb2_frequency / 16))
 		br = SPI_CR1_BAUDRATE_FPCLK_DIV_32;
-	else if(serial_clk_hz < (rcc_ahb_frequency / 8))
+	else if(serial_clk_hz < (rcc_apb2_frequency / 8))
 		br = SPI_CR1_BAUDRATE_FPCLK_DIV_16;
-	else if(serial_clk_hz < (rcc_ahb_frequency / 4))
+	else if(serial_clk_hz < (rcc_apb2_frequency / 4))
 		br = SPI_CR1_BAUDRATE_FPCLK_DIV_8;
-	else if(serial_clk_hz < (rcc_ahb_frequency / 2))
+	else if(serial_clk_hz < (rcc_apb2_frequency / 2))
 		br = SPI_CR1_BAUDRATE_FPCLK_DIV_4;
 	else
 		br = SPI_CR1_BAUDRATE_FPCLK_DIV_2;

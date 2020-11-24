@@ -46,10 +46,8 @@ void eglib_Init(
 );
 
 void eglib_SleepIn(eglib_t *eglib);
-void eglib_SleepOut(eglib_t *eglib);
 
-coordinate_t eglib_GetWidth(eglib_t *eglib);
-coordinate_t eglib_GetHeight(eglib_t *eglib);
+void eglib_SleepOut(eglib_t *eglib);
 
 void eglib_SetClipRange(
 	eglib_t *eglib,

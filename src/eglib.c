@@ -1,4 +1,5 @@
 #include "eglib.h"
+#include "eglib/display.h"
 
 void eglib_Init(
 	eglib_t *eglib,
@@ -18,8 +19,8 @@ void eglib_Init(
 	eglib->clip.x = 0;
 	eglib->clip.y = 0;
 
-	eglib->clip.width = eglib_GetWidth(eglib);
-	eglib->clip.height = eglib_GetHeight(eglib);
+	eglib->clip.width = display_GetWidth(eglib);
+	eglib->clip.height = display_GetHeight(eglib);
 
 	for(size_t i=0 ; i < sizeof(eglib->color_index) / sizeof(*eglib->color_index) ; i++) {
 		eglib->color_index[i].r = 0;
@@ -39,22 +40,6 @@ void eglib_SleepIn(eglib_t *eglib) {
 void eglib_SleepOut(eglib_t *eglib) {
 	eglib->hal->sleep_out(eglib);
 	eglib->display->sleep_out(eglib);
-}
-
-coordinate_t eglib_GetWidth(eglib_t *eglib) {
-	coordinate_t width, heigh;
-
-	eglib->display->get_dimension(eglib, &width, &heigh);
-
-	return width;
-}
-
-coordinate_t eglib_GetHeight(eglib_t *eglib) {
-	coordinate_t width, heigh;
-
-	eglib->display->get_dimension(eglib, &width, &heigh);
-
-	return heigh;
 }
 
 void eglib_SetClipRange(

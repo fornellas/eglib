@@ -55,6 +55,11 @@ struct _display_struct {
 #define display_GetDimension(eglib, width, height) ( \
 	(eglib)->display->get_dimension(eglib, width, height) \
 )
+
+coordinate_t display_GetWidth(eglib_t *eglib);
+
+coordinate_t display_GetHeight(eglib_t *eglib);
+
 #define display_DrawPixelColor(eglib, x, y, color) ( \
 	(eglib)->display->draw_pixel_color(eglib, x, y, color) \
 )

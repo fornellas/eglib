@@ -1,5 +1,5 @@
-#ifndef EGLIB_HAL_4WIRE_SPI_NONE_H
-#define EGLIB_HAL_4WIRE_SPI_NONE_H
+#ifndef EGLIB_HAL_FOUR_WIRE_SPI_NONE_H
+#define EGLIB_HAL_FOUR_WIRE_SPI_NONE_H
 
 #include "../../hal.h"
 

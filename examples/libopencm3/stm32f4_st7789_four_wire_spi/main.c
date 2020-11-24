@@ -1,11 +1,11 @@
 #include <eglib.h>
-#include <eglib/hal/four_wire_spi/libopencm3_stm32f4.h>
 #include <eglib/display/frame_buffer.h>
 #include <eglib/display/st7789.h>
-#include <stdio.h>
-#include <libopencm3/stm32/rcc.h>
+#include <eglib/hal/four_wire_spi/libopencm3_stm32f4.h>
 #include <libopencm3/stm32/gpio.h>
+#include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/spi.h>
+#include <stdio.h>
 
 int main(void) {
 	eglib_t eglib;

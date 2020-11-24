@@ -1,9 +1,6 @@
 #ifndef EGLIB_DISPLAY_H
 #define EGLIB_DISPLAY_H
 
-struct _display_struct;
-typedef struct _display_struct display_t;
-
 #include "../eglib.h"
 #include "hal.h"
 

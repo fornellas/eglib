@@ -1,8 +1,7 @@
-#include "../eglib.h"
-
 #ifndef EGLIB_HAL_H
 #define EGLIB_HAL_H
 
+#include "../eglib.h"
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -66,11 +65,6 @@ typedef struct {
 
 // Common
 
-struct _hal;
-typedef struct _hal hal_t;
-
-#include "../eglib.h"
-
 struct _hal {
 	void (*init)(eglib_t *eglib);
 	void (*sleep_in)(eglib_t *eglib);
@@ -110,3 +104,5 @@ void hal_CommEnd(eglib_t *eglib);
 #define hal_WaitNotBusy(eglib) while(!(hal_GetBusy(eglib)))
 
 #endif
+
+#include "display.h"

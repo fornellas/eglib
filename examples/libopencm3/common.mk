@@ -93,3 +93,10 @@ clean-libopencm3:
 	$(MAKE) -C $(OPENCM3_DIR) clean
 
 clean: clean-libopencm3
+
+.PHONY: clean-bin
+clean-bin:
+	$(MAKE) -C $(OPENCM3_DIR) clean
+
+clean: clean-bin
+	rm -rf $(BUILD_DIR_PREFIX)

@@ -1,7 +1,7 @@
 #ifndef EGLIB_DRAWING_H
 #define EGLIB_DRAWING_H
 
-#include "eglib.h"
+#include "../eglib.h"
 
 /** Draw given pixel coordinates with given color. */
 void eglib_DrawPixelColor(eglib_t *eglib, coordinate_t x, coordinate_t y, color_t color);

@@ -1,7 +1,5 @@
 #include "hal.h"
 
-#include <stdio.h>
-
 void hal_CommBegin(eglib_t *eglib) {
 	eglib->hal_comm_active = true;
 	eglib->hal_i2c_send_slave_addr++;

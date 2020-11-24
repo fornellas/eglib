@@ -3,6 +3,7 @@
 
 #include "../hal.h"
 #include "../../eglib.h"
+#include "../display.h"
 
 typedef struct {
 	display_t frame_buffer;

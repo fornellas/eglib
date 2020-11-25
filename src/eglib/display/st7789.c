@@ -149,7 +149,7 @@ static void set_interface_pixel_format(eglib_t *eglib) {
 	st7789_config_t *display_config;
 	uint8_t interface_pixel_format;
 
-	display_config = display_GetConfig(eglib);
+	display_config = eglib_GetDisplayConfig(eglib);
 
 	interface_pixel_format = 0;
 	switch(display_config->color) {
@@ -171,7 +171,7 @@ static void set_memory_data_access_control(eglib_t *eglib) {
 	st7789_config_t *display_config;
 	uint8_t memory_data_access_control;
 
-	display_config = display_GetConfig(eglib);
+	display_config = eglib_GetDisplayConfig(eglib);
 
 	memory_data_access_control = 0;
 	switch(display_config->page_address) {
@@ -244,7 +244,7 @@ static void set_row_address(eglib_t *eglib, uint16_t y_start, uint16_t y_end) {
 static uint8_t get_bits_per_pixel(eglib_t *eglib) {
 	st7789_config_t *display_config;
 
-	display_config = display_GetConfig(eglib);
+	display_config = eglib_GetDisplayConfig(eglib);
 
 	switch(display_config->color) {
 		case ST7789_COLOR_12_BIT:
@@ -265,7 +265,7 @@ static void clear_memory(eglib_t *eglib) {
 	st7789_config_t *display_config;
 	uint32_t memory_size;
 
-	display_config = display_GetConfig(eglib);
+	display_config = eglib_GetDisplayConfig(eglib);
 
 	memory_size = display_config->width * display_config->height * get_bits_per_pixel(eglib) / 8;
 
@@ -343,7 +343,7 @@ static void get_dimension(
 ) {
 	st7789_config_t *display_config;
 
-	display_config = display_GetConfig(eglib);
+	display_config = eglib_GetDisplayConfig(eglib);
 
 	*width = display_config->width;;
 	*height = display_config->height;
@@ -352,7 +352,7 @@ static void get_dimension(
 static void get_pixel_format(eglib_t *eglib, pixel_format_t *pixel_format) {
 	st7789_config_t *display_config;
 
-	display_config = display_GetConfig(eglib);
+	display_config = eglib_GetDisplayConfig(eglib);
 
 	switch(display_config->color) {
 		case ST7789_COLOR_12_BIT:
@@ -376,7 +376,7 @@ static void draw_pixel_color(
 	st7789_config_t *display_config;
 	uint8_t buff[3];
 
-	display_config = display_GetConfig(eglib);
+	display_config = eglib_GetDisplayConfig(eglib);
 
 	eglib_CommBegin(eglib);
 
@@ -424,7 +424,7 @@ static void send_buffer(
 	st7789_config_t *display_config;
 	uint8_t *buffer = (uint8_t *)buffer_ptr;
 
-	display_config = display_GetConfig(eglib);
+	display_config = eglib_GetDisplayConfig(eglib);
 
 	if((uint32_t)x * get_bits_per_pixel(eglib) % 8)
 		x -= 1;

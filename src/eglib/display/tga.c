@@ -7,7 +7,7 @@
 static void init(eglib_t *eglib) {
 	tga_config_t *display_config;
 
-	display_config = display_GetConfig(eglib);
+	display_config = eglib_GetDisplayConfig(eglib);
 
 	display_config->tga_data = (uint8_t *)calloc(
 		display_config->width * display_config->height,
@@ -32,7 +32,7 @@ static void get_dimension(
 ) {
 	tga_config_t *display_config;
 
-	display_config = display_GetConfig(eglib);
+	display_config = eglib_GetDisplayConfig(eglib);
 
 	*width = display_config->width;
 	*height = display_config->height;
@@ -53,7 +53,7 @@ static void draw_pixel_color(
 	tga_config_t *display_config;
 	uint8_t *p;
 
-	display_config = display_GetConfig(eglib);
+	display_config = eglib_GetDisplayConfig(eglib);
 
 	if(x >= display_config->width || y >= display_config->height || x < 0 || y < 0)
 		return;
@@ -137,7 +137,7 @@ void tga_Save(eglib_t *eglib, char *path) {
 	tga_config_t *display_config;
 	FILE *fp;
 
-	display_config = display_GetConfig(eglib);
+	display_config = eglib_GetDisplayConfig(eglib);
 
 	fp = fopen(path, "wb");
 	if ( fp != NULL ) {

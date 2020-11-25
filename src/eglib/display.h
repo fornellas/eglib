@@ -29,7 +29,7 @@ struct display_comm_struct {
  * - :c:func:`eglib_CommEnd`.
  * - :c:func:`eglib_GetBusy`.
  *
- * :note: :c:func:`display_GetConfig` can be used to retrieve the HAL driver
+ * :note: :c:func:`eglib_GetDisplayConfig` can be used to retrieve the HAL driver
  *   configuration.
  *
  * Aliased as :c:type:`display_t`.
@@ -39,7 +39,7 @@ struct display_struct {
 	struct display_comm_struct comm;
 	/**
 	 * Pointer to a function that initializes the display based on the driver
-	 * configuration (:c:func:`display_GetConfig`)
+	 * configuration (:c:func:`eglib_GetDisplayConfig`)
 	 */
 	void (*init)(eglib_t *eglib);
 	/** Pointer to a function that puts the display in sleep mode. */
@@ -160,7 +160,7 @@ struct display_struct {
  * Returns a pointer to the display driver configuration that was passed to
  * :c:func:`eglib_Init`.
  */
-#define display_GetConfig(eglib) ((eglib)->display_config_ptr)
+#define eglib_GetDisplayConfig(eglib) ((eglib)->display_config_ptr)
 
 /**
  * Returns :c:type:`hal_four_wire_spi_config_t` for :c:type:`display_struct`

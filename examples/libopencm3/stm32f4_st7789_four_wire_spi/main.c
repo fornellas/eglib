@@ -9,6 +9,8 @@
 
 int main(void) {
 	eglib_t eglib;
+	eglib_t *eglib_st7789;
+
 	four_wire_spi_libopencm3_stm32f4_config_t  four_wire_spi_libopencm3_stm32f4_config = {
 		// rst
 		.rcc_rst = RCC_GPIOA,
@@ -34,6 +36,7 @@ int main(void) {
 		.port_mosi = GPIOA,
 		.gpio_mosi = GPIO7,
 	};
+
 	st7789_config_t st7789_config = {
 		.width = 240,
 		.height = 240,
@@ -47,14 +50,8 @@ int main(void) {
 
 	rcc_clock_setup_pll(&rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_84MHZ]);
 
-	// eglib_Init(
-	// 	&eglib,
-	// 	&four_wire_spi_libopencm3_stm32f4, &four_wire_spi_libopencm3_stm32f4_config,
-	// 	&st7789, &st7789_config
-	// );
-
 	frame_buffer_config_t frame_buffer_config;
-	eglib_Init_FrameBuffer(
+	eglib_st7789 = eglib_Init_FrameBuffer(
 		&eglib, &frame_buffer_config,
 		&four_wire_spi_libopencm3_stm32f4, &four_wire_spi_libopencm3_stm32f4_config,
 		&st7789, &st7789_config
@@ -81,9 +78,6 @@ int main(void) {
 		st7789_config.width / 8, st7789_config.height / 8,
 		3 * st7789_config.width / 4, 3 * st7789_config.height / 4
 	);
-	// eglib_FrameBuffer_Send(
-	// 	&eglib,
-	// 	0, 0,
-	// 	st7789_config.width - 1, st7789_config.height - 1
-	// );
+	
+	st7789_SetDisplayInversion(eglib_st7789, true);
 }

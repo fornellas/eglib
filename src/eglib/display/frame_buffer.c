@@ -251,7 +251,7 @@ static bool refresh(eglib_t *eglib) {
 // Extra
 //
 
-void eglib_Init_FrameBuffer(
+eglib_t *eglib_Init_FrameBuffer(
 	eglib_t *eglib,
 	frame_buffer_config_t *frame_buffer_config,
 	const hal_t *hal, void *hal_config_ptr,
@@ -284,6 +284,8 @@ void eglib_Init_FrameBuffer(
 		hal, hal_config_ptr,
 		frame_buffer, frame_buffer_config
 	);
+
+	return &frame_buffer_config->eglib_buffered;
 }
 
 void eglib_FrameBuffer_Send(

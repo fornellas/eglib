@@ -4,20 +4,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static uint8_t *tga_data = NULL;
-
 static void init(eglib_t *eglib) {
 	tga_config_t *display_config;
 
 	display_config = display_GetConfig(eglib);
 
-	if ( tga_data != NULL )
-		free(tga_data);
-	tga_data = (uint8_t *)calloc(
+	display_config->tga_data = (uint8_t *)calloc(
 		display_config->width * display_config->height,
-		3 * sizeof(uint8_t)
+		3
 	);
-	if ( tga_data == NULL )
+	if ( display_config->tga_data == NULL )
 		exit(1);
 }
 
@@ -62,10 +58,7 @@ static void draw_pixel_color(
 	if(x >= display_config->width || y >= display_config->height || x < 0 || y < 0)
 		return;
 
-	if ( tga_data == NULL )
-		return;
-
-	p = tga_data + (display_config->width-y-1)*display_config->height*3 + x*3;
+	p = (display_config->tga_data) + (display_config->width-y-1)*display_config->height*3 + x*3;
 	*p++ = color.b;
 	*p++ = color.g;
 	*p++ = color.r;
@@ -140,11 +133,14 @@ static void tga_write_word(FILE *fp, uint16_t word) {
 	tga_write_byte(fp, word>>8);
 }
 
-void tga_Save(tga_config_t *display_config, char *path) {
+void tga_Save(eglib_t *eglib, char *path) {
+	tga_config_t *display_config;
 	FILE *fp;
+
+	display_config = display_GetConfig(eglib);
+
 	fp = fopen(path, "wb");
-	if ( fp != NULL )
-	{
+	if ( fp != NULL ) {
 		tga_write_byte(fp, 0);		/* no ID */
 		tga_write_byte(fp, 0);		/* no color map */
 		tga_write_byte(fp, 2);		/* uncompressed true color */
@@ -157,7 +153,7 @@ void tga_Save(tga_config_t *display_config, char *path) {
 		tga_write_word(fp, display_config->height);		/* height */
 		tga_write_byte(fp, 24);		/* color depth */
 		tga_write_byte(fp, 0);
-		fwrite(tga_data, display_config->width * display_config->height * 3, 1, fp);
+		fwrite(display_config->tga_data, 3, display_config->width * display_config->height, fp);
 		tga_write_word(fp, 0);
 		tga_write_word(fp, 0);
 		tga_write_word(fp, 0);

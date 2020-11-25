@@ -3,13 +3,36 @@
 
 #include "../display.h"
 
+/**
+ * Configuration for :c:data:`tga`.
+ *
+ * :See also: :c:func:`eglib_Init`.
+ */
 typedef struct {
+	/** TGA width */
 	coordinate_t width;
+	/** TGA height */
 	coordinate_t height;
+	uint8_t *tga_data;
 } tga_config_t;
 
+/**
+ * TGA display driver.
+ *
+ * Buffers image in memory which can be written to a file with
+ * :c:func:`tga_Save`.
+ *
+ * This driver is mainly useful for testing.
+ *
+ * :See also: :c:func:`eglib_Init`.
+ */
 extern const display_t tga;
 
-void tga_Save(tga_config_t *config, char *path);
+/**
+ * Saves TGA to given file path.
+ *
+ * :See also: :c:data:`tga`.
+ */
+void tga_Save(eglib_t *eglib, char *path);
 
 #endif

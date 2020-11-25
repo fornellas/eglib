@@ -8,6 +8,9 @@
 #include <libopencm3/stm32/spi.h>
 
 int main(void) {
+	eglib_t eglib;
+	eglib_t *eglib_sh1106;
+
 	sh1106_config_t sh1106_config = {
 		// Display physical construction
 		.width = 128,
@@ -34,7 +37,6 @@ int main(void) {
 		.dc_dc_voltage = SHH1106_DC_DC_8_0_V,
 	};
 
-	eglib_t eglib;
 	frame_buffer_config_t frame_buffer_config;
 
 	four_wire_spi_libopencm3_stm32f4_config_t  four_wire_spi_libopencm3_stm32f4_config = {
@@ -65,7 +67,7 @@ int main(void) {
 
 	rcc_clock_setup_pll(&rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_84MHZ]);
 
-	eglib_Init_FrameBuffer(
+	eglib_sh1106 = eglib_Init_FrameBuffer(
 		&eglib, &frame_buffer_config,
 		&four_wire_spi_libopencm3_stm32f4, &four_wire_spi_libopencm3_stm32f4_config,
 		&sh1106_vdd1_2_4_v, &sh1106_config
@@ -77,4 +79,6 @@ int main(void) {
 	eglib_DrawLine(&eglib,0, sh1106_config.height-1, sh1106_config.width-1, 0);
 
 	eglib_FrameBuffer_Send(&eglib, 0, 0, sh1106_config.width-1, sh1106_config.height-1);
+
+	sh1106_Reverse(eglib_sh1106, true);
 }

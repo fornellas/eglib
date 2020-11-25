@@ -8,6 +8,7 @@
 
 int main(void) {
 	eglib_t eglib;
+	eglib_t *eglib_sh1106;
 	frame_buffer_config_t frame_buffer_config;
 
 	rcc_clock_setup_pll(&rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_84MHZ]);
@@ -54,7 +55,7 @@ int main(void) {
 		.sa0 = 0,
 	};
 
-	eglib_Init_FrameBuffer(
+	eglib_sh1106 = eglib_Init_FrameBuffer(
 		&eglib, &frame_buffer_config,
 		&i2c_libopencm3_stm32f4, &i2c_libopencm3_stm32f4_config,
 		&sh1106_vdd1_2_4_v, &sh1106_config
@@ -67,5 +68,5 @@ int main(void) {
 
 	eglib_FrameBuffer_Send(&eglib, 0, 0, sh1106_config.width-1, sh1106_config.height-1);
 
-	sh1106_Reverse(&eglib, true);
+	sh1106_Reverse(eglib_sh1106, true);
 }

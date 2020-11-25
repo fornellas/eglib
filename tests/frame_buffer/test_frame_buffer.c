@@ -11,17 +11,19 @@ int main(int argc, char *argv[]) {
 	};
 
 	eglib_t eglib;
+	eglib_t *eglib_tga;
 	frame_buffer_config_t frame_buffer_config;
 
 	coordinate_t width, height;
+	
+	setbuf(stdout, NULL);
 
-	eglib_Init_FrameBuffer(
+	eglib_tga = eglib_Init_FrameBuffer(
 		&eglib, &frame_buffer_config,
 		&four_wire_spi_none, NULL,
 		&tga, &tga_config
 	);
 
-	setbuf(stdout, NULL);
 
 	width = display_GetWidth(&eglib);
 	height = display_GetHeight(&eglib);
@@ -44,7 +46,7 @@ int main(int argc, char *argv[]) {
 	eglib_FrameBuffer_Send(&eglib, 0, 0, width - 1, height -1);
 
 	if(argc == 2)
-		tga_Save(&tga_config, argv[1]);
+		tga_Save(eglib_tga, argv[1]);
 	else
 		return 1;
 }

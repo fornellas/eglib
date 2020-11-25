@@ -1,6 +1,6 @@
 BUILD_DIR_PREFIX = bin
 BUILD_DIR = $(BUILD_DIR_PREFIX)/$(PROJECT)
-OPENCM3_DIR=$(abspath ../libopencm3)
+OPENCM3_DIR=$(abspath ../../../submodules/libopencm3/)
 
 include $(OPENCM3_DIR)/mk/genlink-config.mk
 # genlink-config.mk does not populate these variables first run,

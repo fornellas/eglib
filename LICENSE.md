@@ -1,3 +1,11 @@
+eglib codebase is composed of both original code and code imported from other projects.
+
+eglib original code
+===================
+
+All eglib originally written code (the bulk of it) is under the following license.
+
+```
                     GNU GENERAL PUBLIC LICENSE
                        Version 2, June 1991
 
@@ -337,3 +345,48 @@ proprietary programs.  If your program is a subroutine library, you may
 consider it more useful to permit linking proprietary applications with the
 library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.
+```
+
+ucglib
+======
+
+Parts of eglib codebase were heavily based on https://github.com/olikraus/ucglib:
+
+- TGA display driver.
+- Drawing functions.
+
+Those parts of the code are covered by the following license:
+
+```
+The Ucglib code (http://code.google.com/p/ucglib/) is licensed under the terms
+of the new-bsd license (two-clause bsd license).
+
+Universal 8bit Graphics Library (http://code.google.com/p/u8glib/)
+
+Copyright (c) 2014, olikraus@gmail.com
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, 
+are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this list 
+  of conditions and the following disclaimer.
+  
+* Redistributions in binary form must reproduce the above copyright notice, this 
+  list of conditions and the following disclaimer in the documentation and/or other 
+  materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+```

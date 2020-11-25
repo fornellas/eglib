@@ -209,6 +209,18 @@ struct display_struct {
 	(eglib)->display->get_dimension(eglib, width, height) \
 )
 
+/**
+ * Returns the pixel format used in-memory by the display.
+ *
+ * :param eglib: :c:type:`eglib_t` handle.
+ * :param pixel_format: Pointer to :c:type:`pixel_format_t` where to write
+ *   pixel format to.
+ * :return: :c:type:`pixel_format_t`.
+ */
+#define display_GetPixelFormat(eglib, pixel_format) ( \
+	(eglib)->display->get_pixel_format(eglib, pixel_format) \
+)
+
 /** Returns display width as :c:type:`coordinate_t`. */
 coordinate_t display_GetWidth(eglib_t *eglib);
 

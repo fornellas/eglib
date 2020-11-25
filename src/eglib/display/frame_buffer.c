@@ -304,3 +304,11 @@ void eglib_FrameBuffer_Send(
 		width, height
 	);
 }
+
+void frame_buffer_Free(eglib_t *eglib) {
+	frame_buffer_config_t *display_config;
+
+	display_config = display_GetConfig(eglib);
+
+	free(display_config->buffer);
+}

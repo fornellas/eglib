@@ -142,12 +142,15 @@ extern const sh1106_config_t sh1106_config_sparkfun_micro_oled;
 /**
  * SH1106 display driver.
  *
-  * This driver supports the following data buses:
+ * This driver supports the following data buses:
  *
  * - 4-Wire SPI.
  * - I2C.
  *
- * This version is to be used when VDD1 = 1.65 - 3.5V, TA= +25°C.
+ * This display driver does not support writing pixels directly to the display
+ * RAM and **must** be used in conjunction with :c:func:`eglib_Init_FrameBuffer`.
+ *
+ * This variant is to be used when VDD1 = 1.65 - 3.5V, TA= +25°C.
  *
  * :See also: :c:func:`eglib_Init`.
  * :See also: :c:data:`sh1106_vdd1_2_4_v`.
@@ -158,12 +161,15 @@ extern const display_t sh1106_vdd1_1_65_v;
 /**
  * SH1106 display driver.
  *
-  * This driver supports the following data buses:
+ * This driver supports the following data buses:
  *
  * - 4-Wire SPI.
  * - I2C.
  *
- * This version is to be used when VDD1 = 2.4 - 3.5V, TA= +25°C
+ * This display driver does not support writing pixels directly to the display
+ * RAM and **must** be used in conjunction with :c:func:`eglib_Init_FrameBuffer`.
+ *
+ * This variant is to be used when VDD1 = 2.4 - 3.5V, TA= +25°C
  *
  * :See also: :c:func:`eglib_Init`.
  * :See also: :c:data:`sh1106_vdd1_1_65_v`.

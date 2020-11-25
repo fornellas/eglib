@@ -35,10 +35,10 @@ struct _eglib_struct {
  * :param eglib: Pointer to :c:type:`eglib_t` to be initialized.
  * :param hal: Pointer to the HAL driver :c:type:`hal_t` to use.
  * :param hal_driver_config_ptr: Pointer to the HAL driver configuration.
- *  Please refer each HAL driver documentation for details.
+ *   Please refer each HAL driver documentation for details.
  * :param display: Pointer to the display driver :c:type:`display_t` to use.
  * :param display_config_ptr: Pointer to the display driver configuration.
- *  Please refer each display driver documentation for details.
+ *   Please refer each display driver documentation for details.
  */
 void eglib_Init(
 	eglib_t *eglib,

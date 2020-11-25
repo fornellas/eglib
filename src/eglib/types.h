@@ -7,6 +7,9 @@
 
 /**
  * Pixel format used in-memory by displays.
+ *
+ * :note: some formats have a difference between the color depth and the bit
+ *  depth in memory!
  */
 typedef enum {
 	/**
@@ -14,13 +17,17 @@ typedef enum {
 	 * is a page: MSB bits are the upper line, LSB bits are the lower line.
 	 */
 	PIXEL_FORMAT_1BIT_BW_PAGED,
-	/** RRRRGGGG BBBBRRRR GGGGBBBB */
+	/** ``RRRRGGGG BBBBRRRR GGGGBBBB`` */
 	PIXEL_FORMAT_12BIT_RGB,
-	/** RRRRRGGG GGGBBBBB */
+	/** ``RRRRRGGG GGGBBBBB`` */
 	PIXEL_FORMAT_16BIT_RGB,
-	/** RRRRRRxx GGGGGGxx BBBBBBxx */
+	/**
+	 * ``RRRRRRxx GGGGGGxx BBBBBBxx``
+	 *
+	 * :note: the color depth is 18bit but the bit depth in memory is 24bit!
+	 */
 	PIXEL_FORMAT_18BIT_RGB_24BIT,
-	/** RRRRRRRR GGGGGGGG BBBBBBBB */
+	/** ``RRRRRRRR GGGGGGGG BBBBBBBB`` */
 	PIXEL_FORMAT_24BIT_RGB,
 	PIXEL_FORMAT_COUNT,
 } pixel_format_t;

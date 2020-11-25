@@ -1,4 +1,4 @@
-drawing.h
-=========
+eglib/drawing.h
+===============
 
-.. c:autodoc:: drawing.h
+.. c:autodoc:: eglib/drawing.h

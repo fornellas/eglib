@@ -452,7 +452,7 @@ static bool refresh(eglib_t *eglib) {
 
 const display_t st7789 = {
 	.comm = {
-		.four_wire_spi = &((hal_four_wire_spi_config_comm_t){
+		.four_wire_spi = &((hal_four_wire_spi_config_t){
 		    .bit_numbering = HAL_MSB_FIRST,
 		    .cs_setup_ns = 15,
 		    .cs_hold_ns = 15,

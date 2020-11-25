@@ -340,7 +340,7 @@ static void i2c_send(
 	}
 }
 
-static hal_i2c_config_comm_t hal_i2c_config_comm = {
+static hal_i2c_config_t hal_i2c_config = {
 	.speed = HAL_I2C_400KHZ,
 	.get_7bit_slave_addr = get_7bit_slave_addr,
 	.send = i2c_send,
@@ -348,7 +348,7 @@ static hal_i2c_config_comm_t hal_i2c_config_comm = {
 
 const display_t sh1106_vdd1_1_65_v = {
 	.comm = {
-		.four_wire_spi = &((hal_four_wire_spi_config_comm_t){
+		.four_wire_spi = &((hal_four_wire_spi_config_t){
 			.mode = 0,
 			.bit_numbering = HAL_MSB_FIRST,
 			.cs_setup_ns = 240,
@@ -358,7 +358,7 @@ const display_t sh1106_vdd1_1_65_v = {
 			.dc_hold_ns = 300,
 			.sck_cycle_ns = 500,
 		}),
-		.i2c = &hal_i2c_config_comm,
+		.i2c = &hal_i2c_config,
 	},
 	.init = init,
 	.sleep_in = sleep_in,
@@ -372,7 +372,7 @@ const display_t sh1106_vdd1_1_65_v = {
 
 const display_t sh1106_vdd1_2_4_v = {
 	.comm = {
-		.four_wire_spi = &((hal_four_wire_spi_config_comm_t){
+		.four_wire_spi = &((hal_four_wire_spi_config_t){
 			.mode = 0,
 			.bit_numbering = HAL_MSB_FIRST,
 			.cs_setup_ns = 120,
@@ -382,7 +382,7 @@ const display_t sh1106_vdd1_2_4_v = {
 			.dc_hold_ns = 150,
 			.sck_cycle_ns = 250,
 		}),
-		.i2c = &hal_i2c_config_comm,
+		.i2c = &hal_i2c_config,
 	},
 	.init = init,
 	.sleep_in = sleep_in,

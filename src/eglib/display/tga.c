@@ -108,7 +108,7 @@ static bool refresh(eglib_t *eglib) {
 	return false;
 }
 
-static hal_four_wire_spi_config_comm_t four_wire_spi_config = {
+static hal_four_wire_spi_config_t four_wire_spi_config = {
 		.mode = 0,
 		.bit_numbering = HAL_MSB_FIRST,
 		.cs_setup_ns = 0,

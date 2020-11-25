@@ -16,7 +16,7 @@ static void set_dc(
 	bool state
 ) {
 	four_wire_spi_libopencm3_stm32f4_config_t *config;
-	hal_four_wire_spi_config_comm_t *four_wire_spi_config_comm;
+	hal_four_wire_spi_config_t *four_wire_spi_config_comm;
 
 	config = hal_GetConfig(eglib);
 	four_wire_spi_config_comm = display_GetHalFourWireSpiConfigComm(eglib);
@@ -41,7 +41,7 @@ static void set_cs(
 	bool state
 ) {
 	four_wire_spi_libopencm3_stm32f4_config_t *config;
-	hal_four_wire_spi_config_comm_t *four_wire_spi_config_comm;
+	hal_four_wire_spi_config_t *four_wire_spi_config_comm;
 
 	config = hal_GetConfig(eglib);
 	four_wire_spi_config_comm = display_GetHalFourWireSpiConfigComm(eglib);
@@ -71,7 +71,7 @@ static void init(
 	eglib_t *eglib
 ) {
 	four_wire_spi_libopencm3_stm32f4_config_t *config;
-	hal_four_wire_spi_config_comm_t *four_wire_spi_config_comm;
+	hal_four_wire_spi_config_t *four_wire_spi_config_comm;
 	uint32_t serial_clk_hz;
 	uint32_t br;
 	uint32_t cpol = 0;

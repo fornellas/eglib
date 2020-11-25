@@ -4,10 +4,15 @@
 #include "../eglib.h"
 #include "hal.h"
 
-struct _display_struct {
+/**
+ * Display driver definition.
+ *
+ * Aliased as :c:type:`display_t`.
+ */
+struct display_struct {
 	struct {
-		hal_four_wire_spi_config_comm_t *four_wire_spi;
-		hal_i2c_config_comm_t *i2c;
+		hal_four_wire_spi_config_t *four_wire_spi;
+		hal_i2c_config_t *i2c;
 	} comm;
 	void (*init)(eglib_t *eglib);
 	void (*sleep_in)(eglib_t *eglib);

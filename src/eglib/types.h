@@ -51,10 +51,14 @@ struct _eglib_struct;
  */
 typedef struct _eglib_struct eglib_t;
 
-struct _hal;
-typedef struct _hal hal_t;
+struct hal_struct;
 
-struct _display_struct;
-typedef struct _display_struct display_t;
+/** Alias for :c:type:`hal_struct`. */
+typedef struct hal_struct hal_t;
+
+struct display_struct;
+
+/** Alias for :c:type:`display_struct`. */
+typedef struct display_struct display_t;
 
 #endif

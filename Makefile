@@ -1,6 +1,7 @@
 MAKEFILES += src/Makefile
-MAKEFILES += $(wildcard examples/libopencm3/*_*/Makefile)
 MAKEFILES += $(wildcard tests/*/Makefile)
+MAKEFILES += $(wildcard examples/libopencm3/*_*/Makefile)
+MAKEFILES += docs/Makefile
 
 MAKE_ALL = $(addsuffix -all,$(MAKEFILES))
 MAKE_CLEAN = $(addsuffix -clean,$(MAKEFILES))

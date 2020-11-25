@@ -276,6 +276,40 @@ static void clear_memory(eglib_t *eglib) {
 		eglib_SendDataByte(eglib, 0x00);
 }
 
+static void send_pixel(eglib_t *eglib, color_t color) {
+	st7789_config_t *display_config;
+	uint8_t buff[3];
+
+	display_config = eglib_GetDisplayConfig(eglib);
+
+	switch(display_config->color) {
+		case ST7789_COLOR_12_BIT:
+			buff[0] = color.r & 0xf0;
+			buff[0] |= (color.g & 0xf0) >> 4;
+			buff[1] = color.b & 0xf0;
+			for(uint8_t i=0 ; i < 2 ; i++)
+				eglib_SendDataByte(eglib, buff[i]);
+			break;
+		case ST7789_COLOR_16_BIT:
+			buff[0] = color.r & 0xf8;
+			buff[0] |= color.g >> 5;
+			buff[1] = (color.g >> 2) << 5;
+			buff[1] |= color.b >> 3;
+			for(uint8_t i=0 ; i < 2 ; i++)
+				eglib_SendDataByte(eglib, buff[i]);
+			break;
+		case ST7789_COLOR_18_BIT:
+			buff[0] = color.r & ~0x03;
+			buff[1] = color.g & ~0x03;
+			buff[2] = color.b & ~0x03;
+			for(uint8_t i=0 ; i < 3 ; i++)
+				eglib_SendDataByte(eglib, buff[i]);
+			break;
+		default:
+			while(true);
+	}
+}
+
 //
 // Display
 //
@@ -373,11 +407,6 @@ static void draw_pixel_color(
 	eglib_t *eglib,
 	coordinate_t x, coordinate_t y, color_t color
 ) {
-	st7789_config_t *display_config;
-	uint8_t buff[3];
-
-	display_config = eglib_GetDisplayConfig(eglib);
-
 	eglib_CommBegin(eglib);
 
 	set_column_address(eglib, x, x);
@@ -385,35 +414,40 @@ static void draw_pixel_color(
 
 	eglib_SendCommandByte(eglib, ST7789_MEMORY_WRITE);
 
-	switch(display_config->color) {
-		case ST7789_COLOR_12_BIT:
-			buff[0] = color.r & 0xf0;
-			buff[0] |= (color.g & 0xf0) >> 4;
-			buff[1] = color.b & 0xf0;
-			for(uint8_t i=0 ; i < 2 ; i++)
-				eglib_SendDataByte(eglib, buff[i]);
-			break;
-		case ST7789_COLOR_16_BIT:
-			buff[0] = color.r & 0xf8;
-			buff[0] |= color.g >> 5;
-			buff[1] = (color.g >> 2) << 5;
-			buff[1] |= color.b >> 3;
-			for(uint8_t i=0 ; i < 2 ; i++)
-				eglib_SendDataByte(eglib, buff[i]);
-			break;
-		case ST7789_COLOR_18_BIT:
-			buff[0] = color.r & ~0x03;
-			buff[1] = color.g & ~0x03;
-			buff[2] = color.b & ~0x03;
-			for(uint8_t i=0 ; i < 3 ; i++)
-				eglib_SendDataByte(eglib, buff[i]);
-			break;
-		default:
-			while(true);
-	}
+	send_pixel(eglib, color);
 
 	eglib_CommEnd(eglib);
 };
+
+static void draw_line(
+	eglib_t *eglib,
+	coordinate_t x,
+	coordinate_t y,
+	display_line_direction_t direction,
+	coordinate_t length,
+	color_t (*get_next_color)(eglib_t *eglib)
+) {
+	if(direction == DISPLAY_LINE_DIRECTION_RIGHT) {
+		eglib_CommBegin(eglib);
+
+		set_column_address(eglib, x, x + length);
+		set_row_address(eglib, y, y);
+
+		eglib_SendCommandByte(eglib, ST7789_MEMORY_WRITE);
+
+		while(length--)
+			send_pixel(eglib, get_next_color(eglib));
+
+		eglib_CommEnd(eglib);
+	} else {
+		display_default_draw_line(
+			eglib,
+			x, y,
+			direction, length,
+			get_next_color
+		);
+	}
+}
 
 static void send_buffer(
 	eglib_t *eglib,
@@ -453,14 +487,14 @@ static bool refresh(eglib_t *eglib) {
 const display_t st7789 = {
 	.comm = {
 		.four_wire_spi = &((hal_four_wire_spi_config_t){
-		    .bit_numbering = HAL_MSB_FIRST,
-		    .cs_setup_ns = 15,
-		    .cs_hold_ns = 15,
-		    .cs_disable_ns = 40,
-		    .dc_setup_ns = 10,
-		    .dc_hold_ns = 10,
-		    .sck_cycle_ns = 66,  // 15.1MHz Datasheet
-		    // .sck_cycle_ns = 47, // 21.2MHz Overclock
+			.bit_numbering = HAL_MSB_FIRST,
+			.cs_setup_ns = 15,
+			.cs_hold_ns = 15,
+			.cs_disable_ns = 40,
+			.dc_setup_ns = 10,
+			.dc_hold_ns = 10,
+			.sck_cycle_ns = 66,  // 15.1MHz Datasheet
+			// .sck_cycle_ns = 47, // 21.2MHz Overclock
 		}),
 		.i2c = NULL,
 	},
@@ -470,6 +504,7 @@ const display_t st7789 = {
 	.get_dimension = get_dimension,
 	.get_pixel_format = get_pixel_format,
 	.draw_pixel_color = draw_pixel_color,
+	.draw_line = draw_line,
 	.send_buffer = send_buffer,
 	.refresh = refresh,
 };

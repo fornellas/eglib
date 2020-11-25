@@ -120,6 +120,7 @@ const display_t tga = {
 	.get_dimension = get_dimension,
 	.get_pixel_format = get_pixel_format,
 	.draw_pixel_color = draw_pixel_color,
+	.draw_line = display_default_draw_line,
 	.send_buffer = send_buffer,
 	.refresh = refresh,
 };

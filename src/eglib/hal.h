@@ -206,8 +206,11 @@ struct hal_struct {
  */
 #define eglib_GetHalConfig(eglib) ((eglib)->hal_config_ptr)
 
+
 /**
  * Whether in between calls to :c:func:`eglib_CommBegin` and :c:func:`eglib_CommEnd`.
+ *
+ * :note: Used by HAL drivers :c:type:`hal_t`.
  */
 #define eglib_IsCommActive(eglib) ((eglib)->hal_comm_active)
 
@@ -215,6 +218,7 @@ struct hal_struct {
  * Whether I2C slave address should be sent.
  *
  * See ``send`` attribute at :c:type:`hal_struct`.
+ * :note: Used by I2C HAL drivers :c:type:`hal_t`.
  */
 #define eglib_ShouldSendI2cSlaveAddr(eglib) ((eglib)->hal_i2c_send_slave_addr)
 
@@ -224,10 +228,18 @@ struct hal_struct {
 /** Delay for given number of milliseconds */
 #define eglib_DelayMs(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns * 1000 * 1000))
 
-/** Set reset line to given state */
+/**
+ * Set reset line to given state.
+ *
+ * :note: Used by display drivers :c:type:`display_t`.
+ */
 #define eglib_SetReset(eglib, state) ((eglib)->hal->set_reset(eglib, state))
 
-/** Initiates communication. Must be called before :c:func:`eglib_Send`. */
+/**
+ * Initiates communication. Must be called before :c:func:`eglib_Send`.
+ *
+ * :note: Used by display drivers :c:type:`display_t`.
+ */
 void eglib_CommBegin(eglib_t *eglib);
 
 /**
@@ -237,6 +249,8 @@ void eglib_CommBegin(eglib_t *eglib);
  * :param dc: Whether bytes are command or data (:c:type:`hal_dc_t`).
  * :param bytes: Pointer to an array of bytes to send.
  * :param length: Number of bytes to send.
+ *
+ * :note: Used by display drivers :c:type:`display_t`.
  */
 void eglib_Send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
 
@@ -244,6 +258,8 @@ void eglib_Send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
  * Sends data.
  *
  * :See also: :c:func:`eglib_Send`.
+ *
+ * :note: Used by display drivers :c:type:`display_t`.
  */
 #define eglib_SendData(eglib, bytes, length) (\
 	eglib_Send(eglib, HAL_DATA, bytes, length)\
@@ -253,6 +269,8 @@ void eglib_Send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
  * Sends a single data byte.
  *
  * :See also: :c:func:`eglib_Send`.
+ *
+ * :note: Used by display drivers :c:type:`display_t`.
  */
 #define eglib_SendDataByte(eglib, bytes) (\
 	eglib_SendData(eglib, &((uint8_t){bytes}), 1)\
@@ -262,6 +280,8 @@ void eglib_Send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
  * Sends commands.
  *
  * :See also: :c:func:`eglib_Send`.
+ *
+ * :note: Used by display drivers :c:type:`display_t`.
  */
 #define eglib_SendCommands(eglib, bytes, length) (\
 	eglib_Send(eglib, HAL_COMMAND, bytes, length)\
@@ -271,16 +291,24 @@ void eglib_Send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
  * Sends a single command byte.
  *
  * :See also: :c:func:`eglib_Send`.
+ *
+ * :note: Used by display drivers :c:type:`display_t`.
  */
 #define eglib_SendCommandByte(eglib, bytes) (\
 	eglib_SendCommands(eglib, &((uint8_t){bytes}), 1)\
 )
 
-/** Ends communication. */
+/**
+ * Ends communication.
+ *
+ * :note: Used by display drivers :c:type:`display_t`.
+ */
 void eglib_CommEnd(eglib_t *eglib);
 
 /**
  * Get the value of th busy data line, often found in e-ink / e-paper displays.
+ *
+ * :note: Used by display drivers :c:type:`display_t`.
  */
 #define eglib_GetBusy(eglib) ((eglib)->hal->get_busy(eglib))
 

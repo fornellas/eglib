@@ -25,9 +25,9 @@ typedef struct {
 	/** Optional: busy line GPIO (eg: ``GPIO4``). */
 	uint16_t gpio_busy;
 
-	/** I2C RCC GPIO (eg: ``RCC_GPIOB``) */
+	/** I2C RCC GPIO (eg: ``RCC_GPIOB``). */
 	enum rcc_periph_clken rcc_gpio_i2c;
-	/** I2C PORT (eg: ``GPIOB``) */
+	/** I2C PORT (eg: ``GPIOB``). */
 	uint32_t port_i2c;
 	/** I2C SCL GPIO (eg: ``GPIO8``). */
 	uint16_t gpio_scl;

@@ -42,7 +42,7 @@ int main(void) {
 		.rcc_rst = RCC_GPIOA,
 		.port_rst = GPIOA,
 		.gpio_rst = GPIO4,
-		// cd
+		// dc
 		.rcc_dc = RCC_GPIOA,
 		.port_dc = GPIOA,
 		.gpio_dc = GPIO3,

@@ -84,6 +84,7 @@ typedef struct {
 	 *
 	 * :param eglib: :c:type:`eglib_t` handle.
 	 * :param dc: Whether address command or data (:c:type:`hal_dc_t`).
+	 * :return: 7-bit slave address.
 	 *
 	 * See :c:type:`hal_dc_t`.
 	 */
@@ -129,7 +130,11 @@ struct hal_struct {
 	 * Pointer to a function that initializes the peripheral based on:
 	 *
 	 *  - The HAL driver configuration (:c:func:`hal_GetConfig`).
-	 *  - The Display driver (:c:func:`display_GetHalFourWireSpiConfigComm`)
+	 *  - The Display driver bus configuration:
+	 *
+	 *   - **4-Wire SPI**: (:c:func:`display_GetHalFourWireSpiConfigComm`).
+	 *   - **I2C**: (:c:func:`display_GetHalI2cConfigComm`).
+	 *
 	 */
 	void (*init)(eglib_t *eglib);
 	/** Pointer to a function that puts the peripheral in sleep mode. */
@@ -156,21 +161,21 @@ struct hal_struct {
 	 *
 	 *  - **4-Wire SPI**: asserts CS.
 	 *  - **I2C**: sends start condition.
-	 *    - When called more than one time before ending communication
-	 *    (:c:func:`hal_CommEnd`) sends restart condition.
+	 *
+	 *   - When called more than one time before ending communication
+	 *     (:c:func:`hal_CommEnd`) sends restart condition.
 	 *
 	 * Can be called from the display driver (:c:type:`display_struct`) with
 	 * :c:func:`hal_CommBegin`.
 	 */
 	void (*comm_begin)(eglib_t *eglib);
-	// hal_ShouldSendI2cSlaveAddr
 	/**
 	 * Sends data. Depending on the bus, additional things must happen prior to
 	 * sending the data:
 	 *
 	 *  - **4-Wire SPI**: Set data or command line.
 	 *  - **I2C**: if :c:func:`hal_ShouldSendI2cSlaveAddr` returns true then the
-	 *    slave address must be sent.
+	 *    slave address :c:func:`display_GetI2c7bitSlaveAddr` must be sent.
 	 *
 	 * :param eglib: :c:type:`eglib_t` handle.
 	 * :param dc: Whether bytes are command or data (:c:type:`hal_dc_t`).
@@ -278,13 +283,6 @@ void hal_CommEnd(eglib_t *eglib);
  * Get the value of th busy data line, often found in e-ink / e-paper displays.
  */
 #define hal_GetBusy(eglib) ((eglib)->hal->get_busy(eglib))
-
-/**
- * Busy wait until busy data line is high.
- *
- * See :c:func:`hal_GetBusy`.
- */
-#define hal_WaitNotBusy(eglib) while(!(hal_GetBusy(eglib)))
 
 #endif
 

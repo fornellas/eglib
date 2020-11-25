@@ -15,6 +15,7 @@ void eglib_Init(
 
 	eglib->display = display;
 	eglib->display_config_ptr = display_config_ptr;
+	eglib->display_refreshing = false;
 
 	eglib->clip.x = 0;
 	eglib->clip.y = 0;

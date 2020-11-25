@@ -16,6 +16,7 @@ struct _eglib_struct {
 	// Display
 	const display_t *display;
 	void *display_config_ptr;
+	bool display_refreshing : 1;
 
 	// Drawing
 	struct {

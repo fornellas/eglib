@@ -24,6 +24,10 @@ typedef struct {
  *
  * This driver is mainly useful for testing.
  *
+ * This driver supports the following data buses:
+ *
+ * - 4-Wire SPI.
+ *
  * :See also: :c:func:`eglib_Init`.
  */
 extern const display_t tga;

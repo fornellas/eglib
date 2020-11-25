@@ -18,7 +18,7 @@ static void set_dc(
 	four_wire_spi_libopencm3_stm32f4_config_t *config;
 	hal_four_wire_spi_config_t *four_wire_spi_config_comm;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 	four_wire_spi_config_comm = display_GetHalFourWireSpiConfigComm(eglib);
 
 	wait_spi_not_busy(config->spi);
@@ -43,7 +43,7 @@ static void set_cs(
 	four_wire_spi_libopencm3_stm32f4_config_t *config;
 	hal_four_wire_spi_config_t *four_wire_spi_config_comm;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 	four_wire_spi_config_comm = display_GetHalFourWireSpiConfigComm(eglib);
 
 	wait_spi_not_busy(config->spi);
@@ -78,7 +78,7 @@ static void init(
 	uint32_t cpha = 0;
 	uint32_t lsbfirst = 0;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 	four_wire_spi_config_comm = display_GetHalFourWireSpiConfigComm(eglib);
 
 	rcc_periph_clock_enable(config->rcc_rst);
@@ -207,7 +207,7 @@ static void sleep_in(
 ) {
 	four_wire_spi_libopencm3_stm32f4_config_t *config;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	spi_disable(config->spi);
 }
@@ -233,7 +233,7 @@ static void set_reset(
 ) {
 	four_wire_spi_libopencm3_stm32f4_config_t *config;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	if(!(config->rcc_rst))
 		return;
@@ -256,7 +256,7 @@ static void send(
 ) {
 	four_wire_spi_libopencm3_stm32f4_config_t *config;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	set_dc(eglib, dc);
 	
@@ -268,7 +268,7 @@ static void send(
 static void comm_end(eglib_t *eglib) {
 	four_wire_spi_libopencm3_stm32f4_config_t *config;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	wait_spi_not_busy(config->spi);
 	set_cs(eglib, true);
@@ -277,7 +277,7 @@ static void comm_end(eglib_t *eglib) {
 static bool get_busy(eglib_t *eglib) {
 	four_wire_spi_libopencm3_stm32f4_config_t *config;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	return gpio_get(config->port_busy, config->gpio_busy);
 }

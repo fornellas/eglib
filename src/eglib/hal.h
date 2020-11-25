@@ -99,7 +99,7 @@ typedef struct {
 	 *  - First send a byte informing whether the following bytes are data or
 	 *    command.
 	 *  - Issue an I2C restart at the end of transmission (by calling
-	 *    :c:func:`hal_CommBegin`).
+	 *    :c:func:`eglib_CommBegin`).
 	 *
 	 * :param eglib: :c:type:`eglib_t` handle.
 	 * :param i2c_write: Pointer to a function that sends the passed byte via
@@ -120,7 +120,7 @@ typedef struct {
 /**
  * HAL driver definition.
  *
- * :note: :c:func:`hal_GetConfig` can be used to retrieve the HAL driver
+ * :note: :c:func:`eglib_GetHalConfig` can be used to retrieve the HAL driver
  *  configuration.
  *
  * Aliased as :c:type:`hal_t`.
@@ -129,7 +129,7 @@ struct hal_struct {
 	/**
 	 * Pointer to a function that initializes the peripheral based on:
 	 *
-	 *  - The HAL driver configuration (:c:func:`hal_GetConfig`).
+	 *  - The HAL driver configuration (:c:func:`eglib_GetHalConfig`).
 	 *  - The Display driver bus configuration:
 	 *
 	 *   - **4-Wire SPI**: (:c:func:`display_GetHalFourWireSpiConfigComm`).
@@ -145,14 +145,14 @@ struct hal_struct {
 	 * Pointer to a function that delays for given amount of nanoseconds.
 	 *
 	 * Can be called from the display driver (:c:type:`display_struct`) with
-	 * :c:func:`hal_DelayNs`.
+	 * :c:func:`eglib_DelayNs`.
 	 */
 	void (*delay_ns)(eglib_t *eglib, uint32_t ns);
 	/**
 	 * Pointer to a function that sets the reset pin to given ``state``.
 	 *
 	 * Can be called from the display driver (:c:type:`display_struct`) with
-	 * :c:func:`hal_SetReset`.
+	 * :c:func:`eglib_SetReset`.
 	 */
 	void (*set_reset)(eglib_t *eglib, bool state);
 	/**
@@ -163,10 +163,10 @@ struct hal_struct {
 	 *  - **I2C**: sends start condition.
 	 *
 	 *   - When called more than one time before ending communication
-	 *     (:c:func:`hal_CommEnd`) sends restart condition.
+	 *     (:c:func:`eglib_CommEnd`) sends restart condition.
 	 *
 	 * Can be called from the display driver (:c:type:`display_struct`) with
-	 * :c:func:`hal_CommBegin`.
+	 * :c:func:`eglib_CommBegin`.
 	 */
 	void (*comm_begin)(eglib_t *eglib);
 	/**
@@ -174,7 +174,7 @@ struct hal_struct {
 	 * sending the data:
 	 *
 	 *  - **4-Wire SPI**: Set data or command line.
-	 *  - **I2C**: if :c:func:`hal_ShouldSendI2cSlaveAddr` returns true then the
+	 *  - **I2C**: if :c:func:`eglib_ShouldSendI2cSlaveAddr` returns true then the
 	 *    slave address :c:func:`display_GetI2c7bitSlaveAddr` must be sent.
 	 *
 	 * :param eglib: :c:type:`eglib_t` handle.
@@ -183,7 +183,7 @@ struct hal_struct {
 	 * :param length: Number of bytes to send.
 	 *
 	 * Can be called from the display driver (:c:type:`display_struct`) with
-	 * :c:func:`hal_Send`.
+	 * :c:func:`eglib_Send`.
 	 */
 	void (*send)(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
 	/**
@@ -194,7 +194,7 @@ struct hal_struct {
 	 *  - **I2C**: sends stop condition.
 	 *
 	 * Can be called from the display driver (:c:type:`display_struct`) with
-	 * :c:func:`hal_CommEnd`.
+	 * :c:func:`eglib_CommEnd`.
 	 */
 	void (*comm_end)(eglib_t *eglib);
 	bool (*get_busy)(eglib_t *eglib);
@@ -204,85 +204,85 @@ struct hal_struct {
  * Returns a pointer to the HAL driver configuration that was passed to
  * :c:func:`eglib_Init`.
  */
-#define hal_GetConfig(eglib) ((eglib)->hal_config_ptr)
+#define eglib_GetHalConfig(eglib) ((eglib)->hal_config_ptr)
 
 /**
- * Whether in between calls to :c:func:`hal_CommBegin` and :c:func:`hal_CommEnd`.
+ * Whether in between calls to :c:func:`eglib_CommBegin` and :c:func:`eglib_CommEnd`.
  */
-#define hal_IsCommActive(eglib) ((eglib)->hal_comm_active)
+#define eglib_IsCommActive(eglib) ((eglib)->hal_comm_active)
 
 /**
  * Whether I2C slave address should be sent.
  *
  * See ``send`` attribute at :c:type:`hal_struct`.
  */
-#define hal_ShouldSendI2cSlaveAddr(eglib) ((eglib)->hal_i2c_send_slave_addr)
+#define eglib_ShouldSendI2cSlaveAddr(eglib) ((eglib)->hal_i2c_send_slave_addr)
 
 /** Delay for given number of nanoseconds */
-#define hal_DelayNs(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns))
+#define eglib_DelayNs(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns))
 
 /** Delay for given number of milliseconds */
-#define hal_DelayMs(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns * 1000 * 1000))
+#define eglib_DelayMs(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns * 1000 * 1000))
 
 /** Set reset line to given state */
-#define hal_SetReset(eglib, state) ((eglib)->hal->set_reset(eglib, state))
+#define eglib_SetReset(eglib, state) ((eglib)->hal->set_reset(eglib, state))
 
-/** Initiates communication. Must be called before :c:func:`hal_Send`. */
-void hal_CommBegin(eglib_t *eglib);
+/** Initiates communication. Must be called before :c:func:`eglib_Send`. */
+void eglib_CommBegin(eglib_t *eglib);
 
 /**
- * Sends data. Must be called after :c:func:`hal_CommBegin`.
+ * Sends data. Must be called after :c:func:`eglib_CommBegin`.
  *
  * :param eglib: :c:type:`eglib_t` handle.
  * :param dc: Whether bytes are command or data (:c:type:`hal_dc_t`).
  * :param bytes: Pointer to an array of bytes to send.
  * :param length: Number of bytes to send.
  */
-void hal_Send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
+void eglib_Send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
 
 /**
  * Sends data.
  *
- * :See also: :c:func:`hal_Send`.
+ * :See also: :c:func:`eglib_Send`.
  */
-#define hal_SendData(eglib, bytes, length) (\
-	hal_Send(eglib, HAL_DATA, bytes, length)\
+#define eglib_SendData(eglib, bytes, length) (\
+	eglib_Send(eglib, HAL_DATA, bytes, length)\
 )
 
 /**
  * Sends a single data byte.
  *
- * :See also: :c:func:`hal_Send`.
+ * :See also: :c:func:`eglib_Send`.
  */
-#define hal_SendDataByte(eglib, bytes) (\
-	hal_SendData(eglib, &((uint8_t){bytes}), 1)\
+#define eglib_SendDataByte(eglib, bytes) (\
+	eglib_SendData(eglib, &((uint8_t){bytes}), 1)\
 )
 
 /**
  * Sends commands.
  *
- * :See also: :c:func:`hal_Send`.
+ * :See also: :c:func:`eglib_Send`.
  */
-#define hal_SendCommands(eglib, bytes, length) (\
-	hal_Send(eglib, HAL_COMMAND, bytes, length)\
+#define eglib_SendCommands(eglib, bytes, length) (\
+	eglib_Send(eglib, HAL_COMMAND, bytes, length)\
 )
 
 /**
  * Sends a single command byte.
  *
- * :See also: :c:func:`hal_Send`.
+ * :See also: :c:func:`eglib_Send`.
  */
-#define hal_SendCommandByte(eglib, bytes) (\
-	hal_SendCommands(eglib, &((uint8_t){bytes}), 1)\
+#define eglib_SendCommandByte(eglib, bytes) (\
+	eglib_SendCommands(eglib, &((uint8_t){bytes}), 1)\
 )
 
 /** Ends communication. */
-void hal_CommEnd(eglib_t *eglib);
+void eglib_CommEnd(eglib_t *eglib);
 
 /**
  * Get the value of th busy data line, often found in e-ink / e-paper displays.
  */
-#define hal_GetBusy(eglib) ((eglib)->hal->get_busy(eglib))
+#define eglib_GetBusy(eglib) ((eglib)->hal->get_busy(eglib))
 
 #endif
 

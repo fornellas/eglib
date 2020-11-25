@@ -22,12 +22,12 @@ struct display_comm_struct {
  * Communication with the data bus can be done using these and other ``hal_*``
  * functions:
  *
- * - :c:func:`hal_DelayNs`.
- * - :c:func:`hal_SetReset`.
- * - :c:func:`hal_CommBegin`.
- * - :c:func:`hal_Send`.
- * - :c:func:`hal_CommEnd`.
- * - :c:func:`hal_GetBusy`.
+ * - :c:func:`eglib_DelayNs`.
+ * - :c:func:`eglib_SetReset`.
+ * - :c:func:`eglib_CommBegin`.
+ * - :c:func:`eglib_Send`.
+ * - :c:func:`eglib_CommEnd`.
+ * - :c:func:`eglib_GetBusy`.
  *
  * :note: :c:func:`display_GetConfig` can be used to retrieve the HAL driver
  *   configuration.
@@ -134,14 +134,14 @@ struct display_struct {
 	 * .. code-block:: c
 	 *
 	 *   if(display_IsRefreshing(eglib)) {
-	 *   	return !hal_GetBusy(eglib);
+	 *   	return !eglib_GetBusy(eglib);
 	 *   } else {
 	 *   	send_refresh_command_to_display(eglib);
 	 *   	return true;
 	 *   }
 	 *
 	 * :c:func:`display_IsRefreshing` queries the current state of refresh (that
-	 * eglib keeps track) and :c:func:`hal_GetBusy` can be used no read the
+	 * eglib keeps track) and :c:func:`eglib_GetBusy` can be used no read the
 	 * state of the busy data line.
 	 *
 	 * User code can then refresh the display with:

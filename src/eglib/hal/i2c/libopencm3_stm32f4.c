@@ -10,7 +10,7 @@
 static void init_io(eglib_t *eglib) {
 	i2c_libopencm3_stm32f4_config_t *config;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	rcc_periph_clock_enable(config->rcc_rst);
 	gpio_mode_setup(
@@ -55,7 +55,7 @@ static void init_peripheral(eglib_t *eglib) {
 	i2c_libopencm3_stm32f4_config_t *config;
 	enum i2c_speeds speed = i2c_speed_sm_100k;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	rcc_periph_clock_enable(config->rcc_i2c);
 
@@ -83,7 +83,7 @@ static void init_peripheral(eglib_t *eglib) {
 static bool i2c_has_error(eglib_t *eglib) {
 	i2c_libopencm3_stm32f4_config_t *config;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	if(
 		I2C_SR1(config->i2c) & (
@@ -106,7 +106,7 @@ static void send_slave_address(eglib_t *eglib, hal_dc_t dc) {
 	i2c_libopencm3_stm32f4_config_t *config;
 	uint8_t seven_bit_slave_addr;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	// write in the DR register with the Slave address
 	seven_bit_slave_addr = display_GetI2c7bitSlaveAddr(eglib, dc);
@@ -127,7 +127,7 @@ static void send_slave_address(eglib_t *eglib, hal_dc_t dc) {
 static void i2c_write(eglib_t *eglib, uint8_t byte) {
 	i2c_libopencm3_stm32f4_config_t *config;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	i2c_send_data(config->i2c, byte);
 	while (!(I2C_SR1(config->i2c) & (I2C_SR1_BTF)))
@@ -151,7 +151,7 @@ static void sleep_in(
 ) {
 	i2c_libopencm3_stm32f4_config_t *config;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	i2c_peripheral_disable(config->i2c);
 }
@@ -177,7 +177,7 @@ static void set_reset(
 ) {
 	i2c_libopencm3_stm32f4_config_t *config;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	if(!(config->rcc_rst))
 		return;
@@ -191,12 +191,12 @@ static void set_reset(
 static void comm_begin(eglib_t *eglib) {
 	i2c_libopencm3_stm32f4_config_t *config;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	// Setting the START bit
 	i2c_send_start(config->i2c);
 	// when the BUSY bit is cleared
-	if(!hal_IsCommActive(eglib))
+	if(!eglib_IsCommActive(eglib))
 		while((I2C_SR2(config->i2c) & I2C_SR2_BUSY))
 			if(i2c_has_error(eglib))
 				return;
@@ -217,7 +217,7 @@ static void send(
 	uint8_t *bytes,
 	uint32_t length
 ) {
-	if(hal_ShouldSendI2cSlaveAddr(eglib))
+	if(eglib_ShouldSendI2cSlaveAddr(eglib))
 		send_slave_address(eglib, dc);
 
 	display_I2cSend(eglib, i2c_write, dc, bytes, length);
@@ -226,7 +226,7 @@ static void send(
 static void comm_end(eglib_t *eglib) {
 	i2c_libopencm3_stm32f4_config_t *config;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	// Clears ADDR
 	(void)I2C_SR2(config->i2c);
@@ -237,7 +237,7 @@ static void comm_end(eglib_t *eglib) {
 static bool get_busy(eglib_t *eglib) {
 	i2c_libopencm3_stm32f4_config_t *config;
 
-	config = hal_GetConfig(eglib);
+	config = eglib_GetHalConfig(eglib);
 
 	return gpio_get(config->port_busy, config->gpio_busy);
 }

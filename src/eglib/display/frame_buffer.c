@@ -274,6 +274,7 @@ eglib_t *eglib_Init_FrameBuffer(
 	frame_buffer->get_dimension = get_dimension;
 	frame_buffer->get_pixel_format = get_pixel_format;
 	frame_buffer->draw_pixel_color = draw_pixel_color;
+	frame_buffer->draw_line = display_default_draw_line;
 	frame_buffer->send_buffer = send_buffer;
 	frame_buffer->refresh = refresh;
 

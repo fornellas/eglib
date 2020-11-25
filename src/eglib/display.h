@@ -5,6 +5,20 @@
 #include "hal.h"
 
 /**
+ * Line direction
+ */
+typedef enum {
+	/** Right: x increments. */
+	DISPLAY_LINE_DIRECTION_RIGHT,
+	/** Right: x decrements. */
+	DISPLAY_LINE_DIRECTION_LEFT,
+	/** Right: y increments. */
+	DISPLAY_LINE_DIRECTION_DOWN,
+	/** Right: y decrements. */
+	DISPLAY_LINE_DIRECTION_UP,
+} display_line_direction_t;
+
+/**
  * Communication bus configuration required by the display.
  *
  * Buses net supported by the display can be set to ``NULL``.
@@ -15,6 +29,20 @@ struct display_comm_struct {
 	/** I2C */
 	hal_i2c_config_t *i2c;
 };
+
+/**
+ * Not accelerated implementation of :c:type:`display_struct` ``draw_line``
+ * based on ``draw_pixel_color``.
+ */
+void display_default_draw_line(
+	eglib_t *eglib,
+	coordinate_t x,
+	coordinate_t y,
+	display_line_direction_t direction,
+	coordinate_t length,
+	color_t (*get_next_color)(eglib_t *eglib)
+);
+
 
 /**
  * Display driver definition.
@@ -95,6 +123,56 @@ struct display_struct {
 		coordinate_t x,
 		coordinate_t y,
 		color_t color
+	);
+	/**
+	 * Pointer to a function that draws a line directly to the display memory.
+	 *
+	 * This is meant to be an accelerator for drawing lines for displays that
+	 * support auto increment/decrement of the memory address written.
+	 *
+	 * A typical implementation should roughly look like:
+	 *
+	 * .. code-block:: c
+	 *
+	 *   eglib_CommBegin(eglib);
+	 *   switch(direction) {
+	 *       case DISPLAY_LINE_DIRECTION_RIGHT:
+	 *           set_display_memory_address_auto_increment_x(eglib);
+	 *           break;
+	 *       case DISPLAY_LINE_DIRECTION_LEFT:
+	 *           set_display_memory_address_auto_decrement_x(eglib);
+	 *           break;
+	 *       case DISPLAY_LINE_DIRECTION_DOWN:
+	 *           set_display_memory_address_auto_increment_y(eglib);
+	 *           break;
+	 *       case DISPLAY_LINE_DIRECTION_UP:
+	 *           set_display_memory_address_auto_decrement_y(eglib);
+	 *           break;
+	 *   }
+	 *   set_display_memory_address(eglib, x, y);
+	 *   while(length--)
+	 *       send_pixel_to_memory(eglib, get_next_color(eglib));
+	 *   eglib_CommEnd(eglib);
+	 *
+	 * For displays that **do not** support auto increment/decrement of x/y
+	 * (for all or some cases) the implementation can be set to
+	 * :c:func:`display_default_draw_line`.
+	 *
+	 * :param eglib: :c:type:`eglib_t` handle.
+	 * :param x: line x start.
+	 * :param y: line y start.
+	 * :param direction: Line :c:type:`display_line_direction_t` (right, left, down up).
+	 * :param length: Line length in pixels.
+	 * :param get_next_color: Pointer to a function that must be called for each
+	 *   line pixel to get its color.
+	 */
+	void (*draw_line)(
+		eglib_t *eglib,
+		coordinate_t x,
+		coordinate_t y,
+		display_line_direction_t direction,
+		coordinate_t length,
+		color_t (*get_next_color)(eglib_t *eglib)
 	);
 	/**
 	 * Pointer to a function that sends given buffer to display memory.

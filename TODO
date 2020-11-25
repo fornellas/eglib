@@ -1,0 +1,37 @@
+- Documentation
+  - Usage
+    - Existing config
+    - Custom config
+    - Frame buffer
+    - Drawing
+  - Development
+  	- HAL Driver
+  	- Display Driver
+- color_t
+  - Normalize color quantization from RGB for different bit depths:
+    - Grayscale
+    - BW
+    - BWY
+    - BWR
+- Frame buffer
+	- DMA
+- HAL
+  - 4-wire SPI
+    - avr-libc
+    - Arduino
+  - I2C
+    - avr-libc
+    - Arduino
+	- 3-Wire SPI
+	- Parallel 6800
+	- Parallel 8000
+- Testing
+  - cppcheck
+- Display drivers
+	- SSD1306
+	- ST7565
+- Drawing
+	- Import ucglib / u8g2 functions
+	- Import ucglib / u8g2 fonts
+	- printf()
+- Fix examples make clean

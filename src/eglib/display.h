@@ -183,18 +183,16 @@ struct display_struct {
 )
 
 /**
- * See :c:type:`hal_i2c_config_t` ``get_7bit_slave_addr`` for details on this
- * function.
- *
+ * :See also: :c:type:`hal_i2c_config_t` ``get_7bit_slave_addr`` for details on this
+ *   function.
  * :note: Used by I2C HAL drivers :c:type:`hal_t`.
  */
 #define display_GetI2c7bitSlaveAddr(eglib, dc) \
 	(display_GetHalI2cConfigComm(eglib)->get_7bit_slave_addr(eglib, dc))
 
 /**
- * See :c:type:`hal_i2c_config_t` ``send`` for details on this
- * function.
- *
+ * :See also: :c:type:`hal_i2c_config_t` ``send`` for details on this
+ *   function.
  * :note: Used by I2C HAL drivers :c:type:`hal_t`.
  */
 #define display_I2cSend(eglib, i2c_write, dc, bytes, length) \

@@ -22,7 +22,7 @@ int main(void) {
 		.gpio_sda = GPIO9,
 		.rcc_i2c = RCC_I2C1,
 		.i2c = I2C1,
-		.peripheral_clock_mhz = rcc_apb1_frequency / 1e6,
+		.i2c_peripheral_clock_mhz = rcc_apb1_frequency / 1e6,
 	};
 
 	sh1106_config_t sh1106_config = {

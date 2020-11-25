@@ -24,7 +24,7 @@ typedef enum {
 /**
  * 4-Wire SPI configuration.
  *
- * See :c:type:`display_struct`.
+ * :See also: :c:type:`display_struct`.
  */
 typedef struct {
 	/**
@@ -58,7 +58,7 @@ typedef struct {
 /**
  * I2C Speed.
  *
- * See :c:type:`hal_i2c_config_t`.
+ * :See also: :c:type:`hal_i2c_config_t`.
  */
 typedef enum {
 	/** 100kHz */
@@ -70,7 +70,7 @@ typedef enum {
 /**
  * I2C Configuration.
  *
- * See :c:type:`display_struct`.
+ * :See also: :c:type:`display_struct`.
  */
 typedef struct {
 	/** I2C Speed */
@@ -86,7 +86,7 @@ typedef struct {
 	 * :param dc: Whether address command or data (:c:type:`hal_dc_t`).
 	 * :return: 7-bit slave address.
 	 *
-	 * See :c:type:`hal_dc_t`.
+	 * :See also: :c:type:`hal_dc_t`.
 	 */
 	uint8_t (*get_7bit_slave_addr)(eglib_t *eglib, hal_dc_t dc);
 	/**
@@ -243,7 +243,7 @@ void hal_Send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
 /**
  * Sends data.
  *
- * See :c:func:`hal_Send`.
+ * :See also: :c:func:`hal_Send`.
  */
 #define hal_SendData(eglib, bytes, length) (\
 	hal_Send(eglib, HAL_DATA, bytes, length)\
@@ -252,7 +252,7 @@ void hal_Send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
 /**
  * Sends a single data byte.
  *
- * See :c:func:`hal_Send`.
+ * :See also: :c:func:`hal_Send`.
  */
 #define hal_SendDataByte(eglib, bytes) (\
 	hal_SendData(eglib, &((uint8_t){bytes}), 1)\
@@ -261,7 +261,7 @@ void hal_Send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
 /**
  * Sends commands.
  *
- * See :c:func:`hal_Send`.
+ * :See also: :c:func:`hal_Send`.
  */
 #define hal_SendCommands(eglib, bytes, length) (\
 	hal_Send(eglib, HAL_COMMAND, bytes, length)\
@@ -270,7 +270,7 @@ void hal_Send(eglib_t *eglib, hal_dc_t dc, uint8_t *bytes, uint32_t length);
 /**
  * Sends a single command byte.
  *
- * See :c:func:`hal_Send`.
+ * :See also: :c:func:`hal_Send`.
  */
 #define hal_SendCommandByte(eglib, bytes) (\
 	hal_SendCommands(eglib, &((uint8_t){bytes}), 1)\

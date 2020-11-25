@@ -72,7 +72,7 @@ static void init_peripheral(eglib_t *eglib) {
 			break;
 	}
 
-	i2c_set_speed(config->i2c, speed, config->peripheral_clock_mhz);
+	i2c_set_speed(config->i2c, speed, config->i2c_peripheral_clock_mhz);
 
 	// TODO
 	// I2C_FLTR(config->i2c) = (I2C_FLTR(config->i2c) & ~I2C_FLTR_DNF_MASK) | (15<<I2C_FLTR_DNF_SHIFT);

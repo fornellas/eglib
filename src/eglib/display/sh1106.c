@@ -248,7 +248,7 @@ static void send_buffer(
 
 	buffer = (uint8_t *)buffer_ptr;
 
-	display_GetDimension(eglib, &display_width, &display_height);
+	eglib_GetDimension(eglib, &display_width, &display_height);
 
 	eglib_CommBegin(eglib);
 	for(uint8_t page=y/8 ; page < ((y+height)/8+1) ; page++) {

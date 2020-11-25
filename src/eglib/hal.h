@@ -132,8 +132,8 @@ struct hal_struct {
 	 *  - The HAL driver configuration (:c:func:`eglib_GetHalConfig`).
 	 *  - The Display driver bus configuration:
 	 *
-	 *   - **4-Wire SPI**: (:c:func:`display_GetHalFourWireSpiConfigComm`).
-	 *   - **I2C**: (:c:func:`display_GetHalI2cConfigComm`).
+	 *   - **4-Wire SPI**: (:c:func:`eglib_GetHalFourWireSpiConfigComm`).
+	 *   - **I2C**: (:c:func:`eglib_GetHalI2cConfigComm`).
 	 *
 	 */
 	void (*init)(eglib_t *eglib);
@@ -175,7 +175,7 @@ struct hal_struct {
 	 *
 	 *  - **4-Wire SPI**: Set data or command line.
 	 *  - **I2C**: if :c:func:`eglib_ShouldSendI2cSlaveAddr` returns true then the
-	 *    slave address :c:func:`display_GetI2c7bitSlaveAddr` must be sent.
+	 *    slave address :c:func:`eglib_GetI2c7bitSlaveAddr` must be sent.
 	 *
 	 * :param eglib: :c:type:`eglib_t` handle.
 	 * :param dc: Whether bytes are command or data (:c:type:`hal_dc_t`).

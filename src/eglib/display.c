@@ -1,6 +1,6 @@
 #include "display.h"
 
-coordinate_t display_GetWidth(eglib_t *eglib) {
+coordinate_t eglib_GetWidth(eglib_t *eglib) {
 	coordinate_t width, heigh;
 
 	eglib->display->get_dimension(eglib, &width, &heigh);
@@ -8,7 +8,7 @@ coordinate_t display_GetWidth(eglib_t *eglib) {
 	return width;
 }
 
-coordinate_t display_GetHeight(eglib_t *eglib) {
+coordinate_t eglib_GetHeight(eglib_t *eglib) {
 	coordinate_t width, heigh;
 
 	eglib->display->get_dimension(eglib, &width, &heigh);
@@ -16,7 +16,7 @@ coordinate_t display_GetHeight(eglib_t *eglib) {
 	return heigh;
 }
 
-bool display_Refresh(eglib_t *eglib) {
+bool eglib_Refresh(eglib_t *eglib) {
 	bool is_currently_refreshing;
 
 	is_currently_refreshing = eglib->display->refresh(eglib);

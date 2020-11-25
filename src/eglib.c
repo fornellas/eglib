@@ -20,8 +20,8 @@ void eglib_Init(
 	eglib->clip.x = 0;
 	eglib->clip.y = 0;
 
-	eglib->clip.width = display_GetWidth(eglib);
-	eglib->clip.height = display_GetHeight(eglib);
+	eglib->clip.width = eglib_GetWidth(eglib);
+	eglib->clip.height = eglib_GetHeight(eglib);
 
 	for(size_t i=0 ; i < sizeof(eglib->color_index) / sizeof(*eglib->color_index) ; i++) {
 		eglib->color_index[i].r = 0;

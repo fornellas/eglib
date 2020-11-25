@@ -87,7 +87,7 @@ static void send_buffer(
                        buffer++;
                        color.b = *buffer;
                        buffer++;
-                       display_DrawPixelColor(
+                       eglib_DrawPixelColor(
                                eglib,
                                x, y,
                                color

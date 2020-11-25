@@ -133,14 +133,14 @@ struct display_struct {
 	 *
 	 * .. code-block:: c
 	 *
-	 *   if(display_IsRefreshing(eglib)) {
+	 *   if(eglib_IsRefreshing(eglib)) {
 	 *   	return !eglib_GetBusy(eglib);
 	 *   } else {
 	 *   	send_refresh_command_to_display(eglib);
 	 *   	return true;
 	 *   }
 	 *
-	 * :c:func:`display_IsRefreshing` queries the current state of refresh (that
+	 * :c:func:`eglib_IsRefreshing` queries the current state of refresh (that
 	 * eglib keeps track) and :c:func:`eglib_GetBusy` can be used no read the
 	 * state of the busy data line.
 	 *
@@ -148,7 +148,7 @@ struct display_struct {
 	 *
 	 * .. code-block:: c
 	 *
-	 *   while(display_Refresh(eglib));
+	 *   while(eglib_Refresh(eglib));
 	 *
 	 * :param eglib: :c:type:`eglib_t` handle.
 	 * :return: ``true`` when refresh is ongoing and ``false`` when refresh finished.
@@ -168,7 +168,7 @@ struct display_struct {
  *
  * :note: Used by 4-Wire SPI HAL drivers :c:type:`hal_t`.
  */
-#define display_GetHalFourWireSpiConfigComm(eglib) (\
+#define eglib_GetHalFourWireSpiConfigComm(eglib) (\
 	(eglib)->display->comm.four_wire_spi \
 )
 
@@ -178,7 +178,7 @@ struct display_struct {
  *
  * :note: Used by I2C HAL drivers :c:type:`hal_t`.
  */
-#define display_GetHalI2cConfigComm(eglib) (\
+#define eglib_GetHalI2cConfigComm(eglib) (\
 	(eglib)->display->comm.i2c \
 )
 
@@ -187,16 +187,16 @@ struct display_struct {
  *   function.
  * :note: Used by I2C HAL drivers :c:type:`hal_t`.
  */
-#define display_GetI2c7bitSlaveAddr(eglib, dc) \
-	(display_GetHalI2cConfigComm(eglib)->get_7bit_slave_addr(eglib, dc))
+#define eglib_GetI2c7bitSlaveAddr(eglib, dc) \
+	(eglib_GetHalI2cConfigComm(eglib)->get_7bit_slave_addr(eglib, dc))
 
 /**
  * :See also: :c:type:`hal_i2c_config_t` ``send`` for details on this
  *   function.
  * :note: Used by I2C HAL drivers :c:type:`hal_t`.
  */
-#define display_I2cSend(eglib, i2c_write, dc, bytes, length) \
-	(display_GetHalI2cConfigComm(eglib)->send(eglib, i2c_write, dc, bytes, length))
+#define eglib_I2cSend(eglib, i2c_write, dc, bytes, length) \
+	(eglib_GetHalI2cConfigComm(eglib)->send(eglib, i2c_write, dc, bytes, length))
 
 /**
  * Get display dimensions.
@@ -205,7 +205,7 @@ struct display_struct {
  * :param width: Pointer where to write display width to.
  * :param height: Pointer where to write display height to.
  */
-#define display_GetDimension(eglib, width, height) ( \
+#define eglib_GetDimension(eglib, width, height) ( \
 	(eglib)->display->get_dimension(eglib, width, height) \
 )
 
@@ -217,30 +217,15 @@ struct display_struct {
  *   pixel format to.
  * :return: :c:type:`pixel_format_t`.
  */
-#define display_GetPixelFormat(eglib, pixel_format) ( \
+#define eglib_GetPixelFormat(eglib, pixel_format) ( \
 	(eglib)->display->get_pixel_format(eglib, pixel_format) \
 )
 
 /** Returns display width as :c:type:`coordinate_t`. */
-coordinate_t display_GetWidth(eglib_t *eglib);
+coordinate_t eglib_GetWidth(eglib_t *eglib);
 
 /** Returns display height as :c:type:`coordinate_t`. */
-coordinate_t display_GetHeight(eglib_t *eglib);
-
-/**
- * Draws directly to the display memory at ``(x, y)`` using given ``color``.
- *
- * :param eglib: :c:type:`eglib_t` handle.
- * :param x: X :c:type:`coordinate_t`.
- * :param y: Y :c:type:`coordinate_t`.
- * :param color: Color :c:type:`color_t`.
- *
- * :note: Some displays do not support this function and must be used with
- *   :c:type:`eglib_Init_FrameBuffer`.
- */
-#define display_DrawPixelColor(eglib, x, y, color) ( \
-	(eglib)->display->draw_pixel_color(eglib, x, y, color) \
-)
+coordinate_t eglib_GetHeight(eglib_t *eglib);
 
 /**
  * Refreshes the display image. Only applicable to some displays (eg: e-ink /
@@ -248,14 +233,14 @@ coordinate_t display_GetHeight(eglib_t *eglib);
  *
  * .. code-block:: c
  *
- *   while(display_Refresh(eglib));
+ *   while(eglib_Refresh(eglib));
  *
  * :param eglib: :c:type:`eglib_t` handle.
  * :return: ``true`` when refresh is ongoing and ``false`` when refresh finished.
  */
-bool display_Refresh(eglib_t *eglib);
+bool eglib_Refresh(eglib_t *eglib);
 
-/** Whether a display refresh initiated by :c:func:`display_Refresh` is ongoing */
-#define display_IsRefreshing(eglib) ((eglib)->display_refreshing)
+/** Whether a display refresh initiated by :c:func:`eglib_Refresh` is ongoing */
+#define eglib_IsRefreshing(eglib) ((eglib)->display_refreshing)
 
 #endif

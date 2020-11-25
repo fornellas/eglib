@@ -19,8 +19,8 @@ int main(int argc, char *argv[]) {
 		&tga, &tga_config
 	);
 
-	width = display_GetWidth(&eglib);
-	height = display_GetHeight(&eglib);
+	width = eglib_GetWidth(&eglib);
+	height = eglib_GetHeight(&eglib);
 
 	eglib_SetColor(&eglib, 0, 0, 0, 0);
 	for(coordinate_t v=0 ; (v < width) && (v < height) ; v++ )

@@ -19,7 +19,7 @@ static void set_dc(
 	hal_four_wire_spi_config_t *four_wire_spi_config_comm;
 
 	config = eglib_GetHalConfig(eglib);
-	four_wire_spi_config_comm = display_GetHalFourWireSpiConfigComm(eglib);
+	four_wire_spi_config_comm = eglib_GetHalFourWireSpiConfigComm(eglib);
 
 	wait_spi_not_busy(config->spi);
 	_delay_ns(four_wire_spi_config_comm->dc_setup_ns);
@@ -44,7 +44,7 @@ static void set_cs(
 	hal_four_wire_spi_config_t *four_wire_spi_config_comm;
 
 	config = eglib_GetHalConfig(eglib);
-	four_wire_spi_config_comm = display_GetHalFourWireSpiConfigComm(eglib);
+	four_wire_spi_config_comm = eglib_GetHalFourWireSpiConfigComm(eglib);
 
 	wait_spi_not_busy(config->spi);
 	if(state) {
@@ -79,7 +79,7 @@ static void init(
 	uint32_t lsbfirst = 0;
 
 	config = eglib_GetHalConfig(eglib);
-	four_wire_spi_config_comm = display_GetHalFourWireSpiConfigComm(eglib);
+	four_wire_spi_config_comm = eglib_GetHalFourWireSpiConfigComm(eglib);
 
 	rcc_periph_clock_enable(config->rcc_rst);
 	gpio_mode_setup(

@@ -63,7 +63,7 @@ static void init_peripheral(eglib_t *eglib) {
 
 	i2c_reset(config->i2c);
 
-	switch(display_GetHalI2cConfigComm(eglib)->speed) {
+	switch(eglib_GetHalI2cConfigComm(eglib)->speed) {
 		case HAL_I2C_100KHZ:
 			speed = i2c_speed_sm_100k;
 			break;
@@ -109,7 +109,7 @@ static void send_slave_address(eglib_t *eglib, hal_dc_t dc) {
 	config = eglib_GetHalConfig(eglib);
 
 	// write in the DR register with the Slave address
-	seven_bit_slave_addr = display_GetI2c7bitSlaveAddr(eglib, dc);
+	seven_bit_slave_addr = eglib_GetI2c7bitSlaveAddr(eglib, dc);
 	i2c_send_7bit_address(config->i2c, seven_bit_slave_addr, I2C_WRITE);
 
 	// As soon as the address byte is sent
@@ -220,7 +220,7 @@ static void send(
 	if(eglib_ShouldSendI2cSlaveAddr(eglib))
 		send_slave_address(eglib, dc);
 
-	display_I2cSend(eglib, i2c_write, dc, bytes, length);
+	eglib_I2cSend(eglib, i2c_write, dc, bytes, length);
 }
 
 static void comm_end(eglib_t *eglib) {

@@ -46,5 +46,6 @@ Features
 .. toctree::
    :maxdepth: 4
    :caption: Contents:
+   :hidden:
 
    reference/index.rst

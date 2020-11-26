@@ -1,4 +1,8 @@
-eglib/display/sh1106.h
-======================
+SH1106
+======
+
+.. code:: c
+
+    #include <eglib/display/sh1106.h>
 
 .. c:autodoc:: eglib/display/sh1106.h

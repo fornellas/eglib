@@ -1,4 +1,8 @@
-eglib/hal/four_wire_spi/stdout.h
-=============================================
+stdout
+======
+
+.. code:: c
+
+    #include <eeglib/hal/four_wire_spi/stdout.h>
 
 .. c:autodoc:: eglib/hal/four_wire_spi/stdout.h

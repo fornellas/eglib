@@ -1,4 +1,8 @@
-eglib/display/st7789.h
-======================
+ST7789
+======
+
+.. code:: c
+
+    #include <eglib/display/st7789.h>
 
 .. c:autodoc:: eglib/display/st7789.h

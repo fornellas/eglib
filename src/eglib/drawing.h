@@ -3,6 +3,39 @@
 
 #include "../eglib.h"
 
+/**
+ * Defines a rectangle to clip all drawing functions to.
+ *
+ * Any drawing function outside of these boundaries will have no effect.
+ */
+void eglib_SetClipRange(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
+);
+
+/**
+ * Returns whether the pixel at given coordinate is clipped. See :c:func:`eglib_SetClipRange`.
+ */
+bool eglib_IsPixelClipped(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y
+);
+
+/**
+ * Drawing functions often use colors defined by an index which can be defined
+ * by this function.
+ *
+ * Please refer to drawing functions for appropriate values.
+ */
+void eglib_SetColor(
+	eglib_t *eglib,
+	size_t idx,
+	color_channel_t r,
+	color_channel_t g,
+	color_channel_t b
+);
+
 /** Draw given pixel coordinates with given color. */
 void eglib_DrawPixelColor(eglib_t *eglib, coordinate_t x, coordinate_t y, color_t color);
 

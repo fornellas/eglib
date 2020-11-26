@@ -1,6 +1,47 @@
 #include "drawing.h"
 #include "display.h"
 
+void eglib_SetClipRange(
+  eglib_t *eglib,
+  coordinate_t x,
+  coordinate_t y,
+  coordinate_t width,
+  coordinate_t height
+) {
+  eglib->clip.x = x;
+  eglib->clip.y = y;
+  eglib->clip.width = width;
+  eglib->clip.height = height;
+}
+
+bool eglib_IsPixelClipped(
+  eglib_t *eglib,
+  coordinate_t x,
+  coordinate_t y
+) {
+  if(x < eglib->clip.x)
+    return true;
+  if(x > (eglib->clip.x + eglib->clip.width))
+    return true;
+  if(y < eglib->clip.y)
+    return true;
+  if(y > (eglib->clip.y + eglib->clip.height))
+    return true;
+  return false;
+}
+
+void eglib_SetColor(
+  eglib_t *eglib,
+  size_t idx,
+  color_channel_t r,
+  color_channel_t g,
+  color_channel_t b
+) {
+  eglib->color_index[idx].r = r;
+  eglib->color_index[idx].g = g;
+  eglib->color_index[idx].b = b;
+}
+
 void eglib_DrawPixelColor(eglib_t *eglib, coordinate_t x, coordinate_t y, color_t color) {
   if(eglib_IsPixelClipped(eglib, x, y))
     return;

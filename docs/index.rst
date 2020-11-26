@@ -23,17 +23,20 @@ Features
   - Supports configuration
 
     - Enables the same controller driver to be used with different screen sizes or boards from different manufactures.
+    - Support for extra controller features, such as different color depths.
     - Configuration for new boards can often be added with only a few lines.
-    - Support for nice controller features such as different color depths.
 
   - Support for display controller specific functions, such as color inversion, scrolling, brightness etc.
   - Accelerated line drawing routines.
-  - Support a wide range of display color depths: black/white, black/white/red|yellow (e-ink / e-paper), grayscale to full color.
+  - Supports a wide range:
+
+    - Of display types: LCD, OLED, e-ink/e-paper.
+    - Of color depths: black/white, black/white/red|yellow (e-ink / e-paper), grayscale to full color.
 
 - Frame buffer
 
 	- Can be used on top of any display driver.
-	- Seamlessly integrates with the display color depth.
+	- Seamlessly integrates regardless of display color depth.
 	- Faster refresh rates.
 	- No visual artifacts from drawing directly on the display memory.
 	- Supports partial display updates.

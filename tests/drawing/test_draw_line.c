@@ -22,19 +22,19 @@ int main(int argc, char *argv[]) {
 	width = eglib_GetWidth(&eglib);
 	height = eglib_GetHeight(&eglib);
 
-	eglib_SetColor(&eglib, 0, 0, 0, 0);
+	eglib_SetIndexColor(&eglib, 0, 0, 0, 0);
 	for(coordinate_t v=0 ; (v < width) && (v < height) ; v++ )
 		eglib_DrawPixel(&eglib, v, v);
 
 	eglib_SetClipRange(&eglib, 0, 0, width / 2, height / 2);
 
-	eglib_SetColor(&eglib, 0, 255, 0, 0);
+	eglib_SetIndexColor(&eglib, 0, 255, 0, 0);
 	eglib_DrawLine(&eglib, 0, 0, width - 1, 0);
 
-	eglib_SetColor(&eglib, 0, 0, 255, 0);
+	eglib_SetIndexColor(&eglib, 0, 0, 255, 0);
 	eglib_DrawLine(&eglib, 0, height - 1, 0, 0);
 
-	eglib_SetColor(&eglib, 0, 0, 0, 255);
+	eglib_SetIndexColor(&eglib, 0, 0, 0, 255);
 	eglib_DrawLine(&eglib, 0, 0, width - 1, height - 1);
 
 	if(argc == 2)

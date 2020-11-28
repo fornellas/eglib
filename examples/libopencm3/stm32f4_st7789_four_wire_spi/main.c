@@ -60,17 +60,17 @@ int main(void) {
 	for(uint16_t y=0;y<st7789_config.width;y++) {
 		uint8_t v;
 		v = y / (float)st7789_config.width * 255;
-		eglib_SetColor(&eglib, 0, v, v, v);
+		eglib_SetIndexColor(&eglib, 0, v, v, v);
 		eglib_DrawLine(&eglib,0, y, st7789_config.width-1, y);
 	}
 
-	eglib_SetColor(&eglib, 0, 255, 0, 0);
+	eglib_SetIndexColor(&eglib, 0, 255, 0, 0);
 	eglib_DrawLine(&eglib,0, 0, st7789_config.width-1, st7789_config.height/2);
 
-	eglib_SetColor(&eglib, 0, 0, 255, 0);
+	eglib_SetIndexColor(&eglib, 0, 0, 255, 0);
 	eglib_DrawLine(&eglib,0, 0, st7789_config.width-1, st7789_config.height-1);
 
-	eglib_SetColor(&eglib, 0, 0, 0, 255);
+	eglib_SetIndexColor(&eglib, 0, 0, 0, 255);
 	eglib_DrawLine(&eglib,0, 0, st7789_config.width/2, st7789_config.height-1);
 
 	eglib_FrameBuffer_Send(

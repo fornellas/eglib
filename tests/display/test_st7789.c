@@ -23,12 +23,12 @@ int main(void) {
 		&st7789, &st7789_config
 	);
 
-	eglib_SetColor(&eglib, 0, 255, 0, 0);
+	eglib_SetIndexColor(&eglib, 0, 255, 0, 0);
 	eglib_DrawLine(&eglib,0, 0, st7789_config.width-1, st7789_config.height/2);
 
-	eglib_SetColor(&eglib, 0, 0, 255, 0);
+	eglib_SetIndexColor(&eglib, 0, 0, 255, 0);
 	eglib_DrawLine(&eglib,0, 0, st7789_config.width-1, st7789_config.height-1);
 
-	eglib_SetColor(&eglib, 0, 0, 0, 255);
+	eglib_SetIndexColor(&eglib, 0, 0, 0, 255);
 	eglib_DrawLine(&eglib,0, 0, st7789_config.width/2, st7789_config.height-1);
 }

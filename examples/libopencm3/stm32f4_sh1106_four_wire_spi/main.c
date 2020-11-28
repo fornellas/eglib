@@ -73,7 +73,7 @@ int main(void) {
 		&sh1106_vdd1_2_4_v, &sh1106_config
 	);
 
-	eglib_SetColor(&eglib, 0, 0xFF, 0xFF, 0xFF);
+	eglib_SetIndexColor(&eglib, 0, 0xFF, 0xFF, 0xFF);
 
 	eglib_DrawLine(&eglib,0, 0, sh1106_config.width-1, sh1106_config.height-1);
 	eglib_DrawLine(&eglib,0, sh1106_config.height-1, sh1106_config.width-1, 0);

@@ -30,7 +30,7 @@ bool eglib_IsPixelClipped(
   return false;
 }
 
-void eglib_SetColor(
+void eglib_SetIndexColor(
   eglib_t *eglib,
   size_t idx,
   color_channel_t r,

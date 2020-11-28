@@ -2,7 +2,7 @@
 
 Experimental Graphics Library
 
-[![Build Status](https://travis-ci.org/fornellas/eglib.svg?branch=master)](https://travis-ci.org/github/fornellas/eglib)
+![Build](https://github.com/fornellas/eglib/workflows/build/badge.svg)
 
 ## Development
 

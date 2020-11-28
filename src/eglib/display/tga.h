@@ -4,6 +4,11 @@
 #include "../display.h"
 
 /**
+ * Driver
+ * ======
+ */
+
+/**
  * Configuration for :c:data:`tga`.
  *
  * :See also: :c:func:`eglib_Init`.
@@ -31,6 +36,14 @@ typedef struct {
  * :See also: :c:func:`eglib_Init`.
  */
 extern const display_t tga;
+
+/**
+ * Functions
+ * =========
+ *
+ * These functions can be used exclusively with :c:type:`eglib_t` initialized
+ * with :c:data:`tga`.
+ */
 
 /**
  * Saves TGA to given file path.

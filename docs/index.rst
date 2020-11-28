@@ -1,7 +1,7 @@
 eglib
 =====
 
-eglib is a portable graphics library for interfacing with LCD, OLED, e-ink / e-paper displays, usable from microcontrollers to Linux.
+A portable graphics C library for interfacing with LCD, OLED, e-ink / e-paper displays, usable from microcontrollers to Linux.
 
 Its design provides a simple but coherent interface enjoyable from both the perspective of end users or HAL / display driver developers.
 

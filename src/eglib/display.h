@@ -5,7 +5,12 @@
 #include "hal.h"
 
 /**
- * Line direction
+ * Types
+ * =====
+ */
+
+/**
+ * Line direction to draw.
  */
 typedef enum {
 	/** Right: x increments. */
@@ -31,31 +36,15 @@ struct display_comm_struct {
 };
 
 /**
- * Not accelerated implementation of :c:type:`display_struct` ``draw_line``
- * based on ``draw_pixel_color``.
+ * Display driver
+ * ==============
  */
-void display_default_draw_line(
-	eglib_t *eglib,
-	coordinate_t x,
-	coordinate_t y,
-	display_line_direction_t direction,
-	coordinate_t length,
-	color_t (*get_next_color)(eglib_t *eglib)
-);
-
 
 /**
  * Display driver definition.
  *
- * Communication with the data bus can be done using these and other ``hal_*``
- * functions:
- *
- * - :c:func:`eglib_DelayNs`.
- * - :c:func:`eglib_SetReset`.
- * - :c:func:`eglib_CommBegin`.
- * - :c:func:`eglib_Send`.
- * - :c:func:`eglib_CommEnd`.
- * - :c:func:`eglib_GetBusy`.
+ * Communication with the data bus can be done using the
+ * :ref:`display driver HAL interface functions <Display driver HAL interface functions>`
  *
  * :note: :c:func:`eglib_GetDisplayConfig` can be used to retrieve the HAL driver
  *   configuration.
@@ -235,16 +224,40 @@ struct display_struct {
 };
 
 /**
+ * Display Driver Helper Functions
+ * -------------------------------
+ */
+
+/**
+ * Not accelerated implementation of :c:type:`display_struct` ``draw_line``
+ * based on ``draw_pixel_color``.
+ */
+void display_default_draw_line(
+	eglib_t *eglib,
+	coordinate_t x,
+	coordinate_t y,
+	display_line_direction_t direction,
+	coordinate_t length,
+	color_t (*get_next_color)(eglib_t *eglib)
+);
+
+/**
  * Returns a pointer to the display driver configuration that was passed to
  * :c:func:`eglib_Init`.
  */
 #define eglib_GetDisplayConfig(eglib) ((eglib)->display_config_ptr)
 
 /**
+ * HAL Driver Helper Functions
+ * ===========================
+ *
+ * These functions are used by :doc:`HAL Drivers <../hal/index>` to interface with the HAL definitions
+ * :c:type:`display_comm_struct` from the display driver :c:type:`display_struct`.
+ */
+
+/**
  * Returns :c:type:`hal_four_wire_spi_config_t` for :c:type:`display_struct`
  * from given :c:type:`eglib_t`.
- *
- * :note: Used by 4-Wire SPI HAL drivers :c:type:`hal_t`.
  */
 #define eglib_GetHalFourWireSpiConfigComm(eglib) (\
 	(eglib)->display->comm.four_wire_spi \
@@ -253,17 +266,14 @@ struct display_struct {
 /**
  * Returns :c:type:`hal_i2c_config_t` for :c:type:`display_struct`
  * from given :c:type:`eglib_t`.
- *
- * :note: Used by I2C HAL drivers :c:type:`hal_t`.
  */
 #define eglib_GetHalI2cConfigComm(eglib) (\
 	(eglib)->display->comm.i2c \
 )
 
 /**
- * :See also: :c:type:`hal_i2c_config_t` ``get_7bit_slave_addr`` for details on this
+ * See :c:type:`hal_i2c_config_t` ``get_7bit_slave_addr`` for details on this
  *   function.
- * :note: Used by I2C HAL drivers :c:type:`hal_t`.
  */
 #define eglib_GetI2c7bitSlaveAddr(eglib, dc) \
 	(eglib_GetHalI2cConfigComm(eglib)->get_7bit_slave_addr(eglib, dc))
@@ -271,10 +281,17 @@ struct display_struct {
 /**
  * :See also: :c:type:`hal_i2c_config_t` ``send`` for details on this
  *   function.
- * :note: Used by I2C HAL drivers :c:type:`hal_t`.
  */
 #define eglib_I2cSend(eglib, i2c_write, dc, bytes, length) \
 	(eglib_GetHalI2cConfigComm(eglib)->send(eglib, i2c_write, dc, bytes, length))
+
+/**
+ * Display Functions
+ * =================
+ *
+ * These functions can be used by end users to query and send commands to the
+ * display driver.
+ */
 
 /**
  * Get display dimensions.

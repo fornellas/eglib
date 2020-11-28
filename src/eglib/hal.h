@@ -274,6 +274,8 @@ struct hal_struct {
 #define eglib_ShouldSendI2cSlaveAddr(eglib) ((eglib)->hal_i2c_send_slave_addr)
 
 /**
+ * .. _Display driver HAL interface functions:
+ *
  * Display driver HAL interface functions
  * ======================================
  *

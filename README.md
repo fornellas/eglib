@@ -2,7 +2,7 @@
 
 Experimental Graphics Library
 
-![Build](https://github.com/fornellas/eglib/workflows/build/badge.svg)
+[![Build](https://github.com/fornellas/eglib/workflows/build/badge.svg?branch=master)](https://github.com/fornellas/eglib/actions?query=workflow%3Abuild+branch%3Amaster)
 
 ## Development
 

@@ -30,5 +30,13 @@ jobs:
         run: sudo apt-get -y install gcc-arm-none-eabi libnewlib-dev libnewlib-arm-none-eabi
       - name: Install test dependencies
         run: sudo apt-get -y install valgrind
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install requirements.txt apt dependencies
+        run: sudo apt-get -y install libclang-10-dev
+      - name: Install Python dependencies
+        run: pip install -r docs/requirements.txt
       - name: make
         run: make

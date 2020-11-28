@@ -104,7 +104,7 @@ static inline void display_on(eglib_t *eglib) {
 
 // display_t
 
-static uint8_t get_7bit_slave_addr(eglib_t *eglib, hal_dc_t dc) {
+static uint8_t get_7bit_slave_addr(eglib_t *eglib, enum hal_dc_t dc) {
 	sh1106_config_t *display_config;
 
 	(void)dc;
@@ -316,7 +316,7 @@ void sh1106_Reverse(
 static void i2c_send(
 	eglib_t *eglib,
 	void (*i2c_write)(eglib_t *eglib, uint8_t byte),
-	hal_dc_t dc,
+	enum hal_dc_t dc,
 	uint8_t *bytes,
 	uint32_t length
 ) {

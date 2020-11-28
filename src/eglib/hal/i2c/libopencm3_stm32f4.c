@@ -102,7 +102,7 @@ static bool i2c_has_error(eglib_t *eglib) {
 	return false;
 }
 
-static void send_slave_address(eglib_t *eglib, hal_dc_t dc) {
+static void send_slave_address(eglib_t *eglib, enum hal_dc_t dc) {
 	i2c_libopencm3_stm32f4_config_t *config;
 	uint8_t seven_bit_slave_addr;
 
@@ -188,6 +188,14 @@ static void set_reset(
 		gpio_clear(config->port_rst, config->gpio_rst);
 }
 
+static bool get_busy(eglib_t *eglib) {
+	i2c_libopencm3_stm32f4_config_t *config;
+
+	config = eglib_GetHalConfig(eglib);
+
+	return gpio_get(config->port_busy, config->gpio_busy);
+}
+
 static void comm_begin(eglib_t *eglib) {
 	i2c_libopencm3_stm32f4_config_t *config;
 
@@ -213,7 +221,7 @@ static void comm_begin(eglib_t *eglib) {
 
 static void send(
 	eglib_t *eglib,
-	hal_dc_t dc,
+	enum hal_dc_t dc,
 	uint8_t *bytes,
 	uint32_t length
 ) {
@@ -234,22 +242,14 @@ static void comm_end(eglib_t *eglib) {
 	i2c_send_stop(config->i2c);
 }
 
-static bool get_busy(eglib_t *eglib) {
-	i2c_libopencm3_stm32f4_config_t *config;
-
-	config = eglib_GetHalConfig(eglib);
-
-	return gpio_get(config->port_busy, config->gpio_busy);
-}
-
 const hal_t i2c_libopencm3_stm32f4 = {
 	.init = init,
 	.sleep_in = sleep_in,
 	.sleep_out = sleep_out,
 	.delay_ns = delay_ns,
 	.set_reset = set_reset,
+	.get_busy = get_busy,
 	.comm_begin = comm_begin,
 	.send = send,
 	.comm_end = comm_end,
-	.get_busy = get_busy,
 };

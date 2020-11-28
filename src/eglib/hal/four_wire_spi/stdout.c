@@ -31,6 +31,13 @@ static void set_reset(eglib_t *eglib, bool state) {
 	printf("set_reset %d\n", state);
 }
 
+static bool get_busy(eglib_t *eglib) {
+	(void)eglib;
+
+	printf("get_busy\n");
+	return false;
+}
+
 static void comm_begin(eglib_t *eglib) {
 	(void)eglib;
 
@@ -39,7 +46,7 @@ static void comm_begin(eglib_t *eglib) {
 
 static void send(
 	eglib_t *eglib,
-	hal_dc_t dc,
+	enum hal_dc_t dc,
 	uint8_t *bytes,
 	uint32_t length
 ) {
@@ -60,21 +67,14 @@ static void comm_end(eglib_t *eglib) {
 	printf("comm_end\n");
 }
 
-static bool get_busy(eglib_t *eglib) {
-	(void)eglib;
-
-	printf("get_busy\n");
-	return false;
-}
-
 const hal_t four_wire_spi_stdout = {
 	.init = init,
 	.sleep_in = sleep_in,
 	.sleep_out = sleep_out,
 	.delay_ns = delay_ns,
 	.set_reset = set_reset,
+	.get_busy = get_busy,
 	.comm_begin = comm_begin,
 	.send = send,
 	.comm_end = comm_end,
-	.get_busy = get_busy,
 };

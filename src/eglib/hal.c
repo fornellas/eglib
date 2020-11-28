@@ -8,7 +8,7 @@ void eglib_CommBegin(eglib_t *eglib) {
 
 void eglib_Send(
 	eglib_t *eglib,
-	hal_dc_t dc,
+	enum hal_dc_t dc,
 	uint8_t *bytes,
 	uint32_t length
 ) {

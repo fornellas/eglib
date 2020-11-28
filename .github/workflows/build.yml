@@ -29,4 +29,6 @@ jobs:
       - name: git status
         run: GIT_STATUS="$(git status --porcelain)" && [ -n "$GIT_STATUS" ] && { echo git status ; echo "$GIT_STATUS" ; echo git diff ; git diff ; exit 1 ; } || true
       - name: git status --ignored
-        run: GIT_STATUS="$(git status --ignored --porcelain)" && [ -n "$GIT_STATUS" ] && { echo git status ; echo "$GIT_STATUS" ; exit 1 ; } || true
+        run: |
+          make clean
+          GIT_STATUS="$(git status --ignored --porcelain)" && [ -n "$GIT_STATUS" ] && { echo git status ; echo "$GIT_STATUS" ; exit 1 ; } || true

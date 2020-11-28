@@ -19,4 +19,6 @@ $(MAKE_CLEAN):
 
 .PHONY: docs
 docs:
+	rm -rf docs/*
 	sphinx-build -b html -a -d sphinx/_build/doctrees/ sphinx/ docs/
+	rm -rf docs/.buildinfo sphinx/_build/

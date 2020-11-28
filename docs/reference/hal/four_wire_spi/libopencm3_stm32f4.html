@@ -52,8 +52,8 @@
 <div class="section" id="configuration">
 <h2><a class="toc-backref" href="#id3">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t">
-<code class="sig-name descname">four_wire_spi_libopencm3_stm32f4_config_t</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t" title="Permalink to this definition">¶</a></dt>
+<dt id="c.struct">
+<code class="sig-name descname">struct</code><span class="sig-paren">(</span>anonymous at<em> /home/fornellas/src/eglib/src/eglib/hal/four_wire_spi/libopencm3_stm32f4.h:18:9</em><span class="sig-paren">)</span><a class="headerlink" href="#c.struct" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configuration for <a class="reference internal" href="#c.four_wire_spi_libopencm3_stm32f4" title="four_wire_spi_libopencm3_stm32f4"><code class="xref c c-data docutils literal notranslate"><span class="pre">four_wire_spi_libopencm3_stm32f4</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">See also</dt>
@@ -63,123 +63,123 @@
 <dd class="field-even"><p><a class="reference external" href="http://libopencm3.org/">libopencm3</a> documentation.</p>
 </dd>
 </dl>
-<dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_rst">
-enum rcc_periph_clken <code class="sig-name descname">rcc_rst</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_rst" title="Permalink to this definition">¶</a></dt>
+<dl class="type">
+<dt id="c.rcc_periph_clken">
+enum <code class="sig-name descname">rcc_periph_clken</code><a class="headerlink" href="#c.rcc_periph_clken" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optional: reset line RCC (eg: <code class="docutils literal notranslate"><span class="pre">RCC_GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.port_rst">
-uint32_t <code class="sig-name descname">port_rst</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.port_rst" title="Permalink to this definition">¶</a></dt>
+<dt id="c.port_rst">
+uint32_t <code class="sig-name descname">port_rst</code><a class="headerlink" href="#c.port_rst" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optional: reset line PORT (eg: <code class="docutils literal notranslate"><span class="pre">GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.gpio_rst">
-uint16_t <code class="sig-name descname">gpio_rst</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.gpio_rst" title="Permalink to this definition">¶</a></dt>
+<dt id="c.gpio_rst">
+uint16_t <code class="sig-name descname">gpio_rst</code><a class="headerlink" href="#c.gpio_rst" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optional: reset line GPIO (eg: <code class="docutils literal notranslate"><span class="pre">GPIO4</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_busy">
-enum rcc_periph_clken <code class="sig-name descname">rcc_busy</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_busy" title="Permalink to this definition">¶</a></dt>
+<dt id="c.rcc_busy">
+enum <a class="reference internal" href="../i2c/libopencm3_stm32f4.html#c.rcc_periph_clken" title="rcc_periph_clken">rcc_periph_clken</a> <code class="sig-name descname">rcc_busy</code><a class="headerlink" href="#c.rcc_busy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optional: busy line RCC (eg: <code class="docutils literal notranslate"><span class="pre">RCC_GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.port_busy">
-uint32_t <code class="sig-name descname">port_busy</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.port_busy" title="Permalink to this definition">¶</a></dt>
+<dt id="c.port_busy">
+uint32_t <code class="sig-name descname">port_busy</code><a class="headerlink" href="#c.port_busy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optional: busy line PORT (eg: <code class="docutils literal notranslate"><span class="pre">GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.gpio_busy">
-uint16_t <code class="sig-name descname">gpio_busy</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.gpio_busy" title="Permalink to this definition">¶</a></dt>
+<dt id="c.gpio_busy">
+uint16_t <code class="sig-name descname">gpio_busy</code><a class="headerlink" href="#c.gpio_busy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optional: busy line GPIO (eg: <code class="docutils literal notranslate"><span class="pre">GPIO4</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_dc">
-enum rcc_periph_clken <code class="sig-name descname">rcc_dc</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_dc" title="Permalink to this definition">¶</a></dt>
+<dt id="c.rcc_dc">
+enum <a class="reference internal" href="../i2c/libopencm3_stm32f4.html#c.rcc_periph_clken" title="rcc_periph_clken">rcc_periph_clken</a> <code class="sig-name descname">rcc_dc</code><a class="headerlink" href="#c.rcc_dc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Data / command line RCC GPIO (eg: <code class="docutils literal notranslate"><span class="pre">RCC_GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.port_dc">
-uint32_t <code class="sig-name descname">port_dc</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.port_dc" title="Permalink to this definition">¶</a></dt>
+<dt id="c.port_dc">
+uint32_t <code class="sig-name descname">port_dc</code><a class="headerlink" href="#c.port_dc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Data / command line PORT (eg: <code class="docutils literal notranslate"><span class="pre">GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.gpio_dc">
-uint16_t <code class="sig-name descname">gpio_dc</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.gpio_dc" title="Permalink to this definition">¶</a></dt>
+<dt id="c.gpio_dc">
+uint16_t <code class="sig-name descname">gpio_dc</code><a class="headerlink" href="#c.gpio_dc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Data / command line GPIO (eg: <code class="docutils literal notranslate"><span class="pre">GPIO3</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_cs">
-enum rcc_periph_clken <code class="sig-name descname">rcc_cs</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_cs" title="Permalink to this definition">¶</a></dt>
+<dt id="c.rcc_cs">
+enum <a class="reference internal" href="../i2c/libopencm3_stm32f4.html#c.rcc_periph_clken" title="rcc_periph_clken">rcc_periph_clken</a> <code class="sig-name descname">rcc_cs</code><a class="headerlink" href="#c.rcc_cs" title="Permalink to this definition">¶</a></dt>
 <dd><p>SPI CS line RCC GPIO (eg: <code class="docutils literal notranslate"><span class="pre">RCC_GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.port_cs">
-uint32_t <code class="sig-name descname">port_cs</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.port_cs" title="Permalink to this definition">¶</a></dt>
+<dt id="c.port_cs">
+uint32_t <code class="sig-name descname">port_cs</code><a class="headerlink" href="#c.port_cs" title="Permalink to this definition">¶</a></dt>
 <dd><p>SPI CS line PORT (eg: <code class="docutils literal notranslate"><span class="pre">GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.gpio_cs">
-uint16_t <code class="sig-name descname">gpio_cs</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.gpio_cs" title="Permalink to this definition">¶</a></dt>
+<dt id="c.gpio_cs">
+uint16_t <code class="sig-name descname">gpio_cs</code><a class="headerlink" href="#c.gpio_cs" title="Permalink to this definition">¶</a></dt>
 <dd><p>SPI CS line GPIO (eg: <code class="docutils literal notranslate"><span class="pre">GPIO2</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_spi">
-enum rcc_periph_clken <code class="sig-name descname">rcc_spi</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_spi" title="Permalink to this definition">¶</a></dt>
+<dt id="c.rcc_spi">
+enum <a class="reference internal" href="../i2c/libopencm3_stm32f4.html#c.rcc_periph_clken" title="rcc_periph_clken">rcc_periph_clken</a> <code class="sig-name descname">rcc_spi</code><a class="headerlink" href="#c.rcc_spi" title="Permalink to this definition">¶</a></dt>
 <dd><p>SPI RCC (eg: <code class="docutils literal notranslate"><span class="pre">RCC_SPI1</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.spi">
-uint32_t <code class="sig-name descname">spi</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.spi" title="Permalink to this definition">¶</a></dt>
+<dt id="c.spi">
+uint32_t <code class="sig-name descname">spi</code><a class="headerlink" href="#c.spi" title="Permalink to this definition">¶</a></dt>
 <dd><p>SPI peripheral (eg: <code class="docutils literal notranslate"><span class="pre">SPI1</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_sck">
-enum rcc_periph_clken <code class="sig-name descname">rcc_sck</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_sck" title="Permalink to this definition">¶</a></dt>
+<dt id="c.rcc_sck">
+enum <a class="reference internal" href="../i2c/libopencm3_stm32f4.html#c.rcc_periph_clken" title="rcc_periph_clken">rcc_periph_clken</a> <code class="sig-name descname">rcc_sck</code><a class="headerlink" href="#c.rcc_sck" title="Permalink to this definition">¶</a></dt>
 <dd><p>SPI SCK line RCC GPIO (eg: <code class="docutils literal notranslate"><span class="pre">RCC_GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.port_sck">
-uint32_t <code class="sig-name descname">port_sck</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.port_sck" title="Permalink to this definition">¶</a></dt>
+<dt id="c.port_sck">
+uint32_t <code class="sig-name descname">port_sck</code><a class="headerlink" href="#c.port_sck" title="Permalink to this definition">¶</a></dt>
 <dd><p>SPI SCK line PORT (eg: <code class="docutils literal notranslate"><span class="pre">GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.gpio_sck">
-uint16_t <code class="sig-name descname">gpio_sck</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.gpio_sck" title="Permalink to this definition">¶</a></dt>
+<dt id="c.gpio_sck">
+uint16_t <code class="sig-name descname">gpio_sck</code><a class="headerlink" href="#c.gpio_sck" title="Permalink to this definition">¶</a></dt>
 <dd><p>SPI SCK line GPIO (eg: <code class="docutils literal notranslate"><span class="pre">GPIO5</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_mosi">
-enum rcc_periph_clken <code class="sig-name descname">rcc_mosi</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.rcc_mosi" title="Permalink to this definition">¶</a></dt>
+<dt id="c.rcc_mosi">
+enum <a class="reference internal" href="../i2c/libopencm3_stm32f4.html#c.rcc_periph_clken" title="rcc_periph_clken">rcc_periph_clken</a> <code class="sig-name descname">rcc_mosi</code><a class="headerlink" href="#c.rcc_mosi" title="Permalink to this definition">¶</a></dt>
 <dd><p>SPI MOSI line RCC GPIO (eg: <code class="docutils literal notranslate"><span class="pre">RCC_GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.port_mosi">
-uint32_t <code class="sig-name descname">port_mosi</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.port_mosi" title="Permalink to this definition">¶</a></dt>
+<dt id="c.port_mosi">
+uint32_t <code class="sig-name descname">port_mosi</code><a class="headerlink" href="#c.port_mosi" title="Permalink to this definition">¶</a></dt>
 <dd><p>SPI MOSI line PORT (eg: <code class="docutils literal notranslate"><span class="pre">GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.four_wire_spi_libopencm3_stm32f4_config_t.gpio_mosi">
-uint16_t <code class="sig-name descname">gpio_mosi</code><a class="headerlink" href="#c.four_wire_spi_libopencm3_stm32f4_config_t.gpio_mosi" title="Permalink to this definition">¶</a></dt>
+<dt id="c.gpio_mosi">
+uint16_t <code class="sig-name descname">gpio_mosi</code><a class="headerlink" href="#c.gpio_mosi" title="Permalink to this definition">¶</a></dt>
 <dd><p>SPI MOSI line GPIO (eg: <code class="docutils literal notranslate"><span class="pre">GPIO7</span></code>).</p>
 </dd></dl>
 

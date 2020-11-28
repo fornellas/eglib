@@ -45,7 +45,7 @@ typedef struct {
  * You can not use a frame buffer only when you don't have enough RAM available.
  *
  * This function allocates the memory required for the buffer dynamically based
- * on :c:type:`display_sturct` width, height and pixel format (width * height *
+ * on :c:type:`display_struct` width, height and pixel format (width * height *
  * bit depth / 8). This can be freed
  * by :c:func:`frame_buffer_Free`.
  *

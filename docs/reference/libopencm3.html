@@ -148,21 +148,22 @@ make -C <span class="si">${</span><span class="nv">EGLIB_ROOT</span><span class=
 <span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">eglib</span>
 <span class="nf">clean-eglib</span><span class="o">:</span>
 	rm -rf <span class="k">$(</span>EGLIB_BUILD_DIR<span class="k">)</span>
-
 <span class="nf">clean</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">eglib</span>
 
 <span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">libopencm</span>3
 <span class="nf">clean-libopencm3</span><span class="o">:</span>
 	<span class="k">$(</span>MAKE<span class="k">)</span> -C <span class="k">$(</span>OPENCM3_DIR<span class="k">)</span> clean
-
 <span class="nf">clean</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">libopencm</span>3
 
 <span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">bin</span>
 <span class="nf">clean-bin</span><span class="o">:</span>
 	<span class="k">$(</span>MAKE<span class="k">)</span> -C <span class="k">$(</span>OPENCM3_DIR<span class="k">)</span> clean
-
 <span class="nf">clean</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">bin</span>
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">build</span>-<span class="n">dir</span>-<span class="n">prefix</span>
+<span class="nf">clean-build-dir-prefix</span><span class="o">:</span>
 	rm -rf <span class="k">$(</span>BUILD_DIR_PREFIX<span class="k">)</span>
+<span class="nf">clean</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">build</span>-<span class="n">dir</span>-<span class="n">prefix</span>
 </pre></div>
 </div>
 <p>And it can then be used by a project’s <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>:</p>

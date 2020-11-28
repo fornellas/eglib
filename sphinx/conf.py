@@ -45,7 +45,6 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
-
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -63,13 +62,13 @@ html_theme_options = {
     "code_font_size": "0.8em",
 }
 html_sidebars = {
-    '**': [
-        'about.html',
-        'badges.html',
-        'donate.html',
-        'navigation.html',
+    "**": [
+        "about.html",
+        "badges.html",
+        "donate.html",
+        "navigation.html",
         # 'relations.html',
-        'searchbox.html',
+        "searchbox.html",
     ]
 }
 

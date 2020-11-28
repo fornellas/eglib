@@ -2,6 +2,7 @@
 #define EGLIB_DISPLAY_SH1106_H
 
 #include "../hal.h"
+#include <stdint.h>
 #include <stdbool.h>
 
 /**

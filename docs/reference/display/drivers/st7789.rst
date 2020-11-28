@@ -1,8 +1,17 @@
 ST7789
 ======
 
+Driver
+------
+
 .. code:: c
 
     #include <eglib/display/st7789.h>
 
 .. c:autodoc:: eglib/display/st7789.h
+
+Example
+-------
+
+.. literalinclude:: ../../../../examples/libopencm3/stm32f4_st7789_four_wire_spi/main.c
+   :language: C

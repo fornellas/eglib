@@ -24,8 +24,6 @@ jobs:
         run: |
           git submodule init
           git submodule update
-      - name: Install build-essential
-        run: sudo apt-get -y install build-essential
       - name: Install Arm toolchain
         run: sudo apt-get -y install gcc-arm-none-eabi libnewlib-dev libnewlib-arm-none-eabi
       - name: Install test dependencies

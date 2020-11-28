@@ -1,4 +1,4 @@
-![eglib](./assets/logo.png)
+![eglib](./docs/_static/logo.png)
 
 Experimental Graphics Library
 

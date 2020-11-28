@@ -23,6 +23,6 @@ jobs:
       - name: Install requirements.txt apt dependencies
         run: sudo apt-get -y install libclang-10-dev
       - name: Install Python dependencies
-        run: pip install -r docs/requirements.txt
+        run: pip install -r sphinx/requirements.txt
       - name: make
         run: make

@@ -47,7 +47,7 @@ typedef struct {
 } i2c_libopencm3_stm32f4_config_t;
 
 /**
- * I2C HAL driver for `libopencm3 <http://libopencm3.org/>`_.
+ * I2C HAL driver for `libopencm3 <http://libopencm3.org/>`_ STM32F4 targets.
  *
  * :See also: :c:func:`eglib_Init`.
  */

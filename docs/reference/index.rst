@@ -11,3 +11,4 @@ This section contains source code reference for all eglib public API headers.
    drawing.rst
    hal/index.rst
    display/index.rst
+   libopencm3.rst

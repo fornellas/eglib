@@ -60,7 +60,7 @@ typedef struct {
 } four_wire_spi_libopencm3_stm32f4_config_t;
 
 /**
- * 4-Wire SPI HAL driver for `libopencm3 <http://libopencm3.org/>`_.
+ * 4-Wire SPI HAL driver for `libopencm3 <http://libopencm3.org/>`_ STM32F4 targets.
  *
  * :See also: :c:func:`eglib_Init`.
  */

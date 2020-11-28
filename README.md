@@ -1,4 +1,4 @@
-![eglib](./docs/_static/logo.png)
+![eglib](./sphinx/_static/logo.png)
 
 A portable C library for interfacing with LCD, OLED, e-ink / e-paper displays, usable from microcontrollers to Linux.
 

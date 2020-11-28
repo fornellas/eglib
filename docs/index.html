@@ -42,9 +42,9 @@
 <li><p>Hardware Abstraction Layer (HAL).</p>
 <ul class="simple">
 <li><p>Supports different data buses such as 4-Wire SPI and I2C.</p></li>
-<li><p>Easy to develop reusable drivers to different platforms.</p></li>
-<li><p>Drivers can accept configuration (eg: I/O pins).</p></li>
-<li><p>Supports display specific configuration for things like timings.</p></li>
+<li><p>Easy to develop reusable drivers for different platforms.
+- Drivers have accept configuration for things like I/O pins.
+- Display drivers provide bus specific configuration.</p></li>
 </ul>
 </li>
 <li><p>Display drivers.</p>
@@ -52,17 +52,16 @@
 <li><p>Common interface regardless of data bus.</p></li>
 <li><p>Supports configuration</p>
 <ul>
-<li><p>Enables the same controller driver to be used with different screen sizes or boards from different manufactures.</p></li>
-<li><p>Support for extra controller features, such as different color depths.</p></li>
-<li><p>Configuration for new boards can often be added with only a few lines.</p></li>
+<li><p>Same controller driver works with different screen sizes or boards.</p></li>
+<li><p>Allows configuration of things like color depth.</p></li>
 </ul>
 </li>
-<li><p>Support for display controller specific functions, such as color inversion, scrolling, brightness etc.</p></li>
+<li><p>Support for specific commands: color inversion, scrolling, brightness etc.</p></li>
 <li><p>Accelerated line drawing routines.</p></li>
-<li><p>Supports a wide range:</p>
+<li><p>Supports a wide range of:</p>
 <ul>
-<li><p>Of display types: LCD, OLED, e-ink/e-paper.</p></li>
-<li><p>Of color depths: black/white, black/white/red|yellow (e-ink / e-paper), grayscale to full color.</p></li>
+<li><p>Display types: LCD, OLED, e-ink/e-paper.</p></li>
+<li><p>Color depths: black/white, black/white/red|yellow (e-ink / e-paper), grayscale to full color.</p></li>
 </ul>
 </li>
 </ul>
@@ -71,17 +70,16 @@
 <blockquote>
 <div><ul class="simple">
 <li><p>Can be used on top of any display driver.</p></li>
-<li><p>Seamlessly integrates regardless of display color depth.</p></li>
 <li><p>Faster refresh rates.</p></li>
 <li><p>No visual artifacts from drawing directly on the display memory.</p></li>
-<li><p>Supports partial display updates.</p></li>
+<li><p>Partial display updates.</p></li>
 </ul>
 </div></blockquote>
 </li>
 <li><p>Drawing</p>
 <ul class="simple">
 <li><p>Many functions for lines, boxes, circle etc.</p></li>
-<li><p>Supports defining a clipping box for drawing functions.</p></li>
+<li><p>Clipping box support.</p></li>
 </ul>
 </li>
 </ul>

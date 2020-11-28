@@ -13,38 +13,36 @@ Features
 - Hardware Abstraction Layer (HAL).
 
   - Supports different data buses such as 4-Wire SPI and I2C.
-  - Easy to develop reusable drivers to different platforms.
-  - Drivers can accept configuration (eg: I/O pins).
-  - Supports display specific configuration for things like timings.
+  - Easy to develop reusable drivers for different platforms.
+    - Drivers have accept configuration for things like I/O pins.
+    - Display drivers provide bus specific configuration.
 
 - Display drivers.
 
   - Common interface regardless of data bus.
   - Supports configuration
 
-    - Enables the same controller driver to be used with different screen sizes or boards from different manufactures.
-    - Support for extra controller features, such as different color depths.
-    - Configuration for new boards can often be added with only a few lines.
+    - Same controller driver works with different screen sizes or boards.
+    - Allows configuration of things like color depth.
 
-  - Support for display controller specific functions, such as color inversion, scrolling, brightness etc.
+  - Support for specific commands: color inversion, scrolling, brightness etc.
   - Accelerated line drawing routines.
-  - Supports a wide range:
+  - Supports a wide range of:
 
-    - Of display types: LCD, OLED, e-ink/e-paper.
-    - Of color depths: black/white, black/white/red|yellow (e-ink / e-paper), grayscale to full color.
+    - Display types: LCD, OLED, e-ink/e-paper.
+    - Color depths: black/white, black/white/red|yellow (e-ink / e-paper), grayscale to full color.
 
 - Frame buffer
 
 	- Can be used on top of any display driver.
-	- Seamlessly integrates regardless of display color depth.
 	- Faster refresh rates.
 	- No visual artifacts from drawing directly on the display memory.
-	- Supports partial display updates.
+	- Partial display updates.
 
 - Drawing
 
   - Many functions for lines, boxes, circle etc.
-  - Supports defining a clipping box for drawing functions.
+  - Clipping box support.
 
 .. toctree::
    :maxdepth: 4

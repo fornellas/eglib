@@ -52,8 +52,8 @@
 <div class="section" id="configuration">
 <h2><a class="toc-backref" href="#id3">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
-<dt id="c.struct">
-<code class="sig-name descname">struct</code><span class="sig-paren">(</span>anonymous at<em> /home/fornellas/src/eglib/src/eglib/hal/i2c/libopencm3_stm32f4.h:18:9</em><span class="sig-paren">)</span><a class="headerlink" href="#c.struct" title="Permalink to this definition">¶</a></dt>
+<dt id="c.i2c_libopencm3_stm32f4_config_t">
+<code class="sig-name descname">i2c_libopencm3_stm32f4_config_t</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configuration for <a class="reference internal" href="#c.i2c_libopencm3_stm32f4" title="i2c_libopencm3_stm32f4"><code class="xref c c-data docutils literal notranslate"><span class="pre">i2c_libopencm3_stm32f4</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">See also</dt>
@@ -63,81 +63,81 @@
 <dd class="field-even"><p><a class="reference external" href="http://libopencm3.org/">libopencm3</a> documentation.</p>
 </dd>
 </dl>
-<dl class="type">
-<dt id="c.rcc_periph_clken">
-enum <code class="sig-name descname">rcc_periph_clken</code><a class="headerlink" href="#c.rcc_periph_clken" title="Permalink to this definition">¶</a></dt>
+<dl class="member">
+<dt id="c.i2c_libopencm3_stm32f4_config_t.rcc_rst">
+enum rcc_periph_clken <code class="sig-name descname">rcc_rst</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t.rcc_rst" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optional: reset line RCC (eg: <code class="docutils literal notranslate"><span class="pre">RCC_GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.port_rst">
-uint32_t <code class="sig-name descname">port_rst</code><a class="headerlink" href="#c.port_rst" title="Permalink to this definition">¶</a></dt>
+<dt id="c.i2c_libopencm3_stm32f4_config_t.port_rst">
+uint32_t <code class="sig-name descname">port_rst</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t.port_rst" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optional: reset line PORT (eg: <code class="docutils literal notranslate"><span class="pre">GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.gpio_rst">
-uint16_t <code class="sig-name descname">gpio_rst</code><a class="headerlink" href="#c.gpio_rst" title="Permalink to this definition">¶</a></dt>
+<dt id="c.i2c_libopencm3_stm32f4_config_t.gpio_rst">
+uint16_t <code class="sig-name descname">gpio_rst</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t.gpio_rst" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optional: reset line GPIO (eg: <code class="docutils literal notranslate"><span class="pre">GPIO4</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.rcc_busy">
-enum <a class="reference internal" href="#c.rcc_periph_clken" title="rcc_periph_clken">rcc_periph_clken</a> <code class="sig-name descname">rcc_busy</code><a class="headerlink" href="#c.rcc_busy" title="Permalink to this definition">¶</a></dt>
+<dt id="c.i2c_libopencm3_stm32f4_config_t.rcc_busy">
+enum rcc_periph_clken <code class="sig-name descname">rcc_busy</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t.rcc_busy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optional: busy line RCC (eg: <code class="docutils literal notranslate"><span class="pre">RCC_GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.port_busy">
-uint32_t <code class="sig-name descname">port_busy</code><a class="headerlink" href="#c.port_busy" title="Permalink to this definition">¶</a></dt>
+<dt id="c.i2c_libopencm3_stm32f4_config_t.port_busy">
+uint32_t <code class="sig-name descname">port_busy</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t.port_busy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optional: busy line PORT (eg: <code class="docutils literal notranslate"><span class="pre">GPIOA</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.gpio_busy">
-uint16_t <code class="sig-name descname">gpio_busy</code><a class="headerlink" href="#c.gpio_busy" title="Permalink to this definition">¶</a></dt>
+<dt id="c.i2c_libopencm3_stm32f4_config_t.gpio_busy">
+uint16_t <code class="sig-name descname">gpio_busy</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t.gpio_busy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optional: busy line GPIO (eg: <code class="docutils literal notranslate"><span class="pre">GPIO4</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.rcc_gpio_i2c">
-enum <a class="reference internal" href="#c.rcc_periph_clken" title="rcc_periph_clken">rcc_periph_clken</a> <code class="sig-name descname">rcc_gpio_i2c</code><a class="headerlink" href="#c.rcc_gpio_i2c" title="Permalink to this definition">¶</a></dt>
+<dt id="c.i2c_libopencm3_stm32f4_config_t.rcc_gpio_i2c">
+enum rcc_periph_clken <code class="sig-name descname">rcc_gpio_i2c</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t.rcc_gpio_i2c" title="Permalink to this definition">¶</a></dt>
 <dd><p>I2C RCC GPIO (eg: <code class="docutils literal notranslate"><span class="pre">RCC_GPIOB</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.port_i2c">
-uint32_t <code class="sig-name descname">port_i2c</code><a class="headerlink" href="#c.port_i2c" title="Permalink to this definition">¶</a></dt>
+<dt id="c.i2c_libopencm3_stm32f4_config_t.port_i2c">
+uint32_t <code class="sig-name descname">port_i2c</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t.port_i2c" title="Permalink to this definition">¶</a></dt>
 <dd><p>I2C PORT (eg: <code class="docutils literal notranslate"><span class="pre">GPIOB</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.gpio_scl">
-uint16_t <code class="sig-name descname">gpio_scl</code><a class="headerlink" href="#c.gpio_scl" title="Permalink to this definition">¶</a></dt>
+<dt id="c.i2c_libopencm3_stm32f4_config_t.gpio_scl">
+uint16_t <code class="sig-name descname">gpio_scl</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t.gpio_scl" title="Permalink to this definition">¶</a></dt>
 <dd><p>I2C SCL GPIO (eg: <code class="docutils literal notranslate"><span class="pre">GPIO8</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.gpio_sda">
-uint16_t <code class="sig-name descname">gpio_sda</code><a class="headerlink" href="#c.gpio_sda" title="Permalink to this definition">¶</a></dt>
+<dt id="c.i2c_libopencm3_stm32f4_config_t.gpio_sda">
+uint16_t <code class="sig-name descname">gpio_sda</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t.gpio_sda" title="Permalink to this definition">¶</a></dt>
 <dd><p>I2C SDA GPIO (eg: <code class="docutils literal notranslate"><span class="pre">GPIO9</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.rcc_i2c">
-enum <a class="reference internal" href="#c.rcc_periph_clken" title="rcc_periph_clken">rcc_periph_clken</a> <code class="sig-name descname">rcc_i2c</code><a class="headerlink" href="#c.rcc_i2c" title="Permalink to this definition">¶</a></dt>
+<dt id="c.i2c_libopencm3_stm32f4_config_t.rcc_i2c">
+enum rcc_periph_clken <code class="sig-name descname">rcc_i2c</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t.rcc_i2c" title="Permalink to this definition">¶</a></dt>
 <dd><p>I2C RCC (eg: <code class="docutils literal notranslate"><span class="pre">RCC_I2C1</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.i2c">
-uint32_t <code class="sig-name descname">i2c</code><a class="headerlink" href="#c.i2c" title="Permalink to this definition">¶</a></dt>
+<dt id="c.i2c_libopencm3_stm32f4_config_t.i2c">
+uint32_t <code class="sig-name descname">i2c</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t.i2c" title="Permalink to this definition">¶</a></dt>
 <dd><p>I2C peripheral (eg: <code class="docutils literal notranslate"><span class="pre">I2C1</span></code>).</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.i2c_peripheral_clock_mhz">
-uint32_t <code class="sig-name descname">i2c_peripheral_clock_mhz</code><a class="headerlink" href="#c.i2c_peripheral_clock_mhz" title="Permalink to this definition">¶</a></dt>
+<dt id="c.i2c_libopencm3_stm32f4_config_t.i2c_peripheral_clock_mhz">
+uint32_t <code class="sig-name descname">i2c_peripheral_clock_mhz</code><a class="headerlink" href="#c.i2c_libopencm3_stm32f4_config_t.i2c_peripheral_clock_mhz" title="Permalink to this definition">¶</a></dt>
 <dd><p>I2C peripheral clock (eg: <code class="docutils literal notranslate"><span class="pre">rcc_apb1_frequency</span> <span class="pre">/</span> <span class="pre">1e6</span></code>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">See also</dt>

@@ -4,6 +4,12 @@
 #include "eglib/types.h"
 #include "eglib/drawing.h"
 
+/**
+ * These functions initialize :c:type:`eglib_t` and control sleep status of
+ * the hardware.
+ */
+
+// No doc
 struct _eglib_struct {
 	// HAL
 	const hal_t *hal;
@@ -33,12 +39,14 @@ struct _eglib_struct {
  * the display driver supports.
  *
  * :param eglib: Pointer to :c:type:`eglib_t` to be initialized.
- * :param hal: Pointer to the HAL driver :c:type:`hal_t` to use.
+ * :param hal: Pointer to the :doc:`HAL driver<hal/index>` (:c:type:`hal_t`) to use.
  * :param hal_driver_config_ptr: Pointer to the HAL driver configuration.
  *   Please refer each HAL driver documentation for details.
- * :param display: Pointer to the display driver :c:type:`display_t` to use.
+ * :param display: Pointer to the :doc:`display driver<display/index>` (:c:type:`display_t`) to use.
  * :param display_config_ptr: Pointer to the display driver configuration.
  *   Please refer each display driver documentation for details.
+ *
+ * :See also: :c:func:`eglib_Init_FrameBuffer`.
  */
 void eglib_Init(
 	eglib_t *eglib,

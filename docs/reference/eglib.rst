@@ -1,5 +1,5 @@
-eglib core
-==========
+eglib
+=====
 
 .. code:: c
 

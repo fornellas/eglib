@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>libopencm3 integration &#8212; eglib dev documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="TGA" href="display/drivers/tga.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="libopencm3-integration">
+<h1><a class="toc-backref" href="#id1">libopencm3 integration</a><a class="headerlink" href="#libopencm3-integration" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#libopencm3-integration" id="id1">libopencm3 integration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#manual-integration" id="id2">Manual integration</a></p></li>
+<li><p><a class="reference internal" href="#makefile-example" id="id3"><code class="docutils literal notranslate"><span class="pre">Makefile</span></code> example</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p><a class="reference external" href="http://libopencm3.org/">libopencm3 documentation</a> should be referred to learn how to create a new project with it.</p>
+<div class="section" id="manual-integration">
+<h2><a class="toc-backref" href="#id2">Manual integration</a><a class="headerlink" href="#manual-integration" title="Permalink to this headline">¶</a></h2>
+<p>Integrating eglib with it requires that eglib is built with Arm gcc and flags required by libopencm3 headers, eg:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CC</span><span class="o">=</span>arm-none-eabi-gcc
+<span class="nb">export</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-DSTM32F4 -DSTM32F411CEU6 -I</span><span class="si">${</span><span class="nv">LIBOPENCM3_ROOT</span><span class="si">}</span><span class="s2">/libopencm3/include -I</span><span class="si">${</span><span class="nv">EGLIB_ROOT</span><span class="si">}</span><span class="s2">/eglib/src -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nano.specs&quot;</span>
+make -C <span class="si">${</span><span class="nv">EGLIB_ROOT</span><span class="si">}</span>/eglib/src <span class="nv">HAL_DRIVERS</span><span class="o">=</span>four_wire_spi/libopencm3_stm32f4 <span class="nv">EGLIB_DISPLAY_DRIVERS</span><span class="o">=</span>st7789
+</pre></div>
+</div>
+<p>This will build <code class="docutils literal notranslate"><span class="pre">${EGLIB_ROOT}/eglib/src/bin/libeglib.a</span></code>, which can be linked at the final build by passing these parameters to gcc:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-L${EGLIB_ROOT}/eglib/src/bin/ -leglib
+</pre></div>
+</div>
+</div>
+<div class="section" id="makefile-example">
+<h2><a class="toc-backref" href="#id3"><code class="docutils literal notranslate"><span class="pre">Makefile</span></code> example</a><a class="headerlink" href="#makefile-example" title="Permalink to this headline">¶</a></h2>
+<p>The following <code class="docutils literal notranslate"><span class="pre">common.mk</span></code> comes from eglib’s own source tree example. It can be used as a starting point to write your own. Note that it depends on <code class="docutils literal notranslate"><span class="pre">rules.mk</span></code> from  <a class="reference external" href="https://github.com/libopencm3/libopencm3-template">libopencm3-template</a>. and <code class="docutils literal notranslate"><span class="pre">mk/genlink-config.mk</span></code> from <a class="reference external" href="https://github.com/libopencm3/libopencm3">libopencm3</a>.</p>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nv">BUILD_DIR_PREFIX</span> <span class="o">=</span> bin
+<span class="nv">BUILD_DIR</span> <span class="o">=</span> <span class="k">$(</span>BUILD_DIR_PREFIX<span class="k">)</span>/<span class="k">$(</span>PROJECT<span class="k">)</span>
+<span class="nv">OPENCM3_DIR</span><span class="o">=</span><span class="k">$(</span>abspath ../../../submodules/libopencm3/<span class="k">)</span>
+
+<span class="cp">include $(OPENCM3_DIR)/mk/genlink-config.mk</span>
+<span class="c"># genlink-config.mk does not populate these variables first run,</span>
+<span class="c"># as it depends on opencm3_stm32f4.a existing.</span>
+<span class="cp">ifndef LIBNAME</span>
+<span class="nv">LIBNAME</span> <span class="o">=</span> <span class="k">$(</span>OPENCM3_LIBNAME<span class="k">)</span>
+<span class="nv">LDLIBS</span> <span class="o">+=</span> -l<span class="k">$(</span>LIBNAME<span class="k">)</span>
+<span class="nv">LIBDEPS</span> <span class="o">+=</span> <span class="k">$(</span>OPENCM3_DIR<span class="k">)</span>/lib/lib<span class="k">$(</span>LIBNAME<span class="k">)</span>.a
+<span class="cp">endif</span>
+<span class="cp">ifneq ($(LIBNAME), $(OPENCM3_LIBNAME))</span>
+<span class="k">$(</span><span class="nv">error</span> <span class="nv">Unexpected</span> <span class="nv">LIBNAME</span> <span class="nv">value</span> <span class="k">$(</span><span class="nv">LIBNAME</span><span class="k">))</span>
+<span class="cp">endif</span>
+
+<span class="cp">include ../libopencm3-template/rules.mk</span>
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="k">$(</span><span class="nv">OPENCM3_DIR</span><span class="k">)</span>/<span class="n">lib</span>/<span class="n">lib</span><span class="k">$(</span><span class="nv">LIBNAME</span><span class="k">)</span>.<span class="n">a</span>
+<span class="nf">$(OPENCM3_DIR)/lib/lib$(LIBNAME).a</span><span class="o">:</span>
+	<span class="k">$(</span>MAKE<span class="k">)</span> -j -C <span class="k">$(</span>OPENCM3_DIR<span class="k">)</span> <span class="k">$(</span>OPENCM3_LIBDIR<span class="k">)</span>
+
+<span class="cp">include $(OPENCM3_DIR)/mk/genlink-rules.mk</span>
+<span class="k">export</span> <span class="nv">CC</span>
+<span class="nv">CFLAGS</span> <span class="o">+=</span> -I<span class="k">$(</span>OPENCM3_DIR<span class="k">)</span>/include
+<span class="nv">CFLAGS</span> <span class="o">+=</span> <span class="k">$(</span>ARCH_FLAGS<span class="k">)</span>
+<span class="nv">CFLAGS</span> <span class="o">+=</span> -specs<span class="o">=</span>nano.specs
+<span class="nv">CFLAGS</span> <span class="o">+=</span> <span class="se">\</span>
+	-MD <span class="se">\</span>
+	-O3 <span class="se">\</span>
+	-Wall <span class="se">\</span>
+	-Wextra <span class="se">\</span>
+	-Wimplicit-function-declaration <span class="se">\</span>
+	-Wredundant-decls <span class="se">\</span>
+	-Wmissing-prototypes <span class="se">\</span>
+	-Wstrict-prototypes <span class="se">\</span>
+	-Wundef <span class="se">\</span>
+	-Wshadow <span class="se">\</span>
+	-Wstrict-prototypes <span class="se">\</span>
+	-Werror <span class="se">\</span>
+	-Wfatal-errors
+<span class="k">export</span> <span class="nv">CFLAGS</span>
+<span class="k">export</span> <span class="nv">CPPFLAGS</span>
+
+<span class="nv">EGLIB_PATH</span> <span class="o">=</span> ../../../src/
+<span class="nv">INCLUDES</span> <span class="o">+=</span> -I<span class="k">$(</span>EGLIB_PATH<span class="k">)</span>
+<span class="nv">EGLIB_BUILD_DIR</span> <span class="o">=</span> <span class="k">$(</span>abspath <span class="k">$(</span>BUILD_DIR_PREFIX<span class="k">)</span>/eglib<span class="k">)</span>
+<span class="nv">EGLIB_LIB</span> <span class="o">=</span> <span class="k">$(</span>EGLIB_BUILD_DIR<span class="k">)</span>/libeglib.a
+<span class="nv">LDLIBS</span> <span class="o">+=</span> -leglib -l<span class="k">$(</span>LIBNAME<span class="k">)</span>
+<span class="nf">$(PROJECT).elf</span><span class="o">:</span> <span class="k">$(</span><span class="nv">EGLIB_LIB</span><span class="k">)</span>
+<span class="nv">LDFLAGS</span> <span class="o">+=</span> -L<span class="k">$(</span>EGLIB_BUILD_DIR<span class="k">)</span>
+<span class="c"># required for malloc()</span>
+<span class="nv">LDLIBS</span> <span class="o">+=</span> -specs<span class="o">=</span>nosys.specs
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="k">$(</span><span class="nv">EGLIB_LIB</span><span class="k">)</span>
+<span class="nf">$(EGLIB_LIB)</span><span class="o">:</span>
+	<span class="k">$(</span>MAKE<span class="k">)</span> <span class="se">\</span>
+		-C <span class="k">$(</span>EGLIB_PATH<span class="k">)</span> <span class="se">\</span>
+		<span class="nv">BUILD_DIR</span><span class="o">=</span><span class="k">$(</span>EGLIB_BUILD_DIR<span class="k">)</span> <span class="se">\</span>
+		<span class="nv">HAL_DRIVERS</span><span class="o">=</span><span class="k">$(</span>EGLIB_HAL_DRIVERS<span class="k">)</span> <span class="se">\</span>
+		<span class="nv">DISPLAY_DRIVERS</span><span class="o">=</span><span class="k">$(</span>EGLIB_DISPLAY_DRIVERS<span class="k">)</span>
+
+<span class="nf">dfu_download</span><span class="o">:</span> ${<span class="n">BINARY</span>}.<span class="n">bin</span>
+	dfu-util <span class="se">\</span>
+		--alt <span class="m">0</span> <span class="se">\</span>
+		--device <span class="k">$(</span>USB_DFU_BOOTLOADER_VID<span class="k">)</span>:<span class="k">$(</span>USB_DFU_BOOTLOADER_PID<span class="k">)</span> <span class="se">\</span>
+		--dfuse-address <span class="k">$(</span>MAIN_MEMORY_BASE<span class="k">)</span> <span class="se">\</span>
+		--download $&lt;
+
+<span class="nf">openocd</span><span class="o">:</span>
+	openocd <span class="se">\</span>
+		--file interface/<span class="k">$(</span>OOCD_INTERFACE<span class="k">)</span>.cfg <span class="se">\</span>
+		--file target/<span class="k">$(</span>OOCD_TARGET<span class="k">)</span>.cfg
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">openocd_program</span>
+<span class="nf">openocd_program</span><span class="o">:</span> ${<span class="n">PROJECT</span>}.<span class="n">bin</span> <span class="k">$(</span><span class="nv">LDSCRIPT</span><span class="k">)</span>
+	<span class="k">$(</span>Q<span class="k">)</span>openocd <span class="se">\</span>
+		--file interface/<span class="k">$(</span>OOCD_INTERFACE<span class="k">)</span>.cfg <span class="se">\</span>
+		--file target/<span class="k">$(</span>OOCD_TARGET<span class="k">)</span>.cfg <span class="se">\</span>
+		--command <span class="s2">&quot;program </span><span class="si">${</span><span class="nv">PROJECT</span><span class="si">}</span><span class="s2">.bin verify reset exit </span><span class="k">$(</span>FLASH_BASE<span class="k">)</span><span class="s2">&quot;</span>
+
+<span class="nf">gdb</span><span class="o">:</span> <span class="k">$(</span><span class="nv">BINARY</span><span class="k">)</span>.<span class="n">elf</span>
+	<span class="k">$(</span>GDB<span class="k">)</span> --init-command<span class="o">=</span>lib/gdb.init <span class="k">$(</span>BINARY<span class="k">)</span>.elf
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">eglib</span>
+<span class="nf">clean-eglib</span><span class="o">:</span>
+	rm -rf <span class="k">$(</span>EGLIB_BUILD_DIR<span class="k">)</span>
+
+<span class="nf">clean</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">eglib</span>
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">libopencm</span>3
+<span class="nf">clean-libopencm3</span><span class="o">:</span>
+	<span class="k">$(</span>MAKE<span class="k">)</span> -C <span class="k">$(</span>OPENCM3_DIR<span class="k">)</span> clean
+
+<span class="nf">clean</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">libopencm</span>3
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">bin</span>
+<span class="nf">clean-bin</span><span class="o">:</span>
+	<span class="k">$(</span>MAKE<span class="k">)</span> -C <span class="k">$(</span>OPENCM3_DIR<span class="k">)</span> clean
+
+<span class="nf">clean</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">bin</span>
+	rm -rf <span class="k">$(</span>BUILD_DIR_PREFIX<span class="k">)</span>
+</pre></div>
+</div>
+<p>And it can then be used by a project’s <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>:</p>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="c">##</span>
+<span class="c">## Project</span>
+<span class="c">##</span>
+
+<span class="nv">PROJECT</span> <span class="o">=</span> stm32f4_st7789
+<span class="nv">CFILES</span> <span class="o">=</span> main.c
+
+<span class="c">##</span>
+<span class="c">## Hardware</span>
+<span class="c">##</span>
+
+<span class="nv">DEVICE</span><span class="o">=</span>stm32f411ceu6
+<span class="nv">FLASH_BASE</span> <span class="o">=</span> 0x08000000
+<span class="nv">USB_DFU_BOOTLOADER_VID</span><span class="o">=</span>0x0483
+<span class="nv">USB_DFU_BOOTLOADER_PID</span><span class="o">=</span>0xdf11
+
+<span class="c">##</span>
+<span class="c">## openocd</span>
+<span class="c">##</span>
+
+<span class="nv">OOCD_INTERFACE</span> <span class="o">=</span> stlink-v2
+<span class="nv">OOCD_TARGET</span><span class="o">=</span> stm32f4x
+
+<span class="c">##</span>
+<span class="c">## libopencm3</span>
+<span class="c">##</span>
+
+<span class="nv">OPENCM3_LIBNAME</span> <span class="o">=</span> opencm3_stm32f4
+<span class="nv">OPENCM3_LIBDIR</span> <span class="o">=</span> lib/stm32/f4
+
+<span class="c">##</span>
+<span class="c">## eglib</span>
+<span class="c">##</span>
+
+<span class="nv">EGLIB_HAL_DRIVERS</span><span class="o">=</span>four_wire_spi/libopencm3_stm32f4
+<span class="nv">EGLIB_DISPLAY_DRIVERS</span><span class="o">=</span>st7789
+
+<span class="cp">include ../common.mk</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="display/drivers/tga.html" title="Previous document">TGA</a>
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+
+
+<p>
+	<a class="badge" href="https://github.com/fornellas/eglib/actions?query=workflow%3Abuild+branch%3Amaster" target="_blank">
+	  <img src="https://github.com/fornellas/eglib/workflows/build/badge.svg?branch=master"/>
+	</a>
+	<a class="badge" href="https://github.com/fornellas/eglib/pulls" target="_blank">
+	  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"/>
+	</a>
+	<br>
+	<a class="badge" href="https://www.paypal.com/donate?hosted_button_id=AX26JVRT2GS2Q" target="_blank">
+	  <img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat"/>
+	</a>
+</p>
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="eglib.html">eglib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drawing.html">Drawing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hal/index.html">HAL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="display/index.html">Display</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">libopencm3 integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#manual-integration">Manual integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#makefile-example"><code class="docutils literal notranslate"><span class="pre">Makefile</span></code> example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Fabio Pugliese Ornellas.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/reference/libopencm3.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/fornellas/eglib" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

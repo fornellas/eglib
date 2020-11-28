@@ -5,6 +5,11 @@
 #include <libopencm3/stm32/rcc.h>
 
 /**
+ * Configuration
+ * =============
+ */
+
+/**
  * Configuration for :c:data:`i2c_libopencm3_stm32f4`.
  *
  * :See also: :c:func:`eglib_Init`.
@@ -45,6 +50,11 @@ typedef struct {
 	uint32_t i2c_peripheral_clock_mhz;
 	// TODO I2C Filter
 } i2c_libopencm3_stm32f4_config_t;
+
+/**
+ * Driver
+ * ======
+ */
 
 /**
  * I2C HAL driver for `libopencm3 <http://libopencm3.org/>`_ STM32F4 targets.

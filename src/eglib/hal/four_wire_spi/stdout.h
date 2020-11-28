@@ -4,6 +4,11 @@
 #include "../../hal.h"
 
 /**
+ * Driver
+ * ======
+ */
+
+/**
  * 4-Wire SPI HAL driver that prints communication to stdout.
  *
  * This is useful for testing only.

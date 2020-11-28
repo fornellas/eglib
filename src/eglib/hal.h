@@ -44,19 +44,23 @@ typedef enum {
 } hal_i2c_speed_t;
 
 /**
- * 4-Wire SPI display configuration
- * ================================
+ * Display Configuration
+ * =====================
  *
- * 4-Wire SPI configuration that must be provided by
- * :doc:`display drivers <../display/index>`.
- *
- * :See also: :c:func:`eglib_GetHalFourWireSpiConfigComm`.
+ * These are configuration definitions required by the HAL driver :c:type:`hal_struct` and that
+ * are provided by display the driver :c:type:`display_struct`.
+ */
+
+/**
+ * 4-Wire SPI
+ * ----------
  */
 
 /**
  * 4-Wire SPI configuration.
  *
  * :See also: :c:type:`display_struct`.
+ * :See also: :c:func:`eglib_GetHalFourWireSpiConfigComm`.
  */
 typedef struct {
 	/**
@@ -88,19 +92,15 @@ typedef struct {
 } hal_four_wire_spi_config_t;
 
 /**
- * I2C display configuration
- * =========================
- *
- * I2C configuration that must be provided by
- * * :doc:`display drivers <../display/index>`.
- *
- * :See also: :c:func:`eglib_GetHalI2cConfigComm`.
+ * I2C
+ * ---
  */
 
 /**
  * I2C Configuration.
  *
  * :See also: :c:type:`display_struct`.
+ * :See also: :c:func:`eglib_GetHalI2cConfigComm`.
  */
 typedef struct {
 	/** I2C Speed */

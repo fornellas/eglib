@@ -1,5 +1,8 @@
-Interface
-=========
+HAL Interface
+=============
+
+.. contents::
+    :depth: 3
 
 .. code:: c
 

@@ -4,8 +4,8 @@
 #include "../display.h"
 
 /**
- * Driver
- * ======
+ * Configuration
+ * =============
  */
 
 /**
@@ -20,6 +20,11 @@ typedef struct {
 	coordinate_t height;
 	uint8_t *tga_data;
 } tga_config_t;
+
+/**
+ * Driver
+ * ======
+ */
 
 /**
  * TGA display driver.

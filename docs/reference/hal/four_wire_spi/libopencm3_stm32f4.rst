@@ -1,8 +1,8 @@
 libopencm3 STM32F4
 ==================
 
-Driver
-------
+.. contents::
+    :depth: 3
 
 .. code:: c
 

@@ -1,8 +1,8 @@
 TGA
 ===
 
-Driver
-------
+.. contents::
+    :depth: 3
 
 .. code:: c
 

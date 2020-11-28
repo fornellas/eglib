@@ -5,6 +5,11 @@
 #include <libopencm3/stm32/rcc.h>
 
 /**
+ * Configuration
+ * =============
+ */
+
+/**
  * Configuration for :c:data:`four_wire_spi_libopencm3_stm32f4`.
  *
  * :See also: :c:func:`eglib_Init`.
@@ -58,6 +63,11 @@ typedef struct {
 	/** SPI MOSI line GPIO (eg: ``GPIO7``). */
 	uint16_t gpio_mosi;
 } four_wire_spi_libopencm3_stm32f4_config_t;
+
+/**
+ * Driver
+ * ======
+ */
 
 /**
  * 4-Wire SPI HAL driver for `libopencm3 <http://libopencm3.org/>`_ STM32F4 targets.

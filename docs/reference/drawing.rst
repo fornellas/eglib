@@ -1,6 +1,9 @@
 Drawing
 =======
 
+.. contents::
+    :depth: 3
+
 .. code:: c
 
     #include <eglib/drawing.h>

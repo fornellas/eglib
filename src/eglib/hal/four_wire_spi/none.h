@@ -4,6 +4,11 @@
 #include "../../hal.h"
 
 /**
+ * Driver
+ * ======
+ */
+
+/**
  * 4-Wire SPI HAL driver that does nothing.
  *
  * This is useful for testing only.

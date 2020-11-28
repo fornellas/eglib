@@ -6,6 +6,11 @@
 #include "../display.h"
 
 /**
+ * Configuration
+ * =============
+ */
+
+/**
  * Configuration for frame buffer display.
  *
  * :c:func:`eglib_Init_FrameBuffer` populates the values here.
@@ -15,6 +20,14 @@ typedef struct {
 	eglib_t eglib_buffered;
 	void *buffer;
 } frame_buffer_config_t;
+
+/**
+ * Functions
+ * =========
+ *
+ * These functions can be used exclusively with :c:type:`eglib_t` initialized
+ * for frame buffer.
+ */
 
 /**
  * Works similarly to :c:func:`eglib_Init`, but creates a frame buffer where data

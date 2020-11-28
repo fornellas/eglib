@@ -1,8 +1,8 @@
 ST7789
 ======
 
-Driver
-------
+.. contents::
+    :depth: 3
 
 .. code:: c
 

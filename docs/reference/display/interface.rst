@@ -1,6 +1,9 @@
 Interface
 =========
 
+.. contents::
+    :depth: 3
+
 Display drivers implement the interface :c:type:`display_struct` defined here.
 
 .. code:: c

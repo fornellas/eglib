@@ -5,6 +5,11 @@
 #include <stdbool.h>
 
 /**
+ * Types
+ * =====
+ */
+
+/**
  * Display color depth. Higher color depths require more data to be transfered,
  * meaning slower refresh rates and more memory required when using a frame
  * buffer.
@@ -60,6 +65,11 @@ typedef enum {
 } st7789_horizontal_refresh_t;
 
 /**
+ * Configuration
+ * =============
+ */
+
+/**
  * Configuration for :c:data:`st7789`.
  *
  * :See also: :c:func:`eglib_Init`.
@@ -84,6 +94,11 @@ typedef struct {
 } st7789_config_t;
 
 /**
+ * Driver
+ * ======
+ */
+
+/**
  * ST7789 display driver.
  *
   * This driver supports the following data buses:
@@ -95,9 +110,13 @@ typedef struct {
  */
 extern const display_t st7789;
 
-//
-// Custom functions
-//
+/**
+ * Functions
+ * =========
+ *
+ * These functions can be used exclusively with :c:type:`eglib_t` initialized
+ * with :c:data:`st7789`.
+ */
 
 /**Set display inversion on/off. */
 void st7789_SetDisplayInversion(eglib_t *eglib, bool inversion);

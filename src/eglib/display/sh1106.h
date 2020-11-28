@@ -4,6 +4,11 @@
 #include "../hal.h"
 #include <stdbool.h>
 
+/**
+ * Types
+ * =====
+ */
+
 /** Segment remap. */
 typedef enum {
 	/** Normal direction. */
@@ -77,6 +82,11 @@ typedef enum {
 } sh1106_shh1106_dc_dc_t;
 
 /**
+ * Configuration
+ * =============
+ */
+
+/**
  * Configuration for :c:data:`sh1106_vdd1_1_65_v` and :c:data:`sh1106_vdd1_2_4_v`.
  *
  * :See also: :c:func:`eglib_Init`.
@@ -133,11 +143,21 @@ typedef struct {
 } sh1106_config_t;
 
 /**
+ * Pre-baked configurations
+ * ------------------------
+ */
+
+/**
  * Configuration for `SparkFun Micro OLED Breakout <https://www.sparkfun.com/products/13003>`_.
  *
  * Values extracted from `example code <https://github.com/sparkfun/SparkFun_Micro_OLED_Arduino_Library/blob/master/src/SFE_MicroOLED.cpp>`_.
  */
 extern const sh1106_config_t sh1106_config_sparkfun_micro_oled;
+
+/**
+ * Driver
+ * ======
+ */
 
 /**
  * SH1106 display driver.

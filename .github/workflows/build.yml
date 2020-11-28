@@ -26,3 +26,5 @@ jobs:
         run: pip install -r sphinx/requirements.txt
       - name: make
         run: make
+      - name: git status
+        run: GIT_STATUS="$(git status --porcelain)" && [ -n "$GIT_STATUS" ] && { echo git status ; echo "$GIT_STATUS" ; exit 1 ; } || true

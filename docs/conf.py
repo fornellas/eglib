@@ -54,15 +54,23 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 html_theme = "alabaster"
 html_theme_options = {
     "logo": "logo.png",
-    # "donate_url": "http://tbd",
-    "github_banner": True,
-    "github_button": True,
-    "github_type": "star",
     "github_user": "fornellas",
     "github_repo": "eglib",
-    "travis_button": True,
+    "github_banner": True,
+    "github_button": False,
+    "github_type": "star",
     "show_relbar_bottom": True,
     "code_font_size": "0.8em",
+}
+html_sidebars = {
+    '**': [
+        'about.html',
+        'badges.html',
+        'donate.html',
+        'navigation.html',
+        # 'relations.html',
+        'searchbox.html',
+    ]
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,

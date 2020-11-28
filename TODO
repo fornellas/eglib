@@ -4,6 +4,10 @@
     - Custom config
     - Frame buffer
     - Drawing
+  - Drivers
+    - Include example code.
+      .. literalinclude:: examples/example-10-macro.c
+         :language: C
   - Development
   	- HAL Driver
   	- Display Driver

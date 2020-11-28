@@ -85,18 +85,19 @@ gdb: $(BINARY).elf
 .PHONY: clean-eglib
 clean-eglib:
 	rm -rf $(EGLIB_BUILD_DIR)
-
 clean: clean-eglib
 
 .PHONY: clean-libopencm3
 clean-libopencm3:
 	$(MAKE) -C $(OPENCM3_DIR) clean
-
 clean: clean-libopencm3
 
 .PHONY: clean-bin
 clean-bin:
 	$(MAKE) -C $(OPENCM3_DIR) clean
-
 clean: clean-bin
+
+.PHONY: clean-build-dir-prefix
+clean-build-dir-prefix:
 	rm -rf $(BUILD_DIR_PREFIX)
+clean: clean-build-dir-prefix

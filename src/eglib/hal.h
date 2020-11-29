@@ -126,7 +126,7 @@ typedef struct {
 	/**
 	 * Pointer to a function that sends I2C bytes.
 	 *
-	 * Each display driver has its own particular way of encoding bytes send
+	 * Each display driver has its own particular way of encoding bytes sent
 	 * via I2C, depending on data or command being sent, number of bytes etc.
 	 *
 	 * This function delegates this encoding to display drivers and is called by

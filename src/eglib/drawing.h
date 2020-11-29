@@ -93,4 +93,37 @@ void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate
  */
 #define eglib_DrawVLine(eglib, x, y, len) eglib_DrawLine(eglib, x, y, x, y + len);
 
+/** Draw line from coordinates (`x1`, `y1`) to (`x2`, `y2`).
+ *
+ * Line color will be a gradient from index 0 at (`x1`, `y1`) to color from index
+ * 1 at (`x2`, `y2`).
+ *
+ * :See also: :c:func:`eglib_SetIndexColor`.
+ */
+void eglib_DrawGradientLine(
+	eglib_t *eglib,
+	coordinate_t x1, coordinate_t y1,
+	coordinate_t x2, coordinate_t y2
+);
+
+/** Draw horizontal gradient line from coordinates (`x`, `y`) to (`x + len`, `y`).
+ *
+ * :See also: :c:func:`eglib_DrawGradientLine`.
+ */
+#define eglib_DrawGradientHLine(eglib, x, y, len) eglib_DrawGradientLine( \
+	eglib, \
+	x, y, \
+	x + len, y \
+)
+
+/** Draw vertical gradient line from coordinates (`x`, `y`) to (`x`, `y + len`).
+ *
+ * :See also: :c:func:`eglib_DrawGradientLine`.
+ */
+#define eglib_DrawGradientVLine(eglib, x, y, len) eglib_DrawGradientLine( \
+	eglib, \
+	x, y, \
+	x, y + len \
+)
+
 #endif

@@ -256,7 +256,7 @@ called by HAL drivers <a class="reference internal" href="#c.hal_struct" title="
 <dt>
 <code class="sig-name descname">void (*)(eglib_t *, void (*)(eglib_t *, uint8_t), enum hal_dc_t, uint8_t *, uint32_t) send</code></dt>
 <dd><p>Pointer to a function that sends I2C bytes.</p>
-<p>Each display driver has its own particular way of encoding bytes send
+<p>Each display driver has its own particular way of encoding bytes sent
 via I2C, depending on data or command being sent, number of bytes etc.</p>
 <p>This function delegates this encoding to display drivers and is called by
 HAL drivers <a class="reference internal" href="#c.hal_struct" title="hal_struct"><code class="xref c c-type docutils literal notranslate"><span class="pre">hal_struct</span></code></a> via <a class="reference internal" href="../display/interface.html#c.eglib_I2cSend" title="eglib_I2cSend"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_I2cSend()</span></code></a> when needed.</p>

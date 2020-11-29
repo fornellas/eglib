@@ -9,7 +9,20 @@
  * the hardware.
  */
 
-// No doc
+// Internal: state for gradient drawing functions
+struct _gradient_channel_t {
+	color_channel_t color_channel;
+	coordinate_t count;
+	double step;
+};
+
+// Internal: state for gradient drawing functions
+struct _gradient_t {
+	struct _gradient_channel_t r;
+	struct _gradient_channel_t g;
+	struct _gradient_channel_t b;
+};
+
 struct _eglib_struct {
 	// HAL
 	const hal_t *hal;
@@ -32,6 +45,7 @@ struct _eglib_struct {
 		coordinate_t height;
 	} clip;
 	color_t color_index[4];
+	struct _gradient_t gradient;
 };
 
 /**

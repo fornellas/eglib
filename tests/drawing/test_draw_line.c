@@ -37,6 +37,14 @@ int main(int argc, char *argv[]) {
 	eglib_SetIndexColor(&eglib, 0, 0, 0, 255);
 	eglib_DrawLine(&eglib, 0, 0, width - 1, height - 1);
 
+	eglib_SetIndexColor(&eglib, 0, 0, 255, 255);
+	eglib_SetIndexColor(&eglib, 1, 255, 0, 0);
+	eglib_DrawGradientLine(&eglib, 0, 0, width / 4, height / 2);
+
+	eglib_SetIndexColor(&eglib, 0, 255, 0, 255);
+	eglib_SetIndexColor(&eglib, 1, 0, 255, 0);
+	eglib_DrawGradientLine(&eglib, 0, 0, width / 2, height / 4);
+
 	if(argc == 2)
 		tga_Save(&eglib, argv[1]);
 	else

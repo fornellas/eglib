@@ -1,7 +1,7 @@
 BUILD_DIR_PREFIX = bin
 BUILD_DIR = $(BUILD_DIR_PREFIX)/tests
 EGLIB_BUILD_DIR = $(abspath $(BUILD_DIR_PREFIX)/eglib)
-CFILES = $(wildcard *.c)
+CFILES = $(wildcard test_*.c)
 OBJS = $(CFILES:test_%.c=$(BUILD_DIR)/test_%.o)
 TEST_BINARIES = $(CFILES:test_%.c=$(BUILD_DIR)/test_%)
 TESTS = $(CFILES:test_%.c=test_%)
@@ -41,10 +41,6 @@ $(BUILD_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
 -include $(OBJS:.o=.d)
-
-$(BUILD_DIR)/test_%: $(BUILD_DIR)/test_%.o $(EGLIB_LIB)
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
 
 .PHONY: clean
 clean:

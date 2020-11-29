@@ -26,7 +26,7 @@ typedef enum {
 /**
  * Communication bus configuration required by the display.
  *
- * Buses net supported by the display can be set to ``NULL``.
+ * Buses not supported by the display can be set to ``NULL``.
  */
 struct display_comm_struct {
 	/** 4-Wire SPI */

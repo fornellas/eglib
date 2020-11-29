@@ -9,7 +9,7 @@ void display_default_draw_line(
 	coordinate_t length,
 	color_t (*get_next_color)(eglib_t *eglib)
 ) {
-	bool dx=0, dy=0;
+	coordinate_t dx=0, dy=0;
 
 	eglib_CommBegin(eglib);
 
@@ -28,9 +28,7 @@ void display_default_draw_line(
 			break;
 	}
 
-	while(length--) {
-		if(eglib_IsPixelClipped(eglib, x, y))
-			continue;
+	for(length++ ; length-- ; ) {
 		eglib->display->draw_pixel_color(eglib, x, y, get_next_color(eglib));
 		x += dx;
 		y += dy;

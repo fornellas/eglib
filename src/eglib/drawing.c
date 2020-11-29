@@ -116,35 +116,87 @@ static void draw_fast_90_line(
   coordinate_t x2, coordinate_t y2,
   color_t (*get_next_color)(eglib_t *eglib)
 ) {
-    coordinate_t x,y;
     display_line_direction_t direction;
     coordinate_t length;
-
-    x = x1 > x2 ? x2 : x1;
-    y = y1 > y2 ? y2 : y1;
+    coordinate_t clip_x_end;
+    coordinate_t clip_y_end;
 
     if(x1==x2) {  // vertical
-      length = y1 > y2 ? y1 - y2 : y2 - y1;
-      if(y1 > y2)
-        direction = DISPLAY_LINE_DIRECTION_UP;
-      else
+      length = y2 > y1 ? y2 - y1 : y1 - y2;
+      if(y2 > y1)
         direction = DISPLAY_LINE_DIRECTION_DOWN;
-    } else {  // horizontal
-      length = x1 > x2 ? x1 - x2 : x2 - x1;
-      if(y1 > y2)
-        direction = DISPLAY_LINE_DIRECTION_LEFT;
       else
+        direction = DISPLAY_LINE_DIRECTION_UP;
+    } else if(y1==y2) {  // horizontal
+      length = x2 > x1 ? x2 - x1 : x1 - x2;
+      if(x2 > x1)
         direction = DISPLAY_LINE_DIRECTION_RIGHT;
+      else
+        direction = DISPLAY_LINE_DIRECTION_LEFT;
+    } else
+      while(true);
+
+    clip_x_end = eglib->clip.x + eglib->clip.width;
+    clip_y_end = eglib->clip.y + eglib->clip.height;
+
+    switch(direction) {
+      case DISPLAY_LINE_DIRECTION_RIGHT:
+      case DISPLAY_LINE_DIRECTION_LEFT:
+        if((y1 < eglib->clip.y) || (y1 > clip_y_end))
+          return;
+        break;
+      case DISPLAY_LINE_DIRECTION_DOWN:
+      case DISPLAY_LINE_DIRECTION_UP:
+        if((x1 < eglib->clip.x) || (x1 > clip_x_end))
+          return;
+        break;
     }
+
+    switch(direction) {
+      case DISPLAY_LINE_DIRECTION_RIGHT:
+        if(x1 < eglib->clip.x) {
+          length -= eglib->clip.x - x1;
+          x1 = eglib->clip.x;
+        }
+        if(x1 + length > clip_x_end)
+          length -= (x1 + length) - (clip_x_end);
+        break;
+      case DISPLAY_LINE_DIRECTION_LEFT:
+        if(x1 > clip_x_end) {
+          length -= x1 - (clip_x_end);
+          x1 = clip_x_end;
+        }
+        if(x1 - length < eglib->clip.x)
+          length -= (x1 - length) - eglib->clip.x;
+        break;
+      case DISPLAY_LINE_DIRECTION_DOWN:
+        if(y1 < eglib->clip.y) {
+          length -= eglib->clip.y - y1;
+          y1 = eglib->clip.y;
+        }
+        if(y1 + length > clip_y_end)
+          length -= (y1 + length) - (clip_y_end);
+        break;
+      case DISPLAY_LINE_DIRECTION_UP:
+        if(y1 > clip_y_end) {
+          length -= y1 - (clip_y_end);
+          y1 = clip_y_end;
+        }
+        if(y1 - length < eglib->clip.y)
+          length -= (y1 - length) - eglib->clip.y;
+        break;
+    }
+
+    if(length < 1)
+      return;
 
     eglib->display->draw_line(
       eglib,
-      x, y,
+      x1, y1,
       direction,
       length,
       get_next_color
     );
-    return;
 }
 
 // keep in sync with draw_generic_line()

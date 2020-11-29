@@ -383,7 +383,7 @@ static void get_dimension(
 	*height = display_config->height;
 };
 
-static void get_pixel_format(eglib_t *eglib, pixel_format_t *pixel_format) {
+static void get_pixel_format(eglib_t *eglib, enum pixel_format_t *pixel_format) {
 	st7789_config_t *display_config;
 
 	display_config = eglib_GetDisplayConfig(eglib);
@@ -435,7 +435,7 @@ static void draw_line(
 
 		eglib_SendCommandByte(eglib, ST7789_MEMORY_WRITE);
 
-		while(length--)
+		for(length++ ; length-- ; )
 			send_pixel(eglib, get_next_color(eglib));
 
 		eglib_CommEnd(eglib);

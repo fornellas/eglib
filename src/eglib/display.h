@@ -89,7 +89,7 @@ struct display_struct {
 	 *   pixel format to.
 	 * :return: :c:type:`pixel_format_t`.
 	 */
-	void (*get_pixel_format)(eglib_t *eglib, pixel_format_t *pixel_format);
+	void (*get_pixel_format)(eglib_t *eglib, enum pixel_format_t *pixel_format);
 	/**
 	 * Pointer to a function that that draws directly to the display memory at
 	 * ``(x, y)`` using given ``color``.

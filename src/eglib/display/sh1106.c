@@ -221,7 +221,7 @@ static void get_dimension(
 	*height = display_config->height;
 };
 
-static void get_pixel_format(eglib_t *eglib, pixel_format_t *pixel_format) {
+static void get_pixel_format(eglib_t *eglib, enum pixel_format_t *pixel_format) {
 	(void)eglib;
 
 	*pixel_format = PIXEL_FORMAT_1BIT_BW_PAGED;
@@ -366,6 +366,7 @@ const display_t sh1106_vdd1_1_65_v = {
 	.get_dimension = get_dimension,
 	.get_pixel_format = get_pixel_format,
 	.draw_pixel_color = draw_pixel_color,
+	.draw_line = display_default_draw_line,
 	.send_buffer = send_buffer,
 	.refresh = refresh,
 };

@@ -1,7 +1,7 @@
 #include "frame_buffer.h"
 #include <stdlib.h>
 
-static void get_pixel_format(eglib_t *eglib, pixel_format_t *pixel_format);
+static void get_pixel_format(eglib_t *eglib, enum pixel_format_t *pixel_format);
 
 static void get_dimension(
 	eglib_t *eglib,
@@ -145,7 +145,7 @@ static const uint8_t color_bits[PIXEL_FORMAT_COUNT] = {
 
 static void init(eglib_t *eglib) {
 	frame_buffer_config_t *display_config;
-	pixel_format_t pixel_format;
+	enum pixel_format_t pixel_format;
 	coordinate_t width, height;
 
 	display_config = eglib_GetDisplayConfig(eglib);
@@ -192,7 +192,7 @@ static void get_dimension(
 	);
 };
 
-static void get_pixel_format(eglib_t *eglib, pixel_format_t *pixel_format) {
+static void get_pixel_format(eglib_t *eglib, enum pixel_format_t *pixel_format) {
 	frame_buffer_config_t *display_config;
 
 	display_config = eglib_GetDisplayConfig(eglib);
@@ -207,7 +207,7 @@ static void draw_pixel_color(
 	coordinate_t x, coordinate_t y, color_t color
 ) {
 	frame_buffer_config_t *display_config;
-	pixel_format_t pixel_format;
+	enum pixel_format_t pixel_format;
 	coordinate_t width, height;
 
 	display_config = eglib_GetDisplayConfig(eglib);

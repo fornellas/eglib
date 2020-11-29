@@ -38,7 +38,7 @@ static void get_dimension(
 	*height = display_config->height;
 }
 
-static void get_pixel_format(eglib_t *eglib, pixel_format_t *pixel_format) {
+static void get_pixel_format(eglib_t *eglib, enum pixel_format_t *pixel_format) {
 	(void)eglib;
 
 	*pixel_format = PIXEL_FORMAT_24BIT_RGB;

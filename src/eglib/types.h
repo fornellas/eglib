@@ -15,7 +15,7 @@
  * :note: some formats have a difference between the color depth and the bit
  *  depth in memory!
  */
-typedef enum {
+enum pixel_format_t {
 	/**
 	 * 1bit per pixel where each number of bytes equal to the display width
 	 * is a page, and each page has 8 rows: MSB bits are the upper line, LSB
@@ -49,7 +49,7 @@ typedef enum {
 	 */
 	PIXEL_FORMAT_24BIT_RGB,
 	PIXEL_FORMAT_COUNT,
-} pixel_format_t;
+};
 
 /**
  * Data type for each color channel: red, green, blue.

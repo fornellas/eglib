@@ -61,7 +61,8 @@ void eglib_SetIndexColor(
 /** Draw given pixel coordinates with given color. */
 void eglib_DrawPixelColor(eglib_t *eglib, coordinate_t x, coordinate_t y, color_t color);
 
-/** Draw given pixel coordinates using color from index 0.
+/**
+ * Draw given pixel coordinates using color from index 0.
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -72,28 +73,32 @@ void eglib_DrawPixel(eglib_t *eglib, coordinate_t x, coordinate_t y);
  * =====
  */
 
-/** Draw line from coordinates (`x1`, `y1`) to (`x2`, `y2`) using color from
+/**
+ * Draw line from coordinates (`x1`, `y1`) to (`x2`, `y2`) using color from
  * index 0.
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
 void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate_t x2, coordinate_t y2);
 
-/** Draw horizontal line starting at (`x`, `y`) with length `len` using color from
+/**
+ * Draw horizontal line starting at (`x`, `y`) with length `len` using color from
  * index 0.
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
 #define eglib_DrawHLine(eglib, x, y, len) eglib_DrawLine(eglib, x, y, x + len, y);
 
-/** Draw vertical line starting at (`x`, `y`) with length `len` using color from
+/**
+ * Draw vertical line starting at (`x`, `y`) with length `len` using color from
  * index 0.
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
 #define eglib_DrawVLine(eglib, x, y, len) eglib_DrawLine(eglib, x, y, x, y + len);
 
-/** Draw line from coordinates (`x1`, `y1`) to (`x2`, `y2`).
+/**
+ * Draw line from coordinates (`x1`, `y1`) to (`x2`, `y2`).
  *
  * Line color will be a gradient from index 0 at (`x1`, `y1`) to color from index
  * 1 at (`x2`, `y2`).
@@ -106,7 +111,8 @@ void eglib_DrawGradientLine(
 	coordinate_t x2, coordinate_t y2
 );
 
-/** Draw horizontal gradient line from coordinates (`x`, `y`) to (`x + len`, `y`).
+/**
+ * Draw horizontal gradient line from coordinates (`x`, `y`) to (`x + len`, `y`).
  *
  * :See also: :c:func:`eglib_DrawGradientLine`.
  */
@@ -116,7 +122,8 @@ void eglib_DrawGradientLine(
 	x + len, y \
 )
 
-/** Draw vertical gradient line from coordinates (`x`, `y`) to (`x`, `y + len`).
+/**
+ * Draw vertical gradient line from coordinates (`x`, `y`) to (`x`, `y + len`).
  *
  * :See also: :c:func:`eglib_DrawGradientLine`.
  */
@@ -125,5 +132,75 @@ void eglib_DrawGradientLine(
 	x, y, \
 	x, y + len \
 )
+
+/**
+ * Boxes
+ * =====
+ */
+
+/**
+ * Draw frame starting at ``(x, y)`` with ``width`` and ``height`` using color
+ * from index 0.
+ *
+ * :See also: :c:func:`eglib_SetIndexColor`.
+ */
+void eglib_DrawFrame(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
+);
+
+/**
+ * Draw frame starting at ``(x, y)`` with ``width`` and ``height``.
+ *
+ * Its colors will be a gradient:
+ *
+ * - Top left: color index 0.
+ * - Top right: color index 1.
+ * - Bottom left: color index 2.
+ * - Bottom right: color index 3.
+ *
+ * :See also: :c:func:`eglib_SetIndexColor`.
+ */
+void eglib_DrawGradientFrame(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
+);
+
+/**
+ * Draw box starting at ``(x, y)`` with ``width`` and ``height`` using color
+ * from index 0.
+ *
+ * :See also: :c:func:`eglib_SetIndexColor`.
+ */
+void eglib_DrawBox(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
+);
+
+/**
+ * Draw box starting at ``(x, y)`` with ``width`` and ``height``.
+ *
+ * Its colors will be a gradient:
+ *
+ * - Top left: color index 0.
+ * - Top right: color index 1.
+ * - Bottom left: color index 2.
+ * - Bottom right: color index 3.
+ *
+ * :See also: :c:func:`eglib_SetIndexColor`.
+ */
+void eglib_DrawGradientBox(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
+);
+
+/**
+ * Clear screen, all pixels black, just like after :c:func:`eglib_Init`.
+ */
+void eglib_ClearScreen(eglib_t *eglib);
 
 #endif

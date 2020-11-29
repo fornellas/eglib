@@ -1,21 +1,12 @@
 - Drawing
-  - Clipping
-    - Check all drawing functions for it.
-      - Display line may not check clipping
-  - Box
-    - eglib_DrawBox
-    - eglib_DrawRBox
-    - eglib_DrawGradientBox
-    - eglib_ClearScreen
-  - Frame
-    - eglib_DrawFrame
-    - ucg_DrawRFrame
-    - eglib_DrawGradientBox
   - Circle / Disc
     - eglib_DrawDisc
     - eglib_DrawCircle
     - eglib_drawEllipse
     - eglib_drawFilledEllipse
+  - Boxes
+    - eglib_DrawRFrame
+    - eglib_DrawRBox
   - Polygon
     - eglib_drawTetragon
     - eglib_drawTriangle

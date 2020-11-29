@@ -56,7 +56,9 @@ struct display_struct {
 	struct display_comm_struct comm;
 	/**
 	 * Pointer to a function that initializes the display based on the driver
-	 * configuration (:c:func:`eglib_GetDisplayConfig`)
+	 * configuration (:c:func:`eglib_GetDisplayConfig`).
+	 *
+	 * It must initialize the display memory to all black pixels.
 	 */
 	void (*init)(eglib_t *eglib);
 	/** Pointer to a function that puts the display in sleep mode. */

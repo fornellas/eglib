@@ -80,14 +80,14 @@ static void gradient_channel_begin(
 }
 
 static void gradient_begin(
-  eglib_t *eglib,
+  struct _gradient_t *gradient,
   color_t color_start,
   color_t color_end,
   coordinate_t steps
 ) {
-  gradient_channel_begin(&eglib->gradient.r, color_start.r, color_end.r, steps);
-  gradient_channel_begin(&eglib->gradient.g, color_start.g, color_end.g, steps);
-  gradient_channel_begin(&eglib->gradient.b, color_start.b, color_end.b, steps);
+  gradient_channel_begin(&gradient->r, color_start.r, color_end.r, steps);
+  gradient_channel_begin(&gradient->g, color_start.g, color_end.g, steps);
+  gradient_channel_begin(&gradient->b, color_start.b, color_end.b, steps);
 }
 
 static color_channel_t get_gradient_channel_color(
@@ -96,12 +96,22 @@ static color_channel_t get_gradient_channel_color(
   return gradient_channel->color_channel + gradient_channel->step * ++gradient_channel->count;
 }
 
-static color_t get_gradient_color(eglib_t *eglib) {
+static color_t get_next_gradient_color_eglib(eglib_t *eglib) {
   color_t color;
 
   color.r = get_gradient_channel_color(&eglib->gradient.r);
   color.g = get_gradient_channel_color(&eglib->gradient.g);
   color.b = get_gradient_channel_color(&eglib->gradient.b);
+
+  return color;
+}
+
+static color_t get_next_gradient_color(struct _gradient_t *gradient) {
+  color_t color;
+
+  color.r = get_gradient_channel_color(&gradient->r);
+  color.g = get_gradient_channel_color(&gradient->g);
+  color.b = get_gradient_channel_color(&gradient->b);
 
   return color;
 }
@@ -301,10 +311,110 @@ void eglib_DrawGradientLine(
   coordinate_t x2, coordinate_t y2
 ) {
   gradient_begin(
-    eglib,
-    eglib->color_index[0],
-    eglib->color_index[1],
+    &eglib->gradient,
+    eglib->color_index[0], eglib->color_index[1],
     get_line_pixel_count(x1, y1, x2, y2)
   );
-  draw_line(eglib, x1, y1, x2, y2, get_gradient_color);
+  draw_line(eglib, x1, y1, x2, y2, get_next_gradient_color_eglib);
+}
+
+//
+// Boxes
+//
+
+void eglib_DrawFrame(
+  eglib_t *eglib,
+  coordinate_t x, coordinate_t y,
+  coordinate_t width, coordinate_t height
+) {
+  eglib_DrawHLine(eglib, x, y, width);
+  eglib_DrawHLine(eglib, x, y + height, width);
+  eglib_DrawVLine(eglib, x, y, height);
+  eglib_DrawVLine(eglib, x + width, y, height);
+}
+
+void eglib_DrawGradientFrame(
+  eglib_t *eglib,
+  coordinate_t x, coordinate_t y,
+  coordinate_t width, coordinate_t height
+) {
+  color_t previous_color_index_0;
+  color_t previous_color_index_1;
+
+  previous_color_index_0 = eglib->color_index[0];
+  previous_color_index_1 = eglib->color_index[1];
+
+  eglib_DrawGradientHLine(eglib, x, y, width);
+  eglib->color_index[0] = eglib->color_index[2];
+  eglib->color_index[1] = eglib->color_index[3];
+  eglib_DrawGradientHLine(eglib, x, y + height, width);
+  eglib->color_index[0] = previous_color_index_0;
+  eglib->color_index[1] = eglib->color_index[2];
+  eglib_DrawGradientVLine(eglib, x, y, height);
+  eglib->color_index[0] = previous_color_index_1;
+  eglib->color_index[1] = eglib->color_index[3];
+  eglib_DrawGradientVLine(eglib, x + width, y, height);
+
+  eglib->color_index[0] = previous_color_index_0;
+  eglib->color_index[1] = previous_color_index_1;
+}
+
+void eglib_DrawBox(
+  eglib_t *eglib,
+  coordinate_t x, coordinate_t y,
+  coordinate_t width, coordinate_t height
+) {
+  for( ; height ; height--, y++)
+    eglib_DrawHLine(eglib, x, y, width);
+}
+
+void eglib_DrawGradientBox(
+  eglib_t *eglib,
+  coordinate_t x, coordinate_t y,
+  coordinate_t width, coordinate_t height
+) {
+  color_t previous_color_index_0;
+  color_t previous_color_index_1;
+  struct _gradient_t gradient_left;
+  struct _gradient_t gradient_right;
+
+  previous_color_index_0 = eglib->color_index[0];
+  previous_color_index_1 = eglib->color_index[1];
+
+  gradient_begin(
+    &gradient_left,
+    eglib->color_index[0], eglib->color_index[2],
+    height
+  );
+  gradient_begin(
+    &gradient_right,
+    eglib->color_index[1], eglib->color_index[3],
+    height
+  );
+
+  for( ; height ; height--, y++) {
+    eglib->color_index[0] = get_next_gradient_color(&gradient_left);
+    eglib->color_index[1] = get_next_gradient_color(&gradient_right);
+    eglib_DrawGradientHLine(eglib, x, y, width);
+  }
+
+  eglib->color_index[0] = previous_color_index_0;
+  eglib->color_index[1] = previous_color_index_1;
+}
+
+void eglib_ClearScreen(eglib_t *eglib) {
+  color_t previous_color_index_0;
+
+  previous_color_index_0 = eglib->color_index[0];
+
+  eglib_SetIndexColor(eglib, 0, 0, 0, 0);
+
+  eglib_DrawBox(
+    eglib,
+    0, 0,
+    eglib_GetWidth(eglib) - 1,
+    eglib_GetHeight(eglib) - 1
+  );
+
+  eglib->color_index[0] = previous_color_index_0;
 }

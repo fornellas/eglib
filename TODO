@@ -1,6 +1,13 @@
 - Drawing
+  - eglib_DrawPixelColor: change to accept r, g, b;
+  - eglib_SetNoClip
   - Circle / Disc
     - eglib_DrawDisc
+    - eglib_DrawCircle
+
+    - eglib_DrawFilledArc
+
+    - eglib_DrawDisc > filled
     - eglib_DrawCircle
     - eglib_drawEllipse
     - eglib_drawFilledEllipse

@@ -247,6 +247,7 @@ static void draw_generic_line(
   coordinate_t ystep;
   coordinate_t x_arg, y_arg;
   uint8_t swapxy = 0;
+  bool reversed = false;
 
   dx = x1 > x2 ? x1 - x2 : x2 - x1;
   dy = y1 > y2 ? y1 - y2 : y2 - y1;
@@ -258,25 +259,39 @@ static void draw_generic_line(
     tmp = x2; x2 = y2; y2 = tmp;
   }
   if(x1 > x2) {
+    reversed = true;
     tmp = x1; x1 =x2; x2 = tmp;
     tmp = y1; y1 =y2; y2 = tmp;
   }
   err = dx >> 1;
   ystep = y2 > y1 ? 1 : -1;
   y = y1;
-  for( x = x1; x <= x2; x++) {
-    if(swapxy == 0) {
+  if(reversed) {
+    for( x = x2 ; x >= x1 ; x--) {
       x_arg = x;
-      y_arg = y;
-    } else {
-      x_arg = y;
-      y_arg = x;
+      y_arg = y2;
+      eglib_DrawPixelColor(eglib, x_arg, y_arg, get_next_color(eglib));
+      err -= (uint8_t)dy;
+      if(err < 0) {
+        y2 -= ystep;
+        err += dx;
+      }
     }
-    eglib_DrawPixelColor(eglib, x_arg, y_arg, get_next_color(eglib));
-    err -= (uint8_t)dy;
-    if(err < 0) {
-      y += ystep;
-      err += dx;
+  } else {
+    for( x = x1; x <= x2; x++) {
+      if(swapxy == 0) {
+        x_arg = x;
+        y_arg = y;
+      } else {
+        x_arg = y;
+        y_arg = x;
+      }
+      eglib_DrawPixelColor(eglib, x_arg, y_arg, get_next_color(eglib));
+      err -= (uint8_t)dy;
+      if(err < 0) {
+        y += ystep;
+        err += dx;
+      }
     }
   }
 }
@@ -404,8 +419,16 @@ void eglib_DrawGradientBox(
 
 void eglib_ClearScreen(eglib_t *eglib) {
   color_t previous_color_index_0;
+  struct _clip_t previous_clip;
 
   previous_color_index_0 = eglib->color_index[0];
+  previous_clip = eglib->clip;
+
+  eglib_SetClipRange(
+    eglib,
+    0, 0,
+    eglib_GetWidth(eglib), eglib_GetHeight(eglib)
+  );
 
   eglib_SetIndexColor(eglib, 0, 0, 0, 0);
 
@@ -417,4 +440,5 @@ void eglib_ClearScreen(eglib_t *eglib) {
   );
 
   eglib->color_index[0] = previous_color_index_0;
+  eglib->clip = previous_clip;
 }

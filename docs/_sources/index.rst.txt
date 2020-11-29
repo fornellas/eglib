@@ -49,4 +49,5 @@ Features
    :caption: Contents:
    :hidden:
 
+   driver_development/index.rst
    reference/index.rst

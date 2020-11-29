@@ -24,7 +24,7 @@ copyright = "2020, Fabio Pugliese Ornellas"
 author = "Fabio Pugliese Ornellas"
 
 # The full version, including alpha/beta/rc tags
-release = "dev"
+release = "master"
 
 
 # -- General configuration ---------------------------------------------------

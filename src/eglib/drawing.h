@@ -38,6 +38,13 @@ void eglib_SetClipRange(
 );
 
 /**
+ * Disable clipping.
+ *
+ * :See also: :c:func:`eglib_SetClipRange`.
+ */
+void eglib_SetNoClip(eglib_t *eglib);
+
+/**
  * Returns whether the pixel at given coordinate is clipped. See :c:func:`eglib_SetClipRange`.
  */
 bool eglib_IsPixelClipped(

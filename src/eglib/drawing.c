@@ -18,6 +18,14 @@ void eglib_SetClipRange(
   eglib->clip.height = height;
 }
 
+void eglib_SetNoClip(eglib_t *eglib) {
+  eglib_SetClipRange(
+    eglib,
+    0, 0,
+    eglib_GetWidth(eglib), eglib_GetHeight(eglib)
+  );
+}
+
 bool eglib_IsPixelClipped(
   eglib_t *eglib,
   coordinate_t x,
@@ -424,11 +432,7 @@ void eglib_ClearScreen(eglib_t *eglib) {
   previous_color_index_0 = eglib->color_index[0];
   previous_clip = eglib->clip;
 
-  eglib_SetClipRange(
-    eglib,
-    0, 0,
-    eglib_GetWidth(eglib), eglib_GetHeight(eglib)
-  );
+  eglib_SetNoClip(eglib);
 
   eglib_SetIndexColor(eglib, 0, 0, 0, 0);
 

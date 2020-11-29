@@ -1,5 +1,4 @@
 - Drawing
-  - eglib_DrawPixelColor: change to accept r, g, b;
   - eglib_SetNoClip
   - Circle / Disc
     - eglib_DrawDisc

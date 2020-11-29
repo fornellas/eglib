@@ -13,5 +13,5 @@ TGA
 Example
 -------
 
-.. literalinclude:: ../../../../tests/drawing/test_lines.c
+.. literalinclude:: ../../../../tests/drawing/main.c
    :language: C

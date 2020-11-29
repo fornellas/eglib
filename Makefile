@@ -20,5 +20,6 @@ $(MAKE_CLEAN):
 .PHONY: docs
 docs:
 	rm -rf docs/*
+	make -C tests/drawing png
 	sphinx-build -b html -a -d sphinx/_build/doctrees/ -W sphinx/ docs/
 	rm -rf docs/.buildinfo sphinx/_build/

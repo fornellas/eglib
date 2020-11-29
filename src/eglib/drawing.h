@@ -21,6 +21,15 @@
  * Defines a rectangle to clip all drawing functions to.
  *
  * Any drawing function outside of these boundaries will have no effect.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_SetClipRange.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_SetClipRange.png
  */
 void eglib_SetClipRange(
 	eglib_t *eglib,
@@ -58,11 +67,31 @@ void eglib_SetIndexColor(
  * =====
  */
 
-/** Draw given pixel coordinates with given color. */
+/**
+ * Draw given pixel coordinates with given color.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawPixelColor.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawPixelColor.png
+ */
 void eglib_DrawPixelColor(eglib_t *eglib, coordinate_t x, coordinate_t y, color_t color);
 
 /**
  * Draw given pixel coordinates using color from index 0.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawPixel.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawPixel.png
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -77,6 +106,15 @@ void eglib_DrawPixel(eglib_t *eglib, coordinate_t x, coordinate_t y);
  * Draw line from coordinates (`x1`, `y1`) to (`x2`, `y2`) using color from
  * index 0.
  *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawLine.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawLine.png
+ *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
 void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate_t x2, coordinate_t y2);
@@ -85,6 +123,15 @@ void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate
  * Draw horizontal line starting at (`x`, `y`) with length `len` using color from
  * index 0.
  *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawHLine.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawHLine.png
+ *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
 #define eglib_DrawHLine(eglib, x, y, len) eglib_DrawLine(eglib, x, y, x + len, y);
@@ -92,6 +139,15 @@ void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate
 /**
  * Draw vertical line starting at (`x`, `y`) with length `len` using color from
  * index 0.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawVLine.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawVLine.png
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -102,6 +158,15 @@ void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate
  *
  * Line color will be a gradient from index 0 at (`x1`, `y1`) to color from index
  * 1 at (`x2`, `y2`).
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientLine.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawGradientLine.png
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -114,6 +179,15 @@ void eglib_DrawGradientLine(
 /**
  * Draw horizontal gradient line from coordinates (`x`, `y`) to (`x + len`, `y`).
  *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientHLine.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawGradientHLine.png
+ *
  * :See also: :c:func:`eglib_DrawGradientLine`.
  */
 #define eglib_DrawGradientHLine(eglib, x, y, len) eglib_DrawGradientLine( \
@@ -124,6 +198,15 @@ void eglib_DrawGradientLine(
 
 /**
  * Draw vertical gradient line from coordinates (`x`, `y`) to (`x`, `y + len`).
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientVLine.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawGradientVLine.png
  *
  * :See also: :c:func:`eglib_DrawGradientLine`.
  */
@@ -141,6 +224,15 @@ void eglib_DrawGradientLine(
 /**
  * Draw frame starting at ``(x, y)`` with ``width`` and ``height`` using color
  * from index 0.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawFrame.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawFrame.png
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -160,6 +252,15 @@ void eglib_DrawFrame(
  * - Bottom left: color index 2.
  * - Bottom right: color index 3.
  *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientFrame.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawGradientFrame.png
+ *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
 void eglib_DrawGradientFrame(
@@ -171,6 +272,15 @@ void eglib_DrawGradientFrame(
 /**
  * Draw box starting at ``(x, y)`` with ``width`` and ``height`` using color
  * from index 0.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawBox.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawBox.png
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -190,6 +300,15 @@ void eglib_DrawBox(
  * - Bottom left: color index 2.
  * - Bottom right: color index 3.
  *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientBox.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawGradientBox.png
+ *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
 void eglib_DrawGradientBox(
@@ -200,6 +319,15 @@ void eglib_DrawGradientBox(
 
 /**
  * Clear screen, all pixels black, just like after :c:func:`eglib_Init`.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_ClearScreen.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_ClearScreen.png
  */
 void eglib_ClearScreen(eglib_t *eglib);
 

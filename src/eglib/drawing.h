@@ -338,4 +338,97 @@ void eglib_DrawGradientBox(
  */
 void eglib_ClearScreen(eglib_t *eglib);
 
+/**
+ * Arcs
+ * ====
+ */
+
+/**
+ * Draw an arc with color from index 0
+ *
+ * :param x: Center x.
+ * :param y: Center y.
+ * :param radius: Radius.
+ * :param start_angle: Start angle from 0 to 360, where 0 is "up" and 90 is "right".
+ * :param end_angle: End angle, bigger than ``start_angle`` and less or equal to 360.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawArc.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawArc.png
+ */
+void eglib_DrawArc(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t radius,
+	float start_angle,
+	float end_angle
+);
+
+/**
+ * Draw an arc with color from index 0
+ *
+ * :param x: Center x.
+ * :param y: Center y.
+ * :param radius: Radius.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawCircle.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawCircle.png
+ */
+#define eglib_DrawCircle(eglib, x, y, radius) eglib_DrawArc(eglib, x, y, radius, 0, 360);
+
+/**
+ * Draw a filled arc with color from index 0
+ *
+ * :param x: Center x.
+ * :param y: Center y.
+ * :param radius: Radius.
+ * :param start_angle: Start angle from 0 to 360, where 0 is "up" and 90 is "right".
+ * :param end_angle: End angle, bigger than ``start_angle`` and less or equal to 360.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawFilledArc.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawFilledArc.png
+ */
+void eglib_DrawFilledArc(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t radius,
+	float start_angle,
+	float end_angle
+);
+
+/**
+ * Draw a disc with color from index 0
+ *
+ * :param x: Center x.
+ * :param y: Center y.
+ * :param radius: Radius.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawDisc.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawDisc.png
+ */
+#define eglib_DrawDisc(eglib, x, y, radius) eglib_DrawFilledArc(eglib, x, y, radius, 0, 360)
+
 #endif

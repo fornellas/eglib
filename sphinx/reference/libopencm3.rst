@@ -21,7 +21,7 @@ This will build ``${EGLIB_ROOT}/eglib/src/bin/libeglib.a``, which can be linked 
 
 .. code::
 
-  -L${EGLIB_ROOT}/eglib/src/bin/ -leglib
+  -L${EGLIB_ROOT}/eglib/src/bin/ -leglib -lm
 
 ``Makefile`` example
 --------------------

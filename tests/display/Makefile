@@ -7,7 +7,7 @@ include ../common.mk
 
 $(BUILD_DIR)/test_%: $(BUILD_DIR)/test_%.o $(EGLIB_LIB)
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ -lm
 
 .PHONY: test_*
 test_%: $(BUILD_DIR)/test_%

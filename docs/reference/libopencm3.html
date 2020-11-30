@@ -54,7 +54,7 @@ make -C <span class="si">${</span><span class="nv">EGLIB_ROOT</span><span class=
 </pre></div>
 </div>
 <p>This will build <code class="docutils literal notranslate"><span class="pre">${EGLIB_ROOT}/eglib/src/bin/libeglib.a</span></code>, which can be linked at the final build by passing these parameters to gcc:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-L${EGLIB_ROOT}/eglib/src/bin/ -leglib
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-L${EGLIB_ROOT}/eglib/src/bin/ -leglib -lm
 </pre></div>
 </div>
 </div>
@@ -109,7 +109,7 @@ make -C <span class="si">${</span><span class="nv">EGLIB_ROOT</span><span class=
 <span class="nv">INCLUDES</span> <span class="o">+=</span> -I<span class="k">$(</span>EGLIB_PATH<span class="k">)</span>
 <span class="nv">EGLIB_BUILD_DIR</span> <span class="o">=</span> <span class="k">$(</span>abspath <span class="k">$(</span>BUILD_DIR_PREFIX<span class="k">)</span>/eglib<span class="k">)</span>
 <span class="nv">EGLIB_LIB</span> <span class="o">=</span> <span class="k">$(</span>EGLIB_BUILD_DIR<span class="k">)</span>/libeglib.a
-<span class="nv">LDLIBS</span> <span class="o">+=</span> -leglib -l<span class="k">$(</span>LIBNAME<span class="k">)</span>
+<span class="nv">LDLIBS</span> <span class="o">+=</span> -leglib -l<span class="k">$(</span>LIBNAME<span class="k">)</span> -lm
 <span class="nf">$(PROJECT).elf</span><span class="o">:</span> <span class="k">$(</span><span class="nv">EGLIB_LIB</span><span class="k">)</span>
 <span class="nv">LDFLAGS</span> <span class="o">+=</span> -L<span class="k">$(</span>EGLIB_BUILD_DIR<span class="k">)</span>
 <span class="c"># required for malloc()</span>

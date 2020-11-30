@@ -1,18 +1,8 @@
 - Drawing
-  - eglib_SetNoClip
-  - Circle / Disc
-    - eglib_DrawDisc
-    - eglib_DrawCircle
-
-    - eglib_DrawFilledArc
-
-    - eglib_DrawDisc > filled
-    - eglib_DrawCircle
+  - Arc
+    - Optimize algorithm to use line drawing when possible.
     - eglib_drawEllipse
     - eglib_drawFilledEllipse
-  - Boxes
-    - eglib_DrawRFrame
-    - eglib_DrawRBox
   - Polygon
     - eglib_drawTetragon
     - eglib_drawTriangle
@@ -52,6 +42,7 @@
   - Scale
     - eglib_SetScale1x
     - eglib_SetScale2x
+  - printf()
 - Documentation
   - Usage
     - Existing config
@@ -81,7 +72,9 @@
 	- Parallel 8000
 - Testing
   - cppcheck
+  - More thorough tests for display drivers
 - Display drivers
+  - SDL (simulator)
   - SSD1306 (OLED) https://cdn-shop.adafruit.com/datasheets/SSD1306.pdf
   - PCD8544 (LCD) https://www.sparkfun.com/datasheets/LCD/Monochrome/Nokia5110.pdf
   - KS0108 (Blue/White LCD) https://www.sparkfun.com/datasheets/LCD/ks0108b.pdf
@@ -89,8 +82,3 @@
   - SPD0301 (OLED) https://www.usmicroproducts.com/sites/default/files/SPD0301_1.0.pdf
   - IL0373 (e-ink) https://www.smart-prototyping.com/image/data/9_Modules/EinkDisplay/GDEW0154T8/IL0373.pdf
   - ST7565 (Positive LCD) http://www.hpinfotech.ro/ST7565.pdf
-- Drawing
-	- Import ucglib / u8g2 functions
-	- Import ucglib / u8g2 fonts
-	- printf()
-- Fix examples make clean

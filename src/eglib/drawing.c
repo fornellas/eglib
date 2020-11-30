@@ -1,5 +1,8 @@
 #include "drawing.h"
 #include "display.h"
+#include <math.h>
+
+#define degrees_to_radians(degrees) ((degrees) * M_PI / 180.0)
 
 //
 // Clipping
@@ -445,4 +448,51 @@ void eglib_ClearScreen(eglib_t *eglib) {
 
   eglib->color_index[0] = previous_color_index_0;
   eglib->clip = previous_clip;
+}
+
+//
+// Arc
+//
+
+void eglib_DrawArc(
+  eglib_t *eglib,
+  coordinate_t x, coordinate_t y,
+  coordinate_t radius,
+  float start_angle,
+  float end_angle
+) {
+  float angle_step;
+  coordinate_t last_x=-1, last_y=-1;
+
+  angle_step = degrees_to_radians((2.0 * M_PI * radius) / 360.0);
+  start_angle = degrees_to_radians(start_angle - 90);
+  end_angle = degrees_to_radians(end_angle - 90);
+
+  for(float angle=start_angle ; angle <= end_angle ; angle+= angle_step) {
+    coordinate_t curr_x, curr_y;
+
+    curr_x = x + round(cos(angle) * radius);
+    curr_y = y + round(sin(angle) * radius);
+
+    if(curr_x == last_x && curr_y == last_y)
+      continue;
+
+    eglib_DrawPixel(eglib, curr_x, curr_y);
+
+    last_x = curr_x;
+    last_y = curr_y;
+  }
+}
+
+void eglib_DrawFilledArc(
+  eglib_t *eglib,
+  coordinate_t x, coordinate_t y,
+  coordinate_t radius,
+  float start_angle,
+  float end_angle
+) {
+  eglib_DrawPixel(eglib, x, y);
+
+  for(coordinate_t r=1 ; r <= radius ; r++)
+    eglib_DrawArc(eglib, x, y, r, start_angle, end_angle);
 }

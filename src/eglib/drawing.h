@@ -370,6 +370,32 @@ void eglib_DrawArc(
 );
 
 /**
+ * Draw an arc with color gradient from index 0 to index 1.
+ *
+ * :param x: Center x.
+ * :param y: Center y.
+ * :param radius: Radius.
+ * :param start_angle: Start angle from 0 to 360, where 0 is "up" and 90 is "right".
+ * :param end_angle: End angle, bigger than ``start_angle`` and less or equal to 360.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientArc.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawGradientArc.png
+ */
+void eglib_DrawGradientArc(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t radius,
+	float start_angle,
+	float end_angle
+);
+
+/**
  * Draw an arc with color from index 0
  *
  * :param x: Center x.
@@ -414,6 +440,33 @@ void eglib_DrawFilledArc(
 );
 
 /**
+ * Draw a filled arc with color gradient from index 0 at the center and index 1
+ * at the radius.
+ *
+ * :param x: Center x.
+ * :param y: Center y.
+ * :param radius: Radius.
+ * :param start_angle: Start angle from 0 to 360, where 0 is "up" and 90 is "right".
+ * :param end_angle: End angle, bigger than ``start_angle`` and less or equal to 360.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientFilledArc.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawGradientFilledArc.png
+ */
+void eglib_DrawGradientFilledArc(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t radius,
+	float start_angle,
+	float end_angle
+);
+
+/**
  * Draw a disc with color from index 0
  *
  * :param x: Center x.
@@ -430,5 +483,24 @@ void eglib_DrawFilledArc(
  * .. image:: ../../tests/drawing/test_eglib_DrawDisc.png
  */
 #define eglib_DrawDisc(eglib, x, y, radius) eglib_DrawFilledArc(eglib, x, y, radius, 0, 360)
+
+/**
+ * Draw a disc with color gradient from index 0 at the center and index 1 at the
+ * radius.
+ *
+ * :param x: Center x.
+ * :param y: Center y.
+ * :param radius: Radius.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientDisc.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawGradientDisc.png
+ */
+#define eglib_DrawGradientDisc(eglib, x, y, radius) eglib_DrawGradientFilledArc(eglib, x, y, radius, 0, 360)
 
 #endif

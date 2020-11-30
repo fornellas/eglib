@@ -518,6 +518,37 @@ void <code class="sig-name descname">eglib_DrawArc</code><span class="sig-paren"
 </dd></dl>
 
 <dl class="function">
+<dt id="c.eglib_DrawGradientArc">
+void <code class="sig-name descname">eglib_DrawGradientArc</code><span class="sig-paren">(</span><a class="reference internal" href="eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, <a class="reference internal" href="eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> radius</em>, float<em> start_angle</em>, float<em> end_angle</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawGradientArc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw an arc with color gradient from index 0 to index 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – Center x.</p></li>
+<li><p><strong>y</strong> – Center y.</p></li>
+<li><p><strong>radius</strong> – Radius.</p></li>
+<li><p><strong>start_angle</strong> – Start angle from 0 to 360, where 0 is “up” and 90 is “right”.</p></li>
+<li><p><strong>end_angle</strong> – End angle, bigger than <code class="docutils literal notranslate"><span class="pre">start_angle</span></code> and less or equal to 360.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;eglib.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;eglib/display.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;draw_test.h&quot;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">draw_test</span><span class="p">(</span><span class="n">eglib_t</span> <span class="o">*</span><span class="n">eglib</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
+  <span class="n">eglib_DrawGradientArc</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">135</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<img alt="../_images/test_eglib_DrawGradientArc.png" src="../_images/test_eglib_DrawGradientArc.png" />
+</dd></dl>
+
+<dl class="function">
 <dt id="c.eglib_DrawCircle">
 <code class="sig-name descname">eglib_DrawCircle</code><span class="sig-paren">(</span>eglib, x, y, radius<span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawCircle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draw an arc with color from index 0</p>
@@ -576,6 +607,38 @@ void <code class="sig-name descname">eglib_DrawFilledArc</code><span class="sig-
 </dd></dl>
 
 <dl class="function">
+<dt id="c.eglib_DrawGradientFilledArc">
+void <code class="sig-name descname">eglib_DrawGradientFilledArc</code><span class="sig-paren">(</span><a class="reference internal" href="eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, <a class="reference internal" href="eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> radius</em>, float<em> start_angle</em>, float<em> end_angle</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawGradientFilledArc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a filled arc with color gradient from index 0 at the center and index 1
+at the radius.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – Center x.</p></li>
+<li><p><strong>y</strong> – Center y.</p></li>
+<li><p><strong>radius</strong> – Radius.</p></li>
+<li><p><strong>start_angle</strong> – Start angle from 0 to 360, where 0 is “up” and 90 is “right”.</p></li>
+<li><p><strong>end_angle</strong> – End angle, bigger than <code class="docutils literal notranslate"><span class="pre">start_angle</span></code> and less or equal to 360.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;eglib.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;eglib/display.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;draw_test.h&quot;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">draw_test</span><span class="p">(</span><span class="n">eglib_t</span> <span class="o">*</span><span class="n">eglib</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
+  <span class="n">eglib_DrawGradientFilledArc</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">135</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<img alt="../_images/test_eglib_DrawGradientFilledArc.png" src="../_images/test_eglib_DrawGradientFilledArc.png" />
+</dd></dl>
+
+<dl class="function">
 <dt id="c.eglib_DrawDisc">
 <code class="sig-name descname">eglib_DrawDisc</code><span class="sig-paren">(</span>eglib, x, y, radius<span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawDisc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draw a disc with color from index 0</p>
@@ -601,6 +664,36 @@ void <code class="sig-name descname">eglib_DrawFilledArc</code><span class="sig-
 </div>
 <p>Output:</p>
 <img alt="../_images/test_eglib_DrawDisc.png" src="../_images/test_eglib_DrawDisc.png" />
+</dd></dl>
+
+<dl class="function">
+<dt id="c.eglib_DrawGradientDisc">
+<code class="sig-name descname">eglib_DrawGradientDisc</code><span class="sig-paren">(</span>eglib, x, y, radius<span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawGradientDisc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a disc with color gradient from index 0 at the center and index 1 at the
+radius.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – Center x.</p></li>
+<li><p><strong>y</strong> – Center y.</p></li>
+<li><p><strong>radius</strong> – Radius.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;eglib.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;eglib/display.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;draw_test.h&quot;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">draw_test</span><span class="p">(</span><span class="n">eglib_t</span> <span class="o">*</span><span class="n">eglib</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
+  <span class="n">eglib_DrawGradientDisc</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<img alt="../_images/test_eglib_DrawGradientDisc.png" src="../_images/test_eglib_DrawGradientDisc.png" />
 </dd></dl>
 
 </div>

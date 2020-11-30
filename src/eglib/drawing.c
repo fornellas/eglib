@@ -107,22 +107,26 @@ static color_channel_t get_gradient_channel_color(
   return gradient_channel->color_channel + gradient_channel->step * ++gradient_channel->count;
 }
 
-static color_t get_next_gradient_color_eglib(eglib_t *eglib) {
-  color_t color;
-
-  color.r = get_gradient_channel_color(&eglib->gradient.r);
-  color.g = get_gradient_channel_color(&eglib->gradient.g);
-  color.b = get_gradient_channel_color(&eglib->gradient.b);
-
-  return color;
-}
-
 static color_t get_next_gradient_color(struct _gradient_t *gradient) {
   color_t color;
 
   color.r = get_gradient_channel_color(&gradient->r);
   color.g = get_gradient_channel_color(&gradient->g);
   color.b = get_gradient_channel_color(&gradient->b);
+
+  return color;
+}
+
+static color_t get_color_index_0(eglib_t *eglib) {
+  return eglib->color_index[0];
+}
+
+static color_t get_next_gradient_color_eglib(eglib_t *eglib) {
+  color_t color;
+
+  color.r = get_gradient_channel_color(&eglib->gradient.r);
+  color.g = get_gradient_channel_color(&eglib->gradient.g);
+  color.b = get_gradient_channel_color(&eglib->gradient.b);
 
   return color;
 }
@@ -319,10 +323,6 @@ static void draw_line(
     draw_generic_line(eglib, x1, y1, x2, y2, get_next_color);
 }
 
-static color_t get_color_index_0(eglib_t *eglib) {
-  return eglib->color_index[0];
-}
-
 void eglib_DrawLine(
   eglib_t *eglib,
   coordinate_t x1, coordinate_t y1,
@@ -454,12 +454,14 @@ void eglib_ClearScreen(eglib_t *eglib) {
 // Arc
 //
 
-void eglib_DrawArc(
+// keep in sync with get_arc_pixel_count()
+static void draw_arc(
   eglib_t *eglib,
   coordinate_t x, coordinate_t y,
   coordinate_t radius,
   float start_angle,
-  float end_angle
+  float end_angle,
+  color_t (*get_next_color)(eglib_t *eglib)
 ) {
   float angle_step;
   coordinate_t last_x=-1, last_y=-1;
@@ -477,11 +479,71 @@ void eglib_DrawArc(
     if(curr_x == last_x && curr_y == last_y)
       continue;
 
-    eglib_DrawPixel(eglib, curr_x, curr_y);
+    eglib_DrawPixelColor(eglib, curr_x, curr_y, get_next_color(eglib));
 
     last_x = curr_x;
     last_y = curr_y;
   }
+}
+
+// Keep in sync with draw_arc()
+static coordinate_t get_arc_pixel_count(
+  coordinate_t x,
+  coordinate_t y,
+  coordinate_t radius,
+  float start_angle,
+  float end_angle
+) {
+  float angle_step;
+  coordinate_t last_x=-1, last_y=-1;
+  coordinate_t steps=0;
+
+  angle_step = degrees_to_radians((2.0 * M_PI * radius) / 360.0);
+  start_angle = degrees_to_radians(start_angle - 90);
+  end_angle = degrees_to_radians(end_angle - 90);
+
+  for(float angle=start_angle ; angle <= end_angle ; angle+= angle_step) {
+    coordinate_t curr_x, curr_y;
+
+    curr_x = x + round(cos(angle) * radius);
+    curr_y = y + round(sin(angle) * radius);
+
+    if(curr_x == last_x && curr_y == last_y)
+      continue;
+
+    steps++;
+
+    last_x = curr_x;
+    last_y = curr_y;
+  }
+
+  return steps;
+}
+
+void eglib_DrawArc(
+  eglib_t *eglib,
+  coordinate_t x, coordinate_t y,
+  coordinate_t radius,
+  float start_angle,
+  float end_angle
+) {
+  draw_arc(eglib, x, y, radius, start_angle, end_angle, get_color_index_0);
+}
+
+void eglib_DrawGradientArc(
+  eglib_t *eglib,
+  coordinate_t x, coordinate_t y,
+  coordinate_t radius,
+  float start_angle,
+  float end_angle
+) {
+  gradient_begin(
+    &eglib->gradient,
+    eglib->color_index[0], eglib->color_index[1],
+    get_arc_pixel_count(x, y, radius, start_angle, end_angle)
+  );
+
+  draw_arc(eglib, x, y, radius, start_angle, end_angle, get_next_gradient_color_eglib);
 }
 
 void eglib_DrawFilledArc(
@@ -495,4 +557,31 @@ void eglib_DrawFilledArc(
 
   for(coordinate_t r=1 ; r <= radius ; r++)
     eglib_DrawArc(eglib, x, y, r, start_angle, end_angle);
+}
+
+void eglib_DrawGradientFilledArc(
+  eglib_t *eglib,
+  coordinate_t x, coordinate_t y,
+  coordinate_t radius,
+  float start_angle,
+  float end_angle
+) {
+  color_t previous_color_index_0;
+
+  previous_color_index_0 = eglib->color_index[0];
+
+  gradient_begin(
+    &eglib->gradient,
+    eglib->color_index[0], eglib->color_index[1],
+    radius + 1
+  );
+
+  eglib_DrawPixelColor(eglib, x, y, get_next_gradient_color_eglib(eglib));
+
+  for(coordinate_t r=1 ; r <= radius ; r++) {
+    eglib->color_index[0] = get_next_gradient_color_eglib(eglib);
+    draw_arc(eglib, x, y, r, start_angle, end_angle, get_color_index_0);
+  }
+
+  eglib->color_index[0] = previous_color_index_0;
 }

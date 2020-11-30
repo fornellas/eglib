@@ -30,6 +30,7 @@
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_SetClipRange.png
+ *   :width: 200
  */
 void eglib_SetClipRange(
 	eglib_t *eglib,
@@ -85,6 +86,7 @@ void eglib_SetIndexColor(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawPixelColor.png
+ *   :width: 200
  */
 void eglib_DrawPixelColor(eglib_t *eglib, coordinate_t x, coordinate_t y, color_t color);
 
@@ -99,6 +101,7 @@ void eglib_DrawPixelColor(eglib_t *eglib, coordinate_t x, coordinate_t y, color_
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawPixel.png
+ *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -121,6 +124,7 @@ void eglib_DrawPixel(eglib_t *eglib, coordinate_t x, coordinate_t y);
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawLine.png
+ *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -138,6 +142,7 @@ void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawHLine.png
+ *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -155,6 +160,7 @@ void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawVLine.png
+ *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -174,6 +180,7 @@ void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawGradientLine.png
+ *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -194,6 +201,7 @@ void eglib_DrawGradientLine(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawGradientHLine.png
+ *   :width: 200
  *
  * :See also: :c:func:`eglib_DrawGradientLine`.
  */
@@ -214,6 +222,7 @@ void eglib_DrawGradientLine(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawGradientVLine.png
+ *   :width: 200
  *
  * :See also: :c:func:`eglib_DrawGradientLine`.
  */
@@ -240,6 +249,7 @@ void eglib_DrawGradientLine(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawFrame.png
+ *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -267,6 +277,7 @@ void eglib_DrawFrame(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawGradientFrame.png
+ *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -288,6 +299,7 @@ void eglib_DrawGradientFrame(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawBox.png
+ *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -315,6 +327,7 @@ void eglib_DrawBox(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawGradientBox.png
+ *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
@@ -335,6 +348,7 @@ void eglib_DrawGradientBox(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_ClearScreen.png
+ *   :width: 200
  */
 void eglib_ClearScreen(eglib_t *eglib);
 
@@ -360,6 +374,7 @@ void eglib_ClearScreen(eglib_t *eglib);
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawArc.png
+ *   :width: 200
  */
 void eglib_DrawArc(
 	eglib_t *eglib,
@@ -386,6 +401,7 @@ void eglib_DrawArc(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawGradientArc.png
+ *   :width: 200
  */
 void eglib_DrawGradientArc(
 	eglib_t *eglib,
@@ -410,6 +426,7 @@ void eglib_DrawGradientArc(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawCircle.png
+ *   :width: 200
  */
 #define eglib_DrawCircle(eglib, x, y, radius) eglib_DrawArc(eglib, x, y, radius, 0, 360);
 
@@ -430,6 +447,7 @@ void eglib_DrawGradientArc(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawFilledArc.png
+ *   :width: 200
  */
 void eglib_DrawFilledArc(
 	eglib_t *eglib,
@@ -457,6 +475,7 @@ void eglib_DrawFilledArc(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawGradientFilledArc.png
+ *   :width: 200
  */
 void eglib_DrawGradientFilledArc(
 	eglib_t *eglib,
@@ -481,6 +500,7 @@ void eglib_DrawGradientFilledArc(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawDisc.png
+ *   :width: 200
  */
 #define eglib_DrawDisc(eglib, x, y, radius) eglib_DrawFilledArc(eglib, x, y, radius, 0, 360)
 
@@ -500,6 +520,7 @@ void eglib_DrawGradientFilledArc(
  * Output:
  *
  * .. image:: ../../tests/drawing/test_eglib_DrawGradientDisc.png
+ *   :width: 200
  */
 #define eglib_DrawGradientDisc(eglib, x, y, radius) eglib_DrawGradientFilledArc(eglib, x, y, radius, 0, 360)
 

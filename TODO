@@ -1,17 +1,13 @@
 - Drawing
   - Arc
     - Optimize algorithm to use line drawing when possible.
+  - Ellipse
     - eglib_drawEllipse
     - eglib_drawFilledEllipse
   - Polygon
-    - eglib_drawTetragon
     - eglib_drawTriangle
+    - eglib_drawTetragon
   - Bitmap
-    - eglib_DrawBitMap
-      - 1/4/12/16/18/24 bits per pixel
-      - XBM
-      - PBM
-      - Jpeg
     - eglib_DrawBitMapTransparent
       - By color
       - By alpha 8-bit bitmap

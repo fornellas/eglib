@@ -636,3 +636,52 @@ void eglib_DrawGradientFilledArc(
 
   eglib->color_index[0] = previous_color_index_0;
 }
+
+//
+// Bitmap
+//
+
+static inline bool get_bit(uint8_t *data, uint16_t bit) {
+  return (*(data + bit / 8)) & (1<<(7-(bit % 8)));
+}
+
+void eglib_DrawBitmap(
+  eglib_t *eglib,
+  coordinate_t x,
+  coordinate_t y,
+  const struct bitmap_t *bitmap
+) {
+  coordinate_t u, v;
+  color_t black = {0x00, 0x00, 0x00};
+  color_t white = {0xff, 0xff, 0xff};
+  uint8_t *data_ptr;
+
+  switch(bitmap->format) {
+    case BITMAP_BW:
+      for(v=0 ; v < bitmap->height ; v++)
+        for(u=0 ; u < bitmap->width ; u++) {
+          eglib_DrawPixelColor(
+            eglib,
+            x + u, y + v,
+            get_bit(bitmap->data, (v * bitmap->width) + u) ? white : black
+          );
+        }
+      break;
+    case BITMAP_RGB24:
+      data_ptr = bitmap->data;
+      for(v=0 ; v < bitmap->height ; v++)
+        for(u=0 ; u < bitmap->width ; u++) {
+          color_t color;
+
+          color.r = *data_ptr;
+          data_ptr++;
+          color.g = *data_ptr;
+          data_ptr++;
+          color.b = *data_ptr;
+          data_ptr++;
+
+          eglib_DrawPixelColor(eglib, x + u, y + v, color);
+        }
+      break;
+  }
+}

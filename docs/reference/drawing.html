@@ -47,6 +47,7 @@
 <li><p><a class="reference internal" href="#frames" id="id7">Frames</a></p></li>
 <li><p><a class="reference internal" href="#boxes" id="id8">Boxes</a></p></li>
 <li><p><a class="reference internal" href="#round-things" id="id9">Round things</a></p></li>
+<li><p><a class="reference internal" href="#bitmaps" id="id10">Bitmaps</a></p></li>
 </ul>
 </li>
 </ul>
@@ -757,6 +758,73 @@ radius.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="bitmaps">
+<h2><a class="toc-backref" href="#id10">Bitmaps</a><a class="headerlink" href="#bitmaps" title="Permalink to this headline">¶</a></h2>
+<dl class="type">
+<dt id="c.bitmap_format_t">
+enum <code class="sig-name descname">bitmap_format_t</code><a class="headerlink" href="#c.bitmap_format_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format of bitmap data.</p>
+<dl class="macro">
+<dt id="c.BITMAP_BW">
+<code class="sig-name descname">BITMAP_BW</code><a class="headerlink" href="#c.BITMAP_BW" title="Permalink to this definition">¶</a></dt>
+<dd><p>1 bit per pixel black and white.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Tip</dt>
+<dd class="field-odd"><p>this is the same data format as <a class="reference external" href="https://en.wikipedia.org/wiki/X_BitMap">XBM</a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt id="c.BITMAP_RGB24">
+<code class="sig-name descname">BITMAP_RGB24</code><a class="headerlink" href="#c.BITMAP_RGB24" title="Permalink to this definition">¶</a></dt>
+<dd><p>8bit per channel RGB</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="type">
+<dt id="c.bitmap_t">
+struct <code class="sig-name descname">bitmap_t</code><a class="headerlink" href="#c.bitmap_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>A bitmap definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#c.eglib_DrawBitmap" title="eglib_DrawBitmap"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_DrawBitmap()</span></code></a>.</p>
+</dd>
+</dl>
+<dl class="member">
+<dt id="c.bitmap_t.width">
+<a class="reference internal" href="eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a> <code class="sig-name descname">width</code><a class="headerlink" href="#c.bitmap_t.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Width</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.bitmap_t.height">
+<a class="reference internal" href="eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a> <code class="sig-name descname">height</code><a class="headerlink" href="#c.bitmap_t.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Height</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.bitmap_t.format">
+enum <a class="reference internal" href="#c.bitmap_format_t" title="bitmap_format_t">bitmap_format_t</a> <code class="sig-name descname">format</code><a class="headerlink" href="#c.bitmap_t.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data format</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.bitmap_t.data">
+uint8_t * <code class="sig-name descname">data</code><a class="headerlink" href="#c.bitmap_t.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pointer to bitmap data</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="c.eglib_DrawBitmap">
+void <code class="sig-name descname">eglib_DrawBitmap</code><span class="sig-paren">(</span><a class="reference internal" href="eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, const struct <a class="reference internal" href="#c.bitmap_t" title="bitmap_t">bitmap_t</a> *<em> bitmap</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawBitmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw given bitmap at <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>.</p>
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -831,6 +899,7 @@ radius.</p>
 <li class="toctree-l3"><a class="reference internal" href="#frames">Frames</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#boxes">Boxes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#round-things">Round things</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bitmaps">Bitmaps</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="display/index.html">Display</a></li>

@@ -584,4 +584,49 @@ void eglib_DrawGradientFilledArc(
  */
 #define eglib_DrawGradientDisc(eglib, x, y, radius) eglib_DrawGradientFilledArc(eglib, x, y, radius, 0, 360)
 
+/**
+ * Bitmaps
+ * =======
+ */
+
+/**
+ * Format of bitmap data.
+ */
+enum bitmap_format_t {
+	/**
+	 * 1 bit per pixel black and white.
+	 *
+	 * :Tip: this is the same data format as `XBM <https://en.wikipedia.org/wiki/X_BitMap>`_.
+	 */
+	BITMAP_BW,
+	/** 8bit per channel RGB */
+	BITMAP_RGB24,
+};
+
+/**
+ * A bitmap definition.
+ *
+ * :See also: :c:func:`eglib_DrawBitmap`.
+ */
+struct bitmap_t {
+	/** Width */
+	coordinate_t width;
+	/** Height */
+	coordinate_t height;
+	/** Data format */
+	enum bitmap_format_t format;
+	/** Pointer to bitmap data */
+	uint8_t *data;
+};
+
+/**
+ * Draw given bitmap at ``(x, y)``.
+ */
+void eglib_DrawBitmap(
+	eglib_t *eglib,
+	coordinate_t x,
+	coordinate_t y,
+	const struct bitmap_t *bitmap
+);
+
 #endif

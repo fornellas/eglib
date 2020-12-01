@@ -46,6 +46,32 @@ bool eglib_IsPixelClipped(
 }
 
 //
+// Whole screen
+//
+
+void eglib_ClearScreen(eglib_t *eglib) {
+  color_t previous_color_index_0;
+  struct _clip_t previous_clip;
+
+  previous_color_index_0 = eglib->color_index[0];
+  previous_clip = eglib->clip;
+
+  eglib_SetNoClip(eglib);
+
+  eglib_SetIndexColor(eglib, 0, 0, 0, 0);
+
+  eglib_DrawBox(
+    eglib,
+    0, 0,
+    eglib_GetWidth(eglib) - 1,
+    eglib_GetHeight(eglib) - 1
+  );
+
+  eglib->color_index[0] = previous_color_index_0;
+  eglib->clip = previous_clip;
+}
+
+//
 // Color
 //
 
@@ -345,7 +371,7 @@ void eglib_DrawGradientLine(
 }
 
 //
-// Boxes
+// Frames
 //
 
 void eglib_DrawFrame(
@@ -384,6 +410,30 @@ void eglib_DrawGradientFrame(
   eglib->color_index[0] = previous_color_index_0;
   eglib->color_index[1] = previous_color_index_1;
 }
+
+void eglib_DrawRoundFrame(
+  eglib_t *eglib,
+  coordinate_t x, coordinate_t y,
+  coordinate_t width, coordinate_t height,
+  coordinate_t radius
+) {
+  coordinate_t diameter;
+
+  diameter = 2 * radius;
+
+  eglib_DrawArc(eglib, x + radius, y + radius, radius, 270, 360);
+  eglib_DrawHLine(eglib, x + radius, y, width - diameter);
+  eglib_DrawArc(eglib, x + width - radius, y + radius, radius, 0, 90);
+  eglib_DrawVLine(eglib, x + width, y + radius, height - diameter);
+  eglib_DrawArc(eglib, x + width - radius, y + height - radius, radius, 90, 180);
+  eglib_DrawHLine(eglib, x + radius, y + height, width - diameter);
+  eglib_DrawArc(eglib, x + radius, y + height - radius, radius, 180, 270);
+  eglib_DrawVLine(eglib, x, y + radius, height - diameter);
+}
+
+//
+// Boxes
+//
 
 void eglib_DrawBox(
   eglib_t *eglib,
@@ -428,26 +478,27 @@ void eglib_DrawGradientBox(
   eglib->color_index[1] = previous_color_index_1;
 }
 
-void eglib_ClearScreen(eglib_t *eglib) {
-  color_t previous_color_index_0;
-  struct _clip_t previous_clip;
+void eglib_DrawRoundBox(
+  eglib_t *eglib,
+  coordinate_t x, coordinate_t y,
+  coordinate_t width, coordinate_t height,
+  coordinate_t radius
+) {
+  coordinate_t diameter;
+  coordinate_t v;
 
-  previous_color_index_0 = eglib->color_index[0];
-  previous_clip = eglib->clip;
+  diameter = 2 * radius;
 
-  eglib_SetNoClip(eglib);
-
-  eglib_SetIndexColor(eglib, 0, 0, 0, 0);
-
-  eglib_DrawBox(
-    eglib,
-    0, 0,
-    eglib_GetWidth(eglib) - 1,
-    eglib_GetHeight(eglib) - 1
-  );
-
-  eglib->color_index[0] = previous_color_index_0;
-  eglib->clip = previous_clip;
+  eglib_DrawFilledArc(eglib, x + radius, y + radius, radius, 270, 360);
+  for(v=y ; v <= y + radius ; v++)
+    eglib_DrawHLine(eglib, x + radius, v, width - diameter);
+  eglib_DrawFilledArc(eglib, x + width - radius, y + radius, radius, 0, 90);
+  for(v=y + radius ; v <= y + height - radius ; v++)
+    eglib_DrawHLine(eglib, x, v, width);
+  eglib_DrawFilledArc(eglib, x + radius, y + height - radius, radius, 180, 270);
+  for(v=y + height - radius ; v <= y + width ; v++)
+    eglib_DrawHLine(eglib, x + radius, v, width - diameter);
+  eglib_DrawFilledArc(eglib, x + width - radius, y + height - radius, radius, 90, 180);
 }
 
 //

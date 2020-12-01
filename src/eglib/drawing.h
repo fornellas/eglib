@@ -54,6 +54,26 @@ bool eglib_IsPixelClipped(
 );
 
 /**
+ * Whole Screen
+ * ============
+ */
+
+/**
+ * Clear screen, all pixels black, just like after :c:func:`eglib_Init`.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_ClearScreen.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_ClearScreen.png
+ *   :width: 200
+ */
+void eglib_ClearScreen(eglib_t *eglib);
+
+/**
  * Color
  * =====
  *
@@ -233,8 +253,8 @@ void eglib_DrawGradientLine(
 )
 
 /**
- * Boxes
- * =====
+ * Frames
+ * ======
  */
 
 /**
@@ -288,6 +308,36 @@ void eglib_DrawGradientFrame(
 );
 
 /**
+ * Draw frame starting at ``(x, y)``, with ``width`` and ``height`` and rounded
+ * edges with ``radius``, using color from index 0.
+ *
+ * Both ``width`` and ``height`` must be greater than ``2 * radius``.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawRoundFrame.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawRoundFrame.png
+ *   :width: 200
+ *
+ * :See also: :c:func:`eglib_SetIndexColor`.
+ */
+void eglib_DrawRoundFrame(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height,
+	coordinate_t radius
+);
+
+/**
+ * Boxes
+ * =====
+ */
+
+/**
  * Draw box starting at ``(x, y)`` with ``width`` and ``height`` using color
  * from index 0.
  *
@@ -338,23 +388,33 @@ void eglib_DrawGradientBox(
 );
 
 /**
- * Clear screen, all pixels black, just like after :c:func:`eglib_Init`.
+ * Draw frame starting at ``(x, y)``, with ``width`` and ``height`` and rounded
+ * edges with ``radius``, using color from index 0.
+ *
+ * Both ``width`` and ``height`` must be greater than ``2 * radius``.
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_ClearScreen.c
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawRoundBox.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_ClearScreen.png
+ * .. image:: ../../tests/drawing/test_eglib_DrawRoundBox.png
  *   :width: 200
+ *
+ * :See also: :c:func:`eglib_SetIndexColor`.
  */
-void eglib_ClearScreen(eglib_t *eglib);
+void eglib_DrawRoundBox(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height,
+	coordinate_t radius
+);
 
 /**
- * Arcs
- * ====
+ * Round things
+ * ============
  */
 
 /**

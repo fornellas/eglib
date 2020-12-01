@@ -621,6 +621,16 @@ struct bitmap_t {
 
 /**
  * Draw given bitmap at ``(x, y)``.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../tests/drawing/test_eglib_DrawBitmap.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../tests/drawing/test_eglib_DrawBitmap.png
+ *   :width: 200
  */
 void eglib_DrawBitmap(
 	eglib_t *eglib,

@@ -28,5 +28,5 @@ const struct bitmap_t bitmap_rgb = {
 
 void draw_test(eglib_t *eglib) {
   eglib_DrawBitmap(eglib, 44, 26, &bitmap_bw);
-  eglib_DrawBitmap(eglib, 47, 57, &bitmap_rgb);
+  eglib_DrawBitmap(eglib, 46, 57, &bitmap_rgb);
 }

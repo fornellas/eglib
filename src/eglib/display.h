@@ -247,7 +247,7 @@ void display_default_draw_line(
  * Returns a pointer to the display driver configuration that was passed to
  * :c:func:`eglib_Init`.
  */
-#define eglib_GetDisplayConfig(eglib) ((eglib)->display_config_ptr)
+#define eglib_GetDisplayConfig(eglib) ((eglib)->display.config_ptr)
 
 /**
  * HAL Driver Helper Functions
@@ -262,7 +262,7 @@ void display_default_draw_line(
  * from given :c:type:`eglib_t`.
  */
 #define eglib_GetHalFourWireSpiConfigComm(eglib) (\
-	(eglib)->display->comm.four_wire_spi \
+	(eglib)->display.driver->comm.four_wire_spi \
 )
 
 /**
@@ -270,7 +270,7 @@ void display_default_draw_line(
  * from given :c:type:`eglib_t`.
  */
 #define eglib_GetHalI2cConfigComm(eglib) (\
-	(eglib)->display->comm.i2c \
+	(eglib)->display.driver->comm.i2c \
 )
 
 /**
@@ -303,7 +303,7 @@ void display_default_draw_line(
  * :param height: Pointer where to write display height to.
  */
 #define eglib_GetDimension(eglib, width, height) ( \
-	(eglib)->display->get_dimension(eglib, width, height) \
+	(eglib)->display.driver->get_dimension(eglib, width, height) \
 )
 
 /**
@@ -315,7 +315,7 @@ void display_default_draw_line(
  * :return: :c:type:`pixel_format_t`.
  */
 #define eglib_GetPixelFormat(eglib, pixel_format) ( \
-	(eglib)->display->get_pixel_format(eglib, pixel_format) \
+	(eglib)->display.driver->get_pixel_format(eglib, pixel_format) \
 )
 
 /** Returns display width as :c:type:`coordinate_t`. */

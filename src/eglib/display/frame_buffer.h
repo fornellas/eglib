@@ -52,10 +52,10 @@ typedef struct {
  * :param eglib: Pointer to :c:type:`eglib_t` to be initialized.
  * :param frame_buffer_config: Pointer to :c:type:`frame_buffer_config_t` to be
  *   initialized.
- * :param hal: Pointer to the HAL driver :c:type:`hal_t` to use.
- * :param hal_driver_config_ptr: Pointer to the HAL driver configuration.
+ * :param hal_driver: Pointer to the HAL driver :c:type:`hal_t` to use.
+ * :param hal_config_ptr: Pointer to the HAL driver configuration.
  *   Please refer each HAL driver documentation for details.
- * :param display: Pointer to the display driver :c:type:`display_t` to use.
+ * :param display_driver: Pointer to the display driver :c:type:`display_t` to use.
  * :param display_config_ptr: Pointer to the display driver configuration.
  *   Please refer each display driver documentation for details.
  * :return: Pointer to an initialized :c:type:`eglib_t` for the given HAL and
@@ -65,9 +65,9 @@ typedef struct {
 eglib_t *eglib_Init_FrameBuffer(
 	eglib_t *eglib,
 	frame_buffer_config_t *frame_buffer_config,
-	const hal_t *hal,
+	const hal_t *hal_driver,
 	void *hal_config_ptr,
-	const display_t *display,
+	const display_t *display_driver,
 	void *display_config_ptr
 );
 

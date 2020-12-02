@@ -65,7 +65,7 @@
 for frame buffer.</p>
 <dl class="function">
 <dt id="c.eglib_Init_FrameBuffer">
-<a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> * <code class="sig-name descname">eglib_Init_FrameBuffer</code><span class="sig-paren">(</span><a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="#c.frame_buffer_config_t" title="frame_buffer_config_t">frame_buffer_config_t</a> *<em> frame_buffer_config</em>, const <a class="reference internal" href="../../eglib.html#c.hal_t" title="hal_t">hal_t</a> *<em> hal</em>, void *<em> hal_config_ptr</em>, const <a class="reference internal" href="../../eglib.html#c.display_t" title="display_t">display_t</a> *<em> display</em>, void *<em> display_config_ptr</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_Init_FrameBuffer" title="Permalink to this definition">¶</a></dt>
+<a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> * <code class="sig-name descname">eglib_Init_FrameBuffer</code><span class="sig-paren">(</span><a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="#c.frame_buffer_config_t" title="frame_buffer_config_t">frame_buffer_config_t</a> *<em> frame_buffer_config</em>, const <a class="reference internal" href="../../eglib.html#c.hal_t" title="hal_t">hal_t</a> *<em> hal_driver</em>, void *<em> hal_config_ptr</em>, const <a class="reference internal" href="../../eglib.html#c.display_t" title="display_t">display_t</a> *<em> display_driver</em>, void *<em> display_config_ptr</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_Init_FrameBuffer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Works similarly to <a class="reference internal" href="../../eglib.html#c.eglib_Init" title="eglib_Init"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_Init()</span></code></a>, but creates a frame buffer where data
 is written to, instead of directly to the display. The buffer is only sent to
 the display when <a class="reference internal" href="#c.eglib_FrameBuffer_Send" title="eglib_FrameBuffer_Send"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_FrameBuffer_Send()</span></code></a> is called.</p>
@@ -88,10 +88,10 @@ by <a class="reference internal" href="#c.frame_buffer_Free" title="frame_buffer
 <li><p><strong>eglib</strong> – Pointer to <a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">eglib_t</span></code></a> to be initialized.</p></li>
 <li><p><strong>frame_buffer_config</strong> – Pointer to <a class="reference internal" href="#c.frame_buffer_config_t" title="frame_buffer_config_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">frame_buffer_config_t</span></code></a> to be
 initialized.</p></li>
-<li><p><strong>hal</strong> – Pointer to the HAL driver <a class="reference internal" href="../../eglib.html#c.hal_t" title="hal_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">hal_t</span></code></a> to use.</p></li>
-<li><p><strong>hal_driver_config_ptr</strong> – Pointer to the HAL driver configuration.
+<li><p><strong>hal_driver</strong> – Pointer to the HAL driver <a class="reference internal" href="../../eglib.html#c.hal_t" title="hal_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">hal_t</span></code></a> to use.</p></li>
+<li><p><strong>hal_config_ptr</strong> – Pointer to the HAL driver configuration.
 Please refer each HAL driver documentation for details.</p></li>
-<li><p><strong>display</strong> – Pointer to the display driver <a class="reference internal" href="../../eglib.html#c.display_t" title="display_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">display_t</span></code></a> to use.</p></li>
+<li><p><strong>display_driver</strong> – Pointer to the display driver <a class="reference internal" href="../../eglib.html#c.display_t" title="display_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">display_t</span></code></a> to use.</p></li>
 <li><p><strong>display_config_ptr</strong> – Pointer to the display driver configuration.
 Please refer each display driver documentation for details.</p></li>
 </ul>

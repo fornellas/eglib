@@ -15,10 +15,10 @@ void eglib_SetClipRange(
   coordinate_t width,
   coordinate_t height
 ) {
-  eglib->clip.x = x;
-  eglib->clip.y = y;
-  eglib->clip.width = width;
-  eglib->clip.height = height;
+  eglib->drawing.clip.x = x;
+  eglib->drawing.clip.y = y;
+  eglib->drawing.clip.width = width;
+  eglib->drawing.clip.height = height;
 }
 
 void eglib_SetNoClip(eglib_t *eglib) {
@@ -34,13 +34,13 @@ bool eglib_IsPixelClipped(
   coordinate_t x,
   coordinate_t y
 ) {
-  if(x < eglib->clip.x)
+  if(x < eglib->drawing.clip.x)
     return true;
-  if(x > (eglib->clip.x + eglib->clip.width))
+  if(x > (eglib->drawing.clip.x + eglib->drawing.clip.width))
     return true;
-  if(y < eglib->clip.y)
+  if(y < eglib->drawing.clip.y)
     return true;
-  if(y > (eglib->clip.y + eglib->clip.height))
+  if(y > (eglib->drawing.clip.y + eglib->drawing.clip.height))
     return true;
   return false;
 }
@@ -53,8 +53,8 @@ void eglib_ClearScreen(eglib_t *eglib) {
   color_t previous_color_index_0;
   struct _clip_t previous_clip;
 
-  previous_color_index_0 = eglib->color_index[0];
-  previous_clip = eglib->clip;
+  previous_color_index_0 = eglib->drawing.color_index[0];
+  previous_clip = eglib->drawing.clip;
 
   eglib_SetNoClip(eglib);
 
@@ -67,8 +67,8 @@ void eglib_ClearScreen(eglib_t *eglib) {
     eglib_GetHeight(eglib) - 1
   );
 
-  eglib->color_index[0] = previous_color_index_0;
-  eglib->clip = previous_clip;
+  eglib->drawing.color_index[0] = previous_color_index_0;
+  eglib->drawing.clip = previous_clip;
 }
 
 //
@@ -82,9 +82,9 @@ void eglib_SetIndexColor(
   color_channel_t g,
   color_channel_t b
 ) {
-  eglib->color_index[idx].r = r;
-  eglib->color_index[idx].g = g;
-  eglib->color_index[idx].b = b;
+  eglib->drawing.color_index[idx].r = r;
+  eglib->drawing.color_index[idx].g = g;
+  eglib->drawing.color_index[idx].b = b;
 }
 
 //
@@ -94,11 +94,11 @@ void eglib_SetIndexColor(
 void eglib_DrawPixelColor(eglib_t *eglib, coordinate_t x, coordinate_t y, color_t color) {
   if(eglib_IsPixelClipped(eglib, x, y))
     return;
-  eglib->display->draw_pixel_color(eglib, x, y, color);
+  eglib->display.driver->draw_pixel_color(eglib, x, y, color);
 }
 
 void eglib_DrawPixel(eglib_t *eglib, coordinate_t x, coordinate_t y) {
-	eglib_DrawPixelColor(eglib, x, y, eglib->color_index[0]);
+	eglib_DrawPixelColor(eglib, x, y, eglib->drawing.color_index[0]);
 }
 
 //
@@ -144,15 +144,15 @@ static color_t get_next_gradient_color(struct _gradient_t *gradient) {
 }
 
 static color_t get_color_index_0(eglib_t *eglib) {
-  return eglib->color_index[0];
+  return eglib->drawing.color_index[0];
 }
 
 static color_t get_next_gradient_color_eglib(eglib_t *eglib) {
   color_t color;
 
-  color.r = get_gradient_channel_color(&eglib->gradient.r);
-  color.g = get_gradient_channel_color(&eglib->gradient.g);
-  color.b = get_gradient_channel_color(&eglib->gradient.b);
+  color.r = get_gradient_channel_color(&eglib->drawing.gradient.r);
+  color.g = get_gradient_channel_color(&eglib->drawing.gradient.g);
+  color.b = get_gradient_channel_color(&eglib->drawing.gradient.b);
 
   return color;
 }
@@ -187,27 +187,27 @@ static void draw_fast_90_line(
     } else
       while(true);
 
-    clip_x_end = eglib->clip.x + eglib->clip.width;
-    clip_y_end = eglib->clip.y + eglib->clip.height;
+    clip_x_end = eglib->drawing.clip.x + eglib->drawing.clip.width;
+    clip_y_end = eglib->drawing.clip.y + eglib->drawing.clip.height;
 
     switch(direction) {
       case DISPLAY_LINE_DIRECTION_RIGHT:
       case DISPLAY_LINE_DIRECTION_LEFT:
-        if((y1 < eglib->clip.y) || (y1 > clip_y_end))
+        if((y1 < eglib->drawing.clip.y) || (y1 > clip_y_end))
           return;
         break;
       case DISPLAY_LINE_DIRECTION_DOWN:
       case DISPLAY_LINE_DIRECTION_UP:
-        if((x1 < eglib->clip.x) || (x1 > clip_x_end))
+        if((x1 < eglib->drawing.clip.x) || (x1 > clip_x_end))
           return;
         break;
     }
 
     switch(direction) {
       case DISPLAY_LINE_DIRECTION_RIGHT:
-        if(x1 < eglib->clip.x) {
-          length -= eglib->clip.x - x1;
-          x1 = eglib->clip.x;
+        if(x1 < eglib->drawing.clip.x) {
+          length -= eglib->drawing.clip.x - x1;
+          x1 = eglib->drawing.clip.x;
         }
         if(x1 + length > clip_x_end)
           length -= (x1 + length) - (clip_x_end);
@@ -217,13 +217,13 @@ static void draw_fast_90_line(
           length -= x1 - (clip_x_end);
           x1 = clip_x_end;
         }
-        if(x1 - length < eglib->clip.x)
-          length -= (x1 - length) - eglib->clip.x;
+        if(x1 - length < eglib->drawing.clip.x)
+          length -= (x1 - length) - eglib->drawing.clip.x;
         break;
       case DISPLAY_LINE_DIRECTION_DOWN:
-        if(y1 < eglib->clip.y) {
-          length -= eglib->clip.y - y1;
-          y1 = eglib->clip.y;
+        if(y1 < eglib->drawing.clip.y) {
+          length -= eglib->drawing.clip.y - y1;
+          y1 = eglib->drawing.clip.y;
         }
         if(y1 + length > clip_y_end)
           length -= (y1 + length) - (clip_y_end);
@@ -233,15 +233,15 @@ static void draw_fast_90_line(
           length -= y1 - (clip_y_end);
           y1 = clip_y_end;
         }
-        if(y1 - length < eglib->clip.y)
-          length -= (y1 - length) - eglib->clip.y;
+        if(y1 - length < eglib->drawing.clip.y)
+          length -= (y1 - length) - eglib->drawing.clip.y;
         break;
     }
 
     if(length < 1)
       return;
 
-    eglib->display->draw_line(
+    eglib->display.driver->draw_line(
       eglib,
       x1, y1,
       direction,
@@ -363,8 +363,8 @@ void eglib_DrawGradientLine(
   coordinate_t x2, coordinate_t y2
 ) {
   gradient_begin(
-    &eglib->gradient,
-    eglib->color_index[0], eglib->color_index[1],
+    &eglib->drawing.gradient,
+    eglib->drawing.color_index[0], eglib->drawing.color_index[1],
     get_line_pixel_count(x1, y1, x2, y2)
   );
   draw_line(eglib, x1, y1, x2, y2, get_next_gradient_color_eglib);
@@ -393,22 +393,22 @@ void eglib_DrawGradientFrame(
   color_t previous_color_index_0;
   color_t previous_color_index_1;
 
-  previous_color_index_0 = eglib->color_index[0];
-  previous_color_index_1 = eglib->color_index[1];
+  previous_color_index_0 = eglib->drawing.color_index[0];
+  previous_color_index_1 = eglib->drawing.color_index[1];
 
   eglib_DrawGradientHLine(eglib, x, y, width);
-  eglib->color_index[0] = eglib->color_index[2];
-  eglib->color_index[1] = eglib->color_index[3];
+  eglib->drawing.color_index[0] = eglib->drawing.color_index[2];
+  eglib->drawing.color_index[1] = eglib->drawing.color_index[3];
   eglib_DrawGradientHLine(eglib, x, y + height, width);
-  eglib->color_index[0] = previous_color_index_0;
-  eglib->color_index[1] = eglib->color_index[2];
+  eglib->drawing.color_index[0] = previous_color_index_0;
+  eglib->drawing.color_index[1] = eglib->drawing.color_index[2];
   eglib_DrawGradientVLine(eglib, x, y, height);
-  eglib->color_index[0] = previous_color_index_1;
-  eglib->color_index[1] = eglib->color_index[3];
+  eglib->drawing.color_index[0] = previous_color_index_1;
+  eglib->drawing.color_index[1] = eglib->drawing.color_index[3];
   eglib_DrawGradientVLine(eglib, x + width, y, height);
 
-  eglib->color_index[0] = previous_color_index_0;
-  eglib->color_index[1] = previous_color_index_1;
+  eglib->drawing.color_index[0] = previous_color_index_0;
+  eglib->drawing.color_index[1] = previous_color_index_1;
 }
 
 void eglib_DrawRoundFrame(
@@ -454,28 +454,28 @@ void eglib_DrawGradientBox(
   struct _gradient_t gradient_left;
   struct _gradient_t gradient_right;
 
-  previous_color_index_0 = eglib->color_index[0];
-  previous_color_index_1 = eglib->color_index[1];
+  previous_color_index_0 = eglib->drawing.color_index[0];
+  previous_color_index_1 = eglib->drawing.color_index[1];
 
   gradient_begin(
     &gradient_left,
-    eglib->color_index[0], eglib->color_index[2],
+    eglib->drawing.color_index[0], eglib->drawing.color_index[2],
     height
   );
   gradient_begin(
     &gradient_right,
-    eglib->color_index[1], eglib->color_index[3],
+    eglib->drawing.color_index[1], eglib->drawing.color_index[3],
     height
   );
 
   for( ; height ; height--, y++) {
-    eglib->color_index[0] = get_next_gradient_color(&gradient_left);
-    eglib->color_index[1] = get_next_gradient_color(&gradient_right);
+    eglib->drawing.color_index[0] = get_next_gradient_color(&gradient_left);
+    eglib->drawing.color_index[1] = get_next_gradient_color(&gradient_right);
     eglib_DrawGradientHLine(eglib, x, y, width);
   }
 
-  eglib->color_index[0] = previous_color_index_0;
-  eglib->color_index[1] = previous_color_index_1;
+  eglib->drawing.color_index[0] = previous_color_index_0;
+  eglib->drawing.color_index[1] = previous_color_index_1;
 }
 
 void eglib_DrawRoundBox(
@@ -589,8 +589,8 @@ void eglib_DrawGradientArc(
   float end_angle
 ) {
   gradient_begin(
-    &eglib->gradient,
-    eglib->color_index[0], eglib->color_index[1],
+    &eglib->drawing.gradient,
+    eglib->drawing.color_index[0], eglib->drawing.color_index[1],
     get_arc_pixel_count(x, y, radius, start_angle, end_angle)
   );
 
@@ -619,22 +619,22 @@ void eglib_DrawGradientFilledArc(
 ) {
   color_t previous_color_index_0;
 
-  previous_color_index_0 = eglib->color_index[0];
+  previous_color_index_0 = eglib->drawing.color_index[0];
 
   gradient_begin(
-    &eglib->gradient,
-    eglib->color_index[0], eglib->color_index[1],
+    &eglib->drawing.gradient,
+    eglib->drawing.color_index[0], eglib->drawing.color_index[1],
     radius + 1
   );
 
   eglib_DrawPixelColor(eglib, x, y, get_next_gradient_color_eglib(eglib));
 
   for(coordinate_t r=1 ; r <= radius ; r++) {
-    eglib->color_index[0] = get_next_gradient_color_eglib(eglib);
+    eglib->drawing.color_index[0] = get_next_gradient_color_eglib(eglib);
     draw_arc(eglib, x, y, r, start_angle, end_angle, get_color_index_0);
   }
 
-  eglib->color_index[0] = previous_color_index_0;
+  eglib->drawing.color_index[0] = previous_color_index_0;
 }
 
 //

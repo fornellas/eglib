@@ -260,18 +260,18 @@ struct hal_struct {
  * Returns a pointer to the HAL driver configuration that was passed to
  * :c:func:`eglib_Init`.
  */
-#define eglib_GetHalConfig(eglib) ((eglib)->hal_config_ptr)
+#define eglib_GetHalConfig(eglib) ((eglib)->hal.config_ptr)
 
 
 /**
  * Whether in between calls to :c:func:`eglib_CommBegin` and :c:func:`eglib_CommEnd`.
  */
-#define eglib_IsCommActive(eglib) ((eglib)->hal_comm_active)
+#define eglib_IsCommActive(eglib) ((eglib)->hal.comm_active)
 
 /**
  * Whether I2C slave address should be sent.
  */
-#define eglib_ShouldSendI2cSlaveAddr(eglib) ((eglib)->hal_i2c_send_slave_addr)
+#define eglib_ShouldSendI2cSlaveAddr(eglib) ((eglib)->hal.i2c_send_slave_addr)
 
 /**
  * .. _Display driver HAL interface functions:
@@ -290,10 +290,10 @@ struct hal_struct {
  */
 
 /** Delay for given number of nanoseconds */
-#define eglib_DelayNs(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns))
+#define eglib_DelayNs(eglib, ns) ((eglib)->hal.driver->delay_ns(eglib, ns))
 
 /** Delay for given number of milliseconds */
-#define eglib_DelayMs(eglib, ns) ((eglib)->hal->delay_ns(eglib, ns * 1000 * 1000))
+#define eglib_DelayMs(eglib, ns) ((eglib)->hal.driver->delay_ns(eglib, ns * 1000 * 1000))
 
 /**
  * I/O
@@ -303,12 +303,12 @@ struct hal_struct {
 /**
  * Set reset line to given state.
  */
-#define eglib_SetReset(eglib, state) ((eglib)->hal->set_reset(eglib, state))
+#define eglib_SetReset(eglib, state) ((eglib)->hal.driver->set_reset(eglib, state))
 
 /**
  * Get the value of th busy data line, often found in e-ink / e-paper displays.
  */
-#define eglib_GetBusy(eglib) ((eglib)->hal->get_busy(eglib))
+#define eglib_GetBusy(eglib) ((eglib)->hal.driver->get_busy(eglib))
 
 /**
  * Communication

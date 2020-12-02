@@ -164,7 +164,7 @@ static void sleep_in(eglib_t *eglib) {
 
 	display_config = eglib_GetDisplayConfig(eglib);
 
-	display_config->eglib_buffered.display->sleep_in(
+	display_config->eglib_buffered.display.driver->sleep_in(
 		&display_config->eglib_buffered
 	);
 };
@@ -174,7 +174,7 @@ static void sleep_out(eglib_t *eglib) {
 
 	display_config = eglib_GetDisplayConfig(eglib);
 
-	display_config->eglib_buffered.display->sleep_out(
+	display_config->eglib_buffered.display.driver->sleep_out(
 		&display_config->eglib_buffered
 	);
 };
@@ -187,7 +187,7 @@ static void get_dimension(
 
 	display_config = eglib_GetDisplayConfig(eglib);
 
-	display_config->eglib_buffered.display->get_dimension(
+	display_config->eglib_buffered.display.driver->get_dimension(
 		&display_config->eglib_buffered, width, height
 	);
 };
@@ -197,7 +197,7 @@ static void get_pixel_format(eglib_t *eglib, enum pixel_format_t *pixel_format) 
 
 	display_config = eglib_GetDisplayConfig(eglib);
 
-	display_config->eglib_buffered.display->get_pixel_format(
+	display_config->eglib_buffered.display.driver->get_pixel_format(
 		&display_config->eglib_buffered, pixel_format
 	);
 }
@@ -242,7 +242,7 @@ static bool refresh(eglib_t *eglib) {
 
 	display_config = eglib_GetDisplayConfig(eglib);
 
-	return display_config->eglib_buffered.display->refresh(
+	return display_config->eglib_buffered.display.driver->refresh(
 		&display_config->eglib_buffered
 	);
 }
@@ -254,8 +254,8 @@ static bool refresh(eglib_t *eglib) {
 eglib_t *eglib_Init_FrameBuffer(
 	eglib_t *eglib,
 	frame_buffer_config_t *frame_buffer_config,
-	const hal_t *hal, void *hal_config_ptr,
-	const display_t *display, void *display_config_ptr
+	const hal_t *hal_driver, void *hal_config_ptr,
+	const display_t *display_driver, void *display_config_ptr
 ) {
 	display_t *frame_buffer;
 
@@ -263,11 +263,11 @@ eglib_t *eglib_Init_FrameBuffer(
 
 	eglib_Init(
 		&frame_buffer_config->eglib_buffered,
-		hal, hal_config_ptr,
-		display, display_config_ptr
+		hal_driver, hal_config_ptr,
+		display_driver, display_config_ptr
 	);
 
-	frame_buffer->comm = display->comm;
+	frame_buffer->comm = display_driver->comm;
 	frame_buffer->init = init;
 	frame_buffer->sleep_in = sleep_in;
 	frame_buffer->sleep_out = sleep_out;
@@ -282,7 +282,7 @@ eglib_t *eglib_Init_FrameBuffer(
 
 	eglib_Init(
 		eglib,
-		hal, hal_config_ptr,
+		hal_driver, hal_config_ptr,
 		frame_buffer, frame_buffer_config
 	);
 
@@ -298,7 +298,7 @@ void eglib_FrameBuffer_Send(
 
 	display_config = eglib_GetDisplayConfig(eglib);
 
-	display_config->eglib_buffered.display->send_buffer(
+	display_config->eglib_buffered.display.driver->send_buffer(
 		&display_config->eglib_buffered,
 		display_config->buffer,
 		x, y,

@@ -32,23 +32,26 @@ struct _clip_t {
 };
 
 struct _eglib_struct {
-	// HAL
-	const hal_t *hal;
-	void *hal_config_ptr;
-	// Set in between hal_begin and hal_end
-	bool hal_comm_active : 1;
-	// Whether hal_t send() must send slave address for I2C
-	uint8_t hal_i2c_send_slave_addr : 2;
+	struct {
+		const hal_t *driver;
+		void *config_ptr;
+		// Set in between hal_begin and hal_end
+		bool comm_active : 1;
+		// Whether hal_t send() must send slave address for I2C
+		uint8_t i2c_send_slave_addr : 2;
+	} hal;
 
-	// Display
-	const display_t *display;
-	void *display_config_ptr;
-	bool display_refreshing : 1;
+	struct {
+		const display_t *driver;
+		void *config_ptr;
+		bool refreshing : 1;
+	} display;
 
-	// Drawing
-	struct _clip_t clip;
-	color_t color_index[4];
-	struct _gradient_t gradient;
+	struct {
+		struct _clip_t clip;
+		color_t color_index[4];
+		struct _gradient_t gradient;
+	} drawing;
 };
 
 /**
@@ -56,10 +59,10 @@ struct _eglib_struct {
  * the display driver supports.
  *
  * :param eglib: Pointer to :c:type:`eglib_t` to be initialized.
- * :param hal: Pointer to the :doc:`HAL driver<hal/index>` (:c:type:`hal_t`) to use.
+ * :param hal_driver: Pointer to the :doc:`HAL driver<hal/index>` (:c:type:`hal_t`) to use.
  * :param hal_driver_config_ptr: Pointer to the HAL driver configuration.
  *   Please refer each HAL driver documentation for details.
- * :param display: Pointer to the :doc:`display driver<display/index>` (:c:type:`display_t`) to use.
+ * :param display_driver: Pointer to the :doc:`display driver<display/index>` (:c:type:`display_t`) to use.
  * :param display_config_ptr: Pointer to the display driver configuration.
  *   Please refer each display driver documentation for details.
  *
@@ -67,9 +70,9 @@ struct _eglib_struct {
  */
 void eglib_Init(
 	eglib_t *eglib,
-	const hal_t *hal,
+	const hal_t *hal_driver,
 	void *hal_driver_config_ptr,
-	const display_t *display,
+	const display_t *display_driver,
 	void *display_config_ptr
 );
 

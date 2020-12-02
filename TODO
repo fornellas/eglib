@@ -1,3 +1,5 @@
+- Bugs
+  - Double hal driver init from frame buffer
 - Drawing
   - Arc
     - Optimize algorithm to use line drawing when possible.
@@ -48,6 +50,8 @@
   - Development
   	- HAL Driver
   	- Display Driver
+  - API Reference
+  - The design of eglib
 - color_t
   - Normalize color quantization from RGB for different bit depths:
     - Grayscale

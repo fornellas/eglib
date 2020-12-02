@@ -54,17 +54,17 @@
 the hardware.</p>
 <dl class="function">
 <dt id="c.eglib_Init">
-void <code class="sig-name descname">eglib_Init</code><span class="sig-paren">(</span><a class="reference internal" href="#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, const <a class="reference internal" href="#c.hal_t" title="hal_t">hal_t</a> *<em> hal</em>, void *<em> hal_driver_config_ptr</em>, const <a class="reference internal" href="#c.display_t" title="display_t">display_t</a> *<em> display</em>, void *<em> display_config_ptr</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_Init" title="Permalink to this definition">¶</a></dt>
+void <code class="sig-name descname">eglib_Init</code><span class="sig-paren">(</span><a class="reference internal" href="#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, const <a class="reference internal" href="#c.hal_t" title="hal_t">hal_t</a> *<em> hal_driver</em>, void *<em> hal_driver_config_ptr</em>, const <a class="reference internal" href="#c.display_t" title="display_t">display_t</a> *<em> display_driver</em>, void *<em> display_config_ptr</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_Init" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initializer for <a class="reference internal" href="#c.eglib_t" title="eglib_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">eglib_t</span></code></a>. The given HAL driver must be of a bus that
 the display driver supports.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>eglib</strong> – Pointer to <a class="reference internal" href="#c.eglib_t" title="eglib_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">eglib_t</span></code></a> to be initialized.</p></li>
-<li><p><strong>hal</strong> – Pointer to the <a class="reference internal" href="hal/index.html"><span class="doc">HAL driver</span></a> (<a class="reference internal" href="#c.hal_t" title="hal_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">hal_t</span></code></a>) to use.</p></li>
+<li><p><strong>hal_driver</strong> – Pointer to the <a class="reference internal" href="hal/index.html"><span class="doc">HAL driver</span></a> (<a class="reference internal" href="#c.hal_t" title="hal_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">hal_t</span></code></a>) to use.</p></li>
 <li><p><strong>hal_driver_config_ptr</strong> – Pointer to the HAL driver configuration.
 Please refer each HAL driver documentation for details.</p></li>
-<li><p><strong>display</strong> – Pointer to the <a class="reference internal" href="display/index.html"><span class="doc">display driver</span></a> (<a class="reference internal" href="#c.display_t" title="display_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">display_t</span></code></a>) to use.</p></li>
+<li><p><strong>display_driver</strong> – Pointer to the <a class="reference internal" href="display/index.html"><span class="doc">display driver</span></a> (<a class="reference internal" href="#c.display_t" title="display_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">display_t</span></code></a>) to use.</p></li>
 <li><p><strong>display_config_ptr</strong> – Pointer to the display driver configuration.
 Please refer each display driver documentation for details.</p></li>
 </ul>

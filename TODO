@@ -60,6 +60,11 @@
     - BWR
 - Frame buffer
 	- DMA
+- Packaging
+  - make install
+    - pkg-config
+  - Deb
+  - RPM
 - HAL
   - 4-wire SPI
     - avr-libc

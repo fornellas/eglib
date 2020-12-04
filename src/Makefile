@@ -2,6 +2,7 @@ BUILD_DIR ?= bin
 CFILES += $(wildcard *.c)
 CFILES += $(wildcard eglib/*.c)
 CFILES += $(wildcard eglib/hal/*.c)
+CFILES += $(wildcard eglib/drawing/fonts/*.c)
 CFILES += eglib/display/frame_buffer.c
 ifdef DISPLAY_DRIVERS
 CFILES += $(DISPLAY_DRIVERS:%=eglib/display/%.c)

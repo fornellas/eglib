@@ -54,7 +54,7 @@ enum pixel_format_t {
 /**
  * Data type for each color channel: red, green, blue.
  *
- * All :doc:`drawing functions <drawing>` use this fixed 8-bit color depth and
+ * All :doc:`drawing functions <drawing/index>` use this fixed 8-bit color depth and
  * :doc:`display drivers <display/index>` do
  * `color quantization <https://en.wikipedia.org/wiki/Color_quantization>`_ when
  * they only support a lower color depth.
@@ -62,7 +62,7 @@ enum pixel_format_t {
 typedef uint8_t color_channel_t;
 
 /**
- * Color used by :doc:`drawing functions <drawing>`.
+ * Color used by :doc:`drawing functions <drawing/index>`.
  */
 typedef struct {
 	/** Red */
@@ -73,7 +73,7 @@ typedef struct {
 	color_channel_t b;
 } color_t;
 
-/** Data type for display coordinates used by :doc:`drawing functions <drawing>`. */
+/** Data type for display coordinates used by :doc:`drawing functions <drawing/index>`. */
 typedef int16_t coordinate_t;
 
 struct _eglib_struct;

@@ -44,7 +44,7 @@ export CPPFLAGS
 
 EGLIB_PATH = ../../../src/
 INCLUDES += -I$(EGLIB_PATH)
-EGLIB_BUILD_DIR = $(abspath $(BUILD_DIR_PREFIX)/eglib)
+EGLIB_BUILD_DIR = $(abspath ./../bin)
 EGLIB_LIB = $(EGLIB_BUILD_DIR)/libeglib.a
 LDLIBS += -leglib -l$(LIBNAME) -lm
 $(PROJECT).elf: $(EGLIB_LIB)

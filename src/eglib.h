@@ -51,6 +51,7 @@ struct _eglib_struct {
 		struct _clip_t clip;
 		color_t color_index[4];
 		struct _gradient_t gradient;
+		struct font_t *font;
 	} drawing;
 };
 

@@ -2,6 +2,7 @@
 #define EGLIB_DRAWING_H
 
 #include "../eglib.h"
+#include <wchar.h>
 
 /**
  * These are generic drawing functions.
@@ -24,12 +25,12 @@
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_SetClipRange.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_SetClipRange.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_SetClipRange.png
+ * .. image:: ../../../tests/drawing/test_eglib_SetClipRange.png
  *   :width: 200
  */
 void eglib_SetClipRange(
@@ -63,12 +64,12 @@ bool eglib_IsPixelClipped(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_ClearScreen.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_ClearScreen.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_ClearScreen.png
+ * .. image:: ../../../tests/drawing/test_eglib_ClearScreen.png
  *   :width: 200
  */
 void eglib_ClearScreen(eglib_t *eglib);
@@ -100,12 +101,12 @@ void eglib_SetIndexColor(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawPixelColor.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawPixelColor.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawPixelColor.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawPixelColor.png
  *   :width: 200
  */
 void eglib_DrawPixelColor(eglib_t *eglib, coordinate_t x, coordinate_t y, color_t color);
@@ -115,12 +116,12 @@ void eglib_DrawPixelColor(eglib_t *eglib, coordinate_t x, coordinate_t y, color_
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawPixel.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawPixel.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawPixel.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawPixel.png
  *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
@@ -138,12 +139,12 @@ void eglib_DrawPixel(eglib_t *eglib, coordinate_t x, coordinate_t y);
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawLine.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawLine.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawLine.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawLine.png
  *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
@@ -156,12 +157,12 @@ void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawHLine.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawHLine.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawHLine.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawHLine.png
  *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
@@ -174,12 +175,12 @@ void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawVLine.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawVLine.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawVLine.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawVLine.png
  *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
@@ -194,12 +195,12 @@ void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientLine.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawGradientLine.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawGradientLine.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawGradientLine.png
  *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
@@ -215,12 +216,12 @@ void eglib_DrawGradientLine(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientHLine.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawGradientHLine.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawGradientHLine.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawGradientHLine.png
  *   :width: 200
  *
  * :See also: :c:func:`eglib_DrawGradientLine`.
@@ -236,12 +237,12 @@ void eglib_DrawGradientLine(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientVLine.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawGradientVLine.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawGradientVLine.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawGradientVLine.png
  *   :width: 200
  *
  * :See also: :c:func:`eglib_DrawGradientLine`.
@@ -263,12 +264,12 @@ void eglib_DrawGradientLine(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawFrame.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawFrame.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawFrame.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawFrame.png
  *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
@@ -291,12 +292,12 @@ void eglib_DrawFrame(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientFrame.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawGradientFrame.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawGradientFrame.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawGradientFrame.png
  *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
@@ -315,12 +316,12 @@ void eglib_DrawGradientFrame(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawRoundFrame.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawRoundFrame.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawRoundFrame.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawRoundFrame.png
  *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
@@ -343,12 +344,12 @@ void eglib_DrawRoundFrame(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawBox.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawBox.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawBox.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawBox.png
  *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
@@ -371,12 +372,12 @@ void eglib_DrawBox(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientBox.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawGradientBox.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawGradientBox.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawGradientBox.png
  *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
@@ -395,12 +396,12 @@ void eglib_DrawGradientBox(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawRoundBox.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawRoundBox.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawRoundBox.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawRoundBox.png
  *   :width: 200
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
@@ -428,12 +429,12 @@ void eglib_DrawRoundBox(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawArc.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawArc.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawArc.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawArc.png
  *   :width: 200
  */
 void eglib_DrawArc(
@@ -455,12 +456,12 @@ void eglib_DrawArc(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientArc.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawGradientArc.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawGradientArc.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawGradientArc.png
  *   :width: 200
  */
 void eglib_DrawGradientArc(
@@ -480,12 +481,12 @@ void eglib_DrawGradientArc(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawCircle.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawCircle.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawCircle.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawCircle.png
  *   :width: 200
  */
 #define eglib_DrawCircle(eglib, x, y, radius) eglib_DrawArc(eglib, x, y, radius, 0, 360);
@@ -501,12 +502,12 @@ void eglib_DrawGradientArc(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawFilledArc.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawFilledArc.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawFilledArc.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawFilledArc.png
  *   :width: 200
  */
 void eglib_DrawFilledArc(
@@ -529,12 +530,12 @@ void eglib_DrawFilledArc(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientFilledArc.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawGradientFilledArc.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawGradientFilledArc.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawGradientFilledArc.png
  *   :width: 200
  */
 void eglib_DrawGradientFilledArc(
@@ -554,12 +555,12 @@ void eglib_DrawGradientFilledArc(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawDisc.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawDisc.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawDisc.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawDisc.png
  *   :width: 200
  */
 #define eglib_DrawDisc(eglib, x, y, radius) eglib_DrawFilledArc(eglib, x, y, radius, 0, 360)
@@ -574,12 +575,12 @@ void eglib_DrawGradientFilledArc(
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawGradientDisc.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawGradientDisc.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawGradientDisc.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawGradientDisc.png
  *   :width: 200
  */
 #define eglib_DrawGradientDisc(eglib, x, y, radius) eglib_DrawGradientFilledArc(eglib, x, y, radius, 0, 360)
@@ -624,12 +625,12 @@ struct bitmap_t {
  *
  * Example:
  *
- * .. literalinclude:: ../../tests/drawing/test_eglib_DrawBitmap.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawBitmap.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../tests/drawing/test_eglib_DrawBitmap.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawBitmap.png
  *   :width: 200
  */
 void eglib_DrawBitmap(
@@ -638,5 +639,68 @@ void eglib_DrawBitmap(
 	coordinate_t y,
 	const struct bitmap_t *bitmap
 );
+
+/**
+ * Text
+ * ====
+ */
+
+#include "drawing/fonts.h"
+
+/** A glyph from a :c:type:`font_t`. */
+struct glyph_t {
+	/** Bitmap width. */
+	uint8_t width : 7;
+	/** Bitmap height. */
+	uint8_t height : 7;
+	/** Left padding before bitmap. */
+	int8_t left : 5;
+	/** Right padding after bitmap. */
+	int8_t right : 6;
+	/** Distance from baseline to glyph's highest pixel. */
+	int8_t top : 7;
+	/** Bitmap data. */
+	uint8_t *data;
+};
+
+/**
+ * A Font definition.
+ */
+struct font_t {
+	/** Font pixel size. */
+	uint8_t pixel_size;
+	/** First unicode character code this font supports. */
+	uint32_t charcode_start;
+	/** Last unicode character code this font supports. */
+	uint32_t charcode_end;
+	/** Array of glyphs for each supported unicode character. */
+	struct glyph_t **glyphs;
+};
+
+/**
+ * Set font to be used by other font functions.
+ */
+void eglib_SetFont(eglib_t *eglib, struct font_t *font);
+
+/**
+ * Return given unicode character :c:type:`glyph_t`.
+ */
+struct glyph_t *eglib_GetGlyph(eglib_t *eglib, wchar_t unicode_char);
+
+/**
+ * Draw given character glyph at ``(x, y)``.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawGlyph.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../../tests/drawing/test_eglib_DrawGlyph.png
+ *   :width: 200
+ */
+void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t unicode_char);
+
 
 #endif

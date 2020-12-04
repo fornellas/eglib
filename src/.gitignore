@@ -1,1 +1,3 @@
 bin/
+eglib/drawing/fonts.h
+eglib/drawing/fonts/*

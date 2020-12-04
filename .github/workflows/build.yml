@@ -16,6 +16,8 @@ jobs:
         run: sudo apt-get -y install gcc-arm-none-eabi libnewlib-dev libnewlib-arm-none-eabi
       - name: Install test dependencies
         run: sudo apt-get -y install valgrind
+      - name: Install font_converter dependencies
+        run: sudo apt-get -y install libfreetype-dev fonts-liberation
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:

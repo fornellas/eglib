@@ -1,5 +1,5 @@
-Drawing
-=======
+Drawing Functions
+=================
 
 .. contents::
     :depth: 3

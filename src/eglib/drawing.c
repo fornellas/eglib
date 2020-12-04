@@ -685,3 +685,50 @@ void eglib_DrawBitmap(
       break;
   }
 }
+
+//
+// Font
+//
+
+void eglib_SetFont(eglib_t *eglib, struct font_t *font) {
+  eglib->drawing.font = font;
+}
+
+struct glyph_t *eglib_GetGlyph(eglib_t *eglib, wchar_t unicode_char) {
+  struct font_t *font;
+
+  font = eglib->drawing.font;
+
+  if(!(unicode_char >= (wchar_t)font->charcode_start && unicode_char <= (wchar_t)font->charcode_end))
+    return NULL;
+
+  return font->glyphs[unicode_char - font->charcode_start];
+}
+
+void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t unicode_char) {
+  struct glyph_t *glyph;
+
+  glyph = eglib_GetGlyph(eglib, unicode_char);
+  if(glyph == NULL) {
+    uint8_t pixel_size;
+
+    pixel_size = eglib->drawing.font->pixel_size;
+    eglib_DrawFrame(eglib, x, y - pixel_size, pixel_size, pixel_size);
+    eglib_DrawLine(eglib, x, y, x + pixel_size, y - pixel_size);
+    eglib_DrawLine(eglib, x, y - pixel_size, x + pixel_size, y);
+    return;
+  }
+
+  for(coordinate_t v=0 ; v < glyph->height ; v++)
+    for(coordinate_t u=0 ; u < glyph->width ; u++) {
+      bool pixel;
+
+      pixel = get_bit(glyph->data, (v * glyph->width) + u);
+
+      if(pixel)
+        eglib_DrawPixel(
+          eglib,
+          x + glyph->left + u, y - glyph->top + v
+        );
+    }
+}

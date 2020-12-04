@@ -107,7 +107,7 @@ make -C <span class="si">${</span><span class="nv">EGLIB_ROOT</span><span class=
 
 <span class="nv">EGLIB_PATH</span> <span class="o">=</span> ../../../src/
 <span class="nv">INCLUDES</span> <span class="o">+=</span> -I<span class="k">$(</span>EGLIB_PATH<span class="k">)</span>
-<span class="nv">EGLIB_BUILD_DIR</span> <span class="o">=</span> <span class="k">$(</span>abspath <span class="k">$(</span>BUILD_DIR_PREFIX<span class="k">)</span>/eglib<span class="k">)</span>
+<span class="nv">EGLIB_BUILD_DIR</span> <span class="o">=</span> <span class="k">$(</span>abspath ./../bin<span class="k">)</span>
 <span class="nv">EGLIB_LIB</span> <span class="o">=</span> <span class="k">$(</span>EGLIB_BUILD_DIR<span class="k">)</span>/libeglib.a
 <span class="nv">LDLIBS</span> <span class="o">+=</span> -leglib -l<span class="k">$(</span>LIBNAME<span class="k">)</span> -lm
 <span class="nf">$(PROJECT).elf</span><span class="o">:</span> <span class="k">$(</span><span class="nv">EGLIB_LIB</span><span class="k">)</span>
@@ -269,7 +269,7 @@ make -C <span class="si">${</span><span class="nv">EGLIB_ROOT</span><span class=
 <li class="toctree-l1"><a class="reference internal" href="../driver_development/index.html">Driver Development</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="eglib.html">eglib</a></li>
-<li class="toctree-l2"><a class="reference internal" href="drawing.html">Drawing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drawing/index.html">Drawing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="display/index.html">Display</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hal/index.html">HAL</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">libopencm3 integration</a><ul>

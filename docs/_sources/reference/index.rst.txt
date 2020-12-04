@@ -8,7 +8,7 @@ This section contains source code reference for all eglib public API headers.
    :caption: Contents:
 
    eglib.rst
-   drawing.rst
+   drawing/index.rst
    display/index.rst
    hal/index.rst
    libopencm3.rst

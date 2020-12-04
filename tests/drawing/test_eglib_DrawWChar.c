@@ -15,6 +15,6 @@ void draw_test(eglib_t *eglib) {
 
   eglib_SetFont(eglib, &font_LiberationSans_Regular_20px);
   eglib_SetIndexColor(eglib, 0, 255, 255, 255);
-  eglib_DrawGlyph(eglib, x, y, 'g');
-  eglib_DrawGlyph(eglib, x, y * 2, 9999);  // Unsupported by font
+  eglib_DrawWChar(eglib, x, y, 'g');
+  eglib_DrawWChar(eglib, x, y * 2, 9999);  // Unsupported by font
 }

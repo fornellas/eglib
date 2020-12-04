@@ -20,7 +20,7 @@ CFLAGS += \
 
 .PHONY: generate_fonts
 generate_fonts: font_generator
-	./generate_fonts.sh
+	if ! [ -e ../src/eglib/drawing/fonts.h ] ; then ./generate_fonts.sh ; fi
 
 .PHONY: clean
 clean:

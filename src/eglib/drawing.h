@@ -640,12 +640,12 @@ void eglib_DrawBitmap(
 	const struct bitmap_t *bitmap
 );
 
+#include "drawing/fonts.h"
+
 /**
  * Text
  * ====
  */
-
-#include "drawing/fonts.h"
 
 /** A glyph from a :c:type:`font_t`. */
 struct glyph_t {
@@ -679,28 +679,50 @@ struct font_t {
 
 /**
  * Set font to be used by other font functions.
+ *
+ * :See also: :doc:`fonts`
  */
 void eglib_SetFont(eglib_t *eglib, struct font_t *font);
 
 /**
- * Return given unicode character :c:type:`glyph_t`.
+ * Return given unicode character's :c:type:`glyph_t`.
  */
 struct glyph_t *eglib_GetGlyph(eglib_t *eglib, wchar_t unicode_char);
 
 /**
- * Draw given character glyph at ``(x, y)``.
+ * Draw given :c:type:`glyph_t`, similar to :c:func:`eglib_DrawWChar`.
+ */
+void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, struct glyph_t *glyph);
+
+/**
+ * Draw given unicode character glyph at ``(x, y)``.
  *
  * Example:
  *
- * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawGlyph.c
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawWChar.c
  *   :language: C
  *
  * Output:
  *
- * .. image:: ../../../tests/drawing/test_eglib_DrawGlyph.png
+ * .. image:: ../../../tests/drawing/test_eglib_DrawWChar.png
  *   :width: 200
  */
-void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t unicode_char);
+void eglib_DrawWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t unicode_char);
+
+/**
+ * Draw given UTF-8 text starting at ``(x, y)``.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_DrawText.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../../tests/drawing/test_eglib_DrawText.png
+ *   :width: 200
+ */
+void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, char *utf8_text);
 
 
 #endif

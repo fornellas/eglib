@@ -705,10 +705,7 @@ struct glyph_t *eglib_GetGlyph(eglib_t *eglib, wchar_t unicode_char) {
   return font->glyphs[unicode_char - font->charcode_start];
 }
 
-void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t unicode_char) {
-  struct glyph_t *glyph;
-
-  glyph = eglib_GetGlyph(eglib, unicode_char);
+void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, struct glyph_t *glyph) {
   if(glyph == NULL) {
     uint8_t pixel_size;
 
@@ -731,4 +728,41 @@ void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t uni
           x + glyph->left + u, y - glyph->top + v
         );
     }
+}
+
+void eglib_DrawWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t unicode_char) {
+  eglib_DrawGlyph(eglib, x, y, eglib_GetGlyph(eglib, unicode_char));
+}
+
+#define isutf(c) (((c)&0xC0)!=0x80)
+
+static wchar_t utf8_nextchar(char *utf8_text, uint16_t *index) {
+    wchar_t c;
+    int length;
+    static const uint32_t offsets_from_utf8[] = {
+        0x00000000UL, 0x00003080UL, 0x000E2080UL,
+        0x03C82080UL, 0xFA082080UL, 0x82082080UL
+    };
+
+    c = 0;
+    length = 0;
+
+    do {
+        c <<= 6;
+        c += (uint8_t)utf8_text[(*index)++];
+        length++;
+    } while (utf8_text[*index] && !isutf(utf8_text[*index]));
+    c -= offsets_from_utf8[length-1];
+
+    return c;
+}
+
+void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, char *utf8_text) {
+  struct glyph_t *glyph;
+
+  for(uint16_t index=0 ; utf8_text[index] ; ) {
+    glyph = eglib_GetGlyph(eglib, utf8_nextchar(utf8_text, &index));
+    eglib_DrawGlyph(eglib, x, y, glyph);
+    x += glyph->left + glyph->width + glyph->right;
+  }
 }

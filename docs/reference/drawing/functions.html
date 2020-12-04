@@ -48,6 +48,7 @@
 <li><p><a class="reference internal" href="#boxes" id="id8">Boxes</a></p></li>
 <li><p><a class="reference internal" href="#round-things" id="id9">Round things</a></p></li>
 <li><p><a class="reference internal" href="#bitmaps" id="id10">Bitmaps</a></p></li>
+<li><p><a class="reference internal" href="#text" id="id11">Text</a></p></li>
 </ul>
 </li>
 </ul>
@@ -861,7 +862,9 @@ void <code class="sig-name descname">eglib_DrawBitmap</code><span class="sig-par
 <a class="reference internal image-reference" href="../../_images/test_eglib_DrawBitmap.png"><img alt="../../_images/test_eglib_DrawBitmap.png" src="../../_images/test_eglib_DrawBitmap.png" style="width: 200px;" /></a>
 </dd></dl>
 
-<p>warning: unhandled cursor CursorKind.INCLUSION_DIRECTIVE drawing/fonts.h</p>
+</div>
+<div class="section" id="text">
+<h2><a class="toc-backref" href="#id11">Text</a><a class="headerlink" href="#text" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="c.glyph_t">
 struct <code class="sig-name descname">glyph_t</code><a class="headerlink" href="#c.glyph_t" title="Permalink to this definition">¶</a></dt>
@@ -938,18 +941,29 @@ struct <a class="reference internal" href="#c.glyph_t" title="glyph_t">glyph_t</
 <dt id="c.eglib_SetFont">
 void <code class="sig-name descname">eglib_SetFont</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, struct <a class="reference internal" href="#c.font_t" title="font_t">font_t</a> *<em> font</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_SetFont" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set font to be used by other font functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="fonts.html"><span class="doc">Fonts</span></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="c.eglib_GetGlyph">
 struct <a class="reference internal" href="#c.glyph_t" title="glyph_t">glyph_t</a> * <code class="sig-name descname">eglib_GetGlyph</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, wchar_t<em> unicode_char</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_GetGlyph" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return given unicode character <a class="reference internal" href="#c.glyph_t" title="glyph_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">glyph_t</span></code></a>.</p>
+<dd><p>Return given unicode character’s <a class="reference internal" href="#c.glyph_t" title="glyph_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">glyph_t</span></code></a>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="c.eglib_DrawGlyph">
-void <code class="sig-name descname">eglib_DrawGlyph</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, wchar_t<em> unicode_char</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawGlyph" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draw given character glyph at <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>.</p>
+void <code class="sig-name descname">eglib_DrawGlyph</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, struct <a class="reference internal" href="#c.glyph_t" title="glyph_t">glyph_t</a> *<em> glyph</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawGlyph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw given <a class="reference internal" href="#c.glyph_t" title="glyph_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">glyph_t</span></code></a>, similar to <a class="reference internal" href="#c.eglib_DrawWChar" title="eglib_DrawWChar"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_DrawWChar()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.eglib_DrawWChar">
+void <code class="sig-name descname">eglib_DrawWChar</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, wchar_t<em> unicode_char</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawWChar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw given unicode character glyph at <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>.</p>
 <p>Example:</p>
 <div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;eglib.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;eglib/display.h&gt;</span><span class="cp"></span>
@@ -974,7 +988,36 @@ void <code class="sig-name descname">eglib_DrawGlyph</code><span class="sig-pare
 </pre></div>
 </div>
 <p>Output:</p>
-<a class="reference internal image-reference" href="../../_images/test_eglib_DrawGlyph.png"><img alt="../../_images/test_eglib_DrawGlyph.png" src="../../_images/test_eglib_DrawGlyph.png" style="width: 200px;" /></a>
+<a class="reference internal image-reference" href="../../_images/test_eglib_DrawWChar.png"><img alt="../../_images/test_eglib_DrawWChar.png" src="../../_images/test_eglib_DrawWChar.png" style="width: 200px;" /></a>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.eglib_DrawText">
+void <code class="sig-name descname">eglib_DrawText</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, char *<em> utf8_text</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw given UTF-8 text starting at <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;eglib.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;eglib/display.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;draw_test.h&quot;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">draw_test</span><span class="p">(</span><span class="n">eglib_t</span> <span class="o">*</span><span class="n">eglib</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">coordinate_t</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">50</span> <span class="o">-</span> <span class="mi">20</span><span class="p">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mi">50</span> <span class="o">+</span> <span class="mi">14</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">);</span>
+  <span class="n">eglib_DrawLine</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+  <span class="n">eglib_DrawLine</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">99</span><span class="p">);</span>
+
+  <span class="n">eglib_SetFont</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">font_LiberationSans_Regular_20px</span><span class="p">);</span>
+  <span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
+  <span class="n">eglib_DrawText</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&quot;Olá!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<a class="reference internal image-reference" href="../../_images/test_eglib_DrawText.png"><img alt="../../_images/test_eglib_DrawText.png" src="../../_images/test_eglib_DrawText.png" style="width: 200px;" /></a>
 </dd></dl>
 
 </div>
@@ -1054,6 +1097,7 @@ void <code class="sig-name descname">eglib_DrawGlyph</code><span class="sig-pare
 <li class="toctree-l4"><a class="reference internal" href="#boxes">Boxes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#round-things">Round things</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#bitmaps">Bitmaps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#text">Text</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="fonts.html">Fonts</a></li>

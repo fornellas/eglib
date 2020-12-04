@@ -107,7 +107,7 @@ make -C <span class="si">${</span><span class="nv">EGLIB_ROOT</span><span class=
 
 <span class="nv">EGLIB_PATH</span> <span class="o">=</span> ../../../src/
 <span class="nv">INCLUDES</span> <span class="o">+=</span> -I<span class="k">$(</span>EGLIB_PATH<span class="k">)</span>
-<span class="nv">EGLIB_BUILD_DIR</span> <span class="o">=</span> <span class="k">$(</span>abspath ./../bin<span class="k">)</span>
+<span class="nv">EGLIB_BUILD_DIR</span> <span class="o">=</span> <span class="k">$(</span>abspath <span class="k">$(</span>BUILD_DIR_PREFIX<span class="k">)</span>/eglib<span class="k">)</span>
 <span class="nv">EGLIB_LIB</span> <span class="o">=</span> <span class="k">$(</span>EGLIB_BUILD_DIR<span class="k">)</span>/libeglib.a
 <span class="nv">LDLIBS</span> <span class="o">+=</span> -leglib -l<span class="k">$(</span>LIBNAME<span class="k">)</span> -lm
 <span class="nf">$(PROJECT).elf</span><span class="o">:</span> <span class="k">$(</span><span class="nv">EGLIB_LIB</span><span class="k">)</span>

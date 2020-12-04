@@ -1,4 +1,3 @@
-MAKEFILES += src/Makefile
 MAKEFILES += $(wildcard tests/*/Makefile)
 MAKEFILES += $(wildcard examples/libopencm3/*_*/Makefile)
 

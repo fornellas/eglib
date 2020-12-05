@@ -52,9 +52,7 @@ cat << EOF > "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
  */
 EOF
 
-ls -1 "$LIBERATION_PATH"/*.ttf | sort
-
-for FONT_PATH in $(ls -1 "$LIBERATION_PATH"/*.ttf | sort)
+for FONT_PATH in $(ls -1 "$LIBERATION_PATH"/*.ttf | LANG=C sort)
 do
 	NAME="$(basename "${FONT_PATH%*.ttf}" | tr "-" "_" )"
 	FONT_TITLE="$(echo ${NAME#Liberation*} | tr _ \ )"

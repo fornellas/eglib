@@ -15,6 +15,8 @@ mkdir -p "$EGLIB_ROOT"/eglib/drawing/fonts/
 ## Liberation fonts
 ##
 
+echo "Liberation"
+
 FONT_HEADERS="$FONT_HEADERS fonts/liberation.h"
 
 cat << EOF > "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
@@ -35,11 +37,12 @@ cat << EOF > "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
 
 EOF
 
-for FONT_PATH in $(ls -1 "$LIBERATION_PATH"/*.ttf)
+for FONT_PATH in $(ls -1 "$LIBERATION_PATH"/*.ttf | sort)
 do
 	NAME="$(basename "${FONT_PATH%*.ttf}" | tr "-" "_" )"
-
 	FONT_TITLE="$(echo ${NAME#Liberation*} | tr _ \ )"
+	echo "  $FONT_TITLE"
+
 	cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
 /**
  * $FONT_TITLE
@@ -66,6 +69,7 @@ echo "#endif" >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
 ## Header
 ##
 
+echo "eglib/drawing/fonts.h"
 
 cat << EOF > "$EGLIB_ROOT"/eglib/drawing/fonts.h-
 #ifndef EGLIB_DRAWING_FONTS_H

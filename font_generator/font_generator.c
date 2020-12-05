@@ -6,6 +6,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#define FONT_MAX_UNICODE_BLOCKS 5
+
 void exit_error(FT_Error error, const char *msg);
 
 void exit_error(FT_Error error, const char *msg) {
@@ -22,47 +24,26 @@ void exit_error(FT_Error error, const char *msg) {
 	exit(error);
 }
 
-int main(int argc, char *argv[]) {
-	FT_Library  library;
+void generate_font(
+	char *font_name,
+	FT_Face face,
+	char *unicode_block_name,
+	FT_ULong charcode_start,
+	FT_ULong charcode_end
+);
+
+void generate_font(
+	char *font_name,
+	FT_Face face,
+	char *unicode_block_name,
+	FT_ULong charcode_start,
+	FT_ULong charcode_end
+) {
 	FT_Error error;
-	FT_Face face;
-	FT_Long face_index;
-	char *filepathname;
-	uint8_t pixel_size;
-	FT_ULong charcode_start, charcode_end;
-	char *font_name;
 
-	if(argc != 7) {
-		fprintf(stderr, "Usage: %s [font path] [font name] [face index] [pixel size] [charcode start] [charcode end]\n", argv[0]);
-		exit(1);
-	}
 
-	filepathname = argv[1];
-	font_name = argv[2];
-	face_index = atol(argv[3]);
-	pixel_size = atol(argv[4]);
-	charcode_start = atol(argv[5]);
-	charcode_end = atol(argv[6]);
-
-	error = FT_Init_FreeType(&library);
-	if(error)
-		exit_error(error, "Failed to initialize the Freetype library");
-
-	error = FT_New_Face(library, filepathname, face_index, &face);
-	if(error)
-		exit_error(error, "Failed to open font");
-
-	error = FT_Set_Pixel_Sizes(face, 0, pixel_size);
-	if(error)
-		exit_error(error, "Failed to set pixel size");
-
-	printf("#include \"../../drawing.h\"\n");
 	printf("\n");
-	printf("struct font_t font_%s = {\n", font_name);
-	printf("  .pixel_size = %d,\n", pixel_size);
-	printf("  .ascent = %ld,\n", face->size->metrics.ascender >> 6);
-	printf("  .descent = %ld,\n", face->size->metrics.descender >> 6);
-	printf("  .line_space = %ld,\n", face->size->metrics.height >> 6);
+	printf("struct glyph_unicode_block_t unicode_block_%s_%s = {\n", font_name, unicode_block_name);
 	printf("  .charcode_start = %ld,\n", charcode_start);
 	printf("  .charcode_end = %ld,\n", charcode_end);
 	printf("  .glyphs = (struct glyph_t *[]){\n");
@@ -160,5 +141,85 @@ int main(int argc, char *argv[]) {
 	}
 
 	printf("  },\n");
+	printf("};\n");
+}
+
+void exit_usage_error(char *argv[]);
+
+void exit_usage_error(char *argv[]) {
+	fprintf(
+		stderr,
+		"Usage: %s [font path] [font name] [face index] [pixel size] [[unicode block] [charcode start] [charcode end]]+\n",
+	argv[0]);
+	exit(1);
+}
+
+int main(int argc, char *argv[]) {
+	char *font_path;
+	char *font_name;
+	FT_Long face_index;
+	uint8_t pixel_size;
+	int unicode_blocks;
+	char *unicode_block_name[FONT_MAX_UNICODE_BLOCKS];
+	FT_ULong charcode_start[FONT_MAX_UNICODE_BLOCKS];
+	FT_ULong charcode_end[FONT_MAX_UNICODE_BLOCKS];
+	FT_Library  library;
+	FT_Error error;
+	FT_Face face;
+
+	if(argc < 8)
+		exit_usage_error(argv);
+
+	font_path = argv[1];
+	font_name = argv[2];
+	face_index = atol(argv[3]);
+	pixel_size = atol(argv[4]);
+
+	unicode_blocks=0;
+	for(int i=5 ; i < argc ; i+= 3, unicode_blocks++) {
+		if(i + 3 > argc)
+			exit_usage_error(argv);
+		if(unicode_blocks >= FONT_MAX_UNICODE_BLOCKS) {
+			fprintf(stderr, "Not enough arguments.\n");
+			exit_usage_error(argv);
+		}
+		unicode_block_name[unicode_blocks] = argv[i];
+		charcode_start[unicode_blocks] = atol(argv[i+1]);
+		charcode_end[unicode_blocks] = atol(argv[i+2]);
+	}
+
+	error = FT_Init_FreeType(&library);
+	if(error)
+		exit_error(error, "Failed to initialize the Freetype library");
+
+	error = FT_New_Face(library, font_path, face_index, &face);
+	if(error)
+		exit_error(error, "Failed to open font");
+
+	error = FT_Set_Pixel_Sizes(face, 0, pixel_size);
+	if(error)
+		exit_error(error, "Failed to set pixel size");
+
+	printf("#include \"../../drawing.h\"\n");
+
+	for(int i=0 ; i < unicode_blocks ; i++)
+		generate_font(
+			font_name,
+			face,
+			unicode_block_name[i],
+			charcode_start[i],
+			charcode_end[i]
+		);
+
+	printf("\n");
+	printf("struct font_t font_%s = {\n", font_name);
+	printf("  .pixel_size = %d,\n", pixel_size);
+	printf("  .ascent = %ld,\n", face->size->metrics.ascender >> 6);
+	printf("  .descent = %ld,\n", face->size->metrics.descender >> 6);
+	printf("  .line_space = %ld,\n", face->size->metrics.height >> 6);
+	printf("  .unicode_blocks = (struct glyph_unicode_block_t *[FONT_MAX_UNICODE_BLOCKS]){\n");
+	printf("    &unicode_block_%s_%s,\n", font_name, unicode_block_name[0]);
+	printf("  },\n");
+	printf("  .unicode_blocks_count = 1,\n");
 	printf("};\n");
 }

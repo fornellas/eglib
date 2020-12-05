@@ -869,7 +869,12 @@ void <code class="sig-name descname">eglib_DrawBitmap</code><span class="sig-par
 <dl class="type">
 <dt id="c.glyph_t">
 struct <code class="sig-name descname">glyph_t</code><a class="headerlink" href="#c.glyph_t" title="Permalink to this definition">¶</a></dt>
-<dd><p>A glyph from a <a class="reference internal" href="#c.font_t" title="font_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">font_t</span></code></a>.</p>
+<dd><p>A glyph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><code class="xref c c-type docutils literal notranslate"><span class="pre">glyph_block_t</span></code>.</p>
+</dd>
+</dl>
 <dl class="member">
 <dt id="c.glyph_t.width">
 uint8_t <code class="sig-name descname">width</code><a class="headerlink" href="#c.glyph_t.width" title="Permalink to this definition">¶</a></dt>
@@ -909,6 +914,35 @@ uint8_t * <code class="sig-name descname">data</code><a class="headerlink" href=
 </dd></dl>
 
 <dl class="type">
+<dt id="c.glyph_unicode_block_t">
+struct <code class="sig-name descname">glyph_unicode_block_t</code><a class="headerlink" href="#c.glyph_unicode_block_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Glyphs for a <a class="reference external" href="https://en.wikipedia.org/wiki/Unicode_block">Unicode block</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#c.font_t" title="font_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">font_t</span></code></a>.</p>
+</dd>
+</dl>
+<dl class="member">
+<dt id="c.glyph_unicode_block_t.charcode_start">
+uint32_t <code class="sig-name descname">charcode_start</code><a class="headerlink" href="#c.glyph_unicode_block_t.charcode_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>First unicode character code this font supports.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.glyph_unicode_block_t.charcode_end">
+uint32_t <code class="sig-name descname">charcode_end</code><a class="headerlink" href="#c.glyph_unicode_block_t.charcode_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Last unicode character code this font supports.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.glyph_unicode_block_t.glyphs">
+struct <a class="reference internal" href="#c.glyph_t" title="glyph_t">glyph_t</a> ** <code class="sig-name descname">glyphs</code><a class="headerlink" href="#c.glyph_unicode_block_t.glyphs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array of glyphs for each supported unicode character.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="type">
 <dt id="c.font_t">
 struct <code class="sig-name descname">font_t</code><a class="headerlink" href="#c.font_t" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Font definition.</p>
@@ -937,21 +971,15 @@ uint16_t <code class="sig-name descname">line_space</code><a class="headerlink" 
 </dd></dl>
 
 <dl class="member">
-<dt id="c.font_t.charcode_start">
-uint32_t <code class="sig-name descname">charcode_start</code><a class="headerlink" href="#c.font_t.charcode_start" title="Permalink to this definition">¶</a></dt>
-<dd><p>First unicode character code this font supports.</p>
+<dt id="c.font_t.unicode_blocks">
+struct <a class="reference internal" href="#c.glyph_unicode_block_t" title="glyph_unicode_block_t">glyph_unicode_block_t</a> *[5] <code class="sig-name descname">unicode_blocks</code><a class="headerlink" href="#c.font_t.unicode_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array of glyph unicode blocks.</p>
 </dd></dl>
 
 <dl class="member">
-<dt id="c.font_t.charcode_end">
-uint32_t <code class="sig-name descname">charcode_end</code><a class="headerlink" href="#c.font_t.charcode_end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Last unicode character code this font supports.</p>
-</dd></dl>
-
-<dl class="member">
-<dt id="c.font_t.glyphs">
-struct <a class="reference internal" href="#c.glyph_t" title="glyph_t">glyph_t</a> ** <code class="sig-name descname">glyphs</code><a class="headerlink" href="#c.font_t.glyphs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Array of glyphs for each supported unicode character.</p>
+<dt id="c.font_t.unicode_blocks_count">
+uint8_t <code class="sig-name descname">unicode_blocks_count</code><a class="headerlink" href="#c.font_t.unicode_blocks_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of <code class="docutils literal notranslate"><span class="pre">unicode_blocks</span></code>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -962,7 +990,25 @@ void <code class="sig-name descname">eglib_SetFont</code><span class="sig-paren"
 <dd><p>Set font to be used by other font functions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="fonts.html"><span class="doc">Fonts</span></a>.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><a class="reference internal" href="#c.eglib_AddUnicodeBlockToFont" title="eglib_AddUnicodeBlockToFont"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_AddUnicodeBlockToFont()</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.eglib_AddUnicodeBlockToFont">
+_Bool <code class="sig-name descname">eglib_AddUnicodeBlockToFont</code><span class="sig-paren">(</span>struct <a class="reference internal" href="#c.font_t" title="font_t">font_t</a> *<em> font</em>, struct <a class="reference internal" href="#c.glyph_unicode_block_t" title="glyph_unicode_block_t">glyph_unicode_block_t</a> *<em> unicode_block</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_AddUnicodeBlockToFont" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add given unicode block to font.</p>
+<p>Returns <cite>true</cite> in case of error, <cite>false</cite> on success.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
 <dd class="field-odd"><p><a class="reference internal" href="fonts.html"><span class="doc">Fonts</span></a></p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><a class="reference internal" href="#c.eglib_SetFont" title="eglib_SetFont"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_SetFont()</span></code></a>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1030,6 +1076,10 @@ void <code class="sig-name descname">eglib_DrawText</code><span class="sig-paren
   <span class="n">eglib_DrawLine</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">99</span><span class="p">);</span>
 
   <span class="n">eglib_SetFont</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">font_LiberationSans_Regular_20px</span><span class="p">);</span>
+  <span class="n">eglib_AddUnicodeBlockToFont</span><span class="p">(</span>
+    <span class="o">&amp;</span><span class="n">font_LiberationSans_Regular_20px</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">unicode_block_LiberationSans_Regular_20px_Latin1Supplement</span>
+  <span class="p">);</span>
   <span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
   <span class="n">eglib_DrawText</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&quot;Olá!&quot;</span><span class="p">);</span>
 <span class="p">}</span>
@@ -1040,8 +1090,8 @@ void <code class="sig-name descname">eglib_DrawText</code><span class="sig-paren
 </dd></dl>
 
 <dl class="function">
-<dt id="c.eglib_GetTextWidt">
-<a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a> <code class="sig-name descname">eglib_GetTextWidt</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, char *<em> utf8_text</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_GetTextWidt" title="Permalink to this definition">¶</a></dt>
+<dt id="c.eglib_GetTextWidth">
+<a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a> <code class="sig-name descname">eglib_GetTextWidth</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, char *<em> utf8_text</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_GetTextWidth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the width in pixels of the given UTF-8 text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">See also</dt>

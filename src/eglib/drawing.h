@@ -644,7 +644,11 @@ void eglib_DrawBitmap(
  * ====
  */
 
-/** A glyph from a :c:type:`font_t`. */
+/**
+ * A glyph.
+ *
+ * :See also: :c:type:`glyph_block_t`.
+ */
 struct glyph_t {
 	/** Bitmap width. */
 	uint8_t width : 7;
@@ -661,6 +665,22 @@ struct glyph_t {
 };
 
 /**
+ * Glyphs for a `Unicode block <https://en.wikipedia.org/wiki/Unicode_block>`_.
+ *
+ * :See also: :c:type:`font_t`.
+ */
+struct glyph_unicode_block_t {
+	/** First unicode character code this font supports. */
+	uint32_t charcode_start;
+	/** Last unicode character code this font supports. */
+	uint32_t charcode_end;
+	/** Array of glyphs for each supported unicode character. */
+	struct glyph_t **glyphs;
+};
+
+#define FONT_MAX_UNICODE_BLOCKS 5
+
+/**
  * A Font definition.
  */
 struct font_t {
@@ -672,20 +692,32 @@ struct font_t {
 	int16_t descent;
 	/** The distance that must be placed between two lines of text. */
 	uint16_t line_space;
-	/** First unicode character code this font supports. */
-	uint32_t charcode_start;
-	/** Last unicode character code this font supports. */
-	uint32_t charcode_end;
-	/** Array of glyphs for each supported unicode character. */
-	struct glyph_t **glyphs;
+	/** Array of glyph unicode blocks. */
+	struct glyph_unicode_block_t *unicode_blocks[FONT_MAX_UNICODE_BLOCKS];
+	/** Number of ``unicode_blocks``. */
+	uint8_t unicode_blocks_count;
 };
 
 /**
  * Set font to be used by other font functions.
  *
- * :See also: :doc:`fonts`
+ * :See also: :doc:`fonts`.
+ * :See also: :c:func:`eglib_AddUnicodeBlockToFont`.
  */
 void eglib_SetFont(eglib_t *eglib, struct font_t *font);
+
+/**
+ * Add given unicode block to font.
+ *
+ * Returns `true` in case of error, `false` on success.
+ *
+ * :See also: :doc:`fonts`
+ * :See also: :c:func:`eglib_SetFont`.
+ */
+bool eglib_AddUnicodeBlockToFont(
+	struct font_t *font,
+	struct glyph_unicode_block_t *unicode_block
+);
 
 /**
  * Return given unicode character's :c:type:`glyph_t`.
@@ -732,6 +764,6 @@ void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, char *utf8_t
  *
  * :See also: :c:func:`eglib_SetFont`.
  */
-coordinate_t eglib_GetTextWidt(eglib_t *eglib, char *utf8_text);
+coordinate_t eglib_GetTextWidth(eglib_t *eglib, char *utf8_text);
 
 #endif

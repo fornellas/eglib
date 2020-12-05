@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-#define ROWS 7
+#define ROWS 3
 #define CHARS_PER_ROW 32
 #define START_CHAR 32
 
@@ -19,11 +19,7 @@ int main(int argc, char *argv[]) {
 	char *text[ROWS] = {
 		" !\"#$%&'()*+,-./0123456789:;<=>?",
 		"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
-		"`abcdefghijklmnopqrstuvwxyz{|}~",
-		"",
-		" ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿",
-		"ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß",
-		"àáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ",
+		"`abcdefghijklmnopqrstuvwxyz{|}~",
 	};
 	coordinate_t width, new_width;
 	struct font_t *font;
@@ -37,7 +33,7 @@ int main(int argc, char *argv[]) {
 	width = 0;
 
 	for(int row=0 ; row < ROWS ; row++) {
-		new_width = eglib_GetTextWidt(&eglib_probe, text[row]);
+		new_width = eglib_GetTextWidth(&eglib_probe, text[row]);
 		if(new_width > width)
 			width = new_width;
 	}

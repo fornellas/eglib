@@ -18,7 +18,7 @@ $(BUILD_DIR)/test_%.c: main.c.template
 	cp main.c.template $@
 
 $(BUILD_DIR)/test_%.o: $(BUILD_DIR)/test_%.c
-	$(CC) $(CFLAGS) -DFONT=$(@:$(BUILD_DIR)/test_%.o=font_%) $(INCLUDES) -o $@ -c $<
+	$(CC) $(CFLAGS) -DFONT=$(@:$(BUILD_DIR)/test_%.o=%) $(INCLUDES) -o $@ -c $<
 
 $(BUILD_DIR)/test_%: $(BUILD_DIR)/test_%.o $(EGLIB_LIB)
 	mkdir -p $(dir $@)

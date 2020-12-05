@@ -680,15 +680,33 @@ void eglib_SetFont(eglib_t *eglib, struct font_t *font) {
   eglib->drawing.font = font;
 }
 
+bool eglib_AddUnicodeBlockToFont(
+  struct font_t *font,
+  struct glyph_unicode_block_t *unicode_block
+) {
+  if(font->unicode_blocks_count == FONT_MAX_UNICODE_BLOCKS)
+    return true;
+
+  font->unicode_blocks[font->unicode_blocks_count] = unicode_block;
+  font->unicode_blocks_count++;
+
+  return false;
+}
+
 struct glyph_t *eglib_GetGlyph(eglib_t *eglib, wchar_t unicode_char) {
   struct font_t *font;
 
   font = eglib->drawing.font;
 
-  if(!(unicode_char >= (wchar_t)font->charcode_start && unicode_char <= (wchar_t)font->charcode_end))
-    return NULL;
-
-  return font->glyphs[unicode_char - font->charcode_start];
+  for(int i = 0 ; i < font->unicode_blocks_count ; i++) {
+    if(
+      unicode_char >= (wchar_t)font->unicode_blocks[i]->charcode_start
+      && unicode_char <= (wchar_t)font->unicode_blocks[i]->charcode_end
+    ) {
+      return font->unicode_blocks[i]->glyphs[unicode_char - font->unicode_blocks[i]->charcode_start];
+    }
+  }
+  return NULL;
 }
 
 void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, struct glyph_t *glyph) {
@@ -749,19 +767,26 @@ void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, char *utf8_t
   for(uint16_t index=0 ; utf8_text[index] ; ) {
     glyph = eglib_GetGlyph(eglib, utf8_nextchar(utf8_text, &index));
     eglib_DrawGlyph(eglib, x, y, glyph);
-    x += glyph->advance;
+    if(glyph == NULL)
+      x += eglib->drawing.font->pixel_size;
+    else
+      x += glyph->advance;
   }
 }
 
-coordinate_t eglib_GetTextWidt(eglib_t *eglib, char *utf8_text) {
-  struct glyph_t *glyph;
+coordinate_t eglib_GetTextWidth(eglib_t *eglib, char *utf8_text) {
   coordinate_t width;
 
   width = 0;
 
   for(uint16_t index=0 ; utf8_text[index] ; ) {
+    struct glyph_t *glyph;
+
     glyph = eglib_GetGlyph(eglib, utf8_nextchar(utf8_text, &index));
-    width += glyph->advance;
+    if(glyph == NULL)
+      width += eglib->drawing.font->pixel_size;
+    else
+      width += glyph->advance;
   }
 
   return width;

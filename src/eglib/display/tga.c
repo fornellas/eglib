@@ -58,7 +58,9 @@ static void draw_pixel_color(
 	if(x >= display_config->width || y >= display_config->height || x < 0 || y < 0)
 		return;
 
-	p = (display_config->tga_data) + (display_config->width-y-1)*display_config->height*3 + x*3;
+	y = display_config->height -1 - y;
+
+	p = display_config->tga_data + (y * display_config->width * 3) + (x * 3);
 	*p++ = color.b;
 	*p++ = color.g;
 	*p++ = color.r;
@@ -162,4 +164,12 @@ void tga_Save(eglib_t *eglib, char *path) {
 		fwrite("TRUEVISION-XFILE.", 18, 1, fp);
 		fclose(fp);
 	}
+}
+
+void tga_Free(eglib_t *eglib) {
+	tga_config_t *display_config;
+
+	display_config = eglib_GetDisplayConfig(eglib);
+
+	free(display_config->tga_data);
 }

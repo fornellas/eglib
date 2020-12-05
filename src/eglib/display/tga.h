@@ -57,4 +57,7 @@ extern const display_t tga;
  */
 void tga_Save(eglib_t *eglib, char *path);
 
+/** Free memory previously allocated by :c:func:`eglib_Init` for :c:data:`tga`.. */
+void tga_Free(eglib_t *eglib);
+
 #endif

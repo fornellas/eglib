@@ -60,6 +60,8 @@ int main(int argc, char *argv[]) {
 	printf("\n");
 	printf("struct font_t font_%s = {\n", font_name);
 	printf("  .pixel_size = %d,\n", pixel_size);
+	printf("  .ascent = %ld,\n", face->size->metrics.ascender >> 6);
+	printf("  .descent = %ld,\n", face->size->metrics.descender >> 6);
 	printf("  .line_space = %ld,\n", face->size->metrics.height >> 6);
 	printf("  .charcode_start = %ld,\n", charcode_start);
 	printf("  .charcode_end = %ld,\n", charcode_end);

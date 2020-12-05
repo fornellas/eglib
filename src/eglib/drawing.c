@@ -46,32 +46,6 @@ bool eglib_IsPixelClipped(
 }
 
 //
-// Whole screen
-//
-
-void eglib_ClearScreen(eglib_t *eglib) {
-  color_t previous_color_index_0;
-  struct _clip_t previous_clip;
-
-  previous_color_index_0 = eglib->drawing.color_index[0];
-  previous_clip = eglib->drawing.clip;
-
-  eglib_SetNoClip(eglib);
-
-  eglib_SetIndexColor(eglib, 0, 0, 0, 0);
-
-  eglib_DrawBox(
-    eglib,
-    0, 0,
-    eglib_GetWidth(eglib) - 1,
-    eglib_GetHeight(eglib) - 1
-  );
-
-  eglib->drawing.color_index[0] = previous_color_index_0;
-  eglib->drawing.clip = previous_clip;
-}
-
-//
 // Color
 //
 
@@ -501,6 +475,18 @@ void eglib_DrawRoundBox(
   eglib_DrawFilledArc(eglib, x + width - radius, y + height - radius, radius, 90, 180);
 }
 
+void eglib_ClearScreen(eglib_t *eglib) {
+  struct _clip_t previous_clip;
+
+  previous_clip = eglib->drawing.clip;
+
+  eglib_SetNoClip(eglib);
+
+  eglib_DrawBox(eglib, 0, 0, eglib_GetWidth(eglib), eglib_GetHeight(eglib));
+
+  eglib->drawing.clip = previous_clip;
+}
+
 //
 // Arc
 //
@@ -765,4 +751,18 @@ void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, char *utf8_t
     eglib_DrawGlyph(eglib, x, y, glyph);
     x += glyph->advance;
   }
+}
+
+coordinate_t eglib_GetTextWidt(eglib_t *eglib, char *utf8_text) {
+  struct glyph_t *glyph;
+  coordinate_t width;
+
+  width = 0;
+
+  for(uint16_t index=0 ; utf8_text[index] ; ) {
+    glyph = eglib_GetGlyph(eglib, utf8_nextchar(utf8_text, &index));
+    width += glyph->advance;
+  }
+
+  return width;
 }

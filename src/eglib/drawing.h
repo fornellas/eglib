@@ -55,26 +55,6 @@ bool eglib_IsPixelClipped(
 );
 
 /**
- * Whole Screen
- * ============
- */
-
-/**
- * Clear screen, all pixels black, just like after :c:func:`eglib_Init`.
- *
- * Example:
- *
- * .. literalinclude:: ../../../tests/drawing/test_eglib_ClearScreen.c
- *   :language: C
- *
- * Output:
- *
- * .. image:: ../../../tests/drawing/test_eglib_ClearScreen.png
- *   :width: 200
- */
-void eglib_ClearScreen(eglib_t *eglib);
-
-/**
  * Color
  * =====
  *
@@ -414,6 +394,23 @@ void eglib_DrawRoundBox(
 );
 
 /**
+ * Set all pixels to the color from index 0.
+ *
+ * Example:
+ *
+ * .. literalinclude:: ../../../tests/drawing/test_eglib_ClearScreen.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: ../../../tests/drawing/test_eglib_ClearScreen.png
+ *   :width: 200
+ *
+ * :See also: :c:func:`eglib_SetIndexColor`.
+ */
+void eglib_ClearScreen(eglib_t *eglib);
+
+/**
  * Round things
  * ============
  */
@@ -658,7 +655,7 @@ struct glyph_t {
 	/** Distance to increment the pen position after rendering this glyph. */
 	uint8_t advance : 7;
 	/** Distance from baseline to glyph's highest pixel. */
-	int8_t top : 7;
+	int8_t top;
 	/** Bitmap data. */
 	uint8_t *data;
 };
@@ -669,6 +666,10 @@ struct glyph_t {
 struct font_t {
 	/** Font pixel size. */
 	uint8_t pixel_size;
+	/** The distance from the baseline to the highest or upper grid coordinate used to place an outline point. */
+	int16_t ascent;
+	/** The distance from the baseline to the lowest grid coordinate used to place an outline point. */
+	int16_t descent;
 	/** The distance that must be placed between two lines of text. */
 	uint16_t line_space;
 	/** First unicode character code this font supports. */
@@ -726,5 +727,11 @@ void eglib_DrawWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t uni
  */
 void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, char *utf8_text);
 
+/**
+ * Return the width in pixels of the given UTF-8 text.
+ *
+ * :See also: :c:func:`eglib_SetFont`.
+ */
+coordinate_t eglib_GetTextWidt(eglib_t *eglib, char *utf8_text);
 
 #endif

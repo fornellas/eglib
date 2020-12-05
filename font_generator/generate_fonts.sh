@@ -56,10 +56,15 @@ EOF
 		NAME_SIZE="$NAME"_"${PIXEL_SIZE}px"
 		./font_generator "$FONT_PATH" "$NAME_SIZE" 0 "$PIXEL_SIZE" 32 255 > "$EGLIB_ROOT"/eglib/drawing/fonts/font_"$NAME_SIZE".c
 		cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
-/** $FONT_TITLE */
+/**
+ * $FONT_TITLE
+ *
+ * .. image:: ../../../tests/fonts/test_$NAME_SIZE.png
+ */
 extern struct font_t font_$NAME_SIZE;
 
 EOF
+		touch ../tests/fonts/test_$NAME_SIZE.png
 	done
 done
 

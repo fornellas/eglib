@@ -40,15 +40,14 @@
 <li><p><a class="reference internal" href="#drawing-functions" id="id1">Drawing Functions</a></p>
 <ul>
 <li><p><a class="reference internal" href="#clipping" id="id2">Clipping</a></p></li>
-<li><p><a class="reference internal" href="#whole-screen" id="id3">Whole Screen</a></p></li>
-<li><p><a class="reference internal" href="#color" id="id4">Color</a></p></li>
-<li><p><a class="reference internal" href="#pixel" id="id5">Pixel</a></p></li>
-<li><p><a class="reference internal" href="#lines" id="id6">Lines</a></p></li>
-<li><p><a class="reference internal" href="#frames" id="id7">Frames</a></p></li>
-<li><p><a class="reference internal" href="#boxes" id="id8">Boxes</a></p></li>
-<li><p><a class="reference internal" href="#round-things" id="id9">Round things</a></p></li>
-<li><p><a class="reference internal" href="#bitmaps" id="id10">Bitmaps</a></p></li>
-<li><p><a class="reference internal" href="#text" id="id11">Text</a></p></li>
+<li><p><a class="reference internal" href="#color" id="id3">Color</a></p></li>
+<li><p><a class="reference internal" href="#pixel" id="id4">Pixel</a></p></li>
+<li><p><a class="reference internal" href="#lines" id="id5">Lines</a></p></li>
+<li><p><a class="reference internal" href="#frames" id="id6">Frames</a></p></li>
+<li><p><a class="reference internal" href="#boxes" id="id7">Boxes</a></p></li>
+<li><p><a class="reference internal" href="#round-things" id="id8">Round things</a></p></li>
+<li><p><a class="reference internal" href="#bitmaps" id="id9">Bitmaps</a></p></li>
+<li><p><a class="reference internal" href="#text" id="id10">Text</a></p></li>
 </ul>
 </li>
 </ul>
@@ -107,32 +106,8 @@ _Bool <code class="sig-name descname">eglib_IsPixelClipped</code><span class="si
 </dd></dl>
 
 </div>
-<div class="section" id="whole-screen">
-<h2><a class="toc-backref" href="#id3">Whole Screen</a><a class="headerlink" href="#whole-screen" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="c.eglib_ClearScreen">
-void <code class="sig-name descname">eglib_ClearScreen</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_ClearScreen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear screen, all pixels black, just like after <a class="reference internal" href="../eglib.html#c.eglib_Init" title="eglib_Init"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_Init()</span></code></a>.</p>
-<p>Example:</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;eglib.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;eglib/display.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;draw_test.h&quot;</span><span class="cp"></span>
-
-<span class="kt">void</span> <span class="nf">draw_test</span><span class="p">(</span><span class="n">eglib_t</span> <span class="o">*</span><span class="n">eglib</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-  <span class="n">eglib_DrawBox</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">80</span><span class="p">);</span>
-  <span class="n">eglib_SetClipRange</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span>
-  <span class="n">eglib_ClearScreen</span><span class="p">(</span><span class="n">eglib</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>Output:</p>
-<a class="reference internal image-reference" href="../../_images/test_eglib_ClearScreen.png"><img alt="../../_images/test_eglib_ClearScreen.png" src="../../_images/test_eglib_ClearScreen.png" style="width: 200px;" /></a>
-</dd></dl>
-
-</div>
 <div class="section" id="color">
-<h2><a class="toc-backref" href="#id4">Color</a><a class="headerlink" href="#color" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3">Color</a><a class="headerlink" href="#color" title="Permalink to this headline">¶</a></h2>
 <p>Various drawing functions do not take a color argument and instead use the
 color from a previously defined index.</p>
 <dl class="function">
@@ -143,7 +118,7 @@ void <code class="sig-name descname">eglib_SetIndexColor</code><span class="sig-
 
 </div>
 <div class="section" id="pixel">
-<h2><a class="toc-backref" href="#id5">Pixel</a><a class="headerlink" href="#pixel" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4">Pixel</a><a class="headerlink" href="#pixel" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="c.eglib_DrawPixelColor">
 void <code class="sig-name descname">eglib_DrawPixelColor</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, <a class="reference internal" href="../eglib.html#c.color_t" title="color_t">color_t</a><em> color</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawPixelColor" title="Permalink to this definition">¶</a></dt>
@@ -197,7 +172,7 @@ void <code class="sig-name descname">eglib_DrawPixel</code><span class="sig-pare
 
 </div>
 <div class="section" id="lines">
-<h2><a class="toc-backref" href="#id6">Lines</a><a class="headerlink" href="#lines" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">Lines</a><a class="headerlink" href="#lines" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="c.eglib_DrawLine">
 void <code class="sig-name descname">eglib_DrawLine</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x1</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y1</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x2</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y2</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawLine" title="Permalink to this definition">¶</a></dt>
@@ -372,7 +347,7 @@ void <code class="sig-name descname">eglib_DrawGradientLine</code><span class="s
 
 </div>
 <div class="section" id="frames">
-<h2><a class="toc-backref" href="#id7">Frames</a><a class="headerlink" href="#frames" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">Frames</a><a class="headerlink" href="#frames" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="c.eglib_DrawFrame">
 void <code class="sig-name descname">eglib_DrawFrame</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> width</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> height</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawFrame" title="Permalink to this definition">¶</a></dt>
@@ -460,7 +435,7 @@ edges with <code class="docutils literal notranslate"><span class="pre">radius</
 
 </div>
 <div class="section" id="boxes">
-<h2><a class="toc-backref" href="#id8">Boxes</a><a class="headerlink" href="#boxes" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">Boxes</a><a class="headerlink" href="#boxes" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="c.eglib_DrawBox">
 void <code class="sig-name descname">eglib_DrawBox</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> width</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> height</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawBox" title="Permalink to this definition">¶</a></dt>
@@ -546,9 +521,35 @@ edges with <code class="docutils literal notranslate"><span class="pre">radius</
 </dl>
 </dd></dl>
 
+<dl class="function">
+<dt id="c.eglib_ClearScreen">
+void <code class="sig-name descname">eglib_ClearScreen</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_ClearScreen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set all pixels to the color from index 0.</p>
+<p>Example:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;eglib.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;eglib/display.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;draw_test.h&quot;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">draw_test</span><span class="p">(</span><span class="n">eglib_t</span> <span class="o">*</span><span class="n">eglib</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">eglib_DrawBox</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">80</span><span class="p">);</span>
+  <span class="n">eglib_SetClipRange</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span>
+  <span class="n">eglib_ClearScreen</span><span class="p">(</span><span class="n">eglib</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<a class="reference internal image-reference" href="../../_images/test_eglib_ClearScreen.png"><img alt="../../_images/test_eglib_ClearScreen.png" src="../../_images/test_eglib_ClearScreen.png" style="width: 200px;" /></a>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#c.eglib_SetIndexColor" title="eglib_SetIndexColor"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_SetIndexColor()</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="round-things">
-<h2><a class="toc-backref" href="#id9">Round things</a><a class="headerlink" href="#round-things" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">Round things</a><a class="headerlink" href="#round-things" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="c.eglib_DrawArc">
 void <code class="sig-name descname">eglib_DrawArc</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> radius</em>, float<em> start_angle</em>, float<em> end_angle</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawArc" title="Permalink to this definition">¶</a></dt>
@@ -760,7 +761,7 @@ radius.</p>
 
 </div>
 <div class="section" id="bitmaps">
-<h2><a class="toc-backref" href="#id10">Bitmaps</a><a class="headerlink" href="#bitmaps" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">Bitmaps</a><a class="headerlink" href="#bitmaps" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="c.bitmap_format_t">
 enum <code class="sig-name descname">bitmap_format_t</code><a class="headerlink" href="#c.bitmap_format_t" title="Permalink to this definition">¶</a></dt>
@@ -864,7 +865,7 @@ void <code class="sig-name descname">eglib_DrawBitmap</code><span class="sig-par
 
 </div>
 <div class="section" id="text">
-<h2><a class="toc-backref" href="#id11">Text</a><a class="headerlink" href="#text" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">Text</a><a class="headerlink" href="#text" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="c.glyph_t">
 struct <code class="sig-name descname">glyph_t</code><a class="headerlink" href="#c.glyph_t" title="Permalink to this definition">¶</a></dt>
@@ -915,6 +916,18 @@ struct <code class="sig-name descname">font_t</code><a class="headerlink" href="
 <dt id="c.font_t.pixel_size">
 uint8_t <code class="sig-name descname">pixel_size</code><a class="headerlink" href="#c.font_t.pixel_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Font pixel size.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.font_t.ascent">
+int16_t <code class="sig-name descname">ascent</code><a class="headerlink" href="#c.font_t.ascent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The distance from the baseline to the highest or upper grid coordinate used to place an outline point.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.font_t.descent">
+int16_t <code class="sig-name descname">descent</code><a class="headerlink" href="#c.font_t.descent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The distance from the baseline to the lowest grid coordinate used to place an outline point.</p>
 </dd></dl>
 
 <dl class="member">
@@ -1026,6 +1039,17 @@ void <code class="sig-name descname">eglib_DrawText</code><span class="sig-paren
 <a class="reference internal image-reference" href="../../_images/test_eglib_DrawText.png"><img alt="../../_images/test_eglib_DrawText.png" src="../../_images/test_eglib_DrawText.png" style="width: 200px;" /></a>
 </dd></dl>
 
+<dl class="function">
+<dt id="c.eglib_GetTextWidt">
+<a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a> <code class="sig-name descname">eglib_GetTextWidt</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, char *<em> utf8_text</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_GetTextWidt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the width in pixels of the given UTF-8 text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#c.eglib_SetFont" title="eglib_SetFont"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_SetFont()</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 </div>
 
@@ -1095,7 +1119,6 @@ void <code class="sig-name descname">eglib_DrawText</code><span class="sig-paren
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Drawing</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Drawing Functions</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#clipping">Clipping</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#whole-screen">Whole Screen</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#color">Color</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pixel">Pixel</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#lines">Lines</a></li>

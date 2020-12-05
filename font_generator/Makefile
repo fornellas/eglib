@@ -19,8 +19,8 @@ CFLAGS += \
 	-Wfatal-errors
 
 .PHONY: generate_fonts
-generate_fonts: font_generator
-	if ! [ -e ../src/eglib/drawing/fonts.h ] ; then ./generate_fonts.sh ; fi
+generate_fonts: font_generator generate_fonts.sh
+	if ! [ -e ../src/eglib/drawing/fonts.h ] || [ generate_fonts.sh -nt ../src/eglib/drawing/fonts.h ] ; then ./generate_fonts.sh ; fi
 
 .PHONY: clean
 clean:

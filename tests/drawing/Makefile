@@ -1,7 +1,5 @@
 EGLIB_HAL_DRIVERS=four_wire_spi/none
 EGLIB_DISPLAY_DRIVERS=tga
-TGA_FILES = $(wildcard *.tga)
-PNG_FILES = $(TGA_FILES:%.tga=%.png)
 
 include ../common.mk
 

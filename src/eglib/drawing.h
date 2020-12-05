@@ -669,6 +669,8 @@ struct glyph_t {
 struct font_t {
 	/** Font pixel size. */
 	uint8_t pixel_size;
+	/** The distance that must be placed between two lines of text. */
+	uint16_t line_space;
 	/** First unicode character code this font supports. */
 	uint32_t charcode_start;
 	/** Last unicode character code this font supports. */

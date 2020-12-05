@@ -763,6 +763,6 @@ void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, char *utf8_t
   for(uint16_t index=0 ; utf8_text[index] ; ) {
     glyph = eglib_GetGlyph(eglib, utf8_nextchar(utf8_text, &index));
     eglib_DrawGlyph(eglib, x, y, glyph);
-    x += glyph->left + glyph->width + glyph->right;
+    x += glyph->advance;
   }
 }

@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 
 	for(FT_ULong charcode = charcode_start ; charcode <= charcode_end ; charcode++) {
 		uint16_t x_start, x_end, y_start, y_end;
-		int16_t width, height, left, right, top;
+		int16_t width, height, left, advance, top;
 		uint8_t byte;
 		uint16_t bits;
 
@@ -112,14 +112,14 @@ int main(int argc, char *argv[]) {
 		}
 		left = face->glyph->bitmap_left + x_start;
 		top = face->glyph->bitmap_top - y_start;
-		right = (face->glyph->advance.x >> 6) - left - width;
+		advance = face->glyph->advance.x >> 6;
 
 		printf("    &(struct glyph_t){\n");
 		printf("      .width = %d,\n", width);
 		printf("      .height = %d,\n", height);
 		printf("      .left = %d,\n", left);
 		printf("      .top = %d,\n", top);
-		printf("      .right = %d,\n", right);
+		printf("      .advance = %d,\n", advance);
 		printf("      .data = (uint8_t []){");
 
 		byte = 0;

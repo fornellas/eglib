@@ -17,7 +17,7 @@ void exit_error(FT_Error error, const char *msg) {
 
 	error_str = FT_Error_String(error);
 	if(error_str == NULL) {
-		fprintf(stderr, ".\n");
+		fprintf(stderr, " (%d).\n", error);
 	} else {
 		fprintf(stderr, "%s.\n", error_str);
 	}
@@ -57,6 +57,11 @@ void generate_font(
 		error = FT_Load_Char(face, charcode, FT_LOAD_RENDER | FT_LOAD_MONOCHROME);
 		if(error)
 			exit_error(error, "Failed to load character");
+
+		if(face->glyph->bitmap.buffer == NULL) {
+			fprintf(stderr, "Unsupported character %ld\n", charcode);
+			continue;
+		}
 
 		x_start = face->glyph->bitmap.width;
 		x_end = 0;

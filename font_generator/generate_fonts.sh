@@ -68,8 +68,8 @@ EOF
 
 	for PIXEL_SIZE in "${SCALABLE_FONT_SIZES[@]}"
 	do
-		NAME_SIZE="$NAME"_"${PIXEL_SIZE}px"
-		./font_generator "$FONT_PATH" "$NAME_SIZE" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" > "$EGLIB_ROOT"/eglib/drawing/fonts/font_"$NAME_SIZE".c
+		C_NAME="Liberation_$(echo "${NAME#Liberation*}" | tr -d _\ )_${PIXEL_SIZE}px"
+		./font_generator "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" > "$EGLIB_ROOT"/eglib/drawing/fonts/font_"$C_NAME".c
 		cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
 
 /**
@@ -78,9 +78,9 @@ EOF
  */
 
 /**
- * .. image:: ../../../tests/fonts/test_font_${NAME_SIZE}.png
+ * .. image:: ../../../tests/fonts/test_font_${C_NAME}.png
  */
-extern struct font_t font_$NAME_SIZE;
+extern struct font_t font_$C_NAME;
 
 /**
  * Unicode blocks
@@ -93,12 +93,12 @@ EOF
 			cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
 
 /**
- * $UNICODE_BLOCK_NAME unicode block for :c:data:\`font_$NAME_SIZE\`.
+ * $UNICODE_BLOCK_NAME unicode block for :c:data:\`font_$C_NAME\`.
  */
-extern struct glyph_unicode_block_t unicode_block_${NAME_SIZE}_${UNICODE_BLOCK_NAME};
+extern struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
 EOF
 		done
-		touch ../tests/fonts/test_font_${NAME_SIZE}.png
+		touch ../tests/fonts/test_font_${C_NAME}.png
 	done
 done
 
@@ -192,7 +192,7 @@ EOF
 	for PIXEL_SIZE in ${ADOBE_FONT_PIXEL_SIZES["$NAME"]} ; do echo "$PIXEL_SIZE" ; done | LANG=C sort -k +1n -u | while read PIXEL_SIZE
 	do
 		echo "    $PIXEL_SIZE"
-		C_NAME="adobe_$(echo "$NAME" | tr -d \ )_${PIXEL_SIZE}px"
+		C_NAME="Adobe_$(echo "$NAME" | tr -d \ )_${PIXEL_SIZE}px"
 		FONT_PATH="${ADOBE_FONT_PATHS["$PIXEL_SIZE $NAME"]}"
 		./font_generator "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" > "$EGLIB_ROOT"/eglib/drawing/fonts/font_"$C_NAME".c
 		cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/adobe.h

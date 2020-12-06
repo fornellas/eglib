@@ -14,14 +14,10 @@
       - By color
       - By alpha 8-bit bitmap
       - By alpha 1-bit bitmap
-   - Font
-    - eglib_drawGlyph
-    - eglib_drawString
+   - Text
     - eglib_getFontAscent
     - eglib_getFontDescent
-    - eglib_getStrWidth
     - eglib_print
-    - eglib_setFont
     - eglib_setFontMode
     - eglib_setFontPosBaseline
     - eglib_setFontPosBottom
@@ -32,6 +28,8 @@
     - eglib_setFontRefHeightExtendedText
     - eglib_setFontRefHeightText
     - eglib_setPrintPos
+    - Fonts with aliasing
+      - Experiment with different bits per pixel
   - Rotate
     - eglib_SetRotate0
     - eglib_SetRotate90

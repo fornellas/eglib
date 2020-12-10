@@ -671,9 +671,9 @@ struct glyph_t {
  */
 struct glyph_unicode_block_t {
 	/** First unicode character code this font supports. */
-	uint32_t charcode_start;
+	wchar_t charcode_start;
 	/** Last unicode character code this font supports. */
-	uint32_t charcode_end;
+	wchar_t charcode_end;
 	/** Array of glyphs for each supported unicode character. */
 	struct glyph_t **glyphs;
 };
@@ -720,7 +720,8 @@ bool eglib_AddUnicodeBlockToFont(
 );
 
 /**
- * Return given unicode character's :c:type:`glyph_t`.
+ * Return given unicode character's :c:type:`glyph_t` or `NULL` if unsupported
+ * by font.
  */
 struct glyph_t *eglib_GetGlyph(eglib_t *eglib, wchar_t unicode_char);
 

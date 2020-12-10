@@ -12,9 +12,7 @@ UNICODE_BLOCKS=(
 	# https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)
 	"Latin1Supplement" "161" "255"
 	# https://en.wikipedia.org/wiki/Latin_Extended-A
-	"LatinExtendedA" "256" "383"
-	# https://en.wikipedia.org/wiki/Latin_Extended-B
-	"LatinExtendedB" "384" "591"
+	"LatinExtendedA" "256" "382"
 )
 
 ##
@@ -65,11 +63,15 @@ do
  * $(echo "$FONT_TITLE" | tr "[a-zA-z_ ]" "*")
  */
 EOF
+	C_FILE=""$EGLIB_ROOT"/eglib/drawing/fonts/$(echo liberation_"${NAME#Liberation*}" | tr " " _ | tr A-Z a-z).c"
+	cat << EOF >> "$C_FILE"
+#include "../../drawing.h"
+EOF
 
 	for PIXEL_SIZE in "${SCALABLE_FONT_SIZES[@]}"
 	do
 		C_NAME="Liberation_$(echo "${NAME#Liberation*}" | tr -d _\ )_${PIXEL_SIZE}px"
-		./font_generator "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" > "$EGLIB_ROOT"/eglib/drawing/fonts/font_"$C_NAME".c
+		./font_generator "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" >> "$C_FILE"
 		cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
 
 /**
@@ -78,7 +80,9 @@ EOF
  */
 
 /**
- * .. image:: ../../../tests/fonts/test_font_${C_NAME}.png
+ * This fonts comes with :c:data:\`unicode_block_${C_NAME}_${UNICODE_BLOCKS[0]}\`
+ * and can be extended with :c:func:\`eglib_AddUnicodeBlockToFont\` to support
+ * extra unicode blocks defined below.
  */
 extern struct font_t font_$C_NAME;
 
@@ -93,12 +97,12 @@ EOF
 			cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
 
 /**
- * $UNICODE_BLOCK_NAME unicode block for :c:data:\`font_$C_NAME\`.
+ * .. image:: ../../../tests/fonts/test_unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME}.png
  */
 extern struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
 EOF
+			touch ../tests/fonts/test_unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME}.png
 		done
-		touch ../tests/fonts/test_font_${C_NAME}.png
 	done
 done
 
@@ -107,16 +111,6 @@ echo "#endif" >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
 ##
 ## Adobe
 ##
-
-# https://en.wikipedia.org/wiki/Unicode_block
-UNICODE_BLOCKS=(
-	# https://en.wikipedia.org/wiki/Basic_Latin_(Unicode_block)
-	"BasicLatin" "32" "126"
-	# https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)
-	"Latin1Supplement" "161" "255"
-	# https://en.wikipedia.org/wiki/Latin_Extended-A
-	"LatinExtendedA" "256" "383"
-)
 
 echo "Adobe"
 
@@ -189,12 +183,16 @@ do
  */
 EOF
 
+	C_FILE=""$EGLIB_ROOT"/eglib/drawing/fonts/adobe_$(echo "${NAME}" | tr " " _ | tr A-Z a-z).c"
+	cat << EOF >> "$C_FILE"
+#include "../../drawing.h"
+EOF
+
 	for PIXEL_SIZE in ${ADOBE_FONT_PIXEL_SIZES["$NAME"]} ; do echo "$PIXEL_SIZE" ; done | LANG=C sort -k +1n -u | while read PIXEL_SIZE
 	do
-		echo "    $PIXEL_SIZE"
 		C_NAME="Adobe_$(echo "$NAME" | tr -d \ )_${PIXEL_SIZE}px"
 		FONT_PATH="${ADOBE_FONT_PATHS["$PIXEL_SIZE $NAME"]}"
-		./font_generator "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" > "$EGLIB_ROOT"/eglib/drawing/fonts/font_"$C_NAME".c
+		./font_generator "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" >> "$C_FILE"
 		cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/adobe.h
 
 /**
@@ -203,7 +201,9 @@ EOF
  */
 
 /**
- * .. image:: ../../../tests/fonts/test_font_${C_NAME}.png
+ * This fonts comes with :c:data:\`unicode_block_${C_NAME}_${UNICODE_BLOCKS[0]}\`
+ * and can be extended with :c:func:\`eglib_AddUnicodeBlockToFont\` to support
+ * extra unicode blocks defined below.
  */
 extern struct font_t font_$C_NAME;
 
@@ -218,12 +218,12 @@ EOF
 			cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/adobe.h
 
 /**
- * $UNICODE_BLOCK_NAME unicode block for :c:data:\`font_$C_NAME\`.
+ * .. image:: ../../../tests/fonts/test_unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME}.png
  */
 extern struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
 EOF
+			touch ../tests/fonts/test_unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME}.png
 		done
-		touch ../tests/fonts/test_font_${C_NAME}.png
 	done
 done
 

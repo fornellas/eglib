@@ -1,32 +1,78 @@
-EGLIB_HAL_DRIVERS=four_wire_spi/none
+BUILD_DIR_PREFIX = bin
+BUILD_DIR = $(BUILD_DIR_PREFIX)/fonts
+VALGRIND=valgrind -q
+CFLAGS += \
+	-MD \
+	-O3 \
+	-Wall \
+	-Wextra \
+	-Wimplicit-function-declaration \
+	-Wredundant-decls \
+	-Wmissing-prototypes \
+	-Wstrict-prototypes \
+	-Wundef \
+	-Wshadow \
+	-Wstrict-prototypes \
+	-Werror \
+	-Wfatal-errors
+
+all:
+
+$(BUILD_DIR)/%.o: %.c
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
+
+-include $(OBJS:.o=.d)
+
+.PHONY: clean
+clean:
+	rm -rf $(BUILD_DIR_PREFIX)
+
+##
+## eglib 
+##
+
+EGLIB_BUILD_DIR = $(abspath $(BUILD_DIR_PREFIX)/eglib)
+EGLIB_PATH = ../../src
+CFLAGS += -I$(EGLIB_PATH)
+EGLIB_LIB = $(EGLIB_BUILD_DIR)/libeglib.a
 EGLIB_DISPLAY_DRIVERS=tga
-PNG_FILES = $(wildcard test_*.png)
+EGLIB_HAL_DRIVERS=four_wire_spi/none
 
-include ../common.mk
+.PHONY: $(EGLIB_LIB)
+$(EGLIB_LIB):
+	make \
+		-C $(EGLIB_PATH) \
+		BUILD_DIR=$(EGLIB_BUILD_DIR) \
+		DISPLAY_DRIVERS="$(EGLIB_DISPLAY_DRIVERS)" \
+		HAL_DRIVERS=$(EGLIB_HAL_DRIVERS) \
+		$@
 
-CFILES = $(PNG_FILES:test_%.png=$(BUILD_DIR)/test_%.c)
-OBJS = $(PNG_FILES:test_%.png=$(BUILD_DIR)/test_%.o)
-TESTS = $(PNG_FILES:test_%.png=$(BUILD_DIR)/test_%)
-TGA_FILES = $(PNG_FILES:test_%.png=$(BUILD_DIR)/test_%.tga)
-COMPARE = $(PNG_FILES:test_%.png=$(BUILD_DIR)/test_%.compare)
-.PRECIOUS: $(CFILES) $(OBJS) $(TGA_FILES) $(COMPARE)
+##
+## unicode_block
+##
 
-all: $(COMPARE)
+UNICODE_BLOCK_PNG = $(wildcard test_unicode_block_*.png)
+UNICODE_BLOCK_OBJS = $(UNICODE_BLOCK_PNG:test_unicode_block_%.png=$(BUILD_DIR)/test_unicode_block_%.o)
+UNICODE_BLOCK_BIN = $(UNICODE_BLOCK_PNG:test_unicode_block_%.png=$(BUILD_DIR)/test_unicode_block_%)
+UNICODE_BLOCK_TGA = $(UNICODE_BLOCK_PNG:test_unicode_block_%.png=$(BUILD_DIR)/test_unicode_block_%.tga)
+.PRECIOUS: $(UNICODE_BLOCK_TGA)
+UNICODE_BLOCK_OK = $(UNICODE_BLOCK_PNG:test_unicode_block_%.png=$(BUILD_DIR)/test_unicode_block_%.ok)
 
-$(BUILD_DIR)/test_%.c: main.c.template
+.PHONY: unicode_block
+unicode_block: $(UNICODE_BLOCK_OK)
+all: unicode_block
+
+$(BUILD_DIR)/test_unicode_block_%.o: unicode_block.c
 	mkdir -p $(dir $@)
-	cp main.c.template $@
+	$(CC) $(CFLAGS) -DFONT=font_$(shell basename $@ | cut -d_ -f4,5,6) -DUNICODE_BLOCK=unicode_block_$(shell basename $@ | cut -d_ -f4,5,6,7 | cut -d. -f1) -o $@ -c $<	
 
-$(BUILD_DIR)/test_%.o: $(BUILD_DIR)/test_%.c
-	$(CC) $(CFLAGS) -DFONT=$(@:$(BUILD_DIR)/test_%.o=%) $(INCLUDES) -o $@ -c $<
+$(BUILD_DIR)/test_unicode_block_%: $(BUILD_DIR)/test_unicode_block_%.o $(EGLIB_LIB)
+	$(CC) $(CFLAGS) -o $@ $^ -lm
 
-$(BUILD_DIR)/test_%: $(BUILD_DIR)/test_%.o $(EGLIB_LIB)
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ -lm
+$(BUILD_DIR)/test_unicode_block_%.tga: $(BUILD_DIR)/test_unicode_block_%
+	$(VALGRIND) $< $@
 
-$(BUILD_DIR)/test_%.tga: $(BUILD_DIR)/test_%
-	valgrind -q $< $@
-
-$(BUILD_DIR)/test_%.compare: $(BUILD_DIR)/test_%.tga
+$(BUILD_DIR)/test_unicode_block_%.ok: $(BUILD_DIR)/test_unicode_block_%.tga
 	compare -metric FUZZ $< $(<:$(BUILD_DIR)/%.tga=%.png) /dev/null
 	touch $@

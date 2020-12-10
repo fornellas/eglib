@@ -59,8 +59,8 @@ void generate_font(
 			exit_error(error, "Failed to load character");
 
 		if(face->glyph->bitmap.buffer == NULL) {
-			fprintf(stderr, "Unsupported character %ld\n", charcode);
-			continue;
+			fprintf(stderr, "Unsupported character: %ld.\n", charcode);
+			exit(1);
 		}
 
 		x_start = face->glyph->bitmap.width;
@@ -204,8 +204,6 @@ int main(int argc, char *argv[]) {
 	error = FT_Set_Pixel_Sizes(face, 0, pixel_size);
 	if(error)
 		exit_error(error, "Failed to set pixel size");
-
-	printf("#include \"../../drawing.h\"\n");
 
 	for(int i=0 ; i < unicode_blocks ; i++)
 		generate_font(

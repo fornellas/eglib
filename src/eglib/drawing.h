@@ -147,7 +147,7 @@ void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
-#define eglib_DrawHLine(eglib, x, y, len) eglib_DrawLine(eglib, x, y, x + len, y);
+#define eglib_DrawHLine(eglib, x, y, len) eglib_DrawLine(eglib, x, y, x + len - 1, y);
 
 /**
  * Draw vertical line starting at (`x`, `y`) with length `len` using color from
@@ -165,7 +165,7 @@ void eglib_DrawLine(eglib_t *eglib, coordinate_t x1, coordinate_t y1, coordinate
  *
  * :See also: :c:func:`eglib_SetIndexColor`.
  */
-#define eglib_DrawVLine(eglib, x, y, len) eglib_DrawLine(eglib, x, y, x, y + len);
+#define eglib_DrawVLine(eglib, x, y, len) eglib_DrawLine(eglib, x, y, x, y + len - 1);
 
 /**
  * Draw line from coordinates (`x1`, `y1`) to (`x2`, `y2`).
@@ -209,7 +209,7 @@ void eglib_DrawGradientLine(
 #define eglib_DrawGradientHLine(eglib, x, y, len) eglib_DrawGradientLine( \
 	eglib, \
 	x, y, \
-	x + len, y \
+	x + len - 1, y \
 )
 
 /**
@@ -230,7 +230,7 @@ void eglib_DrawGradientLine(
 #define eglib_DrawGradientVLine(eglib, x, y, len) eglib_DrawGradientLine( \
 	eglib, \
 	x, y, \
-	x, y + len \
+	x, y + len - 1 \
 )
 
 /**

@@ -15,7 +15,7 @@ int main(void) {
 
 	for(uint16_t y=0;y<SSD1331_HEIGHT;y++) {
 		uint8_t v;
-		v = y / ((float)SSD1331_WIDTH-1) * 255;
+		v = y / ((float)SSD1331_HEIGHT-1) * 255;
 		eglib_SetIndexColor(&eglib, 0, v, v, v);
 		eglib_DrawLine(&eglib,0, y, SSD1331_WIDTH-1, y);
 	}

@@ -212,8 +212,6 @@ static void draw_fast_90_line(
         break;
     }
 
-    length--;
-
     if(x1 >= eglib_GetWidth(eglib))
       return;
     if(y1 >= eglib_GetHeight(eglib))
@@ -381,7 +379,7 @@ void eglib_DrawFrame(
   eglib_DrawHLine(eglib, x, y, width);
   eglib_DrawHLine(eglib, x, y + height, width);
   eglib_DrawVLine(eglib, x, y, height);
-  eglib_DrawVLine(eglib, x + width, y, height);
+  eglib_DrawVLine(eglib, x + width, y, height + 1);
 }
 
 void eglib_DrawGradientFrame(
@@ -398,13 +396,13 @@ void eglib_DrawGradientFrame(
   eglib_DrawGradientHLine(eglib, x, y, width);
   eglib->drawing.color_index[0] = eglib->drawing.color_index[2];
   eglib->drawing.color_index[1] = eglib->drawing.color_index[3];
-  eglib_DrawGradientHLine(eglib, x, y + height, width);
+  eglib_DrawGradientHLine(eglib, x, y + height - 1, width);
   eglib->drawing.color_index[0] = previous_color_index_0;
   eglib->drawing.color_index[1] = eglib->drawing.color_index[2];
   eglib_DrawGradientVLine(eglib, x, y, height);
   eglib->drawing.color_index[0] = previous_color_index_1;
   eglib->drawing.color_index[1] = eglib->drawing.color_index[3];
-  eglib_DrawGradientVLine(eglib, x + width, y, height);
+  eglib_DrawGradientVLine(eglib, x + width - 1, y, height);
 
   eglib->drawing.color_index[0] = previous_color_index_0;
   eglib->drawing.color_index[1] = previous_color_index_1;
@@ -528,6 +526,11 @@ static void draw_arc(
   float angle_step;
   coordinate_t last_x=-1, last_y=-1;
 
+  radius--;
+
+  if(radius < 1)
+    return;
+
   angle_step = degrees_to_radians((2.0 * M_PI * radius) / 360.0);
   start_angle = degrees_to_radians(start_angle - 90);
   end_angle = degrees_to_radians(end_angle - 90);
@@ -559,6 +562,11 @@ static coordinate_t get_arc_pixel_count(
   float angle_step;
   coordinate_t last_x=-1, last_y=-1;
   coordinate_t steps=0;
+
+  radius--;
+
+  if(radius < 1)
+    return 0;
 
   angle_step = degrees_to_radians((2.0 * M_PI * radius) / 360.0);
   start_angle = degrees_to_radians(start_angle - 90);

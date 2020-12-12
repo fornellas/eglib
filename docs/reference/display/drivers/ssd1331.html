@@ -58,6 +58,18 @@
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;eglib/display/ssd1331.h&gt;</span><span class="cp"></span>
 </pre></div>
 </div>
+<dl class="macro">
+<dt id="c.SSD1331_WIDTH">
+<code class="sig-name descname">SSD1331_WIDTH</code><a class="headerlink" href="#c.SSD1331_WIDTH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display width</p>
+</dd></dl>
+
+<dl class="macro">
+<dt id="c.SSD1331_HEIGHT">
+<code class="sig-name descname">SSD1331_HEIGHT</code><a class="headerlink" href="#c.SSD1331_HEIGHT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display height</p>
+</dd></dl>
+
 <div class="section" id="types">
 <h2><a class="toc-backref" href="#id2">Types</a><a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
@@ -344,24 +356,24 @@ this.</p>
 		<span class="o">&amp;</span><span class="n">ssd1331</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ssd1331_config_adafruit_65k_colors</span>
 	<span class="p">);</span>
 
-	<span class="k">for</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">y</span><span class="o">&lt;</span><span class="mi">96</span><span class="p">;</span><span class="n">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">for</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">y</span><span class="o">&lt;</span><span class="n">SSD1331_WIDTH</span><span class="p">;</span><span class="n">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 		<span class="kt">uint8_t</span> <span class="n">v</span><span class="p">;</span>
-		<span class="n">v</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="mi">95</span> <span class="o">*</span> <span class="mi">255</span><span class="p">;</span>
+		<span class="n">v</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">SSD1331_WIDTH</span><span class="mi">-1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">255</span><span class="p">;</span>
 		<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
-		<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">96-1</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+		<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span><span class="mi">-1</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
 	<span class="p">}</span>
 
 	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
-	<span class="n">eglib_DrawVLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">96</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">64</span><span class="p">);</span>
+	<span class="n">eglib_DrawVLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SSD1331_HEIGHT</span><span class="p">);</span>
 
 	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-	<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">96-1</span><span class="p">,</span> <span class="mi">64</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+	<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span><span class="mi">-1</span><span class="p">,</span> <span class="n">SSD1331_HEIGHT</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
 
 	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-	<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">96-1</span><span class="p">,</span> <span class="mi">64-1</span><span class="p">);</span>
+	<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span><span class="mi">-1</span><span class="p">,</span> <span class="n">SSD1331_HEIGHT</span><span class="mi">-1</span><span class="p">);</span>
 
 	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
-	<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">96</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64-1</span><span class="p">);</span>
+	<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">SSD1331_HEIGHT</span><span class="mi">-1</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>

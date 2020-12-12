@@ -23,14 +23,6 @@ struct _gradient_t {
 	struct _gradient_channel_t b;
 };
 
-// Internal: clipped region
-struct _clip_t {
-	coordinate_t x;
-	coordinate_t y;
-	coordinate_t width;
-	coordinate_t height;
-};
-
 struct _eglib_struct {
 	struct {
 		const hal_t *driver;
@@ -48,7 +40,6 @@ struct _eglib_struct {
 	} display;
 
 	struct {
-		struct _clip_t clip;
 		color_t color_index[4];
 		struct _gradient_t gradient;
 		struct font_t *font;

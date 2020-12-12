@@ -5,47 +5,6 @@
 #define degrees_to_radians(degrees) ((degrees) * M_PI / 180.0)
 
 //
-// Clipping
-//
-
-void eglib_SetClipRange(
-  eglib_t *eglib,
-  coordinate_t x,
-  coordinate_t y,
-  coordinate_t width,
-  coordinate_t height
-) {
-  eglib->drawing.clip.x = x;
-  eglib->drawing.clip.y = y;
-  eglib->drawing.clip.width = width;
-  eglib->drawing.clip.height = height;
-}
-
-void eglib_SetNoClip(eglib_t *eglib) {
-  eglib_SetClipRange(
-    eglib,
-    0, 0,
-    eglib_GetWidth(eglib), eglib_GetHeight(eglib)
-  );
-}
-
-bool eglib_IsPixelClipped(
-  eglib_t *eglib,
-  coordinate_t x,
-  coordinate_t y
-) {
-  if(x < eglib->drawing.clip.x)
-    return true;
-  if(x > (eglib->drawing.clip.x + eglib->drawing.clip.width))
-    return true;
-  if(y < eglib->drawing.clip.y)
-    return true;
-  if(y > (eglib->drawing.clip.y + eglib->drawing.clip.height))
-    return true;
-  return false;
-}
-
-//
 // Color
 //
 
@@ -66,8 +25,11 @@ void eglib_SetIndexColor(
 //
 
 void eglib_DrawPixelColor(eglib_t *eglib, coordinate_t x, coordinate_t y, color_t color) {
-  if(eglib_IsPixelClipped(eglib, x, y))
+  if(x < 0 || x >= eglib_GetWidth(eglib))
     return;
+  if(y < 0 || y >= eglib_GetHeight(eglib))
+    return;
+
   eglib->display.driver->draw_pixel_color(eglib, x, y, color);
 }
 
@@ -143,8 +105,6 @@ static void draw_fast_90_line(
 ) {
     display_line_direction_t direction;
     coordinate_t length;
-    coordinate_t clip_x_end;
-    coordinate_t clip_y_end;
 
     if(x1==x2) {  // vertical
       length = y2 > y1 ? y2 - y1 : y1 - y2;
@@ -160,57 +120,6 @@ static void draw_fast_90_line(
         direction = DISPLAY_LINE_DIRECTION_LEFT;
     } else
       while(true);
-
-    clip_x_end = eglib->drawing.clip.x + eglib->drawing.clip.width;
-    clip_y_end = eglib->drawing.clip.y + eglib->drawing.clip.height;
-
-    switch(direction) {
-      case DISPLAY_LINE_DIRECTION_RIGHT:
-      case DISPLAY_LINE_DIRECTION_LEFT:
-        if((y1 < eglib->drawing.clip.y) || (y1 > clip_y_end))
-          return;
-        break;
-      case DISPLAY_LINE_DIRECTION_DOWN:
-      case DISPLAY_LINE_DIRECTION_UP:
-        if((x1 < eglib->drawing.clip.x) || (x1 > clip_x_end))
-          return;
-        break;
-    }
-
-    switch(direction) {
-      case DISPLAY_LINE_DIRECTION_RIGHT:
-        if(x1 < eglib->drawing.clip.x) {
-          length -= eglib->drawing.clip.x - x1;
-          x1 = eglib->drawing.clip.x;
-        }
-        if(x1 + length > clip_x_end)
-          length -= (x1 + length) - (clip_x_end);
-        break;
-      case DISPLAY_LINE_DIRECTION_LEFT:
-        if(x1 > clip_x_end) {
-          length -= x1 - (clip_x_end);
-          x1 = clip_x_end;
-        }
-        if(x1 - length < eglib->drawing.clip.x)
-          length -= (x1 - length) - eglib->drawing.clip.x;
-        break;
-      case DISPLAY_LINE_DIRECTION_DOWN:
-        if(y1 < eglib->drawing.clip.y) {
-          length -= eglib->drawing.clip.y - y1;
-          y1 = eglib->drawing.clip.y;
-        }
-        if(y1 + length > clip_y_end)
-          length -= (y1 + length) - (clip_y_end);
-        break;
-      case DISPLAY_LINE_DIRECTION_UP:
-        if(y1 > clip_y_end) {
-          length -= y1 - (clip_y_end);
-          y1 = clip_y_end;
-        }
-        if(y1 - length < eglib->drawing.clip.y)
-          length -= (y1 - length) - eglib->drawing.clip.y;
-        break;
-    }
 
     if(x1 >= eglib_GetWidth(eglib))
       return;
@@ -499,15 +408,7 @@ void eglib_DrawRoundBox(
 }
 
 void eglib_ClearScreen(eglib_t *eglib) {
-  struct _clip_t previous_clip;
-
-  previous_clip = eglib->drawing.clip;
-
-  eglib_SetNoClip(eglib);
-
   eglib_DrawBox(eglib, 0, 0, eglib_GetWidth(eglib), eglib_GetHeight(eglib));
-
-  eglib->drawing.clip = previous_clip;
 }
 
 //

@@ -32,8 +32,6 @@ int main(int argc, char *argv[]) {
 	for(coordinate_t v=0 ; (v < width) && (v < height) ; v++ )
 		eglib_DrawPixel(&eglib, v, v);
 
-	eglib_SetClipRange(&eglib, 0, 0, width / 2, height / 2);
-
 	eglib_SetIndexColor(&eglib, 0, 255, 0, 0);
 	eglib_DrawLine(&eglib, 0, 0, width - 1, 0);
 

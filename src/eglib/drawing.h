@@ -11,50 +11,6 @@
  */
 
 /**
- * Clipping
- * ========
- *
- * These functions allows restricting drawing functions to only work inside
- * a specified box.
- */
-
-/**
- * Defines a rectangle to clip all drawing functions to.
- *
- * Any drawing function outside of these boundaries will have no effect.
- *
- * Example:
- *
- * .. literalinclude:: ../../../tests/drawing/test_eglib_SetClipRange.c
- *   :language: C
- *
- * Output:
- *
- * .. image:: ../../../tests/drawing/test_eglib_SetClipRange.png
- *   :width: 200
- */
-void eglib_SetClipRange(
-	eglib_t *eglib,
-	coordinate_t x, coordinate_t y,
-	coordinate_t width, coordinate_t height
-);
-
-/**
- * Disable clipping.
- *
- * :See also: :c:func:`eglib_SetClipRange`.
- */
-void eglib_SetNoClip(eglib_t *eglib);
-
-/**
- * Returns whether the pixel at given coordinate is clipped. See :c:func:`eglib_SetClipRange`.
- */
-bool eglib_IsPixelClipped(
-	eglib_t *eglib,
-	coordinate_t x, coordinate_t y
-);
-
-/**
  * Color
  * =====
  *

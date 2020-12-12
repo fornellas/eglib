@@ -1,6 +1,7 @@
 EGLIB_HAL_DRIVERS = four_wire_spi/stdout
 EGLIB_DISPLAY_DRIVERS = \
 	sh1106 \
+	ssd1331 \
 	st7789
 
 include ../common.mk

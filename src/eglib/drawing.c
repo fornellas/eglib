@@ -212,6 +212,31 @@ static void draw_fast_90_line(
         break;
     }
 
+    length--;
+
+    if(x1 >= eglib_GetWidth(eglib))
+      return;
+    if(y1 >= eglib_GetHeight(eglib))
+      return;
+    switch(direction) {
+      case DISPLAY_LINE_DIRECTION_RIGHT:
+        if(x1 + length > eglib_GetWidth(eglib))
+          length = eglib_GetWidth(eglib) - x1;
+        break;
+      case DISPLAY_LINE_DIRECTION_LEFT:
+        if(x1 - length < -1)
+          length = x1 + 1;
+        break;
+      case DISPLAY_LINE_DIRECTION_DOWN:
+        if(y1 + length > eglib_GetHeight(eglib))
+          length = eglib_GetHeight(eglib) - y1;
+        break;
+      case DISPLAY_LINE_DIRECTION_UP:
+        if(y1 - length < -1)
+          length = y1 + 1;
+        break;
+    }
+
     if(length < 1)
       return;
 

@@ -7,9 +7,6 @@
 
 #define SSD1331_RESET_LOW_PULSE_WIDTH_US 2
 
-#define SSD1331_WIDTH 96
-#define SSD1331_HEIGHT 64
-
 // Configuration commands
 
 #define SSD1331_SET_COLUMN_ADDRESS 0x15

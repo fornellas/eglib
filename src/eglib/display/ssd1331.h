@@ -3,6 +3,11 @@
 
 #include "../../eglib.h"
 
+/** Display width */
+#define SSD1331_WIDTH 96
+/** Display height */
+#define SSD1331_HEIGHT 64
+
 /**
  * Types
  * =====

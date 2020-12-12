@@ -100,7 +100,7 @@ typedef struct {
 /**
  * Configuration for `Adafruit OLED Breakout Board - 16-bit Color 0.96" w/microSD holder <http://www.adafruit.com/products/684>`_.
  *
- * Values extracted from `example code <https://github.com/adafruit/Adafruit-SSD1331-OLED-Driver-Library-for-Arduino>`_.
+ * Values extracted from `Adafruit's example code <https://github.com/adafruit/Adafruit-SSD1331-OLED-Driver-Library-for-Arduino>`_.
  *
  * :Note: this configuration should work just fine with "generic" SSD1331 boards that can be easily found on eBay or Aliexpress.
  */
@@ -114,7 +114,7 @@ extern ssd1331_config_t ssd1331_config_adafruit_256_colors;
 /**
  * Configuration for `Buy Display module <https://www.buydisplay.com/full-color-0-95-inch-arduino-raspberry-pi-oled-display-module-96x64>`_.
  *
- * Values extracted from `example code <https://www.buydisplay.com/arduino/ER-OLEDM0.95-2_Arduino_Tutorial.zip>`_.
+ * Values extracted from `Buy Display's example code <https://www.buydisplay.com/arduino/ER-OLEDM0.95-2_Arduino_Tutorial.zip>`_.
  */
 extern ssd1331_config_t ssd1331_config_buydisplay_65k_colors;
 

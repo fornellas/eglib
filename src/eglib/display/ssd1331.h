@@ -112,6 +112,13 @@ extern ssd1331_config_t ssd1331_config_adafruit_65k_colors;
 extern ssd1331_config_t ssd1331_config_adafruit_256_colors;
 
 /**
+ * Configuration for `Buy Display module <https://www.buydisplay.com/full-color-0-95-inch-arduino-raspberry-pi-oled-display-module-96x64>`_.
+ *
+ * Values extracted from `example code <https://www.buydisplay.com/arduino/ER-OLEDM0.95-2_Arduino_Tutorial.zip>`_.
+ */
+extern ssd1331_config_t ssd1331_config_buydisplay_65k_colors;
+
+/**
  * Driver
  * ======
  */

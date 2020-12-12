@@ -41,7 +41,8 @@ int main(void) {
 	eglib_Init(
 		&eglib,
 		&four_wire_spi_libopencm3_stm32f4, &four_wire_spi_libopencm3_stm32f4_config,
-		&ssd1331, &ssd1331_config_adafruit_65k_colors
+		&ssd1331, &ssd1331_config_buydisplay_65k_colors
+		// &ssd1331, &ssd1331_config_adafruit_65k_colors
 	);
 
 	for(uint16_t y=0;y<SSD1331_HEIGHT;y++) {

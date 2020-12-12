@@ -557,3 +557,26 @@ ssd1331_config_t ssd1331_config_adafruit_256_colors = {
 	.pre_charge_level = 29,
 	.v_comh = 31,
 };
+
+ssd1331_config_t ssd1331_config_buydisplay_65k_colors = {
+	.color_a_contrast = 255,
+	.color_b_contrast = 255,
+	.color_c_contrast = 255,
+	// Buy Display sets it to 6, but using 15 gives more brightness.
+	.master_current = 15,
+	.second_pre_charge_speed_for_color_a = 0x64,
+	.second_pre_charge_speed_for_color_b = 0x78,
+	.second_pre_charge_speed_for_color_c = 0x64,
+	.column_address_mapping = SSD1331_RAM_COLUMN_0_TO_95_MAPS_TO_PIN_SEG_95_TO_0,
+	.left_right_swapping_on_com = false,
+	.com_scan = SSD1331_SCAN_FROM_COM_N_1_TO_COM0,
+	.com_split_odd_even = true,
+	.color_format = SSD1331_65k_COLORS,
+	.phase1_period = 1,
+	.phase2_period = 3,
+	.clock_divider = 0,
+	.oscillator_frequency = 15,
+	.grayscale_table = NULL,
+	.pre_charge_level = 31,
+	.v_comh = 31,
+};

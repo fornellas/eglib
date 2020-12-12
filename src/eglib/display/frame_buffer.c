@@ -37,6 +37,24 @@ static void draw_to_buffer_1bit_paged(
 	*byte = ((*byte)&~(1<<bit)) | (((color->r|color->g|color->b)&0x01)<<bit);
 }
 
+static void draw_to_buffer_8bit(
+	void *buffer_ptr,
+	coordinate_t width, coordinate_t height,
+	coordinate_t x, coordinate_t y,
+	color_t *color
+) {
+	uint8_t *buffer = (uint8_t *)buffer_ptr;
+
+	(void)height;
+
+	buffer += width * y + x;
+
+	*buffer = 0x00;
+	*buffer |= color->r & 0xE0;
+	*buffer |= (color->g & 0xE0)>>3;
+	*buffer |= (color->b & 0xC0)>>6;
+}
+
 static void draw_to_buffer_12bit(
 	void *buffer_ptr,
 	coordinate_t width, coordinate_t height,
@@ -125,6 +143,7 @@ static void (*draw_to_buffer[PIXEL_FORMAT_COUNT])(
 	color_t *color
 ) = {
 	[PIXEL_FORMAT_1BIT_BW_PAGED] = &draw_to_buffer_1bit_paged,
+	[PIXEL_FORMAT_8BIT_RGB] = &draw_to_buffer_8bit,
 	[PIXEL_FORMAT_12BIT_RGB] = &draw_to_buffer_12bit,
 	[PIXEL_FORMAT_16BIT_RGB] = &draw_to_buffer_16bit,
 	[PIXEL_FORMAT_18BIT_RGB_24BIT] = &draw_to_buffer_18bit_rgb_24bit,
@@ -133,6 +152,7 @@ static void (*draw_to_buffer[PIXEL_FORMAT_COUNT])(
 
 static const uint8_t color_bits[PIXEL_FORMAT_COUNT] = {
 	[PIXEL_FORMAT_1BIT_BW_PAGED] = 1,
+	[PIXEL_FORMAT_8BIT_RGB] = 8,
 	[PIXEL_FORMAT_12BIT_RGB] = 12,
 	[PIXEL_FORMAT_16BIT_RGB] = 16,
 	[PIXEL_FORMAT_18BIT_RGB_24BIT] = 24,

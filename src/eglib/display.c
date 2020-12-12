@@ -11,8 +11,6 @@ void display_default_draw_line(
 ) {
 	coordinate_t dx=0, dy=0;
 
-	eglib_CommBegin(eglib);
-
 	switch(direction) {
 		case DISPLAY_LINE_DIRECTION_RIGHT:
 			dx = 1;
@@ -33,8 +31,6 @@ void display_default_draw_line(
 		x += dx;
 		y += dy;
 	}
-
-	eglib_CommEnd(eglib);
 }
 
 coordinate_t eglib_GetWidth(eglib_t *eglib) {

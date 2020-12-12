@@ -23,7 +23,13 @@ enum pixel_format_t {
 	 */
 	PIXEL_FORMAT_1BIT_BW_PAGED,
 	/**
-	 * Each pair of pixel is packed in 3 bytes:
+	 * Each pixel is encoded in 1 byte:
+	 *
+	 * ``RRRBBBAA``
+	 */
+	PIXEL_FORMAT_8BIT_RGB,
+	/**
+	 * Each pair of pixels are packed in 3 bytes:
 	 *
 	 * ``RRRRGGGG BBBBRRRR GGGGBBBB``
 	 */

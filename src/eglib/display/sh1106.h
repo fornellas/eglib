@@ -153,7 +153,7 @@ typedef struct {
  *
  * Values extracted from `example code <https://github.com/sparkfun/SparkFun_Micro_OLED_Arduino_Library/blob/master/src/SFE_MicroOLED.cpp>`_.
  */
-extern const sh1106_config_t sh1106_config_sparkfun_micro_oled;
+extern sh1106_config_t sh1106_config_sparkfun_micro_oled;
 
 /**
  * Driver

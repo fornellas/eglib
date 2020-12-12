@@ -292,8 +292,11 @@ struct hal_struct {
 /** Delay for given number of nanoseconds */
 #define eglib_DelayNs(eglib, ns) ((eglib)->hal.driver->delay_ns(eglib, ns))
 
+/** Delay for given number of microseconds */
+#define eglib_DelayUs(eglib, us) ((eglib)->hal.driver->delay_ns(eglib, (uint32_t)(us) * 1000UL))
+
 /** Delay for given number of milliseconds */
-#define eglib_DelayMs(eglib, ns) ((eglib)->hal.driver->delay_ns(eglib, ns * 1000 * 1000))
+#define eglib_DelayMs(eglib, ns) ((eglib)->hal.driver->delay_ns(eglib, (uint32_t)(ns) * 1000000UL))
 
 /**
  * I/O

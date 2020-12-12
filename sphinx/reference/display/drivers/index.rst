@@ -7,5 +7,6 @@ Drivers
 
    frame_buffer.rst
    sh1106.rst
+   ssd1331.rst
    st7789.rst
    tga.rst

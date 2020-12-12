@@ -1,6 +1,8 @@
 - Bugs
   - Double hal driver init from frame buffer
 - Drawing
+  - FrameBuffer
+    - Track pixels drawn and use it to auto update only the changed rectangle.
   - Arc
     - Optimize algorithm to use line drawing when possible.
   - Ellipse

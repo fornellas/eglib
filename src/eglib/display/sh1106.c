@@ -83,13 +83,13 @@ static inline void set_column_address(
 	eglib_t *eglib,
 	coordinate_t column
 ) {
-	sh1106_config_t *display_config;
+	sh1106_config_t *config;
 	uint8_t buff[2];
 
-	display_config = eglib_GetDisplayConfig(eglib);
+	config = eglib_GetDisplayConfig(eglib);
 
-	buff[0] = SH1106_SET_HIGHER_COLUMN_ADDRESS(column + display_config->column_offset);
-	buff[1] = SH1106_SET_LOWER_COLUMN_ADDRESS(column + display_config->column_offset);
+	buff[0] = SH1106_SET_HIGHER_COLUMN_ADDRESS(column + config->column_offset);
+	buff[1] = SH1106_SET_LOWER_COLUMN_ADDRESS(column + config->column_offset);
 	eglib_SendCommands(eglib, buff, sizeof(buff));
 }
 
@@ -105,18 +105,18 @@ static inline void display_on(eglib_t *eglib) {
 // display_t
 
 static uint8_t get_7bit_slave_addr(eglib_t *eglib, enum hal_dc_t dc) {
-	sh1106_config_t *display_config;
+	sh1106_config_t *config;
 
 	(void)dc;
-	display_config = eglib_GetDisplayConfig(eglib);
+	config = eglib_GetDisplayConfig(eglib);
 
-	return 0x3C | (display_config->sa0);
+	return 0x3C | (config->sa0);
 }
 
 static void init(eglib_t *eglib) {
-	sh1106_config_t *display_config;
+	sh1106_config_t *config;
 
-	display_config = eglib_GetDisplayConfig(eglib);
+	config = eglib_GetDisplayConfig(eglib);
 
 	// Hardware reset
 
@@ -133,42 +133,42 @@ static void init(eglib_t *eglib) {
 	uint8_t commands_init[] = {
 		// Display physical construction
 
-		SH1106_SET_SEGMENT_REMAP(display_config->segment_remap),
+		SH1106_SET_SEGMENT_REMAP(config->segment_remap),
 
 		SH1106_SET_MULTIPLEX_RATIO,
-		SH1106_SET_MULTIPLEX_RATIO_ARG(display_config->height-1),
+		SH1106_SET_MULTIPLEX_RATIO_ARG(config->height-1),
 
 		SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_MODE_SET,
 		SH1106_COMMON_PADS_HARDWARE_CONFIGURATION_MODE_SET_ARG(
-			display_config->common_pads_hardware_configuration
+			config->common_pads_hardware_configuration
 		),
 
 		SH1106_SET_COMMON_OUTPUT_SCAN_DIRECTION(
-			display_config->common_output_scan_direction
+			config->common_output_scan_direction
 		),
 
 		SH1106_SET_DISPLAY_OFFSET,
-		display_config->display_offset,
+		config->display_offset,
 
 		// Change period
 
 		SH1106_DISCHARGE_PRECHARGE_PERIOD_MODE_SET,
 		SH1106_DISCHARGE_PRECHARGE_PERIOD_MODE_SET_ARG(
-			display_config->dis_charge_period,
-			display_config->pre_charge_period
+			config->dis_charge_period,
+			config->pre_charge_period
 		),
 
 		// VCOM deselect
 
 		SH1106_VCOM_DESELECT_LEVEL_MODE_SET,
-		display_config->vcom_deselect_level,
+		config->vcom_deselect_level,
 
 		// Internal display clocks
 
 		SH1106_SET_DISPLAY_CLOCK_DIVIDE_RATIO_OSCILLATOR_FREQUENCY,
 		SH1106_SET_DISPLAY_CLOCK_DIVIDE_RATIO_OSCILLATOR_FREQUENCY_ARG(
-			display_config->oscillator_frequency,
-			display_config->clock_divide
+			config->oscillator_frequency,
+			config->clock_divide
 		),
 	};
 
@@ -176,20 +176,20 @@ static void init(eglib_t *eglib) {
 
 
 	// Charge Pump Regulator
-	if(display_config->dc_dc_enable) {
+	if(config->dc_dc_enable) {
 		eglib_SendCommandByte(eglib, SH1106_DC_DC_CONTROL_MODE_SET);
 		eglib_SendCommandByte(eglib, SH1106_DC_DC_ON);
-		eglib_SendCommandByte(eglib, SHH1106_SET_PUMP_VOLTAGE(display_config->dc_dc_voltage));
+		eglib_SendCommandByte(eglib, SHH1106_SET_PUMP_VOLTAGE(config->dc_dc_voltage));
 	} else {
 		eglib_SendCommandByte(eglib, SH1106_DC_DC_CONTROL_MODE_SET);
 		eglib_SendCommandByte(eglib, SH1106_DC_DC_OFF);
 	}
 
 	// Clear RAM
-	for(uint8_t page=0 ; page < (display_config->height / 8) ; page++) {
+	for(uint8_t page=0 ; page < (config->height / 8) ; page++) {
 		eglib_SendCommandByte(eglib, SH1106_SET_PAGE_ADDRESS(page));
 		set_column_address(eglib, 0);
-		for(coordinate_t column=0 ; column < display_config->width ; column ++)
+		for(coordinate_t column=0 ; column < config->width ; column ++)
 			eglib_SendDataByte(eglib, 0x00);
 	}
 
@@ -213,12 +213,12 @@ static void get_dimension(
 	eglib_t *eglib,
 	coordinate_t *width, coordinate_t*height
 ) {
-	sh1106_config_t *display_config;
+	sh1106_config_t *config;
 
-	display_config = eglib_GetDisplayConfig(eglib);
+	config = eglib_GetDisplayConfig(eglib);
 
-	*width = display_config->width;;
-	*height = display_config->height;
+	*width = config->width;;
+	*height = config->height;
 };
 
 static void get_pixel_format(eglib_t *eglib, enum pixel_format_t *pixel_format) {
@@ -400,7 +400,7 @@ const display_t sh1106_vdd1_2_4_v = {
 // sh1106_config_t
 //
 
-const sh1106_config_t sh1106_config_sparkfun_micro_oled = {
+sh1106_config_t sh1106_config_sparkfun_micro_oled = {
 	// Display physical construction
 	.width = 64,
 	.height = 48,

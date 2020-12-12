@@ -3,7 +3,7 @@
 
 static void init(eglib_t *eglib) {
 	(void)eglib;
-
+	setvbuf(stdout, NULL, _IONBF, 0);
 	printf("init\n");
 }
 

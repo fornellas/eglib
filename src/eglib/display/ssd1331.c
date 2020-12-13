@@ -1,11 +1,14 @@
 #include "ssd1331.h"
 #include "../display.h"
+#include <stdlib.h>
 
 //
 // Defines
 //
 
 #define SSD1331_RESET_LOW_PULSE_WIDTH_US 2
+#define SSD1331_FOSC_MIN_HZ 800000UL
+#define SSD1331_FOSC_MAX_PERIOD_NS (1000000000UL/SSD1331_FOSC_MIN_HZ)
 
 // Configuration commands
 
@@ -480,9 +483,79 @@ void ssd1331_SetDimMode(
 	eglib_CommEnd(eglib);
 }
 
-// SSD1331_DRAW_LINE
+void ssd1331_DrawLine(
+	eglib_t *eglib,
+	uint8_t x1, uint8_t y1,
+	uint8_t x2, uint8_t y2
+) {
+	coordinate_t xd, yd;
+	uint8_t commands[] = {
+		SSD1331_DRAW_LINE,
+		x1, y1,
+		x2, y2,
+		eglib->drawing.color_index[0].r,
+		eglib->drawing.color_index[0].g,
+		eglib->drawing.color_index[0].b
+	};
 
-// SSD1331_DRAWING_RECTANGLE
+	eglib_CommBegin(eglib);
+	eglib_SendCommands(eglib, commands, sizeof(commands));
+	// Extracted from https://github.com/WolfWings/SSD1331_t3/blob/d7d5a537226ba6d0ade89c97f2bc5048a5a8b5e0/SSD1331_t3.cpp
+	xd = abs(x1 - x2);
+	yd = abs(y1 - y2);
+	eglib_DelayNs(eglib, SSD1331_FOSC_MAX_PERIOD_NS * ((xd > yd) ? xd : yd) / 16);
+	eglib_CommEnd(eglib);
+}
+
+void ssd1331_DrawFrame(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
+) {
+	uint8_t commands[] = {
+		SSD1331_FILL,
+		SSD1331_DISABLE_FILL_FOR_DRAW_RECTANGLE_COMMAND,
+		SSD1331_DRAWING_RECTANGLE,
+		x, y,
+		x + width, y + height,
+		eglib->drawing.color_index[0].r,
+		eglib->drawing.color_index[0].g,
+		eglib->drawing.color_index[0].b,
+		0, 0, 0 // Fill color not used.
+	};
+
+	eglib_CommBegin(eglib);
+	eglib_SendCommands(eglib, commands, sizeof(commands));
+	// Extracted from https://github.com/WolfWings/SSD1331_t3/blob/d7d5a537226ba6d0ade89c97f2bc5048a5a8b5e0/SSD1331_t3.cpp
+	eglib_DelayNs(eglib, SSD1331_FOSC_MAX_PERIOD_NS * (width + height + 2) / 8);
+	eglib_CommEnd(eglib);
+}
+
+void ssd1331_DrawBox(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
+) {
+	uint8_t commands[] = {
+		SSD1331_FILL,
+		SSD1331_ENABLE_FILL_FOR_DRAW_RECTANGLE_COMMAND,
+		SSD1331_DRAWING_RECTANGLE,
+		x, y,
+		x + width, y + height,
+		eglib->drawing.color_index[0].r,
+		eglib->drawing.color_index[0].g,
+		eglib->drawing.color_index[0].b,
+		eglib->drawing.color_index[0].r,
+		eglib->drawing.color_index[0].g,
+		eglib->drawing.color_index[0].b,
+	};
+
+	eglib_CommBegin(eglib);
+	eglib_SendCommands(eglib, commands, sizeof(commands));
+	// Extracted from https://github.com/WolfWings/SSD1331_t3/blob/d7d5a537226ba6d0ade89c97f2bc5048a5a8b5e0/SSD1331_t3.cpp
+	eglib_DelayNs(eglib, SSD1331_FOSC_MAX_PERIOD_NS * ((width + 1) * (height + 1)) / 16);
+	eglib_CommEnd(eglib);
+}
 
 // SSD1331_COPY
 

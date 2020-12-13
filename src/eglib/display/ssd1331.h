@@ -200,4 +200,37 @@ void ssd1331_SetDimMode(
 	uint8_t pre_charge_voltage
 );
 
+/**
+ * Similar to :c:func:`eglib_DrawLine`, draw a line using color from index 0. It
+ * draws directly to display memory using a graphic accelerated command.
+ * Coordinates must be inside the display area.
+ */
+void ssd1331_DrawLine(
+	eglib_t *eglib,
+	uint8_t x1, uint8_t y1,
+	uint8_t x2, uint8_t y2
+);
+
+/**
+ * Similar to :c:func:`eglib_DrawFrame`, draw a frame using color from index 0.
+ * It draws directly to display memory using a graphic accelerated command.
+ * Coordinates must be inside the display area.
+ */
+void ssd1331_DrawFrame(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
+);
+
+/**
+ * Similar to :c:func:`eglib_DrawBox`, draw a box using color from index 0.
+ * It draws directly to display memory using a graphic accelerated command.
+ * Coordinates must be inside the display area.
+ */
+void ssd1331_DrawBox(
+	eglib_t *eglib,
+	coordinate_t x, coordinate_t y,
+	coordinate_t width, coordinate_t height
+);
+
 #endif

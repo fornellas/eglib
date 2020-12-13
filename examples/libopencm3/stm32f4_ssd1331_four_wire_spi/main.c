@@ -62,4 +62,21 @@ int main(void) {
 
 	eglib_SetIndexColor(&eglib, 0, 0, 0, 255);
 	eglib_DrawLine(&eglib,0, 0, SSD1331_WIDTH/2, SSD1331_HEIGHT-1);
+
+	// Accelerated versions
+
+	eglib_SetIndexColor(&eglib, 0, 0, 255, 255);
+	ssd1331_DrawLine(&eglib, 0, 63, 95, 0);
+
+	eglib_SetIndexColor(&eglib, 0, 255, 255, 0);
+	ssd1331_DrawFrame(&eglib, 10, 20, 10, 20);
+
+	eglib_SetIndexColor(&eglib, 0, 255, 0, 255);
+	ssd1331_DrawFrame(&eglib, 0, 16, 95, 32);
+
+	eglib_SetIndexColor(&eglib, 0, 255, 255, 255);
+	ssd1331_DrawBox(&eglib, 40, 20, 40, 20);
+
+	eglib_SetIndexColor(&eglib, 0, 0, 0, 0);
+	ssd1331_DrawFrame(&eglib, 22, 20, 10, 20);
 }

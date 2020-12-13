@@ -36894,7 +36894,6 @@ send
   bytes af
 delay_ns 100000000
 comm_end
-init
 comm_begin
 send
   dc 0

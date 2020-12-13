@@ -345651,7 +345651,6 @@ send
   dc 0
   bytes 29
 comm_end
-init
 comm_begin
 send
   dc 0

@@ -251,7 +251,7 @@ static void send_buffer(
 	eglib_GetDimension(eglib, &display_width, &display_height);
 
 	eglib_CommBegin(eglib);
-	for(uint8_t page=y/8 ; page < ((y+height)/8+1) ; page++) {
+	for(uint8_t page=y/8 ; page < ((y+height)/8.0) ; page++) {
 		eglib_SendCommandByte(eglib, SH1106_SET_PAGE_ADDRESS(page));
 		set_column_address(eglib, x);
 		eglib_SendData(eglib, (buffer + page * display_width + x), width);

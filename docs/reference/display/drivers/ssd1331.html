@@ -46,9 +46,10 @@
 </ul>
 </li>
 <li><p><a class="reference internal" href="#driver" id="id5">Driver</a></p></li>
-<li><p><a class="reference internal" href="#examples" id="id6">Examples</a></p>
+<li><p><a class="reference internal" href="#functions" id="id6">Functions</a></p></li>
+<li><p><a class="reference internal" href="#examples" id="id7">Examples</a></p>
 <ul>
-<li><p><a class="reference internal" href="#wire-spi" id="id7">4-Wire SPI</a></p></li>
+<li><p><a class="reference internal" href="#wire-spi" id="id8">4-Wire SPI</a></p></li>
 </ul>
 </li>
 </ul>
@@ -111,7 +112,7 @@ enum <code class="sig-name descname">ssd1331_com_scan</code><a class="headerlink
 <dl class="type">
 <dt id="c.ssd1331_color_format">
 enum <code class="sig-name descname">ssd1331_color_format</code><a class="headerlink" href="#c.ssd1331_color_format" title="Permalink to this definition">¶</a></dt>
-<dd><p>Color format</p>
+<dd><p>Color format.</p>
 <dl class="macro">
 <dt id="c.SSD1331_256_COLORS">
 <code class="sig-name descname">SSD1331_256_COLORS</code><a class="headerlink" href="#c.SSD1331_256_COLORS" title="Permalink to this definition">¶</a></dt>
@@ -122,6 +123,36 @@ enum <code class="sig-name descname">ssd1331_color_format</code><a class="header
 <dt id="c.SSD1331_65k_COLORS">
 <code class="sig-name descname">SSD1331_65k_COLORS</code><a class="headerlink" href="#c.SSD1331_65k_COLORS" title="Permalink to this definition">¶</a></dt>
 <dd><p>65k color.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="type">
+<dt id="c.ssd1331_display_mode">
+enum <code class="sig-name descname">ssd1331_display_mode</code><a class="headerlink" href="#c.ssd1331_display_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display mode.</p>
+<dl class="macro">
+<dt id="c.SSD1331_DISPLAY_MODE_NORMAL">
+<code class="sig-name descname">SSD1331_DISPLAY_MODE_NORMAL</code><a class="headerlink" href="#c.SSD1331_DISPLAY_MODE_NORMAL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normal display</p>
+</dd></dl>
+
+<dl class="macro">
+<dt id="c.SSD1331_DISPLAY_MODE_ENTIRE_DISPLAY_ON">
+<code class="sig-name descname">SSD1331_DISPLAY_MODE_ENTIRE_DISPLAY_ON</code><a class="headerlink" href="#c.SSD1331_DISPLAY_MODE_ENTIRE_DISPLAY_ON" title="Permalink to this definition">¶</a></dt>
+<dd><p>Entire display ON, all pixels turn ON at GS63.</p>
+</dd></dl>
+
+<dl class="macro">
+<dt id="c.SSD1331_DISPLAY_MODE_ENTIRE_DISPLAY_OFF">
+<code class="sig-name descname">SSD1331_DISPLAY_MODE_ENTIRE_DISPLAY_OFF</code><a class="headerlink" href="#c.SSD1331_DISPLAY_MODE_ENTIRE_DISPLAY_OFF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Entire display OFF, all pixels turn OFF.</p>
+</dd></dl>
+
+<dl class="macro">
+<dt id="c.SSD1331_DISPLAY_MODE_INVERSE">
+<code class="sig-name descname">SSD1331_DISPLAY_MODE_INVERSE</code><a class="headerlink" href="#c.SSD1331_DISPLAY_MODE_INVERSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inverse display.</p>
 </dd></dl>
 
 </dd></dl>
@@ -154,12 +185,6 @@ uint8_t <code class="sig-name descname">color_b_contrast</code><a class="headerl
 <dt id="c.ssd1331_config_t.color_c_contrast">
 uint8_t <code class="sig-name descname">color_c_contrast</code><a class="headerlink" href="#c.ssd1331_config_t.color_c_contrast" title="Permalink to this definition">¶</a></dt>
 <dd><p>Contrast for color “C” segment (Pins: SA0-SA95). RESET=128.</p>
-</dd></dl>
-
-<dl class="member">
-<dt id="c.ssd1331_config_t.master_current">
-uint8_t <code class="sig-name descname">master_current</code><a class="headerlink" href="#c.ssd1331_config_t.master_current" title="Permalink to this definition">¶</a></dt>
-<dd><p>Master current attenuation factor (1/16 to 16/16). RESET=15.</p>
 </dd></dl>
 
 <dl class="member">
@@ -208,6 +233,12 @@ _Bool <code class="sig-name descname">com_split_odd_even</code><a class="headerl
 <dt id="c.ssd1331_config_t.color_format">
 enum <a class="reference internal" href="#c.ssd1331_color_format" title="ssd1331_color_format">ssd1331_color_format</a> <code class="sig-name descname">color_format</code><a class="headerlink" href="#c.ssd1331_config_t.color_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Color format. If 9/18bit mode is selected, color depth will be fixed to 65k.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.ssd1331_config_t.display_offset">
+uint8_t <code class="sig-name descname">display_offset</code><a class="headerlink" href="#c.ssd1331_config_t.display_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping of display start line to one of COM0-63.</p>
 </dd></dl>
 
 <dl class="member">
@@ -282,6 +313,12 @@ uint8_t <code class="sig-name descname">v_comh</code><a class="headerlink" href=
 <p>Values extracted from <a class="reference external" href="https://www.buydisplay.com/arduino/ER-OLEDM0.95-2_Arduino_Tutorial.zip">Buy Display’s example code</a>.</p>
 </dd></dl>
 
+<dl class="var">
+<dt id="c.ssd1331_config_buydisplay_256_colors">
+<a class="reference internal" href="#c.ssd1331_config_t" title="ssd1331_config_t">ssd1331_config_t</a> <code class="sig-name descname">ssd1331_config_buydisplay_256_colors</code><a class="headerlink" href="#c.ssd1331_config_buydisplay_256_colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variant of <a class="reference internal" href="#c.ssd1331_config_buydisplay_65k_colors" title="ssd1331_config_buydisplay_65k_colors"><code class="xref c c-data docutils literal notranslate"><span class="pre">ssd1331_config_buydisplay_65k_colors</span></code></a> with only 256 colors instead of 65k.</p>
+</dd></dl>
+
 </div>
 </div>
 <div class="section" id="driver">
@@ -313,10 +350,75 @@ this.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="functions">
+<h2><a class="toc-backref" href="#id6">Functions</a><a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>These functions can be used exclusively with <a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">eglib_t</span></code></a> initialized
+with <a class="reference internal" href="#c.ssd1331" title="ssd1331"><code class="xref c c-data docutils literal notranslate"><span class="pre">ssd1331</span></code></a> or <cite>ssd1331_overclock</cite>.</p>
+<dl class="function">
+<dt id="c.ssd1331_SetMasterCurrent">
+void <code class="sig-name descname">ssd1331_SetMasterCurrent</code><span class="sig-paren">(</span><a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, uint8_t<em> value</em><span class="sig-paren">)</span><a class="headerlink" href="#c.ssd1331_SetMasterCurrent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set master current attenuation factor from 0 (1/16) to 15 (16/16).</p>
+<p>This effectively controls the how dim / bright the display is.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.ssd1331_SetDisplayStartLine">
+void <code class="sig-name descname">ssd1331_SetDisplayStartLine</code><span class="sig-paren">(</span><a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, uint8_t<em> line</em><span class="sig-paren">)</span><a class="headerlink" href="#c.ssd1331_SetDisplayStartLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the display start line from 0 to 63.</p>
+<p>This controls vertical scrolling.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.ssd1331_SetDisplayMode">
+void <code class="sig-name descname">ssd1331_SetDisplayMode</code><span class="sig-paren">(</span><a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, enum <a class="reference internal" href="#c.ssd1331_display_mode" title="ssd1331_display_mode">ssd1331_display_mode</a><em> mode</em><span class="sig-paren">)</span><a class="headerlink" href="#c.ssd1331_SetDisplayMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set display mode</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.ssd1331_SetDimMode">
+void <code class="sig-name descname">ssd1331_SetDimMode</code><span class="sig-paren">(</span><a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, uint8_t<em> color_a_contrast</em>, uint8_t<em> color_b_contrast</em>, uint8_t<em> color_c_contrast</em>, uint8_t<em> pre_charge_voltage</em><span class="sig-paren">)</span><a class="headerlink" href="#c.ssd1331_SetDimMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set Dim mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>color_a_contrast</strong> – Contrast setting for color A.</p></li>
+<li><p><strong>color_b_contrast</strong> – Contrast setting for color B.</p></li>
+<li><p><strong>color_c_contrast</strong> – Contrast setting for color C.</p></li>
+<li><p><strong>pre_charge_voltge</strong> – Precharge voltage setting (0-31). Setting this to~15 should keep contrast tame with for low contrast values.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.ssd1331_DrawLine">
+void <code class="sig-name descname">ssd1331_DrawLine</code><span class="sig-paren">(</span><a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, uint8_t<em> x1</em>, uint8_t<em> y1</em>, uint8_t<em> x2</em>, uint8_t<em> y2</em><span class="sig-paren">)</span><a class="headerlink" href="#c.ssd1331_DrawLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to <a class="reference internal" href="../../drawing/functions.html#c.eglib_DrawLine" title="eglib_DrawLine"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_DrawLine()</span></code></a>, draw a line using color from index 0. It
+draws directly to display memory using a graphic accelerated command.
+Coordinates must be inside the display area.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.ssd1331_DrawFrame">
+void <code class="sig-name descname">ssd1331_DrawFrame</code><span class="sig-paren">(</span><a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> width</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> height</em><span class="sig-paren">)</span><a class="headerlink" href="#c.ssd1331_DrawFrame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to <a class="reference internal" href="../../drawing/functions.html#c.eglib_DrawFrame" title="eglib_DrawFrame"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_DrawFrame()</span></code></a>, draw a frame using color from index 0.
+It draws directly to display memory using a graphic accelerated command.
+Coordinates must be inside the display area.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.ssd1331_DrawBox">
+void <code class="sig-name descname">ssd1331_DrawBox</code><span class="sig-paren">(</span><a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> width</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> height</em><span class="sig-paren">)</span><a class="headerlink" href="#c.ssd1331_DrawBox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to <a class="reference internal" href="../../drawing/functions.html#c.eglib_DrawBox" title="eglib_DrawBox"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_DrawBox()</span></code></a>, draw a box using color from index 0.
+It draws directly to display memory using a graphic accelerated command.
+Coordinates must be inside the display area.</p>
+</dd></dl>
+
+</div>
 <div class="section" id="examples">
-<h2><a class="toc-backref" href="#id6">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="wire-spi">
-<h3><a class="toc-backref" href="#id7">4-Wire SPI</a><a class="headerlink" href="#wire-spi" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">4-Wire SPI</a><a class="headerlink" href="#wire-spi" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;eglib.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;eglib/display/frame_buffer.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;eglib/display/ssd1331.h&gt;</span><span class="cp"></span>
@@ -361,14 +463,13 @@ this.</p>
 		<span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span>
 		<span class="o">&amp;</span><span class="n">four_wire_spi_libopencm3_stm32f4</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">four_wire_spi_libopencm3_stm32f4_config</span><span class="p">,</span>
 		<span class="o">&amp;</span><span class="n">ssd1331</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ssd1331_config_buydisplay_65k_colors</span>
-		<span class="c1">// &amp;ssd1331, &amp;ssd1331_config_adafruit_65k_colors</span>
 	<span class="p">);</span>
 
 	<span class="k">for</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">y</span><span class="o">&lt;</span><span class="n">SSD1331_HEIGHT</span><span class="p">;</span><span class="n">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 		<span class="kt">uint8_t</span> <span class="n">v</span><span class="p">;</span>
 		<span class="n">v</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">SSD1331_HEIGHT</span><span class="mi">-1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">255</span><span class="p">;</span>
 		<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
-		<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span><span class="mi">-1</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+		<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
 	<span class="p">}</span>
 
 	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
@@ -382,6 +483,23 @@ this.</p>
 
 	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
 	<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">SSD1331_HEIGHT</span><span class="mi">-1</span><span class="p">);</span>
+
+	<span class="c1">// Accelerated versions</span>
+
+	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
+	<span class="n">ssd1331_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="n">ssd1331_DrawFrame</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+
+	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
+	<span class="n">ssd1331_DrawFrame</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>
+
+	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
+	<span class="n">ssd1331_DrawBox</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+
+	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="n">ssd1331_DrawFrame</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>

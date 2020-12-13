@@ -459,65 +459,47 @@ Coordinates must be inside the display area.</p>
 	<span class="p">};</span>
 	<span class="n">rcc_clock_setup_pll</span><span class="p">(</span><span class="o">&amp;</span><span class="n">rcc_hse_25mhz_3v3</span><span class="p">[</span><span class="n">RCC_CLOCK_3V3_84MHZ</span><span class="p">]);</span>
 
-	<span class="c1">// eglib_Init(</span>
-	<span class="c1">// 	&amp;eglib,</span>
-	<span class="c1">// 	&amp;four_wire_spi_libopencm3_stm32f4, &amp;four_wire_spi_libopencm3_stm32f4_config,</span>
-	<span class="c1">// 	&amp;ssd1331, &amp;ssd1331_config_buydisplay_65k_colors</span>
-	<span class="c1">// );</span>
-
-	<span class="n">frame_buffer_config_t</span> <span class="n">frame_buffer_config</span><span class="p">;</span>
-	<span class="n">eglib_Init_FrameBuffer</span><span class="p">(</span>
+	<span class="n">eglib_Init</span><span class="p">(</span>
 		<span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span>
-		<span class="o">&amp;</span><span class="n">frame_buffer_config</span><span class="p">,</span>
 		<span class="o">&amp;</span><span class="n">four_wire_spi_libopencm3_stm32f4</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">four_wire_spi_libopencm3_stm32f4_config</span><span class="p">,</span>
 		<span class="o">&amp;</span><span class="n">ssd1331</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ssd1331_config_buydisplay_65k_colors</span>
 	<span class="p">);</span>
 
+	<span class="k">for</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">y</span><span class="o">&lt;</span><span class="n">SSD1331_HEIGHT</span><span class="p">;</span><span class="n">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kt">uint8_t</span> <span class="n">v</span><span class="p">;</span>
+		<span class="n">v</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">SSD1331_HEIGHT</span><span class="mi">-1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">255</span><span class="p">;</span>
+		<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+		<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+	<span class="p">}</span>
+
 	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
-	<span class="n">eglib_DrawVLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SSD1331_HEIGHT</span><span class="p">);</span>
-	<span class="n">eglib_DrawVLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SSD1331_HEIGHT</span><span class="p">);</span>
+	<span class="n">eglib_DrawVLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SSD1331_HEIGHT</span><span class="p">);</span>
 
-	<span class="n">eglib_FrameBuffer_Send</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">);</span>
+	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span><span class="mi">-1</span><span class="p">,</span> <span class="n">SSD1331_HEIGHT</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
 
-	<span class="n">eglib_DrawVLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SSD1331_HEIGHT</span><span class="p">);</span>
+	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span><span class="mi">-1</span><span class="p">,</span> <span class="n">SSD1331_HEIGHT</span><span class="mi">-1</span><span class="p">);</span>
 
-	<span class="n">eglib_FrameBuffer_SendUpdated</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">);</span>
+	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
+	<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SSD1331_WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">SSD1331_HEIGHT</span><span class="mi">-1</span><span class="p">);</span>
 
-	<span class="c1">// for(uint16_t y=0;y&lt;SSD1331_HEIGHT;y++) {</span>
-	<span class="c1">// 	uint8_t v;</span>
-	<span class="c1">// 	v = y / ((float)SSD1331_HEIGHT-1) * 255;</span>
-	<span class="c1">// 	eglib_SetIndexColor(&amp;eglib, 0, v, v, v);</span>
-	<span class="c1">// 	eglib_DrawLine(&amp;eglib,0, y, SSD1331_WIDTH, y);</span>
-	<span class="c1">// }</span>
+	<span class="c1">// Accelerated versions</span>
 
-	<span class="c1">// eglib_SetIndexColor(&amp;eglib, 0, 255, 255, 255);</span>
-	<span class="c1">// eglib_DrawVLine(&amp;eglib, SSD1331_WIDTH/2, 0, SSD1331_HEIGHT);</span>
+	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
+	<span class="n">ssd1331_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 
-	<span class="c1">// eglib_SetIndexColor(&amp;eglib, 0, 255, 0, 0);</span>
-	<span class="c1">// eglib_DrawLine(&amp;eglib, 0, 0, SSD1331_WIDTH-1, SSD1331_HEIGHT/2);</span>
+	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="n">ssd1331_DrawFrame</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 
-	<span class="c1">// eglib_SetIndexColor(&amp;eglib, 0, 0, 255, 0);</span>
-	<span class="c1">// eglib_DrawLine(&amp;eglib,0, 0, SSD1331_WIDTH-1, SSD1331_HEIGHT-1);</span>
+	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
+	<span class="n">ssd1331_DrawFrame</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>
 
-	<span class="c1">// eglib_SetIndexColor(&amp;eglib, 0, 0, 0, 255);</span>
-	<span class="c1">// eglib_DrawLine(&amp;eglib,0, 0, SSD1331_WIDTH/2, SSD1331_HEIGHT-1);</span>
+	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
+	<span class="n">ssd1331_DrawBox</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 
-	<span class="c1">// // Accelerated versions</span>
-
-	<span class="c1">// eglib_SetIndexColor(&amp;eglib, 0, 0, 255, 255);</span>
-	<span class="c1">// ssd1331_DrawLine(&amp;eglib, 0, 63, 95, 0);</span>
-
-	<span class="c1">// eglib_SetIndexColor(&amp;eglib, 0, 255, 255, 0);</span>
-	<span class="c1">// ssd1331_DrawFrame(&amp;eglib, 10, 20, 10, 20);</span>
-
-	<span class="c1">// eglib_SetIndexColor(&amp;eglib, 0, 255, 0, 255);</span>
-	<span class="c1">// ssd1331_DrawFrame(&amp;eglib, 0, 16, 95, 32);</span>
-
-	<span class="c1">// eglib_SetIndexColor(&amp;eglib, 0, 255, 255, 255);</span>
-	<span class="c1">// ssd1331_DrawBox(&amp;eglib, 40, 20, 40, 20);</span>
-
-	<span class="c1">// eglib_SetIndexColor(&amp;eglib, 0, 0, 0, 0);</span>
-	<span class="c1">// ssd1331_DrawFrame(&amp;eglib, 22, 20, 10, 20);</span>
+	<span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="n">ssd1331_DrawFrame</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>

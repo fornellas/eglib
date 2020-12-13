@@ -55,8 +55,9 @@
 #define SSD1331_SET_MASTER_CONFIGURATION 0xad
 #define SSD1331_SET_MASTER_CONFIGURATION_EXTERNAL_VCC 0x8e
 
+#define SSD1331_SET_DISPLAY_ON_IN_DIM_MODE 0xac
 #define SSD1331_SET_DISPLAY_OFF 0xae
-#define SSD1331_SET_DISPLAY_ON 0xaf
+#define SSD1331_SET_DISPLAY_ON_IN_NORMAL_MODE 0xaf
 #define SSD1331_SET_DISPLAY_ON_DELAY_MS 100
 
 #define SSD1331_POWER_SAVE_MODE 0xb0
@@ -195,13 +196,14 @@ static void init(eglib_t *eglib) {
 		SSD1331_SET_CONTRAST_FOR_COLOR_A, config->color_a_contrast,
 		SSD1331_SET_CONTRAST_FOR_COLOR_B, config->color_b_contrast,
 		SSD1331_SET_CONTRAST_FOR_COLOR_C, config->color_c_contrast,
-		SSD1331_MASTER_CURRENT_CONTROL, config->master_current,
+		SSD1331_MASTER_CURRENT_CONTROL, 15,
 		SSD1331_SET_SECOND_PRE_CHARGE_SPEED_FOR_COLOR_A, config->second_pre_charge_speed_for_color_a,
 		SSD1331_SET_SECOND_PRE_CHARGE_SPEED_FOR_COLOR_B, config->second_pre_charge_speed_for_color_b,
 		SSD1331_SET_SECOND_PRE_CHARGE_SPEED_FOR_COLOR_C, config->second_pre_charge_speed_for_color_c,
 		SSD1331_REMAP_AND_COLOR_DEPTH_SETTING, get_remap_aand_color_depth_setting(config),
 		SSD1331_SET_MULTIPLEX_RATIO, SSD1331_HEIGHT - 1,
 		SSD1331_SET_MASTER_CONFIGURATION, SSD1331_SET_MASTER_CONFIGURATION_EXTERNAL_VCC,
+		SSD1331_SET_DISPLAY_OFFSET, config->display_offset,
 		SSD1331_PHASE_1_AND_2_PERIOD_ADJUSTMENT, SSD1331_PHASE_1_AND_2_PERIOD_ADJUSTMENT_ARG(
 			config->phase1_period,
 			config->phase2_period
@@ -226,27 +228,23 @@ static void init(eglib_t *eglib) {
 	eglib_SendCommandByte(eglib, SSD1331_SET_VCOMH);
 	eglib_SendCommandByte(eglib, SSD1331_VCOMH_ARG(config->v_comh));
 
-	eglib_SendCommandByte(eglib, SSD1331_SET_COLUMN_ADDRESS);
-	eglib_SendCommandByte(eglib, 0);
-	eglib_SendCommandByte(eglib, SSD1331_WIDTH - 1);
-	eglib_SendCommandByte(eglib, SSD1331_SET_ROW_ADDRESS);
-	eglib_SendCommandByte(eglib, 0);
-	eglib_SendCommandByte(eglib, SSD1331_HEIGHT - 1);
+	set_addresses(eglib, 0, SSD1331_WIDTH - 1, 0, SSD1331_HEIGHT - 1);
 	for(uint32_t addr=0 ; addr < SSD1331_HEIGHT * SSD1331_WIDTH * 2 ; addr++)
 		eglib_SendDataByte(eglib, 0x00);
 
-	eglib_SendCommandByte(eglib, SSD1331_SET_DISPLAY_ON);
+	eglib_SendCommandByte(eglib, SSD1331_SET_DISPLAY_ON_IN_NORMAL_MODE);
 	eglib_DelayMs(eglib, SSD1331_SET_DISPLAY_ON_DELAY_MS);
 
 	eglib_CommEnd(eglib);
 };
 
 static void sleep_in(eglib_t *eglib) {
+	eglib_CommBegin(eglib);
+	eglib_SendCommandByte(eglib, SSD1331_SET_DISPLAY_OFF);
 	uint8_t enable_power_save[] = {
 		SSD1331_POWER_SAVE_MODE,
 		SSD1331_POWER_SAVE_MODE_ENABLED,
 	};
-	eglib_CommBegin(eglib);
 	eglib_SendCommands(eglib, enable_power_save, sizeof(enable_power_save));
 	eglib_CommEnd(eglib);
 };
@@ -258,6 +256,8 @@ static void sleep_out(eglib_t *eglib) {
 	};
 	eglib_CommBegin(eglib);
 	eglib_SendCommands(eglib, disable_power_save, sizeof(disable_power_save));
+	eglib_SendCommandByte(eglib, SSD1331_SET_DISPLAY_ON_IN_NORMAL_MODE);
+	eglib_DelayMs(eglib, SSD1331_SET_DISPLAY_ON_DELAY_MS);
 	eglib_CommEnd(eglib);
 };
 
@@ -420,18 +420,65 @@ static bool refresh(eglib_t *eglib) {
 
 // Custom functions
 
-// SSD1331_SET_DISPLAY_START_LINE
+void ssd1331_SetMasterCurrent(eglib_t *eglib, uint8_t value) {
+	eglib_CommBegin(eglib);
+	uint8_t set_master_current[] = {
+		SSD1331_MASTER_CURRENT_CONTROL, value & 0x0f,
+	};
+	eglib_SendCommands(eglib, set_master_current, sizeof(set_master_current));
+	eglib_CommEnd(eglib);
+};
 
-// SSD1331_SET_DISPLAY_OFF
-// SSD1331_SET_DISPLAY_ON
-// SSD1331_SET_DISPLAY_ON_DELAY_MS
+void ssd1331_SetDisplayStartLine(eglib_t *eglib, uint8_t line) {
+	eglib_CommBegin(eglib);
+	uint8_t set_start_line[] = {
+		SSD1331_SET_DISPLAY_START_LINE, line & 0x3F,
+	};
+	eglib_SendCommands(eglib, set_start_line, sizeof(set_start_line));
+	eglib_CommEnd(eglib);
+}
 
-// SSD1331_SET_DISPLAY_OFFSET
+void ssd1331_SetDisplayMode(eglib_t *eglib, enum ssd1331_display_mode mode) {
+	eglib_CommBegin(eglib);
+	switch(mode) {
+		case SSD1331_DISPLAY_MODE_NORMAL:
+			eglib_SendCommandByte(eglib, SSD1331_SET_DISPLAY_MODE_NORMAL);
+			break;
+		case SSD1331_DISPLAY_MODE_ENTIRE_DISPLAY_ON:
+			eglib_SendCommandByte(eglib, SSD1331_SET_DISPLAY_MODE_ENTIRE_DISPLAY_ON);
+			break;
+		case SSD1331_DISPLAY_MODE_ENTIRE_DISPLAY_OFF:
+			eglib_SendCommandByte(eglib, SSD1331_SET_DISPLAY_MODE_ENTIRE_DISPLAY_OFF);
+			break;
+		case SSD1331_DISPLAY_MODE_INVERSE:
+			eglib_SendCommandByte(eglib, SSD1331_SET_DISPLAY_MODE_INVERSE_DISPLAY);
+			break;
+	}
+	eglib_CommEnd(eglib);
+}
 
-// SSD1331_SET_DISPLAY_MODE_NORMAL
-// SSD1331_SET_DISPLAY_MODE_ENTIRE_DISPLAY_ON
-// SSD1331_SET_DISPLAY_MODE_ENTIRE_DISPLAY_OFF
-// SSD1331_SET_DISPLAY_MODE_INVERSE_DISPLAY
+void ssd1331_SetDimMode(
+	eglib_t *eglib,
+	uint8_t color_a_contrast,
+	uint8_t color_b_contrast,
+	uint8_t color_c_contrast,
+	uint8_t pre_charge_voltage
+) {
+	uint8_t commands[] = {
+		SSD1331_DIM_MODE_SETTING,
+		0x00,
+		color_a_contrast,
+		color_b_contrast,
+		color_c_contrast,
+		pre_charge_voltage & 0x1F,
+		SSD1331_SET_DISPLAY_ON_IN_DIM_MODE
+	};
+
+	eglib_CommBegin(eglib);
+	eglib_SendCommands(eglib, commands, sizeof(commands));
+	eglib_DelayMs(eglib, SSD1331_SET_DISPLAY_ON_DELAY_MS);
+	eglib_CommEnd(eglib);
+}
 
 // SSD1331_DRAW_LINE
 
@@ -440,7 +487,6 @@ static bool refresh(eglib_t *eglib) {
 // SSD1331_COPY
 
 // SSD1331_DIM_WINDOW
-// SSD1331_DIM_MODE_SETTING
 
 // SSD1331_CLEAR_WINDOW
 
@@ -451,7 +497,9 @@ static bool refresh(eglib_t *eglib) {
 // SSD1331_FILL_ENABLE_REVERSE_DURING_COPY_COMMAND
 
 // SSD1331_CONTINUOUS_HORIZONTAL_AND_VERTICAL_SCROLLING_SETUP
+
 // SSD1331_DEACTIVATE_SCROLLING
+
 // SSD1331_ACTIVATE_SCROLLING
 
 //
@@ -516,8 +564,6 @@ ssd1331_config_t ssd1331_config_adafruit_65k_colors = {
 	.color_a_contrast = 0x91,
 	.color_b_contrast = 0x50,
 	.color_c_contrast = 0x7d,
-	// Adafruit sets it to 6, but using 15 gives more brightness.
-	.master_current = 15,
 	.second_pre_charge_speed_for_color_a = 0x64,
 	.second_pre_charge_speed_for_color_b = 0x78,
 	.second_pre_charge_speed_for_color_c = 0x64,
@@ -526,6 +572,7 @@ ssd1331_config_t ssd1331_config_adafruit_65k_colors = {
 	.com_scan = SSD1331_SCAN_FROM_COM_N_1_TO_COM0,
 	.com_split_odd_even = true,
 	.color_format = SSD1331_65k_COLORS,
+	.display_offset = 0,
 	.phase1_period = 1,
 	.phase2_period = 3,
 	.clock_divider = 0,
@@ -539,8 +586,6 @@ ssd1331_config_t ssd1331_config_adafruit_256_colors = {
 	.color_a_contrast = 0x91,
 	.color_b_contrast = 0x50,
 	.color_c_contrast = 0x7d,
-	// Adafruit sets it to 6, but using 15 gives more brightness.
-	.master_current = 15,
 	.second_pre_charge_speed_for_color_a = 0x64,
 	.second_pre_charge_speed_for_color_b = 0x78,
 	.second_pre_charge_speed_for_color_c = 0x64,
@@ -549,6 +594,7 @@ ssd1331_config_t ssd1331_config_adafruit_256_colors = {
 	.com_scan = SSD1331_SCAN_FROM_COM_N_1_TO_COM0,
 	.com_split_odd_even = true,
 	.color_format = SSD1331_256_COLORS,
+	.display_offset = 0,
 	.phase1_period = 1,
 	.phase2_period = 3,
 	.clock_divider = 0,
@@ -562,8 +608,6 @@ ssd1331_config_t ssd1331_config_buydisplay_65k_colors = {
 	.color_a_contrast = 255,
 	.color_b_contrast = 255,
 	.color_c_contrast = 255,
-	// Buy Display sets it to 6, but using 15 gives more brightness.
-	.master_current = 15,
 	.second_pre_charge_speed_for_color_a = 0x64,
 	.second_pre_charge_speed_for_color_b = 0x78,
 	.second_pre_charge_speed_for_color_c = 0x64,
@@ -572,11 +616,34 @@ ssd1331_config_t ssd1331_config_buydisplay_65k_colors = {
 	.com_scan = SSD1331_SCAN_FROM_COM_N_1_TO_COM0,
 	.com_split_odd_even = true,
 	.color_format = SSD1331_65k_COLORS,
+	.display_offset = 0,
 	.phase1_period = 1,
 	.phase2_period = 3,
 	.clock_divider = 0,
 	.oscillator_frequency = 15,
 	.grayscale_table = NULL,
-	.pre_charge_level = 31,
+	.pre_charge_level = 29,
+	.v_comh = 31,
+};
+
+ssd1331_config_t ssd1331_config_buydisplay_256_colors = {
+	.color_a_contrast = 255,
+	.color_b_contrast = 255,
+	.color_c_contrast = 255,
+	.second_pre_charge_speed_for_color_a = 0x64,
+	.second_pre_charge_speed_for_color_b = 0x78,
+	.second_pre_charge_speed_for_color_c = 0x64,
+	.column_address_mapping = SSD1331_RAM_COLUMN_0_TO_95_MAPS_TO_PIN_SEG_95_TO_0,
+	.left_right_swapping_on_com = false,
+	.com_scan = SSD1331_SCAN_FROM_COM_N_1_TO_COM0,
+	.com_split_odd_even = true,
+	.color_format = SSD1331_256_COLORS,
+	.display_offset = 0,
+	.phase1_period = 1,
+	.phase2_period = 3,
+	.clock_divider = 0,
+	.oscillator_frequency = 15,
+	.grayscale_table = NULL,
+	.pre_charge_level = 29,
 	.v_comh = 31,
 };

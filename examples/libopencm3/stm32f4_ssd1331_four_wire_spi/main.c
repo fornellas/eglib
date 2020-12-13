@@ -42,14 +42,13 @@ int main(void) {
 		&eglib,
 		&four_wire_spi_libopencm3_stm32f4, &four_wire_spi_libopencm3_stm32f4_config,
 		&ssd1331, &ssd1331_config_buydisplay_65k_colors
-		// &ssd1331, &ssd1331_config_adafruit_65k_colors
 	);
 
 	for(uint16_t y=0;y<SSD1331_HEIGHT;y++) {
 		uint8_t v;
 		v = y / ((float)SSD1331_HEIGHT-1) * 255;
 		eglib_SetIndexColor(&eglib, 0, v, v, v);
-		eglib_DrawLine(&eglib,0, y, SSD1331_WIDTH-1, y);
+		eglib_DrawLine(&eglib,0, y, SSD1331_WIDTH, y);
 	}
 
 	eglib_SetIndexColor(&eglib, 0, 255, 255, 255);

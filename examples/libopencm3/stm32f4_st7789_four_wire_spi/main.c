@@ -61,7 +61,7 @@ int main(void) {
 		uint8_t v;
 		v = y / (float)st7789_config.width * 255;
 		eglib_SetIndexColor(&eglib, 0, v, v, v);
-		eglib_DrawLine(&eglib,0, y, st7789_config.width-1, y);
+		eglib_DrawLine(&eglib,0, y, st7789_config.width, y);
 	}
 
 	eglib_SetIndexColor(&eglib, 0, 255, 0, 0);

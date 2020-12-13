@@ -6,7 +6,7 @@ set_reset 1
 comm_begin
 send
   dc 0
-  bytes 81 91 82 50 83 7d 87 0f 8a 64 8b 78 8c 64 a0 72 a8 3f ad 8e b1 f1 b3 f0
+  bytes 81 91 82 50 83 7d 87 0f 8a 64 8b 78 8c 64 a0 72 a8 3f ad 8e a2 00 b1 f1 b3 f0
 send
   dc 0
   bytes b9
@@ -24,22 +24,7 @@ send
   bytes 3e
 send
   dc 0
-  bytes 15
-send
-  dc 0
-  bytes 00
-send
-  dc 0
-  bytes 5f
-send
-  dc 0
-  bytes 75
-send
-  dc 0
-  bytes 00
-send
-  dc 0
-  bytes 3f
+  bytes 15 00 5f 75 00 3f
 send
   dc 1
   bytes 00

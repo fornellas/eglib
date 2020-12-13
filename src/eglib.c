@@ -28,8 +28,8 @@ void eglib_Init(
 }
 
 void eglib_SleepIn(eglib_t *eglib) {
-	eglib->hal.driver->sleep_in(eglib);
 	eglib->display.driver->sleep_in(eglib);
+	eglib->hal.driver->sleep_in(eglib);
 }
 
 void eglib_SleepOut(eglib_t *eglib) {

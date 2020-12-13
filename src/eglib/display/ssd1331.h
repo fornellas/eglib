@@ -29,12 +29,24 @@ enum ssd1331_com_scan {
 	SSD1331_SCAN_FROM_COM_N_1_TO_COM0,
 };
 
-/** Color format */
+/** Color format. */
 enum ssd1331_color_format {
 	/** 256 color. */
 	SSD1331_256_COLORS,
 	/** 65k color. */
 	SSD1331_65k_COLORS,
+};
+
+/** Display mode. */
+enum ssd1331_display_mode {
+	/** Normal display */
+	SSD1331_DISPLAY_MODE_NORMAL,
+	/** Entire display ON, all pixels turn ON at GS63. */
+	SSD1331_DISPLAY_MODE_ENTIRE_DISPLAY_ON,
+	/** Entire display OFF, all pixels turn OFF. */
+	SSD1331_DISPLAY_MODE_ENTIRE_DISPLAY_OFF,
+	/**Inverse display. */
+	SSD1331_DISPLAY_MODE_INVERSE,
 };
 
 /**
@@ -54,8 +66,6 @@ typedef struct {
 	uint8_t color_b_contrast;
 	/** Contrast for color "C" segment (Pins: SA0-SA95). RESET=128. */
 	uint8_t color_c_contrast;
-	/** Master current attenuation factor (1/16 to 16/16). RESET=15. */
-	uint8_t master_current : 4;
 	/** Second pre-charge speed for color A. Default value equals to ``color_a_contrast``. */
 	uint8_t second_pre_charge_speed_for_color_a;
 	/** Second pre-charge speed for color B. Default value equals to ``color_b_contrast``. */
@@ -72,6 +82,8 @@ typedef struct {
 	bool com_split_odd_even;
 	/** Color format. If 9/18bit mode is selected, color depth will be fixed to 65k. */
 	enum ssd1331_color_format color_format;
+	/** Mapping of display start line to one of COM0-63. */
+	uint8_t display_offset : 6;
 	/** Phase 1 period in N DCLK (1-15). RESET=7. */
 	uint8_t phase1_period : 4;
 	/** Phase 2 period in N DCLK (1-15). RESET=4. */
@@ -119,6 +131,11 @@ extern ssd1331_config_t ssd1331_config_adafruit_256_colors;
 extern ssd1331_config_t ssd1331_config_buydisplay_65k_colors;
 
 /**
+ * Variant of :c:data:`ssd1331_config_buydisplay_65k_colors` with only 256 colors instead of 65k.
+ */
+extern ssd1331_config_t ssd1331_config_buydisplay_256_colors;
+
+/**
  * Driver
  * ======
  */
@@ -141,5 +158,46 @@ extern const display_t ssd1331;
  * this.
  */
 extern const display_t ssd1331_overclock;
+
+/**
+ * Functions
+ * =========
+ *
+ * These functions can be used exclusively with :c:type:`eglib_t` initialized
+ * with :c:data:`ssd1331` or `ssd1331_overclock`.
+ */
+
+/**
+ * Set master current attenuation factor from 0 (1/16) to 15 (16/16).
+ *
+ * This effectively controls the how dim / bright the display is. 
+ */
+void ssd1331_SetMasterCurrent(eglib_t *eglib, uint8_t value);
+
+/**
+ * Set the display start line from 0 to 63.
+ *
+ * This controls vertical scrolling.
+ */
+void ssd1331_SetDisplayStartLine(eglib_t *eglib, uint8_t line);
+
+/** Set display mode */
+void ssd1331_SetDisplayMode(eglib_t *eglib, enum ssd1331_display_mode mode);
+
+/**
+ * Set Dim mode.
+ *
+ * :param color_a_contrast: Contrast setting for color A.
+ * :param color_b_contrast: Contrast setting for color B.
+ * :param color_c_contrast: Contrast setting for color C.
+ * :param pre_charge_voltge: Precharge voltage setting (0-31). Setting this to~15 should keep contrast tame with for low contrast values.
+ */
+void ssd1331_SetDimMode(
+	eglib_t *eglib,
+	uint8_t color_a_contrast,
+	uint8_t color_b_contrast,
+	uint8_t color_c_contrast,
+	uint8_t pre_charge_voltage
+);
 
 #endif

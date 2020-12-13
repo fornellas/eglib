@@ -1,4 +1,5 @@
 #include "frame_buffer.h"
+#include "../hal/four_wire_spi/none.h"
 #include <stdlib.h>
 
 static void get_pixel_format(eglib_t *eglib, enum pixel_format_t *pixel_format);
@@ -302,8 +303,8 @@ eglib_t *eglib_Init_FrameBuffer(
 
 	eglib_Init(
 		eglib,
-		hal_driver, hal_config_ptr,
-		frame_buffer, frame_buffer_config
+		&four_wire_spi_none, NULL,
+		frame_buffer, config
 	);
 
 	return &frame_buffer_config->eglib_buffered;

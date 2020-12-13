@@ -65,7 +65,7 @@
 </ol>
 <blockquote>
 <div><p>It is common for displays controllers to support multiple buses: 4-Wire SPI, 3-Wire SPI, I2C, Parallel 6800/8000.</p>
-<p>eglib has support for some of those with its <a class="reference internal" href="../reference/hal/index.html"><span class="doc">HAL</span></a> interface.</p>
+<p>eglib has support for some of those with its <a class="reference internal" href="../api_reference/hal/index.html"><span class="doc">HAL</span></a> interface.</p>
 </div></blockquote>
 <ol class="arabic simple" start="3">
 <li><p>Determine all commands &amp; arguments it can accept.</p></li>
@@ -116,12 +116,12 @@
 <span class="kt">void</span> <span class="nf">ic_number_DoSomethingSpecific</span><span class="p">(</span><span class="n">eglib_t</span> <span class="o">*</span><span class="n">eglib</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Then add <code class="docutils literal notranslate"><span class="pre">src/eglib/display/${IC_NUMBER}.c</span></code>. This must define the <a class="reference internal" href="../reference/eglib.html#c.display_t" title="display_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">display_t</span></code></a> <code class="docutils literal notranslate"><span class="pre">ic_number</span></code> variable declared at the header. This variable type is actually <a class="reference internal" href="../reference/display/interface.html#c.display_struct" title="display_struct"><code class="xref c c-type docutils literal notranslate"><span class="pre">display_struct</span></code></a>, which must be filled with:</p>
+<p>Then add <code class="docutils literal notranslate"><span class="pre">src/eglib/display/${IC_NUMBER}.c</span></code>. This must define the <a class="reference internal" href="../api_reference/eglib.html#c.display_t" title="display_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">display_t</span></code></a> <code class="docutils literal notranslate"><span class="pre">ic_number</span></code> variable declared at the header. This variable type is actually <a class="reference internal" href="../api_reference/display/interface.html#c.display_struct" title="display_struct"><code class="xref c c-type docutils literal notranslate"><span class="pre">display_struct</span></code></a>, which must be filled with:</p>
 <ul class="simple">
 <li><p>HAL communication configuration for each supported bus.</p></li>
 <li><p>Pointers to functions that implement the various bits of the driver.</p></li>
 </ul>
-<p><a class="reference internal" href="../reference/display/interface.html#c.display_struct" title="display_struct"><code class="xref c c-type docutils literal notranslate"><span class="pre">display_struct</span></code></a> is well documented: you should be able to follow it though to a working driver.</p>
+<p><a class="reference internal" href="../api_reference/display/interface.html#c.display_struct" title="display_struct"><code class="xref c c-type docutils literal notranslate"><span class="pre">display_struct</span></code></a> is well documented: you should be able to follow it though to a working driver.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Important</dt>
 <dd class="field-odd"><p>Create defines for all display commands used: sending a “maigic” value <code class="docutils literal notranslate"><span class="pre">0x33</span></code> is meaningless, but <code class="docutils literal notranslate"><span class="pre">IC_NUMBER_SLEEP_IN</span></code> is not.</p>
@@ -147,7 +147,7 @@
 </div>
 <div class="section" id="add-unit-tests">
 <h2><a class="toc-backref" href="#id7">Add Unit Tests</a><a class="headerlink" href="#add-unit-tests" title="Permalink to this headline">¶</a></h2>
-<p>Add one or more tests to <a class="reference external" href="https://github.com/fornellas/eglib/tree/master/tests/display">master/tests/display</a>. These tests make use of the <a class="reference internal" href="../reference/hal/four_wire_spi/stdout.html"><span class="doc">stdout</span></a> HAL driver and assert on the communication that the display driver does.</p>
+<p>Add one or more tests to <a class="reference external" href="https://github.com/fornellas/eglib/tree/master/tests/display">master/tests/display</a>. These tests make use of the <a class="reference internal" href="../api_reference/hal/four_wire_spi/stdout.html"><span class="doc">stdout</span></a> HAL driver and assert on the communication that the display driver does.</p>
 </div>
 <div class="section" id="send-a-pull-request">
 <h2><a class="toc-backref" href="#id8">Send A Pull Request</a><a class="headerlink" href="#send-a-pull-request" title="Permalink to this headline">¶</a></h2>
@@ -233,7 +233,7 @@
 <li class="toctree-l2"><a class="reference internal" href="hal.html">HAL</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html">API Reference</a></li>
 </ul>
 
 

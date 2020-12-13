@@ -50,4 +50,4 @@ Features
    :hidden:
 
    driver_development/index.rst
-   reference/index.rst
+   api_reference/index.rst

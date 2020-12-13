@@ -5,15 +5,15 @@
 #include <stdio.h>
 
 static void init(eglib_t *eglib) {
-	tga_config_t *display_config;
+	tga_config_t *config;
 
-	display_config = eglib_GetDisplayConfig(eglib);
+	config = eglib_GetDisplayConfig(eglib);
 
-	display_config->tga_data = (uint8_t *)calloc(
-		display_config->width * display_config->height,
+	config->tga_data = (uint8_t *)calloc(
+		config->width * config->height,
 		3
 	);
-	if ( display_config->tga_data == NULL )
+	if ( config->tga_data == NULL )
 		exit(1);
 }
 
@@ -30,12 +30,12 @@ static void get_dimension(
 	coordinate_t *width,
 	coordinate_t *height
 ) {
-	tga_config_t *display_config;
+	tga_config_t *config;
 
-	display_config = eglib_GetDisplayConfig(eglib);
+	config = eglib_GetDisplayConfig(eglib);
 
-	*width = display_config->width;
-	*height = display_config->height;
+	*width = config->width;
+	*height = config->height;
 }
 
 static void get_pixel_format(eglib_t *eglib, enum pixel_format_t *pixel_format) {
@@ -50,17 +50,17 @@ static void draw_pixel_color(
 	coordinate_t y,
 	color_t color
 ) {
-	tga_config_t *display_config;
+	tga_config_t *config;
 	uint8_t *p;
 
-	display_config = eglib_GetDisplayConfig(eglib);
+	config = eglib_GetDisplayConfig(eglib);
 
-	if(x >= display_config->width || y >= display_config->height || x < 0 || y < 0)
+	if(x >= config->width || y >= config->height || x < 0 || y < 0)
 		return;
 
-	y = display_config->height -1 - y;
+	y = config->height -1 - y;
 
-	p = display_config->tga_data + (y * display_config->width * 3) + (x * 3);
+	p = config->tga_data + (y * config->width * 3) + (x * 3);
 	*p++ = color.b;
 	*p++ = color.g;
 	*p++ = color.r;
@@ -72,30 +72,36 @@ static void send_buffer(
        coordinate_t x, coordinate_t y,
        coordinate_t width, coordinate_t height
 ) {
-       uint8_t *buffer = (uint8_t *)buffer_ptr;
-       color_t color;
-       coordinate_t y_start, y_end, x_start, x_end;
+	tga_config_t *config;
+	uint8_t *buffer = (uint8_t *)buffer_ptr;
+	color_t color;
+	coordinate_t y_start, y_end, x_start, x_end;
 
-       y_start = x;
-       y_end = y + height;
-       x_start = x;
-       x_end = x + width;
+	config = eglib_GetDisplayConfig(eglib);
 
-       for(y = y_start; y <= y_end ; y++) {
-               for(x = x_start; x <= x_end ; x++) {
-                       color.r = *buffer;
-                       buffer++;
-                       color.g = *buffer;
-                       buffer++;
-                       color.b = *buffer;
-                       buffer++;
-                       eglib_DrawPixelColor(
-                               eglib,
-                               x, y,
-                               color
-                       );
-               }
-       }
+	y_start = x;
+	y_end = y + height;
+	x_start = x;
+	x_end = x + width;
+
+	for(y = y_start; y < y_end ; y++) {
+		for(x = x_start; x < x_end ; x++) {
+			uint8_t *pixel;
+
+			pixel = buffer + (config->width * y + x) * 3;;
+
+			color.r = *pixel;
+			pixel++;
+			color.g = *pixel;
+			pixel++;
+			color.b = *pixel;
+			eglib_DrawPixelColor(
+				eglib,
+				x, y,
+				color
+			);
+		}
+	}
 }
 
 static bool refresh(eglib_t *eglib) {
@@ -137,10 +143,10 @@ static void tga_write_word(FILE *fp, uint16_t word) {
 }
 
 void tga_Save(eglib_t *eglib, char *path) {
-	tga_config_t *display_config;
+	tga_config_t *config;
 	FILE *fp;
 
-	display_config = eglib_GetDisplayConfig(eglib);
+	config = eglib_GetDisplayConfig(eglib);
 
 	fp = fopen(path, "wb");
 	if ( fp != NULL ) {
@@ -152,11 +158,11 @@ void tga_Save(eglib_t *eglib, char *path) {
 		tga_write_byte(fp, 0);
 		tga_write_word(fp, 0);		/* x origin */
 		tga_write_word(fp, 0);		/* y origin */
-		tga_write_word(fp, display_config->width);		/* width */
-		tga_write_word(fp, display_config->height);		/* height */
+		tga_write_word(fp, config->width);		/* width */
+		tga_write_word(fp, config->height);		/* height */
 		tga_write_byte(fp, 24);		/* color depth */
 		tga_write_byte(fp, 0);
-		fwrite(display_config->tga_data, 3, display_config->width * display_config->height, fp);
+		fwrite(config->tga_data, 3, config->width * config->height, fp);
 		tga_write_word(fp, 0);
 		tga_write_word(fp, 0);
 		tga_write_word(fp, 0);
@@ -167,9 +173,9 @@ void tga_Save(eglib_t *eglib, char *path) {
 }
 
 void tga_Free(eglib_t *eglib) {
-	tga_config_t *display_config;
+	tga_config_t *config;
 
-	display_config = eglib_GetDisplayConfig(eglib);
+	config = eglib_GetDisplayConfig(eglib);
 
-	free(display_config->tga_data);
+	free(config->tga_data);
 }

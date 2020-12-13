@@ -73,7 +73,7 @@ int main(void) {
 	eglib_SetIndexColor(&eglib, 0, 0, 0, 255);
 	eglib_DrawLine(&eglib,0, 0, st7789_config.width/2, st7789_config.height-1);
 
-	eglib_FrameBuffer_Send(
+	eglib_FrameBuffer_SendPartial(
 		&eglib,
 		st7789_config.width / 8, st7789_config.height / 8,
 		3 * st7789_config.width / 4, 3 * st7789_config.height / 4

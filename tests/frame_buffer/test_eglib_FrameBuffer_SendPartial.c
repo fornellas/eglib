@@ -15,8 +15,6 @@ int main(int argc, char *argv[]) {
 	frame_buffer_config_t frame_buffer_config;
 
 	coordinate_t width, height;
-	
-	setbuf(stdout, NULL);
 
 	eglib_tga = eglib_Init_FrameBuffer(
 		&eglib, &frame_buffer_config,
@@ -41,7 +39,7 @@ int main(int argc, char *argv[]) {
 	eglib_SetIndexColor(&eglib, 0, 0, 0, 255);
 	eglib_DrawLine(&eglib, 0, 0, width - 1, height - 1);
 
-	eglib_FrameBuffer_Send(&eglib, 0, 0, width - 1, height -1);
+	eglib_FrameBuffer_SendPartial(&eglib, 0, 0, 50, 50);
 
 	if(argc == 2)
 		tga_Save(eglib_tga, argv[1]);

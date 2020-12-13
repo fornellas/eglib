@@ -105,9 +105,21 @@ specific functions, such as <a class="reference internal" href="st7789.html#c.st
 </dd></dl>
 
 <dl class="function">
+<dt id="c.eglib_FrameBuffer_SendPartial">
+void <code class="sig-name descname">eglib_FrameBuffer_SendPartial</code><span class="sig-paren">(</span><a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> width</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> height</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_FrameBuffer_SendPartial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send part of the frame buffer to the display RAM.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="c.eglib_FrameBuffer_Send">
-void <code class="sig-name descname">eglib_FrameBuffer_Send</code><span class="sig-paren">(</span><a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> width</em>, <a class="reference internal" href="../../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> height</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_FrameBuffer_Send" title="Permalink to this definition">¶</a></dt>
-<dd><p>Send the frame buffer to the display RAM all at once.</p>
+<code class="sig-name descname">eglib_FrameBuffer_Send</code><span class="sig-paren">(</span>eglib<span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_FrameBuffer_Send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send the whole frame buffer to the display RAM.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.eglib_FrameBuffer_SendUpdated">
+void <code class="sig-name descname">eglib_FrameBuffer_SendUpdated</code><span class="sig-paren">(</span><a class="reference internal" href="../../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_FrameBuffer_SendUpdated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send only updated parts of the frame buffer to the display RAM.</p>
 </dd></dl>
 
 <dl class="function">
@@ -199,7 +211,7 @@ void <code class="sig-name descname">frame_buffer_Free</code><span class="sig-pa
 	<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sh1106_config</span><span class="p">.</span><span class="n">width</span><span class="mi">-1</span><span class="p">,</span> <span class="n">sh1106_config</span><span class="p">.</span><span class="n">height</span><span class="mi">-1</span><span class="p">);</span>
 	<span class="n">eglib_DrawLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">sh1106_config</span><span class="p">.</span><span class="n">height</span><span class="mi">-1</span><span class="p">,</span> <span class="n">sh1106_config</span><span class="p">.</span><span class="n">width</span><span class="mi">-1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 
-	<span class="n">eglib_FrameBuffer_Send</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sh1106_config</span><span class="p">.</span><span class="n">width</span><span class="mi">-1</span><span class="p">,</span> <span class="n">sh1106_config</span><span class="p">.</span><span class="n">height</span><span class="mi">-1</span><span class="p">);</span>
+	<span class="n">eglib_FrameBuffer_Send</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eglib</span><span class="p">);</span>
 
 	<span class="n">sh1106_Reverse</span><span class="p">(</span><span class="n">eglib_sh1106</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
 <span class="p">}</span>

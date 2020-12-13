@@ -19,6 +19,10 @@ typedef struct {
 	display_t frame_buffer;
 	eglib_t eglib_buffered;
 	void *buffer;
+	coordinate_t x_start;
+	coordinate_t x_end;
+	coordinate_t y_start;
+	coordinate_t y_end;
 } frame_buffer_config_t;
 
 /**
@@ -71,12 +75,18 @@ eglib_t *eglib_Init_FrameBuffer(
 	void *display_config_ptr
 );
 
-/** Send the frame buffer to the display RAM all at once. */
-void eglib_FrameBuffer_Send(
+/** Send part of the frame buffer to the display RAM. */
+void eglib_FrameBuffer_SendPartial(
 	eglib_t *eglib,
 	coordinate_t x, coordinate_t y,
 	coordinate_t width, coordinate_t height
 );
+
+/** Send the whole frame buffer to the display RAM. */
+#define eglib_FrameBuffer_Send(eglib) eglib_FrameBuffer_SendPartial(eglib, 0, 0, eglib_GetWidth(eglib), eglib_GetHeight(eglib))
+
+/** Send only updated parts of the frame buffer to the display RAM. */
+void eglib_FrameBuffer_SendUpdated(eglib_t *eglib);
 
 /** Free memory previously allocated by :c:func:`eglib_Init_FrameBuffer`. */
 void frame_buffer_Free(eglib_t *eglib);

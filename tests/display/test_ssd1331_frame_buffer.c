@@ -32,7 +32,7 @@ int main(void) {
 	eglib_SetIndexColor(&eglib, 0, 0, 0, 255);
 	eglib_DrawLine(&eglib,0, 0, SSD1331_WIDTH/2, SSD1331_HEIGHT-1);
 
-	eglib_FrameBuffer_Send(
+	eglib_FrameBuffer_SendPartial(
 		&eglib,
 		SSD1331_WIDTH / 8, SSD1331_HEIGHT / 8,
 		3 * SSD1331_WIDTH / 4, 3 * SSD1331_HEIGHT / 4

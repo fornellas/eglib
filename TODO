@@ -13,21 +13,10 @@
       - By alpha 8-bit bitmap
       - By alpha 1-bit bitmap
    - Text
-    - eglib_getFontAscent
-    - eglib_getFontDescent
-    - eglib_print
-    - eglib_setFontMode
-    - eglib_setFontPosBaseline
-    - eglib_setFontPosBottom
-    - eglib_setFontPosCenter
-    - eglib_setFontPosTop
-    - eglib_setPrintDir / eglib_setFontDirection
-    - eglib_setFontRefHeightAll
-    - eglib_setFontRefHeightExtendedText
-    - eglib_setFontRefHeightText
-    - eglib_setPrintPos
-    - Fonts with aliasing
-      - Experiment with different bits per pixel
+    - stdout
+    - Right-to-left, top-to-bottom languages.
+    - Direction degrees: 0, 90, 180, 270.
+    - Aliasing
   - Rotate
     - eglib_SetRotate0
     - eglib_SetRotate90
@@ -36,7 +25,6 @@
   - Scale
     - eglib_SetScale1x
     - eglib_SetScale2x
-  - printf()
 - Documentation
   - Usage
     - Existing config
@@ -79,6 +67,8 @@
   - Add code coverage (gcov).
   - More thorough tests for display drivers
 - Display drivers
+  - In-memory bitmap
+    - That can then be used with eglib_DrawBitmap for artifact free updates.
   - SDL (simulator)
   - SSD1306 (OLED) https://cdn-shop.adafruit.com/datasheets/SSD1306.pdf
   - PCD8544 (LCD) https://www.sparkfun.com/datasheets/LCD/Monochrome/Nokia5110.pdf

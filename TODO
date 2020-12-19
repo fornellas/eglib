@@ -65,6 +65,9 @@
   - 4-wire SPI
     - avr-libc
     - Arduino
+    - Raspberry Pi
+      - Wiring Pi
+      - bcm2835
   - I2C
     - avr-libc
     - Arduino

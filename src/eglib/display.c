@@ -5,7 +5,7 @@ void display_default_draw_line(
 	eglib_t *eglib,
 	coordinate_t x,
 	coordinate_t y,
-	display_line_direction_t direction,
+	enum display_line_direction_t direction,
 	coordinate_t length,
 	color_t (*get_next_color)(eglib_t *eglib)
 ) {

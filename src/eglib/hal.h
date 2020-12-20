@@ -36,12 +36,12 @@ enum hal_bit_numbering_t {
  *
  * :See also: :c:type:`hal_i2c_config_t`.
  */
-typedef enum {
+enum hal_i2c_speed_t {
 	/** 100kHz */
 	HAL_I2C_100KHZ,
 	/** 400kHz */
 	HAL_I2C_400KHZ,
-} hal_i2c_speed_t;
+};
 
 /**
  * Display Configuration
@@ -104,7 +104,7 @@ typedef struct {
  */
 typedef struct {
 	/** I2C Speed */
-	hal_i2c_speed_t speed;
+	enum hal_i2c_speed_t speed;
 	/**
 	 * Pointer to a function that returns the 7-bit slave address of the display.
 	 *

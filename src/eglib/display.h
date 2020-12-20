@@ -12,7 +12,7 @@
 /**
  * Line direction to draw.
  */
-typedef enum {
+enum display_line_direction_t {
 	/** Right: x increments. */
 	DISPLAY_LINE_DIRECTION_RIGHT,
 	/** Right: x decrements. */
@@ -21,7 +21,7 @@ typedef enum {
 	DISPLAY_LINE_DIRECTION_DOWN,
 	/** Right: y decrements. */
 	DISPLAY_LINE_DIRECTION_UP,
-} display_line_direction_t;
+};
 
 /**
  * Communication bus configuration required by the display.
@@ -152,7 +152,7 @@ struct display_struct {
 	 * :param eglib: :c:type:`eglib_t` handle.
 	 * :param x: line x start.
 	 * :param y: line y start.
-	 * :param direction: Line :c:type:`display_line_direction_t` (right, left, down up).
+	 * :param direction: Line :c:type:`enum display_line_direction_t` (right, left, down up).
 	 * :param length: Line length in pixels.
 	 * :param get_next_color: Pointer to a function that must be called for each
 	 *   line pixel to get its color.
@@ -161,7 +161,7 @@ struct display_struct {
 		eglib_t *eglib,
 		coordinate_t x,
 		coordinate_t y,
-		display_line_direction_t direction,
+		enum display_line_direction_t direction,
 		coordinate_t length,
 		color_t (*get_next_color)(eglib_t *eglib)
 	);
@@ -238,7 +238,7 @@ void display_default_draw_line(
 	eglib_t *eglib,
 	coordinate_t x,
 	coordinate_t y,
-	display_line_direction_t direction,
+	enum display_line_direction_t direction,
 	coordinate_t length,
 	color_t (*get_next_color)(eglib_t *eglib)
 );

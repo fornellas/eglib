@@ -103,7 +103,7 @@ static void draw_fast_90_line(
   coordinate_t x2, coordinate_t y2,
   color_t (*get_next_color)(eglib_t *eglib)
 ) {
-    display_line_direction_t direction;
+    enum display_line_direction_t direction;
     coordinate_t length;
 
     if(x1==x2) {  // vertical

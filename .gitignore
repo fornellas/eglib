@@ -15,6 +15,7 @@ config.sub
 configure
 depcomp
 eglib-*.tar.gz
+font_generator/eglib/
 install-sh
 missing
 src/libeglib.a

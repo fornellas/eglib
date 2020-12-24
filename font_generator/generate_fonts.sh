@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 LIBERATION_PATH="/usr/share/fonts/truetype/liberation"
-EGLIB_ROOT="$(dirname $(realpath "$0"))"/../src
+EGLIB_ROOT=.
 SCALABLE_FONT_SIZES=(7 8 9 10 11 12 13 14 15 16 18 20 22 24 26 28 32 36 40 44 48 54 60 66 72 80 83 88 96)
 FONT_HEADERS=""
 
@@ -37,7 +37,7 @@ cat << EOF > "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
 #ifndef EGLIB_DRAWING_FONTS_LIBERATION_H
 #define EGLIB_DRAWING_FONTS_LIBERATION_H
 
-#include "../../drawing.h"
+#include <eglib/drawing.h>
 
 /**
  * Liberation
@@ -65,7 +65,7 @@ do
 EOF
 	C_FILE=""$EGLIB_ROOT"/eglib/drawing/fonts/$(echo liberation_"${NAME#Liberation*}" | tr " " _ | tr A-Z a-z).c"
 	cat << EOF >> "$C_FILE"
-#include "../../drawing.h"
+#include <eglib/drawing.h>
 EOF
 
 	for PIXEL_SIZE in "${SCALABLE_FONT_SIZES[@]}"
@@ -101,7 +101,6 @@ EOF
  */
 extern struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
 EOF
-			touch ../tests/fonts/test_unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME}.png
 		done
 	done
 done
@@ -120,7 +119,7 @@ cat << EOF > "$EGLIB_ROOT"/eglib/drawing/fonts/adobe.h
 #ifndef EGLIB_DRAWING_FONTS_ADOBE_H
 #define EGLIB_DRAWING_FONTS_ADOBE_H
 
-#include "../../drawing.h"
+#include <eglib/drawing.h>
 
 /**
  * Adobe
@@ -159,7 +158,7 @@ declare -A ADOBE_FONT_PIXEL_SIZES
 
 for DPI in 75 100
 do
-	for FONT_PATH in $(find adobe/${DPI}dpi -name \*.bdf)
+	for FONT_PATH in $(find "$(dirname "$0")"/adobe/${DPI}dpi -name \*.bdf)
 	do
 		NAME="$(gawk 'BEGIN{FS="\""}/^FULL_NAME /{print $2}' < $FONT_PATH)"
 		PIXEL_SIZE="$(gawk '/^PIXEL_SIZE /{print $2}' < $FONT_PATH)"
@@ -185,7 +184,7 @@ EOF
 
 	C_FILE=""$EGLIB_ROOT"/eglib/drawing/fonts/adobe_$(echo "${NAME}" | tr " " _ | tr A-Z a-z).c"
 	cat << EOF >> "$C_FILE"
-#include "../../drawing.h"
+#include <eglib/drawing.h>
 EOF
 
 	for PIXEL_SIZE in ${ADOBE_FONT_PIXEL_SIZES["$NAME"]} ; do echo "$PIXEL_SIZE" ; done | LANG=C sort -k +1n -u | while read PIXEL_SIZE
@@ -222,7 +221,6 @@ EOF
  */
 extern struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
 EOF
-			touch ../tests/fonts/test_unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME}.png
 		done
 	done
 done
@@ -239,7 +237,7 @@ cat << EOF > "$EGLIB_ROOT"/eglib/drawing/fonts.h-
 #ifndef EGLIB_DRAWING_FONTS_H
 #define EGLIB_DRAWING_FONTS_H
 
-#include "../drawing.h"
+#include <eglib/drawing.h>
 
 EOF
 

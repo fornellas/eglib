@@ -1,0 +1,48 @@
+- configure.ac
+	autoscan
+	autoconf
+	autoreconf
+- version
+	configure.ac
+- https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.70/html_node/Automatic-Remaking.html
+
+- cross compile
+./configure --host=x86_64-pc-linux-gnu --target=arm-none-eabi CC=arm-none-eabi-gcc CFLAGS="-DSTM32F4 -DSTM32F411CEU6 -I../submodules/libopencm3/include/ -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -lnosys -lc"
+
+docs
+examples
+	libopencm3
+		four_wire_spi/libopencm3_stm32f4
+		i2c/libopencm3_stm32f4
+tests
+	display
+		four_wire_spi/stdout
+		sh1106
+		ssd1331
+		st7789
+	drawing
+		four_wire_spi/none
+		tga
+	fonts
+		four_wire_spi/none
+		tga
+	frame_buffer
+		four_wire_spi/none
+		tga
+fonts
+
+
+-----------
+hal
+	four_wire_spi
+		libopencm3_stm32f4
+		none
+		stdout
+	i2c
+		libopencm3_stm32f4
+display
+	frame_buffer
+	sh1106
+	ssd1331
+	st7789
+	tga

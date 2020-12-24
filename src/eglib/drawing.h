@@ -621,7 +621,7 @@ void eglib_DrawBitmap(
 	const struct bitmap_t *bitmap
 );
 
-#include "drawing/fonts.h"
+#include <eglib/drawing/fonts.h>
 
 /**
  * Text

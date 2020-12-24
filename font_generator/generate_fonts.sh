@@ -158,7 +158,8 @@ declare -A ADOBE_FONT_PIXEL_SIZES
 
 for DPI in 75 100
 do
-	for FONT_PATH in $(find "$(dirname "$0")"/adobe/${DPI}dpi -name \*.bdf)
+	FONT_PATHS="$(find "$(dirname "$0")"/adobe/${DPI}dpi -name \*.bdf)"
+	for FONT_PATH in $FONT_PATHS
 	do
 		NAME="$(gawk 'BEGIN{FS="\""}/^FULL_NAME /{print $2}' < $FONT_PATH)"
 		PIXEL_SIZE="$(gawk '/^PIXEL_SIZE /{print $2}' < $FONT_PATH)"

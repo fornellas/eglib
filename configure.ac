@@ -26,7 +26,7 @@ AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 
 # Checks for programs.
-CFLAGS="-MD -O3 -Wall -Wextra -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wundef -Wshadow -Werror -Wfatal-errors"
+CFLAGS="$CFLAGS -MD -O3 -Wall -Wextra -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wundef -Wshadow -Werror -Wfatal-errors"
 AC_PROG_CC
 AC_PROG_RANLIB
 AM_PROG_AR

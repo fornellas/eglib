@@ -1,6 +1,7 @@
 #include "drawing.h"
 #include "display.h"
 #include <math.h>
+#include <stdlib.h>
 
 #define degrees_to_radians(degrees) ((degrees) * M_PI / 180.0)
 
@@ -164,8 +165,8 @@ static coordinate_t get_line_pixel_count(
   coordinate_t tmp;
   coordinate_t dx, dy;
 
-  dx = x1 > x2 ? x1 - x2 : x2 - x1;
-  dy = y1 > y2 ? y1 - y2 : y2 - y1;
+  dx = abs(x2 - x1);
+  dy = abs(y2 - y1);
 
   if (dy > dx) {
     tmp = dx; dx = dy; dy = tmp;
@@ -192,49 +193,49 @@ static void draw_generic_line(
   coordinate_t dx, dy;
   coordinate_t err;
   coordinate_t ystep;
-  coordinate_t x_arg, y_arg;
-  uint8_t swapxy = 0;
+  bool swapxy = false;
   bool reversed = false;
-
-  dx = x1 > x2 ? x1 - x2 : x2 - x1;
-  dy = y1 > y2 ? y1 - y2 : y2 - y1;
+  
+  dx = abs(x2 - x1);
+  dy = abs(y2 - y1);
 
   if(dy > dx) {
     swapxy = 1;
-    tmp = dx; dx = dy; dy = tmp;
-    tmp = x1; x1 = y1; y1 = tmp;
-    tmp = x2; x2 = y2; y2 = tmp;
+    tmp = dx; dx =dy; dy = tmp;
+    tmp = x1; x1 =y1; y1 = tmp;
+    tmp = x2; x2 =y2; y2 = tmp;
   }
+
   if(x1 > x2) {
     reversed = true;
     tmp = x1; x1 =x2; x2 = tmp;
     tmp = y1; y1 =y2; y2 = tmp;
   }
+
   err = dx >> 1;
+
   ystep = y2 > y1 ? 1 : -1;
   y = y1;
+
   if(reversed) {
-    for( x = x2 ; x >= x1 ; x--) {
-      x_arg = x;
-      y_arg = y2;
-      eglib_DrawPixelColor(eglib, x_arg, y_arg, get_next_color(eglib));
-      err -= (uint8_t)dy;
+    for(x = x2; x >= x1; x--) {
+      if(swapxy == 0)
+        eglib_DrawPixelColor(eglib, x, y2 + y1 - y, get_next_color(eglib));
+      else
+        eglib_DrawPixelColor(eglib, y2 + y1 - y, x, get_next_color(eglib));
+      err -= dy;
       if(err < 0) {
-        y2 -= ystep;
+        y += ystep;
         err += dx;
       }
     }
   } else {
-    for( x = x1; x <= x2; x++) {
-      if(swapxy == 0) {
-        x_arg = x;
-        y_arg = y;
-      } else {
-        x_arg = y;
-        y_arg = x;
-      }
-      eglib_DrawPixelColor(eglib, x_arg, y_arg, get_next_color(eglib));
-      err -= (uint8_t)dy;
+    for(x = x1; x <= x2; x++) {
+      if(swapxy == 0)
+        eglib_DrawPixelColor(eglib, x, y, get_next_color(eglib));
+      else
+        eglib_DrawPixelColor(eglib, y, x, get_next_color(eglib));
+      err -= dy;
       if(err < 0) {
         y += ystep;
         err += dx;

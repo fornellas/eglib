@@ -42,11 +42,12 @@
 <li><p><a class="reference internal" href="#color" id="id2">Color</a></p></li>
 <li><p><a class="reference internal" href="#pixel" id="id3">Pixel</a></p></li>
 <li><p><a class="reference internal" href="#lines" id="id4">Lines</a></p></li>
-<li><p><a class="reference internal" href="#frames" id="id5">Frames</a></p></li>
-<li><p><a class="reference internal" href="#boxes" id="id6">Boxes</a></p></li>
-<li><p><a class="reference internal" href="#round-things" id="id7">Round things</a></p></li>
-<li><p><a class="reference internal" href="#bitmaps" id="id8">Bitmaps</a></p></li>
-<li><p><a class="reference internal" href="#text" id="id9">Text</a></p></li>
+<li><p><a class="reference internal" href="#triangles" id="id5">Triangles</a></p></li>
+<li><p><a class="reference internal" href="#frames" id="id6">Frames</a></p></li>
+<li><p><a class="reference internal" href="#boxes" id="id7">Boxes</a></p></li>
+<li><p><a class="reference internal" href="#round-things" id="id8">Round things</a></p></li>
+<li><p><a class="reference internal" href="#bitmaps" id="id9">Bitmaps</a></p></li>
+<li><p><a class="reference internal" href="#text" id="id10">Text</a></p></li>
 </ul>
 </li>
 </ul>
@@ -300,8 +301,41 @@ void <code class="sig-name descname">eglib_DrawGradientLine</code><span class="s
 </dd></dl>
 
 </div>
+<div class="section" id="triangles">
+<h2><a class="toc-backref" href="#id5">Triangles</a><a class="headerlink" href="#triangles" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="c.eglib_DrawTriangle">
+void <code class="sig-name descname">eglib_DrawTriangle</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x1</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y1</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x2</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y2</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x3</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y3</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawTriangle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw triangle for coordinates (<cite>x1</cite>, <cite>y1</cite>), (<cite>x2</cite>, <cite>y2</cite>) and (<cite>x3</cite>, <cite>y3</cite>)
+using color from index 0.</p>
+<p>Example:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;eglib.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;eglib/display.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;draw_test.h&quot;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">draw_test</span><span class="p">(</span><span class="n">eglib_t</span> <span class="o">*</span><span class="n">eglib</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">eglib_SetIndexColor</span><span class="p">(</span><span class="n">eglib</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">eglib_DrawTriangle</span><span class="p">(</span>
+  	<span class="n">eglib</span><span class="p">,</span>
+  	<span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+  	<span class="mi">0</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span>
+  	<span class="mi">99</span><span class="p">,</span> <span class="mi">99</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<a class="reference internal image-reference" href="../../_images/test_eglib_DrawTriangle.png"><img alt="../../_images/test_eglib_DrawTriangle.png" src="../../_images/test_eglib_DrawTriangle.png" style="width: 200px;" /></a>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#c.eglib_SetIndexColor" title="eglib_SetIndexColor"><code class="xref c c-func docutils literal notranslate"><span class="pre">eglib_SetIndexColor()</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 <div class="section" id="frames">
-<h2><a class="toc-backref" href="#id5">Frames</a><a class="headerlink" href="#frames" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">Frames</a><a class="headerlink" href="#frames" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="c.eglib_DrawFrame">
 void <code class="sig-name descname">eglib_DrawFrame</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> width</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> height</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawFrame" title="Permalink to this definition">¶</a></dt>
@@ -389,7 +423,7 @@ edges with <code class="docutils literal notranslate"><span class="pre">radius</
 
 </div>
 <div class="section" id="boxes">
-<h2><a class="toc-backref" href="#id6">Boxes</a><a class="headerlink" href="#boxes" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">Boxes</a><a class="headerlink" href="#boxes" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="c.eglib_DrawBox">
 void <code class="sig-name descname">eglib_DrawBox</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> width</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> height</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawBox" title="Permalink to this definition">¶</a></dt>
@@ -502,7 +536,7 @@ void <code class="sig-name descname">eglib_ClearScreen</code><span class="sig-pa
 
 </div>
 <div class="section" id="round-things">
-<h2><a class="toc-backref" href="#id7">Round things</a><a class="headerlink" href="#round-things" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">Round things</a><a class="headerlink" href="#round-things" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="c.eglib_DrawArc">
 void <code class="sig-name descname">eglib_DrawArc</code><span class="sig-paren">(</span><a class="reference internal" href="../eglib.html#c.eglib_t" title="eglib_t">eglib_t</a> *<em> eglib</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> x</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> y</em>, <a class="reference internal" href="../eglib.html#c.coordinate_t" title="coordinate_t">coordinate_t</a><em> radius</em>, float<em> start_angle</em>, float<em> end_angle</em><span class="sig-paren">)</span><a class="headerlink" href="#c.eglib_DrawArc" title="Permalink to this definition">¶</a></dt>
@@ -714,7 +748,7 @@ radius.</p>
 
 </div>
 <div class="section" id="bitmaps">
-<h2><a class="toc-backref" href="#id8">Bitmaps</a><a class="headerlink" href="#bitmaps" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">Bitmaps</a><a class="headerlink" href="#bitmaps" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="c.bitmap_format_t">
 enum <code class="sig-name descname">bitmap_format_t</code><a class="headerlink" href="#c.bitmap_format_t" title="Permalink to this definition">¶</a></dt>
@@ -818,7 +852,7 @@ void <code class="sig-name descname">eglib_DrawBitmap</code><span class="sig-par
 
 </div>
 <div class="section" id="text">
-<h2><a class="toc-backref" href="#id9">Text</a><a class="headerlink" href="#text" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">Text</a><a class="headerlink" href="#text" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="c.glyph_t">
 struct <code class="sig-name descname">glyph_t</code><a class="headerlink" href="#c.glyph_t" title="Permalink to this definition">¶</a></dt>
@@ -1125,6 +1159,7 @@ void <code class="sig-name descname">eglib_DrawText</code><span class="sig-paren
 <li class="toctree-l4"><a class="reference internal" href="#color">Color</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pixel">Pixel</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#lines">Lines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#triangles">Triangles</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#frames">Frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#boxes">Boxes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#round-things">Round things</a></li>

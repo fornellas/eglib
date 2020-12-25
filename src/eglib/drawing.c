@@ -278,6 +278,21 @@ void eglib_DrawGradientLine(
 }
 
 //
+// Triangle
+//
+
+void eglib_DrawTriangle(
+  eglib_t *eglib,
+  coordinate_t x1, coordinate_t y1,
+  coordinate_t x2, coordinate_t y2,
+  coordinate_t x3, coordinate_t y3
+) {
+  eglib_DrawLine(eglib, x1, y1, x2, y2);
+  eglib_DrawLine(eglib, x2, y2, x3, y3);
+  eglib_DrawLine(eglib, x3, y3, x1, y1);
+}
+
+//
 // Frames
 //
 

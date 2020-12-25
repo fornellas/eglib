@@ -26,7 +26,8 @@ AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 
 # Checks for programs.
-CFLAGS="$CFLAGS -MD -O3 -Wall -Wextra -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wundef -Wshadow -Werror -Wfatal-errors"
+COMMON_CFLAGS="-O3 -Wall -Wextra -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes -Wundef -Wshadow -Werror -Wfatal-errors"
+AC_SUBST([COMMON_CFLAGS])
 AC_PROG_CC
 AC_PROG_RANLIB
 AM_PROG_AR
@@ -49,5 +50,4 @@ AC_TYPE_UINT8_T
 
 # Checks for library functions.
 
-CFLAGS="$CFLAGS -Wstrict-prototypes"
 AC_OUTPUT

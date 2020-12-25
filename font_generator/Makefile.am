@@ -1,8 +1,6 @@
-all: eglib/drawing/fonts.h
-
 noinst_PROGRAMS = font_generator
 font_generator_SOURCES = font_generator.c
-font_generator_CFLAGS = $(FREETYPE2_CFLAGS)
+font_generator_CFLAGS = $(FREETYPE2_CFLAGS) $(COMMON_CFLAGS)
 font_generator_LDADD = $(FREETYPE2_LIBS)
 
 nobase_nodist_include_HEADERS = eglib/drawing/fonts.h

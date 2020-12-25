@@ -1,6 +1,6 @@
 lib_LIBRARIES = libeglib.a
 
-libeglib_a_CFLAGS = -I$(top_builddir)/font_generator
+libeglib_a_CFLAGS = -I$(top_builddir)/font_generator $(COMMON_CFLAGS)
 
 AUTOMAKE_OPTIONS = subdir-objects
 

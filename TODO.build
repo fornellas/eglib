@@ -1,13 +1,14 @@
+- tests
+	- display
+		- extra functions
+	- drawing
+	- fonts
+- docs
 - configure.ac
-	autoscan
-	autoconf
-	autoreconf
-- version
-	configure.ac
-- https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.70/html_node/Automatic-Remaking.html
-
+	- version from git
 - cross compile
-./configure --host=x86_64-pc-linux-gnu --target=arm-none-eabi CC=arm-none-eabi-gcc CFLAGS="-DSTM32F4 -DSTM32F411CEU6 -I../submodules/libopencm3/include/ -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -lnosys -lc"
+	./configure --host=x86_64-pc-linux-gnu --target=arm-none-eabi CC=arm-none-eabi-gcc CFLAGS="-DSTM32F4 -DSTM32F411CEU6 -I../submodules/libopencm3/include/ -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -lnosys -lc"
+- examples
 
 docs
 examples

@@ -13,3 +13,5 @@ build-aux/
 config.log
 config.status
 configure
+eglib-*.tar.gz
+eglib-*/

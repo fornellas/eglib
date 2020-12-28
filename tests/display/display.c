@@ -4,6 +4,7 @@
 #include <eglib/display.h>
 #include <eglib/display/frame_buffer.h>
 #include <eglib/hal/four_wire_spi/stream.h>
+#include <eglib/hal/i2c/stream.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
@@ -14,14 +15,16 @@
 #include <unistd.h>
 
 #define EGLIB_UPDATE_EXPECTATIONS_MSG "If you trust the code is legit set "\
-	"EGLIB_UPDATE_EXPECTATIONS=true to have the expectation updated."
+	"EGLIB_UPDATE_EXPECTATIONS=true to have the expectation updated.\n"
 
 eglib_t eglib;
 const hal_t *hal_driver;
 four_wire_spi_stream_config_t four_wire_spi_stream_config;
+i2c_stream_config_t i2c_stream_config;
 void *hal_config_ptr;
 FILE *stream;
 char **buffer;
+char *test_case_name;
 char *test_name;
 
 extern const display_t *display_driver;
@@ -33,6 +36,7 @@ extern char driver_name[];
 
 void setup_four_wire_spi(void);
 void setup_four_wire_spi(void) {
+	test_case_name = "four_wire_spi";
 	hal_driver = &four_wire_spi_stream;
 	hal_config_ptr = &four_wire_spi_stream_config;
 	eglib_Init(
@@ -46,11 +50,16 @@ void setup_four_wire_spi(void) {
 
 void setup_i2c(void);
 void setup_i2c(void) {
-	// eglib_Init(
-	// 	&eglib,
-	// 	&i2c_stdout, NULL,
-	// 	display_driver, display_config_ptr
-	// );
+	test_case_name = "i2c";
+	hal_driver = &i2c_stream;
+	hal_config_ptr = &i2c_stream_config;
+	eglib_Init(
+		&eglib,
+		hal_driver, hal_config_ptr,
+		display_driver, display_config_ptr
+	);
+	stream = i2c_stream_config.stream;
+	buffer = &(i2c_stream_config.buffer);
 }
 
 START_TEST(init) {
@@ -171,11 +180,11 @@ void teardown(void) {
 	fclose(stream);
 	buffer_len = strlen(*buffer);
 
-	if(asprintf(&expectation_path, "%s.%s", driver_name, test_name) == -1)
+	if(asprintf(&expectation_path, "%s.%s.%s", driver_name, test_case_name,test_name) == -1)
 		exit(EXIT_FAILURE);
 
 	if(getenv("EGLIB_UPDATE_EXPECTATIONS")) {
-		fprintf(stderr, "Updating expectation `%s'.\n", expectation_path);
+		fprintf(stderr, "Updating expectation `%s' %ld bytes.\n", expectation_path, buffer_len);
 		expectation_fd = open(expectation_path, O_WRONLY | O_TRUNC| O_CREAT, 0644);
 		if(expectation_fd < 0) {
 			fprintf(stderr, "Failed to open `%s': %s.\n", expectation_path, strerror(errno));
@@ -286,7 +295,7 @@ Suite * build_suite(void) {
 
 		tcase = tcase_create("i2c");
 		tcase_add_checked_fixture(tcase, setup_i2c, teardown);
-		// add_tests(tcase);
+		add_tests(tcase);
 
 		suite_add_tcase(suite, tcase);
 	}

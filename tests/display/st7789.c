@@ -1,3 +1,4 @@
+#include <check.h>
 #include <eglib/display/st7789.h>
 
 const display_t *display_driver = &st7789;
@@ -15,3 +16,23 @@ coordinate_t width = 240;
 coordinate_t height = 240;
 enum pixel_format_t pixel_format = PIXEL_FORMAT_16BIT_RGB;
 char driver_name[] = "st7789";
+
+extern eglib_t eglib;
+extern char *test_name;
+
+void tcase_add_extra_tests(TCase *tcase);
+
+START_TEST(SetDisplayInversion) {
+	test_name = "SetDisplayInversion";
+	st7789_SetDisplayInversion(&eglib, true);
+}END_TEST;
+
+START_TEST(SetIdleMode) {
+	test_name = "SetIdleMode";
+	st7789_SetIdleMode(&eglib, true);
+}END_TEST;
+
+void tcase_add_extra_tests(TCase *tcase) {
+	tcase_add_test(tcase, SetDisplayInversion);
+	tcase_add_test(tcase, SetIdleMode);
+}

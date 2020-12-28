@@ -198,9 +198,13 @@ extern const display_t sh1106_vdd1_1_65_v;
  */
 extern const display_t sh1106_vdd1_2_4_v;
 
-//
-// Custom Functions
-//
+/**
+ * Functions
+ * =========
+ *
+ * These functions can be used exclusively with :c:type:`eglib_t` initialized
+ * with :c:data:`sh1106_vdd1_1_65_v` or `sh1106_vdd1_2_4_v`.
+ */
 
 /** Set display start line. */
 void sh1106_SetStartLine(eglib_t *eglib, uint8_t line);

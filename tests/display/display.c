@@ -18,14 +18,14 @@
 	"EGLIB_UPDATE_EXPECTATIONS=true to have the expectation updated.\n"
 
 eglib_t eglib;
-const hal_t *hal_driver;
+const hal_t *hal_driver = NULL;
 four_wire_spi_stream_config_t four_wire_spi_stream_config;
 i2c_stream_config_t i2c_stream_config;
-void *hal_config_ptr;
-FILE *stream;
-char **buffer;
-char *test_case_name;
-char *test_name;
+void *hal_config_ptr = NULL;
+FILE *stream = NULL;
+char **buffer = NULL;
+char *test_case_name = NULL;
+char *test_name = NULL;
 
 extern const display_t *display_driver;
 extern void *display_config_ptr;
@@ -35,6 +35,12 @@ extern enum pixel_format_t pixel_format;
 extern char driver_name[];
 
 void setup_four_wire_spi(void);
+void setup_i2c(void);
+void teardown(void);
+void tcase_add_common_tests(TCase *tcase);
+void tcase_add_extra_tests(TCase *tcase);
+Suite * build_suite(void);
+
 void setup_four_wire_spi(void) {
 	test_case_name = "four_wire_spi";
 	hal_driver = &four_wire_spi_stream;
@@ -48,7 +54,6 @@ void setup_four_wire_spi(void) {
 	buffer = &(four_wire_spi_stream_config.buffer);
 }
 
-void setup_i2c(void);
 void setup_i2c(void) {
 	test_case_name = "i2c";
 	hal_driver = &i2c_stream;
@@ -168,7 +173,6 @@ START_TEST(refresh) {
 	eglib_Refresh(&eglib);
 }END_TEST
 
-void teardown(void);
 void teardown(void) {
 	char *expectation_dir;
 	char *expectation_path;
@@ -187,7 +191,11 @@ void teardown(void) {
 		exit(EXIT_FAILURE);
 	}
 
-	if(asprintf(&expectation_path, "%s/%s.%s.%s",expectation_dir, driver_name, test_case_name,test_name) == -1)
+	ck_assert_ptr_ne(driver_name, NULL);
+	ck_assert_ptr_ne(test_case_name, NULL);
+	ck_assert_ptr_ne(test_name, NULL);
+
+	if(asprintf(&expectation_path, "%s/%s.%s.%s", expectation_dir, driver_name, test_case_name, test_name) == -1)
 		exit(EXIT_FAILURE);
 
 	if(getenv("EGLIB_UPDATE_EXPECTATIONS")) {
@@ -268,8 +276,7 @@ void teardown(void) {
 	free(*buffer);
 }
 
-void add_tests(TCase *tcase);
-void add_tests(TCase *tcase) {
+void tcase_add_common_tests(TCase *tcase) {
 	tcase_add_test(tcase, init);
 	tcase_add_test(tcase, sleep_in);
 	tcase_add_test(tcase, sleep_out);
@@ -281,7 +288,6 @@ void add_tests(TCase *tcase) {
 	tcase_add_test(tcase, refresh);
 }
 
-Suite * build_suite(void);
 Suite * build_suite(void) {
 	Suite *suite;
 
@@ -292,7 +298,8 @@ Suite * build_suite(void) {
 
 		tcase = tcase_create("four_wire_spi");
 		tcase_add_checked_fixture(tcase, setup_four_wire_spi, teardown);
-		add_tests(tcase);
+		tcase_add_common_tests(tcase);
+		tcase_add_extra_tests(tcase);
 
 		suite_add_tcase(suite, tcase);
 	}
@@ -302,7 +309,8 @@ Suite * build_suite(void) {
 
 		tcase = tcase_create("i2c");
 		tcase_add_checked_fixture(tcase, setup_i2c, teardown);
-		add_tests(tcase);
+		tcase_add_common_tests(tcase);
+		tcase_add_extra_tests(tcase);
 
 		suite_add_tcase(suite, tcase);
 	}
@@ -317,7 +325,7 @@ int main(void) {
 
 	suite = build_suite();
 	srunner = srunner_create(suite);
-	srunner_set_fork_status(srunner, CK_NOFORK);
+	// srunner_set_fork_status(srunner, CK_NOFORK);
 	srunner_set_tap(srunner, "-");
 
 	srunner_run_all(srunner, CK_SILENT);

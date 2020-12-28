@@ -170,6 +170,7 @@ START_TEST(refresh) {
 
 void teardown(void);
 void teardown(void) {
+	char *expectation_dir;
 	char *expectation_path;
 	int expectation_fd;
 	struct stat expectation_stat;
@@ -180,7 +181,13 @@ void teardown(void) {
 	fclose(stream);
 	buffer_len = strlen(*buffer);
 
-	if(asprintf(&expectation_path, "%s.%s.%s", driver_name, test_case_name,test_name) == -1)
+	expectation_dir = getenv("EXPECTATIONS_DIR");
+	if(expectation_dir == NULL) {
+		fprintf(stdout, "EXPECTATIONS_DIR not set. Please run this via `make check'.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	if(asprintf(&expectation_path, "%s/%s.%s.%s",expectation_dir, driver_name, test_case_name,test_name) == -1)
 		exit(EXIT_FAILURE);
 
 	if(getenv("EGLIB_UPDATE_EXPECTATIONS")) {

@@ -50,7 +50,7 @@ libeglib_a_SOURCES += eglib/hal.c
 # libeglib_a_SOURCES += eglib/hal/common/libopencm3/stm32f4/delay.c
 # libeglib_a_SOURCES += eglib/hal/four_wire_spi/libopencm3_stm32f4.c
 libeglib_a_SOURCES += eglib/hal/four_wire_spi/none.c
-libeglib_a_SOURCES += eglib/hal/four_wire_spi/stdout.c
+libeglib_a_SOURCES += eglib/hal/four_wire_spi/stream.c
 # libeglib_a_SOURCES += eglib/hal/i2c/libopencm3_stm32f4.c
 
 
@@ -65,6 +65,6 @@ nobase_include_HEADERS += eglib/drawing.h
 nobase_include_HEADERS += eglib/hal.h
 # nobase_include_HEADERS += eglib/hal/four_wire_spi/libopencm3_stm32f4.h
 nobase_include_HEADERS += eglib/hal/four_wire_spi/none.h
-nobase_include_HEADERS += eglib/hal/four_wire_spi/stdout.h
+nobase_include_HEADERS += eglib/hal/four_wire_spi/stream.h
 # nobase_include_HEADERS += eglib/hal/i2c/libopencm3_stm32f4.h
 nobase_include_HEADERS += eglib/types.h

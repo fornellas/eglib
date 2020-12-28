@@ -227,6 +227,8 @@ struct hal_struct {
 	 *  - **4-Wire SPI**: Set data or command line.
 	 *  - **I2C**: if :c:func:`eglib_ShouldSendI2cSlaveAddr` returns true then the
 	 *    slave address returned by :c:func:`eglib_GetI2c7bitSlaveAddr` must be sent.
+	 *    Additionally, :c:func:`eglib_I2cSend` must be used to send I2C data,
+	 *    so that the required encoding by each display is executed.
 	 *
 	 * :param eglib: :c:type:`eglib_t` handle.
 	 * :param dc: Whether bytes are command or data (:c:type:`hal_dc_t`).

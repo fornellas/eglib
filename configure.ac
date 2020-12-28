@@ -24,6 +24,7 @@ AC_CONFIG_FILES([
 	src/Makefile
 	tests/Makefile
 	tests/display/Makefile
+	tests/drawing/Makefile
 ])
 AC_REQUIRE_AUX_FILE([tap-driver.sh])
 
@@ -43,6 +44,18 @@ AC_PROG_RANLIB
 AM_PROG_AR
 PKG_PROG_PKG_CONFIG
 AC_PROG_AWK
+AC_CHECK_PROG([IMAGE_MAGICK_COMPARE], [compare], [yes], [no])
+if test x$IMAGE_MAGICK_COMPARE = xno
+then
+	echo "ImageMagick's \`compare' command not found!"
+	exit 1
+fi
+AC_CHECK_PROG([IMAGE_MAGICK_CONVERT], [convert], [yes], [no])
+if test x$IMAGE_MAGICK_COMPARE = xno
+then
+	echo "ImageMagick's \`convert' command not found!"
+	exit 1
+fi
 
 # Checks for libraries.
 PKG_CHECK_MODULES([FREETYPE2], [freetype2 >= 2.10.1])

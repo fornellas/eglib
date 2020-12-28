@@ -222,5 +222,5 @@ eglib/drawing/fonts.h: generate_fonts.sh font_generator.c font_generator
 
 .PHONY: clean-local
 clean-local:
-	rm -f eglib/drawing/fonts.h
-	rm -rf eglib/drawing/fonts/
+	-rm -f eglib/drawing/fonts.h
+	-rm -rf eglib/drawing/fonts/

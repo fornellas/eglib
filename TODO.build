@@ -1,7 +1,4 @@
 - tests
-	- display
-		- extra functions
-	- drawing
 	- fonts
 - docs
 - configure.ac

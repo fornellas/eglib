@@ -1,1 +1,1 @@
-SUBDIRS = display
+SUBDIRS = display drawing

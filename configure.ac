@@ -25,6 +25,7 @@ AC_CONFIG_FILES([
 	tests/Makefile
 	tests/display/Makefile
 	tests/drawing/Makefile
+	tests/frame_buffer/Makefile
 ])
 AC_REQUIRE_AUX_FILE([tap-driver.sh])
 

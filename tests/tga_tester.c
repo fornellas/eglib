@@ -2,6 +2,7 @@
 #include <check.h>
 #include <eglib.h>
 #include <eglib/display.h>
+#include <eglib/display/frame_buffer.h>
 #include <eglib/display/tga.h>
 #include <eglib/hal/four_wire_spi/none.h>
 #include <errno.h>
@@ -13,10 +14,14 @@
 	"EGLIB_UPDATE_EXPECTATIONS=true to have the expectation updated.\n"
 
 eglib_t eglib;
+eglib_t eglib_tga;
+eglib_t *eglib_export;
 tga_config_t tga_config = {
 	.width = 100,
 	.height = 100,
 };
+extern bool frame_buffer;
+	frame_buffer_config_t frame_buffer_config;
 extern char *suite_name;
 extern char *tcase_name;
 char *test_name = NULL;
@@ -28,7 +33,16 @@ static int run(char *command);
 void tcase_add_tests(TCase *tcase);
 
 void setup(void) {
-	eglib_Init(&eglib, &four_wire_spi_none, NULL, &tga, &tga_config);
+	if(frame_buffer) {
+		eglib_export = eglib_Init_FrameBuffer(
+			&eglib, &frame_buffer_config,
+			&four_wire_spi_none, NULL,
+			&tga, &tga_config
+		);
+	} else {
+		eglib_Init(&eglib, &four_wire_spi_none, NULL, &tga, &tga_config);
+		eglib_export = &eglib;
+	}
 }
 
 static int run(char *command) {
@@ -67,8 +81,8 @@ void teardown(void) {
 	if(asprintf(&test_tga_path, "%s_test.tga", test_name) == -1)
 		exit(EXIT_FAILURE);
 
-	tga_Save(&eglib, test_tga_path);
-	tga_Free(&eglib);
+	tga_Save(eglib_export, test_tga_path);
+	tga_Free(eglib_export);
 
 	if(getenv("EGLIB_UPDATE_EXPECTATIONS")) {
 		fprintf(stderr, "Updating expectation `%s'.\n", expectation_path);

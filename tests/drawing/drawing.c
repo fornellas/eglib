@@ -5,6 +5,7 @@ extern eglib_t eglib;
 char *suite_name = "drawing";
 char *tcase_name = "functions";
 extern char *test_name;
+bool frame_buffer = false;
 
 void tcase_add_tests(TCase *tcase);
 

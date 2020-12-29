@@ -64,7 +64,6 @@ drawing_pngs += eglib_DrawVLine.png
 drawing_pngs += eglib_DrawWChar.png
 EXTRA_DIST += $(drawing_pngs)
 BUILT_SOURCES = $(drawing_pngs)
-# $(drawing_pngs): drawing.test
 
 check_PROGRAMS = drawing.test
 drawing_test_SOURCES = drawing.c

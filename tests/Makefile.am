@@ -1,6 +1,6 @@
 include common.mk
 
-SUBDIRS = . drawing frame_buffer display
+SUBDIRS = . drawing fonts frame_buffer display
 
 check_LIBRARIES = libcommon.a
 check_HEADERS = common.h

@@ -19,13 +19,16 @@ AM_SILENT_RULES([yes])
 AC_CONFIG_SRCDIR([src/eglib.c])
 AC_CONFIG_MACRO_DIR([/usr/share/aclocal])
 AC_CONFIG_FILES([
-	Makefile
 	font_generator/Makefile
+	Makefile
 	src/Makefile
-	tests/Makefile
 	tests/display/Makefile
 	tests/drawing/Makefile
+	tests/fonts/adobe/Makefile
+	tests/fonts/liberation/Makefile
+	tests/fonts/Makefile
 	tests/frame_buffer/Makefile
+	tests/Makefile
 ])
 AC_REQUIRE_AUX_FILE([tap-driver.sh])
 

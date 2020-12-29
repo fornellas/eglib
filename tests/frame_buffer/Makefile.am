@@ -4,12 +4,12 @@ AM_TESTS_ENVIRONMENT = EXPECTATIONS_DIR=$(top_srcdir)/tests/frame_buffer
 
 EXTRA_DIST =
 
-frame_buffer_pngs =
-frame_buffer_pngs += eglib_FrameBuffer_SendPartial.png
-frame_buffer_pngs += eglib_FrameBuffer_Send.png
-frame_buffer_pngs += eglib_FrameBuffer_SendUpdated.png
-EXTRA_DIST += $(frame_buffer_pngs)
-BUILT_SOURCES = $(frame_buffer_pngs)
+expectations_pngs =
+expectations_pngs += eglib_FrameBuffer_SendPartial.png
+expectations_pngs += eglib_FrameBuffer_Send.png
+expectations_pngs += eglib_FrameBuffer_SendUpdated.png
+EXTRA_DIST += $(expectations_pngs)
+BUILT_SOURCES = $(expectations_pngs)
 
 check_PROGRAMS = frame_buffer.test
 frame_buffer_test_SOURCES = frame_buffer.c

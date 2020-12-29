@@ -1,7 +1,8 @@
 include common.mk
 
-SUBDIRS = . display drawing frame_buffer
+SUBDIRS = . drawing frame_buffer display
 
-check_LIBRARIES = libtga_tester.a
-libtga_tester_a_SOURCES = tga_tester.c
-libtga_tester_a_CFLAGS = $(EGLIB_CFLAGS) @CHECK_CFLAGS@ $(AM_CFLAGS)
+check_LIBRARIES = libcommon.a
+check_HEADERS = common.h
+libcommon_a_SOURCES = common.c
+libcommon_a_CFLAGS = $(EGLIB_CFLAGS) @CHECK_CFLAGS@ $(AM_CFLAGS)

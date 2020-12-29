@@ -68,7 +68,7 @@ BUILT_SOURCES = $(drawing_pngs)
 check_PROGRAMS = drawing.test
 drawing_test_SOURCES = drawing.c
 drawing_test_CFLAGS = $(EGLIB_CFLAGS) @CHECK_CFLAGS@ $(AM_CFLAGS)
-drawing_test_LDADD = ../libtga_tester.a $(EGLIB_LIBS) @CHECK_LIBS@
+drawing_test_LDADD = ../libcommon.a $(EGLIB_LIBS) @CHECK_LIBS@
 drawing_test_DEPENDENCIES = $(drawing_sources)
 
 TESTS = $(check_PROGRAMS)

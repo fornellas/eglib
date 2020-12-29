@@ -3,7 +3,7 @@ include ../common.mk
 AM_TESTS_ENVIRONMENT = EXPECTATIONS_DIR=$(top_srcdir)/tests/display
 
 AM_CFLAGS += $(EGLIB_CFLAGS) @CHECK_CFLAGS@
-LDADD = $(EGLIB_LIBS) @CHECK_LIBS@
+LDADD = ../libcommon.a $(EGLIB_LIBS) @CHECK_LIBS@
 
 check_PROGRAMS =
 EXTRA_DIST =

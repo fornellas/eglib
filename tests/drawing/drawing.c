@@ -1,150 +1,171 @@
 #include <check.h>
 #include <eglib.h>
+#include <eglib/display/tga.h>
+#include <eglib/hal/four_wire_spi/none.h>
+#include "../common.h"
 
-extern eglib_t eglib;
-char *suite_name = "drawing";
-char *tcase_name = "functions";
-extern char *test_name;
-bool frame_buffer = false;
+eglib_t eglib;
+tga_config_t tga_config = {
+	.width = 100,
+	.height = 100,
+};
+char *expectation_name;
 
-void tcase_add_tests(TCase *tcase);
+void setup(void);
+void teardown(void);
+Suite * build_suite(void);
+
+void setup(void) {
+	eglib_Init(&eglib, &four_wire_spi_none, NULL, &tga, &tga_config);
+}
 
 START_TEST(test_eglib_AddUnicodeBlockToFont) {
-	test_name = "eglib_AddUnicodeBlockToFont";
+	expectation_name = "eglib_AddUnicodeBlockToFont";
 	#include "eglib_AddUnicodeBlockToFont.c"
 }END_TEST
 
 START_TEST(test_eglib_ClearScreen) {
-	test_name = "eglib_ClearScreen";
+	expectation_name = "eglib_ClearScreen";
 	#include "eglib_ClearScreen.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawArc) {
-	test_name = "eglib_DrawArc";
+	expectation_name = "eglib_DrawArc";
 	#include "eglib_DrawArc.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawBitmap) {
-	test_name = "eglib_DrawBitmap";
+	expectation_name = "eglib_DrawBitmap";
 	#include "eglib_DrawBitmap.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawBox) {
-	test_name = "eglib_DrawBox";
+	expectation_name = "eglib_DrawBox";
 	#include "eglib_DrawBox.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawCircle) {
-	test_name = "eglib_DrawCircle";
+	expectation_name = "eglib_DrawCircle";
 	#include "eglib_DrawCircle.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawDisc) {
-	test_name = "eglib_DrawDisc";
+	expectation_name = "eglib_DrawDisc";
 	#include "eglib_DrawDisc.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawFilledArc) {
-	test_name = "eglib_DrawFilledArc";
+	expectation_name = "eglib_DrawFilledArc";
 	#include "eglib_DrawFilledArc.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawFrame) {
-	test_name = "eglib_DrawFrame";
+	expectation_name = "eglib_DrawFrame";
 	#include "eglib_DrawFrame.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawGradientArc) {
-	test_name = "eglib_DrawGradientArc";
+	expectation_name = "eglib_DrawGradientArc";
 	#include "eglib_DrawGradientArc.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawGradientBox) {
-	test_name = "eglib_DrawGradientBox";
+	expectation_name = "eglib_DrawGradientBox";
 	#include "eglib_DrawGradientBox.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawGradientDisc) {
-	test_name = "eglib_DrawGradientDisc";
+	expectation_name = "eglib_DrawGradientDisc";
 	#include "eglib_DrawGradientDisc.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawGradientFilledArc) {
-	test_name = "eglib_DrawGradientFilledArc";
+	expectation_name = "eglib_DrawGradientFilledArc";
 	#include "eglib_DrawGradientFilledArc.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawGradientFrame) {
-	test_name = "eglib_DrawGradientFrame";
+	expectation_name = "eglib_DrawGradientFrame";
 	#include "eglib_DrawGradientFrame.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawGradientHLine) {
-	test_name = "eglib_DrawGradientHLine";
+	expectation_name = "eglib_DrawGradientHLine";
 	#include "eglib_DrawGradientHLine.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawGradientLine) {
-	test_name = "eglib_DrawGradientLine";
+	expectation_name = "eglib_DrawGradientLine";
 	#include "eglib_DrawGradientLine.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawGradientVLine) {
-	test_name = "eglib_DrawGradientVLine";
+	expectation_name = "eglib_DrawGradientVLine";
 	#include "eglib_DrawGradientVLine.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawHLine) {
-	test_name = "eglib_DrawHLine";
+	expectation_name = "eglib_DrawHLine";
 	#include "eglib_DrawHLine.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawLine) {
-	test_name = "eglib_DrawLine";
+	expectation_name = "eglib_DrawLine";
 	#include "eglib_DrawLine.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawPixelColor) {
-	test_name = "eglib_DrawPixelColor";
+	expectation_name = "eglib_DrawPixelColor";
 	#include "eglib_DrawPixelColor.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawPixel) {
-	test_name = "eglib_DrawPixel";
+	expectation_name = "eglib_DrawPixel";
 	#include "eglib_DrawPixel.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawRoundBox) {
-	test_name = "eglib_DrawRoundBox";
+	expectation_name = "eglib_DrawRoundBox";
 	#include "eglib_DrawRoundBox.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawRoundFrame) {
-	test_name = "eglib_DrawRoundFrame";
+	expectation_name = "eglib_DrawRoundFrame";
 	#include "eglib_DrawRoundFrame.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawText) {
-	test_name = "eglib_DrawText";
+	expectation_name = "eglib_DrawText";
 	#include "eglib_DrawText.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawTriangle) {
-	test_name = "eglib_DrawTriangle";
+	expectation_name = "eglib_DrawTriangle";
 	#include "eglib_DrawTriangle.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawVLine) {
-	test_name = "eglib_DrawVLine";
+	expectation_name = "eglib_DrawVLine";
 	#include "eglib_DrawVLine.c"
 }END_TEST
 
 START_TEST(test_eglib_DrawWChar) {
-	test_name = "eglib_DrawWChar";
+	expectation_name = "eglib_DrawWChar";
 	#include "eglib_DrawWChar.c"
 }END_TEST
 
-void tcase_add_tests(TCase *tcase) {
+void teardown(void) {
+	compare_expectation(expectation_name, &eglib);
+}
+
+Suite * build_suite(void) {
+	Suite *suite;
+	TCase *tcase;
+
+	suite = suite_create("drawing");
+
+	tcase = tcase_create("functions");
+	tcase_add_checked_fixture(tcase, setup, teardown);
 	tcase_add_test(tcase, test_eglib_AddUnicodeBlockToFont);
 	tcase_add_test(tcase, test_eglib_ClearScreen);
 	tcase_add_test(tcase, test_eglib_DrawArc);
@@ -172,4 +193,8 @@ void tcase_add_tests(TCase *tcase) {
 	tcase_add_test(tcase, test_eglib_DrawTriangle);
 	tcase_add_test(tcase, test_eglib_DrawVLine);
 	tcase_add_test(tcase, test_eglib_DrawWChar);
+
+	suite_add_tcase(suite, tcase);
+
+	return suite;
 }

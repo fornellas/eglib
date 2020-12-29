@@ -14,7 +14,7 @@ BUILT_SOURCES = $(frame_buffer_pngs)
 check_PROGRAMS = frame_buffer.test
 frame_buffer_test_SOURCES = frame_buffer.c
 frame_buffer_test_CFLAGS = $(EGLIB_CFLAGS) @CHECK_CFLAGS@ $(AM_CFLAGS)
-frame_buffer_test_LDADD = ../libtga_tester.a $(EGLIB_LIBS) @CHECK_LIBS@
+frame_buffer_test_LDADD = ../libcommon.a $(EGLIB_LIBS) @CHECK_LIBS@
 
 TESTS = $(check_PROGRAMS)
 

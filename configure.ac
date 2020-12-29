@@ -37,8 +37,8 @@ AX_VALGRIND_DFLT([drd],[off])
 AX_VALGRIND_DFLT([sgcheck],[off])
 AX_VALGRIND_DFLT([memcheck],[on])
 AX_VALGRIND_CHECK
-COMMON_CFLAGS="-O3 -Wall -Wextra -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes -Wundef -Wshadow -Werror -Wfatal-errors"
-AC_SUBST([COMMON_CFLAGS])
+AM_CFLAGS="-O3 -Wall -Wextra -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes -Wundef -Wshadow -Werror -Wfatal-errors"
+AC_SUBST([AM_CFLAGS])
 AC_PROG_CC
 AC_PROG_RANLIB
 AM_PROG_AR

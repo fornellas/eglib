@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-LIBERATION_PATH="/usr/share/fonts/truetype/liberation"
 EGLIB_ROOT=.
 SCALABLE_FONT_SIZES=(7 8 9 10 11 12 13 14 15 16 18 20 22 24 26 28 32 36 40 44 48 54 60 66 72 80 83 88 96)
 FONT_HEADERS=""
@@ -45,12 +44,12 @@ cat << EOF > "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
  *
  * The Liberation Fonts is font collection which aims to provide document layout compatibility as usage of Times New Roman, Arial, Courier New.
  *
- * :Source: https://github.com/liberationfonts/liberation-fonts.
+ * :Source: https://github.com/liberationfonts.
  * :License: SIL Open Font License, Version 1.1
  */
 EOF
 
-for FONT_PATH in $(ls -1 "$LIBERATION_PATH"/*.ttf | LANG=C sort)
+for FONT_PATH in $(ls -1 "$(dirname "$0")"/liberation-fonts-ttf-2.1.2/*.ttf "$(dirname "$0")"/liberation-narrow-fonts-ttf-1.07.6/*.ttf | LANG=C sort)
 do
 	NAME="$(basename "${FONT_PATH%*.ttf}" | tr "-" "_" )"
 	FONT_TITLE="$(echo ${NAME#Liberation*} | tr _ \ )"

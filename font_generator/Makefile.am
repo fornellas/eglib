@@ -8,6 +8,7 @@ nobase_nodist_include_HEADERS += eglib/drawing/fonts/adobe.h
 nobase_nodist_include_HEADERS += eglib/drawing/fonts/liberation.h
 
 EXTRA_DIST = generate_fonts.sh
+
 EXTRA_DIST += adobe/100dpi/courB08.bdf
 EXTRA_DIST += adobe/100dpi/courB10.bdf
 EXTRA_DIST += adobe/100dpi/courB12.bdf
@@ -213,6 +214,34 @@ EXTRA_DIST += adobe/75dpi/timR14.bdf
 EXTRA_DIST += adobe/75dpi/timR18.bdf
 EXTRA_DIST += adobe/75dpi/timR24.bdf
 EXTRA_DIST += adobe/COPYING
+
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/AUTHORS
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/ChangeLog
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/LiberationMono-BoldItalic.ttf
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/LiberationMono-Bold.ttf
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/LiberationMono-Italic.ttf
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/LiberationMono-Regular.ttf
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/LiberationSans-BoldItalic.ttf
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/LiberationSans-Bold.ttf
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/LiberationSans-Italic.ttf
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/LiberationSans-Regular.ttf
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/LiberationSerif-BoldItalic.ttf
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/LiberationSerif-Bold.ttf
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/LiberationSerif-Italic.ttf
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/LiberationSerif-Regular.ttf
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/LICENSE
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/README.md
+EXTRA_DIST += liberation-fonts-ttf-2.1.2/TODO
+EXTRA_DIST += liberation-narrow-fonts-ttf-1.07.6/AUTHORS
+EXTRA_DIST += liberation-narrow-fonts-ttf-1.07.6/ChangeLog
+EXTRA_DIST += liberation-narrow-fonts-ttf-1.07.6/COPYING
+EXTRA_DIST += liberation-narrow-fonts-ttf-1.07.6/LiberationSansNarrow-BoldItalic.ttf
+EXTRA_DIST += liberation-narrow-fonts-ttf-1.07.6/LiberationSansNarrow-Bold.ttf
+EXTRA_DIST += liberation-narrow-fonts-ttf-1.07.6/LiberationSansNarrow-Italic.ttf
+EXTRA_DIST += liberation-narrow-fonts-ttf-1.07.6/LiberationSansNarrow-Regular.ttf
+EXTRA_DIST += liberation-narrow-fonts-ttf-1.07.6/License.txt
+EXTRA_DIST += liberation-narrow-fonts-ttf-1.07.6/README.rst
+EXTRA_DIST += liberation-narrow-fonts-ttf-1.07.6/TODO
 
 eglib/drawing/fonts/adobe.h: eglib/drawing/fonts.h
 eglib/drawing/fonts/liberation.h: eglib/drawing/fonts.h

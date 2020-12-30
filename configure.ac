@@ -2,13 +2,9 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-m4_define(
-	[eglib_VERSION],
-	[0.0.0])
-	# m4_esyscmd([build-aux/git-version-gen .tarball-version]))
 AC_INIT(
 	[eglib],
-	m4_defn([eglib_VERSION]),
+	m4_esyscmd([build-aux/git-version-gen .tarball-version]),
 	[https://github.com/fornellas/eglib/issues],
 	[eglib],
 	[https://fornellas.github.io/eglib/])

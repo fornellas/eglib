@@ -26,6 +26,8 @@ jobs:
         run: sudo apt-get -y install libclang-10-dev
       - name: Install Python dependencies
         run: pip install -r sphinx/requirements.txt
+      - name: autogen
+        run: ./autogen.sh
       - name: distcheck
         run: ./configure && make distcheck
       - name: git status

@@ -5,34 +5,25 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-20.04
-
     steps:
       - uses: actions/checkout@v2
       - name: Submodules init & update
         run: |
           git submodule init
           git submodule update
-      - name: Install Arm toolchain
-        run: sudo apt-get -y install gcc-arm-none-eabi libnewlib-dev libnewlib-arm-none-eabi
-      - name: Install test dependencies
-        run: sudo apt-get -y install valgrind imagemagick
-      - name: Install font_converter dependencies
-        run: sudo apt-get -y install libfreetype-dev fonts-liberation
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - name: Install requirements.txt apt dependencies
-        run: sudo apt-get -y install libclang-10-dev
-      - name: Install Python dependencies
-        run: pip install -r sphinx/requirements.txt
+      - name: Install build dependencies
+        run: sudo apt-get -y install gnulib autoconf autoconf-archive automake valgrind gcc pkg-config imagemagick libfreetype-dev check libc-dev make
       - name: autogen
         run: ./autogen.sh
-      - name: distcheck
-        run: ./configure && make distcheck
+      - name: configure
+        run: ./configure
+      - name: make distcheck
+        run: make distcheck
+      - name: make all
+        run: make all
+      - name: make check-valgrind
+        run: make check-valgrind
+      - name: make distclean
+        run: make distclean
       - name: git status
         run: GIT_STATUS="$(git status --porcelain)" && [ -n "$GIT_STATUS" ] && { echo git status ; echo "$GIT_STATUS" ; echo git diff ; git diff ; exit 1 ; } || true
-      - name: git status --ignored
-        run: |
-          make distclean
-          GIT_STATUS="$(git status --ignored --porcelain)" && [ -n "$GIT_STATUS" ] && { echo git status ; echo "$GIT_STATUS" ; exit 1 ; } || true

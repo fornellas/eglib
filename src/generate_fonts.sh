@@ -49,7 +49,7 @@ cat << EOF > "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
  */
 EOF
 
-for FONT_PATH in $(ls -1 "$(dirname "$0")"/liberation-fonts-ttf-2.1.2/*.ttf "$(dirname "$0")"/liberation-narrow-fonts-ttf-1.07.6/*.ttf | LANG=C sort)
+for FONT_PATH in $(ls -1 "$(dirname "$0")"/../fonts/liberation-fonts-ttf-2.1.2/*.ttf "$(dirname "$0")"/../fonts/liberation-narrow-fonts-ttf-1.07.6/*.ttf | LANG=C sort)
 do
 	NAME="$(basename "${FONT_PATH%*.ttf}" | tr "-" "_" )"
 	FONT_TITLE="$(echo ${NAME#Liberation*} | tr _ \ )"
@@ -70,7 +70,7 @@ EOF
 	for PIXEL_SIZE in "${SCALABLE_FONT_SIZES[@]}"
 	do
 		C_NAME="Liberation_$(echo "${NAME#Liberation*}" | tr -d _\ )_${PIXEL_SIZE}px"
-		./font_generator "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" >> "$C_FILE"
+		../font_generator/eglib-font_generator "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" >> "$C_FILE"
 		cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
 
 /**
@@ -157,7 +157,7 @@ declare -A ADOBE_FONT_PIXEL_SIZES
 
 for DPI in 75 100
 do
-	FONT_PATHS="$(find "$(dirname "$0")"/adobe/${DPI}dpi -name \*.bdf)"
+	FONT_PATHS="$(find "$(dirname "$0")"/../fonts/adobe/${DPI}dpi -name \*.bdf)"
 	for FONT_PATH in $FONT_PATHS
 	do
 		NAME="$(gawk 'BEGIN{FS="\""}/^FULL_NAME /{print $2}' < $FONT_PATH)"
@@ -191,7 +191,7 @@ EOF
 	do
 		C_NAME="Adobe_$(echo "$NAME" | tr -d \ )_${PIXEL_SIZE}px"
 		FONT_PATH="${ADOBE_FONT_PATHS["$PIXEL_SIZE $NAME"]}"
-		./font_generator "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" >> "$C_FILE"
+		../font_generator/eglib-font_generator "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" >> "$C_FILE"
 		cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/adobe.h
 
 /**

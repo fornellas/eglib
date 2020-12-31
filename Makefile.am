@@ -1,4 +1,4 @@
-SUBDIRS = font_generator src tests sphinx
+SUBDIRS = fonts $(subdirs_extra) src tests sphinx
 dist_doc_DATA = README.md LICENSE.md
 
 EXTRA_DIST = $(top_srcdir)/.version

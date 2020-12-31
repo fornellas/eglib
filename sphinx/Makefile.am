@@ -34,9 +34,8 @@ EXTRA_DIST += _templates/badges.html
 
 .PHONY: include/
 include/:
-	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/font_generator/ install-data includedir=include DESTDIR=$(top_builddir)/sphinx/
 	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/src/ install-data includedir=include DESTDIR=$(top_builddir)/sphinx/
-	ln -sf ../$(top_srcdir)/submodules/libopencm3/include/libopencm3 include/libopencm3
+	$(LN_S) -sf ../$(top_srcdir)/submodules/libopencm3/include/libopencm3 include/libopencm3
 
 .PHONY: $(top_builddir)/html/
 $(top_builddir)/html/: include/

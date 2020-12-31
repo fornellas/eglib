@@ -14,5 +14,6 @@ build-aux/
 config.log
 config.status
 configure
+configure.scan
 eglib-*.tar.gz
 eglib-*/

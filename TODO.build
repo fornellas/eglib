@@ -1,16 +1,20 @@
 cross compile
-	./configure --host=x86_64-pc-linux-gnu --target=arm-none-eabi CC=arm-none-eabi-gcc CFLAGS="-DSTM32F4 -DSTM32F411CEU6 -I../submodules/libopencm3/include/ -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -lnosys -lc"
+  ./configure --host=arm-none-eabi CFLAGS="-DSTM32F4 -I../submodules/libopencm3/include/ -mcpu=cortex-m4  -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -lnosys -lc"
+
+autoscan
+  add to build
 
 docs
-	should not be built without libopencm3
+  should not be built without libopencm3
+  add python & requirements.txt to configure.ac
 examples
-	libopencm3
-		four_wire_spi/libopencm3_stm32f4
-		i2c/libopencm3_stm32f4
+  libopencm3
+    four_wire_spi/libopencm3_stm32f4
+    i2c/libopencm3_stm32f4
 eglib
-	src
-		hal
-			four_wire_spi
-				libopencm3_stm32f4
-			i2c
-				libopencm3_stm32f4
+  src
+    hal
+      four_wire_spi
+        libopencm3_stm32f4
+      i2c
+        libopencm3_stm32f4

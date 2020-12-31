@@ -35,22 +35,23 @@ EXTRA_DIST += _templates/badges.html
 .PHONY: include/
 include/:
 	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/src/ install-data includedir=include DESTDIR=$(top_builddir)/sphinx/
-	$(LN_S) -sf ../$(top_srcdir)/submodules/libopencm3/include/libopencm3 include/libopencm3
+	rm -f include/libopencm3
+	ln -s ../$(top_srcdir)/submodules/libopencm3/include/libopencm3/ include/libopencm3
 
 .PHONY: $(top_builddir)/html/
 $(top_builddir)/html/: include/
-	EGLIB_SRC="$(top_builddir)/sphinx/include" sphinx-build -b html -a -W $(top_srcdir)/sphinx/ $(top_builddir)/html/
+	EGLIB_SRC="$(top_builddir)/sphinx/include" sphinx-build -b html -W $(top_srcdir)/sphinx/ html/
 
 .PHONY: html-local
 html-local: $(top_builddir)/html/
 
 .PHONY: install-html-local
 install-html-local: html-local
-	$(AM_V_GEN)find html/ -type f -exec $(install_sh_DATA) "{}"  ${DESTDIR}/$(docdir)/"{}" \;
+	find html/ -type f -exec $(install_sh_DATA) "{}" $(docdir)/"{}" \;
 
 .PHONY: uninstall-local
 uninstall-local:
-	-rm -rf ${DESTDIR}/$(docdir)/html
+	-rm -rf $(docdir)/html
 
 # FIXME
 # check: html-local

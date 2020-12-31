@@ -96,7 +96,7 @@ Add a documentation page ``sphinx/reference/display/drivers/${IC_NUMBER}.rst``, 
 Add Unit Tests
 --------------
 
-Add one or more tests to `master/tests/display <https://github.com/fornellas/eglib/tree/master/tests/display>`_. These tests make use of the :doc:`../api_reference/hal/four_wire_spi/stdout` HAL driver and assert on the communication that the display driver does.
+Add one or more tests to `master/tests/display <https://github.com/fornellas/eglib/tree/master/tests/display>`_.
 
 Send A Pull Request
 -------------------

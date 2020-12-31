@@ -14,6 +14,7 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import os
 import os.path
 
 
@@ -35,7 +36,11 @@ release = "master"
 extensions = ["hawkmoth"]
 
 # hawkmoth
-cautodoc_root = os.path.abspath(os.path.dirname(__file__) + "/../src/")
+EGLIB_SRC = os.environ.get("EGLIB_SRC")
+if not EGLIB_SRC:
+    raise RuntimeError("Please run this via `make html'.")
+cautodoc_root = EGLIB_SRC
+cautodoc_clang = f"-I{EGLIB_SRC}"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]

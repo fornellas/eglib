@@ -2,6 +2,7 @@ cross compile
 	./configure --host=x86_64-pc-linux-gnu --target=arm-none-eabi CC=arm-none-eabi-gcc CFLAGS="-DSTM32F4 -DSTM32F411CEU6 -I../submodules/libopencm3/include/ -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -lnosys -lc"
 
 docs
+	should not be built without libopencm3
 examples
 	libopencm3
 		four_wire_spi/libopencm3_stm32f4

@@ -9,9 +9,3 @@ TGA
     #include <eglib/display/tga.h>
 
 .. c:autodoc:: eglib/display/tga.h
-
-Example
--------
-
-.. literalinclude:: ../../../../tests/drawing/main.c
-   :language: C

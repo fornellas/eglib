@@ -18,6 +18,7 @@ AC_CONFIG_FILES([
 	font_generator/Makefile
 	Makefile
 	src/Makefile
+	sphinx/Makefile
 	tests/display/Makefile
 	tests/drawing/Makefile
 	tests/fonts/adobe/Makefile

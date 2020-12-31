@@ -6,3 +6,4 @@ I2C Drivers
    :caption: Contents:
 
    libopencm3_stm32f4.rst
+   stream.rst

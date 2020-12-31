@@ -7,4 +7,4 @@
 
    libopencm3_stm32f4.rst
    none.rst
-   stdout.rst
+   stream.rst

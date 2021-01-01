@@ -43,7 +43,7 @@ if test "x$enable_libopencm3_stm32f4" != xno ; then
 		AC_MSG_ERROR([Missing --host=arm-none-eabi parameter to enable cross-compilation!])
 	fi
 	AC_MSG_CHECKING([required libopencm3 stm32f4 CPPFLAGS])
-	OPENCM3_CPPFLAGS="$(make -f libopencm3.mk OPENCM3_DIR="$OPENCM3_DIR" DEVICE=stm32f4)"
+	OPENCM3_CPPFLAGS="$(make -f build-aux/libopencm3.mk OPENCM3_DIR="$OPENCM3_DIR" DEVICE=stm32f4)"
 	AC_MSG_RESULT([ok])
 	CPPFLAGS="$OPENCM3_CPPFLAGS $CPPFLAGS"
 fi

@@ -1,5 +1,8 @@
-cross compile
-  ./configure --host=arm-none-eabi --enable-libopencm3_stm32f4 --with-libopencm3=../libopencm3
+configure.ac
+  make html
+    python
+      sphinx
+      hawkmoth
 pkg-config
   add configuration for third party projects
 autoscan

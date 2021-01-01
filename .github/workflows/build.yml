@@ -16,7 +16,7 @@ jobs:
       - name: configure
         run: ./configure
       - name: make dist
-        run: make dist
+        run: make dist V=1
       - name: Upload dist
         uses: actions/upload-artifact@v2
         with:
@@ -45,11 +45,11 @@ jobs:
       - name: configure
         run: eglib-$(cat dist/.version)/configure --with-libopencm3=submodules/libopencm3/
       - name: make
-        run: make
+        run: make V=1
       - name: make check-valgrind
-        run: make check-valgrind
+        run: make check-valgrind V=1
       - name: make html
-        run: make html
+        run: make html V=1
   build_libopencm3_stm32f4:
     runs-on: ubuntu-20.04
     needs: dist
@@ -65,4 +65,4 @@ jobs:
       - name: configure
         run: eglib-$(cat dist/.version)/configure --host=arm-none-eabi --enable-libopencm3_stm32f4 --with-libopencm3=libopencm3/
       - name: make
-        run: make
+        run: make V=1

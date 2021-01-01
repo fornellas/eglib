@@ -2,6 +2,7 @@
 **/*.log
 **/*.o
 **/*.test
+**/*.tga
 **/*.trs
 **/.deps/
 **/.dirstamp

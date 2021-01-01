@@ -3,6 +3,7 @@
 
 #include "../../hal.h"
 #include <libopencm3/stm32/rcc.h>
+#include <stdint.h>
 
 /**
  * Configuration

@@ -32,11 +32,13 @@ EXTRA_DIST += requirements.txt
 EXTRA_DIST += _static/logo.png
 EXTRA_DIST += _templates/badges.html
 
+if BUILD_HTML
+
 .PHONY: include/
 include/:
+	rm -rf include/
 	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/src/ install-data includedir=include DESTDIR=$(top_builddir)/sphinx/
-	rm -f include/libopencm3
-	ln -s ../$(top_srcdir)/submodules/libopencm3/include/libopencm3/ include/libopencm3
+	ln -s $(OPENCM3_DIR)/include/* include/
 
 .PHONY: $(top_builddir)/html/
 $(top_builddir)/html/: include/
@@ -53,10 +55,11 @@ install-html-local: html-local
 uninstall-local:
 	-rm -rf $(docdir)/html
 
-# FIXME
-# check: html-local
+check: html-local
 
 .PHONY: clean-local
 clean-local:
 	-rm -rf include/
 	-rm -rf html/
+
+endif

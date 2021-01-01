@@ -1,6 +1,7 @@
 #ifndef EGLIB_H
 #define EGLIB_H
 
+#include "eglib/config.h"
 #include "eglib/types.h"
 #include "eglib/drawing.h"
 

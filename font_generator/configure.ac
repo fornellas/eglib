@@ -22,19 +22,23 @@ AC_PROG_CC
 AC_PROG_AWK
 AC_PROG_MAKE_SET
 PKG_PROG_PKG_CONFIG
+AX_VALGRIND_DFLT([helgrind],[off])
+AX_VALGRIND_DFLT([drd],[off])
+AX_VALGRIND_DFLT([sgcheck],[off])
+AX_VALGRIND_DFLT([memcheck],[on])
+AX_VALGRIND_CHECK
 
 # Checks for libraries.
 PKG_CHECK_MODULES([FREETYPE2], [freetype2 >= 2.10.1])
 
 # Checks for header files.
-AC_CHECK_HEADERS([stdint.h stdlib.h])
+AC_CHECK_HEADERS([stdint.h], [], AC_MSG_FAILURE([stdint.h not found!]))
+AC_CHECK_HEADERS([stdlib.h], [], AC_MSG_FAILURE([stdlib.h not found!]))
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
-if test x$ac_cv_header_stdbool_h != xyes
-then
-	echo "stdbool.h not found!"
-	exit 1
+if test "x$ac_cv_header_stdbool_h" != xyes ; then
+	AC_MSG_FAILURE([stdbool.h not found!])
 fi
 AC_TYPE_INT16_T
 AC_TYPE_UINT16_T

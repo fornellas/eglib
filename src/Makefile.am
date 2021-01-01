@@ -4,18 +4,10 @@ AUTOMAKE_OPTIONS = subdir-objects
 ## Generated Sources
 ##
 
-EXTRA_DIST = generate_fonts.sh
-
-eglib/drawing/fonts/adobe.h: eglib/drawing/fonts.h
-eglib/drawing/fonts/liberation.h: eglib/drawing/fonts.h
-
-eglib/drawing/fonts.h: generate_fonts.sh
-	$(top_srcdir)/src/generate_fonts.sh
-
-nobase_nodist_include_HEADERS = eglib/drawing/fonts.h
+nobase_nodist_include_HEADERS = eglib/config.h
+nobase_nodist_include_HEADERS += eglib/drawing/fonts.h
 nobase_nodist_include_HEADERS += eglib/drawing/fonts/adobe.h
 nobase_nodist_include_HEADERS += eglib/drawing/fonts/liberation.h
-
 nodist_libeglib_a_SOURCES = $(top_builddir)/src/eglib/drawing/fonts/adobe_courier_bold.c
 nodist_libeglib_a_SOURCES += $(top_builddir)/src/eglib/drawing/fonts/adobe_courier_bold_oblique.c
 nodist_libeglib_a_SOURCES += $(top_builddir)/src/eglib/drawing/fonts/adobe_courier.c
@@ -51,6 +43,13 @@ nodist_libeglib_a_SOURCES += $(top_builddir)/src/eglib/drawing/fonts/liberation_
 nodist_libeglib_a_SOURCES += $(top_builddir)/src/eglib/drawing/fonts/liberation_serif_italic.c
 nodist_libeglib_a_SOURCES += $(top_builddir)/src/eglib/drawing/fonts/liberation_serif_regular.c
 
+BUILT_SOURCES = $(nobase_nodist_include_HEADERS) $(nodist_libeglib_a_SOURCES)
+
+EXTRA_DIST = generate_fonts.sh
+
+$(nobase_nodist_include_HEADERS) $(nodist_libeglib_a_SOURCES): $(top_srcdir)/src/generate_fonts.sh
+	$(top_srcdir)/src/generate_fonts.sh
+
 .PHONY: clean-local
 clean-local:
 	-rm -f eglib/drawing/fonts.h
@@ -61,9 +60,8 @@ clean-local:
 ##
 
 lib_LIBRARIES = libeglib.a
-libeglib_a_CFLAGS = -I$(top_builddir)/src $(COMMON_CFLAGS)
+libeglib_a_CFLAGS = -I$(top_builddir)/src $(AM_CFLAGS)
 libeglib_a_SOURCES = eglib.c
-eglib.c: eglib/drawing/fonts.h
 libeglib_a_SOURCES += eglib/display.c
 libeglib_a_SOURCES += eglib/display/frame_buffer.c
 libeglib_a_SOURCES += eglib/display/sh1106.c
@@ -72,11 +70,16 @@ libeglib_a_SOURCES += eglib/display/st7789.c
 libeglib_a_SOURCES += eglib/display/tga.c
 libeglib_a_SOURCES += eglib/drawing.c
 libeglib_a_SOURCES += eglib/hal.c
-# libeglib_a_SOURCES += eglib/hal/common/libopencm3/stm32f4/delay.c
-# libeglib_a_SOURCES += eglib/hal/four_wire_spi/libopencm3_stm32f4.c
 libeglib_a_SOURCES += eglib/hal/four_wire_spi/none.c
 libeglib_a_SOURCES += eglib/hal/four_wire_spi/stream.c
-# libeglib_a_SOURCES += eglib/hal/i2c/libopencm3_stm32f4.c
+EXTRA_libeglib_a_SOURCES = eglib/hal/common/libopencm3/stm32f4/delay.c
+EXTRA_libeglib_a_SOURCES += eglib/hal/four_wire_spi/libopencm3_stm32f4.c
+EXTRA_libeglib_a_SOURCES += eglib/hal/i2c/libopencm3_stm32f4.c
+EXTRA_DIST += eglib/hal/common/libopencm3/stm32f4/delay.c
+if OPENCM3_STM32F4
+libeglib_a_SOURCES += eglib/hal/four_wire_spi/libopencm3_stm32f4.c
+libeglib_a_SOURCES += eglib/hal/i2c/libopencm3_stm32f4.c
+endif
 libeglib_a_SOURCES += eglib/hal/i2c/stream.c
 nobase_include_HEADERS = eglib.h
 nobase_include_HEADERS += eglib/display.h
@@ -93,4 +96,3 @@ nobase_include_HEADERS += eglib/hal/four_wire_spi/stream.h
 nobase_include_HEADERS += eglib/hal/i2c/libopencm3_stm32f4.h
 nobase_include_HEADERS += eglib/hal/i2c/stream.h
 nobase_include_HEADERS += eglib/types.h
-

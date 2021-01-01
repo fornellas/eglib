@@ -19,13 +19,11 @@ jobs:
         run: |
           make dist
           echo "VERSION=$(cat .version)" >> $GITHUB_ENV
-      - name: Archive production artifacts
+      - name: Upload eglib-$VERSION.tar.gz
         uses: actions/upload-artifact@v2
         with:
           name: dist-without-markdown
-          path: |
-            dist
-            !dist/**/*.md
+          path: eglib-${{env.VERSION}}.tar.gz
   build_native:
     runs-on: ubuntu-20.04
     needs: dist

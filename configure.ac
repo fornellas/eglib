@@ -14,6 +14,7 @@ AM_SILENT_RULES([yes])
 AC_CONFIG_SRCDIR([src/eglib.c])
 AC_CONFIG_MACRO_DIR([/usr/share/aclocal])
 AC_REQUIRE_AUX_FILE([tap-driver.sh])
+AC_REQUIRE_AUX_FILE([libopencm3.mk])
 AC_CONFIG_HEADERS([src/eglib/config.h])
 
 # Canonical

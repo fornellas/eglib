@@ -47,7 +47,11 @@ BUILT_SOURCES = $(nobase_nodist_include_HEADERS) $(nodist_libeglib_a_SOURCES)
 
 EXTRA_DIST = generate_fonts.sh
 
-$(nobase_nodist_include_HEADERS) $(nodist_libeglib_a_SOURCES): $(top_srcdir)/src/generate_fonts.sh
+$(nodist_libeglib_a_SOURCES): eglib/drawing/fonts.h
+eglib/drawing/fonts/adobe.h: eglib/drawing/fonts.h
+eglib/drawing/fonts/liberation.h: eglib/drawing/fonts.h
+
+eglib/drawing/fonts.h: $(top_srcdir)/src/generate_fonts.sh
 	$(top_srcdir)/src/generate_fonts.sh
 
 .PHONY: clean-local
@@ -62,6 +66,7 @@ clean-local:
 lib_LIBRARIES = libeglib.a
 libeglib_a_CFLAGS = -I$(top_builddir)/src $(AM_CFLAGS)
 libeglib_a_SOURCES = eglib.c
+eglib.c: eglib/drawing/fonts.h
 libeglib_a_SOURCES += eglib/display.c
 libeglib_a_SOURCES += eglib/display/frame_buffer.c
 libeglib_a_SOURCES += eglib/display/sh1106.c

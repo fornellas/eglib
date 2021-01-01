@@ -51,7 +51,7 @@ static void delay_ns(eglib_t *eglib, uint32_t ns) {
 
 	config = eglib_GetHalConfig(eglib);
 
-	fprintf(config->stream, "delay_ns %d\n", ns);
+	fprintf(config->stream, "delay_ns %lu\n", (unsigned long int)ns);
 }
 
 static void set_reset(eglib_t *eglib, bool state) {

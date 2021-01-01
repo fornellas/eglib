@@ -2,10 +2,9 @@ name: build
 on: [push, pull_request]
 env:
   COMMON_BUILD_DEPS: gcc pkg-config libfreetype-dev libc-dev make
-defaults:
-  runs-on: ubuntu-20.04
 jobs:
   dist:
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Install autotools dependencies
@@ -28,6 +27,7 @@ jobs:
             dist
             !dist/**/*.md
   build_native:
+    runs-on: ubuntu-20.04
     needs: dist
     steps:
       - uses: actions/checkout@v2
@@ -50,6 +50,7 @@ jobs:
       - name: make html
         run: cd eglib-${{env.VERSION}} && make html
   build_libopencm3_stm32f4:
+    runs-on: ubuntu-20.04
     needs: dist
     steps:
       - uses: actions/checkout@v2

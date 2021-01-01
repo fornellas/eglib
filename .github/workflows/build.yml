@@ -1,7 +1,7 @@
 name: build
 on: [push, pull_request]
 env:
-  COMMON_BUILD_DEPS: gcc pkg-config libfreetype-dev libc-dev make
+  COMMON_BUILD_DEPS: gcc pkg-config libfreetype-dev libc-dev make check
 jobs:
   dist:
     runs-on: ubuntu-20.04
@@ -36,7 +36,7 @@ jobs:
           git submodule init
           git submodule update
       - name: Install build dependencies
-        run: sudo apt-get -y install ${{env.COMMON_BUILD_DEPS}} valgrind imagemagick check
+        run: sudo apt-get -y install ${{env.COMMON_BUILD_DEPS}} valgrind imagemagick
       - name: Download eglib-$VERSION.tar.gz
         uses: actions/download-artifact@v2
       - name: Unpack

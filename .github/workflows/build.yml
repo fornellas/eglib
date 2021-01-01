@@ -36,12 +36,12 @@ jobs:
         uses: actions/setup-python@v2
       - name: Install requirements.txt dependencies
         run: sudo apt-get -y install libclang-10-dev
-      - name: Install requirements.txt dependencies
-        run: pip install -r sphinx/requirements.txt
       - name: Download dist
         uses: actions/download-artifact@v2
       - name: Unpack
         run: tar zxf dist/eglib-$(cat dist/.version).tar.gz
+      - name: Install requirements.txt dependencies
+        run: pip install -r eglib-$(cat dist/.version)/sphinx/requirements.txt
       - name: configure
         run: eglib-$(cat dist/.version)/configure --with-libopencm3=submodules/libopencm3/
       - name: make

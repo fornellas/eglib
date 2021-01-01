@@ -16,14 +16,14 @@ jobs:
       - name: configure
         run: ./configure
       - name: make dist
-        run: |
-          make dist
-          echo "VERSION=$(cat .version)" >> $GITHUB_ENV
+        run: make dist
+      - name: Set VERSION
+        run: echo "VERSION=$(cat .version)" >> $GITHUB_ENV
       - name: Upload eglib-$VERSION.tar.gz
         uses: actions/upload-artifact@v2
         with:
-          name: dist-without-markdown
-          path: eglib-${VERSION}.tar.gz
+          name: eglib-${{ env.VERSION }}.tar.gz
+          path: eglib-${{ env.VERSION }}.tar.gz
   build_native:
     runs-on: ubuntu-20.04
     needs: dist
@@ -38,15 +38,15 @@ jobs:
       - name: Download eglib-$VERSION.tar.gz
         uses: actions/download-artifact@v2
       - name: Unpack
-        run: tar zxf eglib-${VERSION}.tar.gz
+        run: tar zxf eglib-${{ env.VERSION }}.tar.gz
       - name: configure
-        run: cd eglib-${VERSION} && ./configure --with-libopencm3=submodules/libopencm3/
+        run: cd eglib-${{ env.VERSION }} && ./configure --with-libopencm3=submodules/libopencm3/
       - name: make
-        run: cd eglib-${VERSION} && make
+        run: cd eglib-${{ env.VERSION }} && make
       - name: make check-valgrind
-        run: cd eglib-${VERSION} && check-valgrind
+        run: cd eglib-${{ env.VERSION }} && check-valgrind
       - name: make html
-        run: cd eglib-${VERSION} && make html
+        run: cd eglib-${{ env.VERSION }} && make html
   build_libopencm3_stm32f4:
     runs-on: ubuntu-20.04
     needs: dist
@@ -61,8 +61,8 @@ jobs:
       - name: Download eglib-$VERSION.tar.gz
         uses: actions/download-artifact@v2
       - name: Unpack
-        run: tar zxf eglib-${VERSION}.tar.gz
+        run: tar zxf eglib-${{ env.VERSION }}.tar.gz
       - name: configure
-        run: cd eglib-${VERSION} && ./configure --host=arm-none-eabi --enable-libopencm3_stm32f4 --with-libopencm3=submodules/libopencm3/
+        run: cd eglib-${{ env.VERSION }} && ./configure --host=arm-none-eabi --enable-libopencm3_stm32f4 --with-libopencm3=submodules/libopencm3/
       - name: make
-        run: cd eglib-${VERSION} && make
+        run: cd eglib-${{ env.VERSION }} && make

@@ -22,6 +22,17 @@ AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 AM_CONDITIONAL([NOT_CROSS_COMPILE], [test x$build = x$host])
 
+with_nosys_specs() {
+	ORIGINAL_CPPFLAGS="$CPPFLAGS"
+	if test "x$host" = xarm-none-eabi ; then
+		# AC_PROG_CC calls exit(3) from its test: we temporarily add nosys.specs
+		# to avoid "undefined reference to `_exit'" error.
+		CPPFLAGS="$CPPFLAGS  -specs=nosys.specs"
+	fi
+	"$@"
+	CPPFLAGS="$ORIGINAL_CPPFLAGS"
+}
+
 # libopencm3
 AC_ARG_WITH(
 	[libopencm3],
@@ -47,6 +58,8 @@ if test "x$enable_libopencm3_stm32f4" != xno ; then
 	OPENCM3_CPPFLAGS="$(make -f build-aux/libopencm3.mk OPENCM3_DIR="$OPENCM3_DIR" DEVICE=stm32f4)"
 	AC_MSG_RESULT([ok])
 	CPPFLAGS="$OPENCM3_CPPFLAGS $CPPFLAGS"
+	check_libopencm3_header() { AC_CHECK_HEADERS([libopencm3/stm32/rcc.h], [], AC_MSG_FAILURE([libopencm3/stm32/rcc.h not found!])) }
+	with_nosys_specs check_libopencm3_header
 fi
 AM_CONDITIONAL([OPENCM3_STM32F4], [test "x$enable_libopencm3_stm32f4" != xno])
 
@@ -62,14 +75,8 @@ AM_CONDITIONAL([BUILD_HTML], [test "x$BUILD_HTML" != xno])
 : ${CFLAGS="-g -O3"}
 AM_CFLAGS="-Wall -Wextra -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes -Wundef -Wshadow -Werror -Wfatal-errors"
 AC_SUBST([AM_CFLAGS])
-ORIGINAL_CPPFLAGS="$CPPFLAGS"
-if test "x$host" = xarm-none-eabi ; then
-	# AC_PROG_CC calls exit(3) from its test: we temporarily add nosys.specs
-	# to avoid "undefined reference to `_exit'" error.
-	CPPFLAGS="$CPPFLAGS  -specs=nosys.specs"
-fi
-AC_PROG_CC
-CPPFLAGS="$ORIGINAL_CPPFLAGS"
+check_prog_cc() { AC_PROG_CC }
+with_nosys_specs check_prog_cc
 AM_PROG_AR
 AC_PROG_RANLIB
 AX_VALGRIND_DFLT([helgrind],[off])

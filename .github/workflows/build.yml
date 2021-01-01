@@ -57,6 +57,6 @@ jobs:
       - name: Unpack
         run: tar zxf dist/eglib-$(cat dist/.version).tar.gz
       - name: configure
-        run: eglib-$(cat dist/.version)/configure --host=arm-none-eabi --enable-libopencm3_stm32f4 --with-libopencm3=submodules/libopencm3/
+        run: eglib-$(cat dist/.version)/configure --host=arm-none-eabi --enable-libopencm3_stm32f4 --with-libopencm3=libopencm3/
       - name: make
         run: make

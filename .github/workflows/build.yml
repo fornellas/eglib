@@ -30,14 +30,16 @@ jobs:
     runs-on: ubuntu-20.04
     needs: dist
     steps:
-      - name: Clone libopencm3
-        run: git clone https://github.com/libopencm3/libopencm3
       - name: Install build dependencies
         run: sudo apt-get -y install ${{env.COMMON_BUILD_DEPS}} valgrind imagemagick
       - name: Setup Python
         uses: actions/setup-python@v2
       - name: Install requirements.txt dependencies
         run: sudo apt-get -y install libclang-10-dev
+      - name: Clone libopencm3
+        run: git clone https://github.com/libopencm3/libopencm3
+      - name: Build libopencm3
+        run: make -C libopencm3/
       - name: Download dist
         uses: actions/download-artifact@v2
       - name: Unpack

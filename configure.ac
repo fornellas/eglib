@@ -43,7 +43,7 @@ if test "x$enable_libopencm3_stm32f4" != xno ; then
 	if test "x$host" != xarm-none-eabi ; then
 		AC_MSG_ERROR([Missing --host=arm-none-eabi parameter to enable cross-compilation!])
 	fi
-	AC_CHECK_FILE(["$OPENCM3_DIR/lib/libopencm3_stm32f4.a"], [], AC_MSG_ERROR([It seems libopencm3 was not built yet! Please build it (eg: \`make -C $OPENCM3_DIR').]))
+	AC_CHECK_FILE(["$OPENCM3_DIR/lib/libopencm3_stm32f4.a"], [], AC_MSG_ERROR([It seems libopencm3 was not built yet! Please build it (eg: 'make -C $OPENCM3_DIR').]))
 	AC_MSG_CHECKING([required libopencm3 stm32f4 CPPFLAGS])
 	OPENCM3_CPPFLAGS="$(make -f build-aux/libopencm3.mk OPENCM3_DIR="$OPENCM3_DIR" DEVICE=stm32f4)"
 	CPPFLAGS="$OPENCM3_CPPFLAGS $CPPFLAGS"
@@ -71,7 +71,6 @@ if test "x$host" = xarm-none-eabi ; then
 fi
 AC_PROG_CC
 CPPFLAGS="$ORIGINAL_CPPFLAGS"
-with_nosys_specs check_prog_cc
 AM_PROG_AR
 AC_PROG_RANLIB
 AX_VALGRIND_DFLT([helgrind],[off])

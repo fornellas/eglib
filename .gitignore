@@ -6,8 +6,11 @@
 **/*.trs
 **/.deps/
 **/.dirstamp
+**/config.h
+**/config.h.in
 **/Makefile
 **/Makefile.in
+**/stamp-h1
 .version
 aclocal.m4
 autom4te.cache/

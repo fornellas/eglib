@@ -63,10 +63,33 @@ clean-local:
 ## Static Sources
 ##
 
+nobase_include_HEADERS = eglib.h
+nobase_include_HEADERS += eglib/display.h
+nobase_include_HEADERS += eglib/display/frame_buffer.h
+nobase_include_HEADERS += eglib/display/sh1106.h
+nobase_include_HEADERS += eglib/display/ssd1331.h
+nobase_include_HEADERS += eglib/display/st7789.h
+nobase_include_HEADERS += eglib/display/tga.h
+nobase_include_HEADERS += eglib/drawing.h
+nobase_include_HEADERS += eglib/hal.h
+nobase_include_HEADERS += eglib/hal/four_wire_spi/libopencm3_stm32f4.h
+nobase_include_HEADERS += eglib/hal/four_wire_spi/none.h
+nobase_include_HEADERS += eglib/hal/four_wire_spi/stream.h
+nobase_include_HEADERS += eglib/hal/i2c/libopencm3_stm32f4.h
+nobase_include_HEADERS += eglib/hal/i2c/stream.h
+nobase_include_HEADERS += eglib/types.h
+
 lib_LIBRARIES = libeglib.a
-libeglib_a_CFLAGS = -I$(top_builddir)/src $(AM_CFLAGS)
-libeglib_a_SOURCES = eglib.c
+if OPENCM3_STM32F4
+libeglib_a_CFLAGS = $(CFLAGS_OPENCM3) $(CFLAGS_WARNINGS)
+libeglib_a_CPPFLAGS = -I$(top_builddir)/src $(CPPFLAGS_OPENCM3)
+else
+libeglib_a_CFLAGS = $(CFLAGS_WARNINGS)
+libeglib_a_CPPFLAGS = -I$(top_builddir)/src
+endif
+
 eglib.c: eglib/drawing/fonts.h
+libeglib_a_SOURCES = eglib.c
 libeglib_a_SOURCES += eglib/display.c
 libeglib_a_SOURCES += eglib/display/frame_buffer.c
 libeglib_a_SOURCES += eglib/display/sh1106.c
@@ -86,18 +109,3 @@ libeglib_a_SOURCES += eglib/hal/four_wire_spi/libopencm3_stm32f4.c
 libeglib_a_SOURCES += eglib/hal/i2c/libopencm3_stm32f4.c
 endif
 libeglib_a_SOURCES += eglib/hal/i2c/stream.c
-nobase_include_HEADERS = eglib.h
-nobase_include_HEADERS += eglib/display.h
-nobase_include_HEADERS += eglib/display/frame_buffer.h
-nobase_include_HEADERS += eglib/display/sh1106.h
-nobase_include_HEADERS += eglib/display/ssd1331.h
-nobase_include_HEADERS += eglib/display/st7789.h
-nobase_include_HEADERS += eglib/display/tga.h
-nobase_include_HEADERS += eglib/drawing.h
-nobase_include_HEADERS += eglib/hal.h
-nobase_include_HEADERS += eglib/hal/four_wire_spi/libopencm3_stm32f4.h
-nobase_include_HEADERS += eglib/hal/four_wire_spi/none.h
-nobase_include_HEADERS += eglib/hal/four_wire_spi/stream.h
-nobase_include_HEADERS += eglib/hal/i2c/libopencm3_stm32f4.h
-nobase_include_HEADERS += eglib/hal/i2c/stream.h
-nobase_include_HEADERS += eglib/types.h

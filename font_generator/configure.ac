@@ -14,28 +14,42 @@ AM_SILENT_RULES([yes])
 AC_CONFIG_SRCDIR([font_generator.c])
 AC_CONFIG_MACRO_DIR([/usr/share/aclocal])
 
-# Checks for programs.
-: ${CFLAGS="-g -O3"}
-AM_CFLAGS="-Wall -Wextra -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes -Wundef -Wshadow -Werror -Wfatal-errors"
-AC_SUBST([AM_CFLAGS])
-AC_PROG_CC
-AC_PROG_AWK
-AC_PROG_MAKE_SET
-PKG_PROG_PKG_CONFIG
-AX_VALGRIND_DFLT([helgrind],[off])
-AX_VALGRIND_DFLT([drd],[off])
-AX_VALGRIND_DFLT([sgcheck],[off])
-AX_VALGRIND_DFLT([memcheck],[on])
-AX_VALGRIND_CHECK
+##
+## Misc
+##
 
-# Checks for libraries.
+# Common warning flags
+CFLAGS_WARNINGS="-Wextra -Wshadow -Wno-unused-variable -Wimplicit-function-declaration"
+CFLAGS_WARNINGS="$CFLAGS_WARNINGS -Wredundant-decls -Wstrict-prototypes -Wmissing-prototypes"
+CFLAGS_WARNINGS="$CFLAGS_WARNINGS -Wall -Wundef"
+CFLAGS_WARNINGS="$CFLAGS_WARNINGS -Werror -Wfatal-errors"
+AC_SUBST([CFLAGS_WARNINGS], [$CFLAGS_WARNINGS])
+
+##
+## Checks for programs.
+##
+
+: ${CFLAGS="-g -O3"}
+AC_PROG_CC
+PKG_PROG_PKG_CONFIG
+
+##
+## Checks for libraries.
+##
+
 PKG_CHECK_MODULES([FREETYPE2], [freetype2 >= 2.10.1])
 
-# Checks for header files.
+##
+## Checks for header files.
+##
+
 AC_CHECK_HEADERS([stdint.h], [], AC_MSG_FAILURE([stdint.h not found!]))
 AC_CHECK_HEADERS([stdlib.h], [], AC_MSG_FAILURE([stdlib.h not found!]))
 
-# Checks for typedefs, structures, and compiler characteristics.
+##
+## Checks for typedefs, structures, and compiler characteristics.
+##
+
 AC_CHECK_HEADER_STDBOOL
 if test "x$ac_cv_header_stdbool_h" != xyes ; then
 	AC_MSG_FAILURE([stdbool.h not found!])
@@ -44,7 +58,11 @@ AC_TYPE_INT16_T
 AC_TYPE_UINT16_T
 AC_TYPE_UINT8_T
 
-# Checks for library functions.
+##
+## Checks for library functions.
+##
+
+# N/A
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

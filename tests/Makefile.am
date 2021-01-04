@@ -4,10 +4,11 @@ include common.mk
 
 SUBDIRS = . drawing fonts frame_buffer display
 
-check_LIBRARIES = libcommon.a
 check_HEADERS = common.h
+check_LIBRARIES = libcommon.a
+libcommon_a_CFLAGS = @CHECK_CFLAGS@ $(CFLAGS_WARNINGS)
+libcommon_a_CPPFLAGS = $(CPPFLAGS_EGLIB)
 libcommon_a_SOURCES = common.c
-libcommon_a_CFLAGS = $(EGLIB_CFLAGS) @CHECK_CFLAGS@ $(AM_CFLAGS)
 
 check-valgrind-local: libcommon.a
 

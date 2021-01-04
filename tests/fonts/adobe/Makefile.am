@@ -537,9 +537,11 @@ EXTRA_DIST += $(expectation_pngs)
 BUILT_SOURCES = $(expectation_pngs)
 
 check_PROGRAMS = adobe.test
+adobe_test_CFLAGS = @CHECK_CFLAGS@ $(CFLAGS_WARNINGS)
+adobe_test_LDFLAGS = $(LDFLAGS_EGLIB)
+adobe_test_LDADD = ../../libcommon.a ../libunicode_block.a $(LIBS_EGLIB) @CHECK_LIBS@
+adobe_test_CPPFLAGS = $(CPPFLAGS_EGLIB)
 adobe_test_SOURCES = adobe.c
-adobe_test_CFLAGS = $(EGLIB_CFLAGS) @CHECK_CFLAGS@ $(AM_CFLAGS)
-adobe_test_LDADD = ../../libcommon.a ../libunicode_block.a $(EGLIB_LIBS) @CHECK_LIBS@
 
 TESTS = $(check_PROGRAMS)
 

@@ -66,9 +66,11 @@ EXTRA_DIST += $(drawing_expectation_pngs)
 BUILT_SOURCES = $(drawing_expectation_pngs)
 
 check_PROGRAMS = drawing.test
+drawing_test_CFLAGS = @CHECK_CFLAGS@ $(CFLAGS_WARNINGS)
+drawing_test_LDFLAGS = $(LDFLAGS_EGLIB)
+drawing_test_LDADD = ../libcommon.a $(LIBS_EGLIB) @CHECK_LIBS@
+drawing_test_CPPFLAGS = $(CPPFLAGS_EGLIB)
 drawing_test_SOURCES = drawing.c
-drawing_test_CFLAGS = $(EGLIB_CFLAGS) @CHECK_CFLAGS@ $(AM_CFLAGS)
-drawing_test_LDADD = ../libcommon.a $(EGLIB_LIBS) @CHECK_LIBS@
 drawing_test_DEPENDENCIES = $(drawing_test_sources)
 
 TESTS = $(check_PROGRAMS)

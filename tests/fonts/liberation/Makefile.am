@@ -1401,9 +1401,11 @@ EXTRA_DIST += $(expectation_pngs)
 BUILT_SOURCES = $(expectation_pngs)
 
 check_PROGRAMS = liberation.test
+liberation_test_CFLAGS = @CHECK_CFLAGS@ $(CFLAGS_WARNINGS)
+liberation_test_LDFLAGS = $(LDFLAGS_EGLIB)
+liberation_test_LDADD = ../../libcommon.a ../libunicode_block.a $(LIBS_EGLIB) @CHECK_LIBS@
+liberation_test_CPPFLAGS = $(CPPFLAGS_EGLIB)
 liberation_test_SOURCES = liberation.c
-liberation_test_CFLAGS = $(EGLIB_CFLAGS) @CHECK_CFLAGS@ $(AM_CFLAGS)
-liberation_test_LDADD = ../../libcommon.a ../libunicode_block.a $(EGLIB_LIBS) @CHECK_LIBS@
 
 TESTS = $(check_PROGRAMS)
 

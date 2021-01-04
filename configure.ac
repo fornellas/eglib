@@ -17,25 +17,36 @@ AC_REQUIRE_AUX_FILE([tap-driver.sh])
 AC_REQUIRE_AUX_FILE([libopencm3.mk])
 AC_CONFIG_HEADERS([src/eglib/config.h])
 
-# Canonical
+##
+## Canonical
+##
+
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 AM_CONDITIONAL([NOT_CROSS_COMPILE], [test x$build = x$host])
 
-# libopencm3
+##
+## libopencm3
+##
+
+# --with-libopencm3
 AC_ARG_WITH(
 	[libopencm3],
-	[AS_HELP_STRING([--with-libopencm3], [http://libopencm3.org/ sources path @<:@default=no@:>@])],
+	[AS_HELP_STRING([--with-libopencm3], [http://libopencm3.org/ built sources path @<:@default=no@:>@])],
 	[OPENCM3_DIR="$(cd "$with_libopencm3" && pwd)"],
 	[with_libopencm3=no])
 if test "x$with_libopencm3" != xno ; then
+	AC_CHECK_FILE([$OPENCM3_DIR/mk/genlink-config.mk], [:], AC_MSG_ERROR([File not found: $OPENCM3_DIR/mk/genlink-config.mk]))
 	AC_SUBST([OPENCM3_DIR], "$OPENCM3_DIR")
 fi
+
+# --enable-libopencm3_stm32f4
 AC_ARG_ENABLE(
 	[libopencm3_stm32f4],
 	[AS_HELP_STRING([--enable-libopencm3_stm32f4], [Build for STM32F4 host. @<:@default=no@:>@])],
 	[],
 	[enable_libopencm3_stm32f4=no])
+AM_CONDITIONAL([OPENCM3_STM32F4], [test "x$enable_libopencm3_stm32f4" != xno])
 if test "x$enable_libopencm3_stm32f4" != xno ; then
 	if test "x$with_libopencm3" = xno ; then
 		AC_MSG_ERROR([Missing --with-libopencm3=\$OPENCM3_DIR parameter!])
@@ -43,15 +54,44 @@ if test "x$enable_libopencm3_stm32f4" != xno ; then
 	if test "x$host" != xarm-none-eabi ; then
 		AC_MSG_ERROR([Missing --host=arm-none-eabi parameter to enable cross-compilation!])
 	fi
-	AC_CHECK_FILE(["$OPENCM3_DIR/lib/libopencm3_stm32f4.a"], [], AC_MSG_ERROR([It seems libopencm3 was not built yet! Please build it (eg: 'make -C $OPENCM3_DIR').]))
-	AC_MSG_CHECKING([required libopencm3 stm32f4 CPPFLAGS])
-	OPENCM3_CPPFLAGS="$(make -f build-aux/libopencm3.mk OPENCM3_DIR="$OPENCM3_DIR" DEVICE=stm32f4)"
-	CPPFLAGS="$OPENCM3_CPPFLAGS $CPPFLAGS"
+	# TODO Python for $(OPENCM3_DIR)/scripts/genlink.py
+	# CFLAGS
+	AC_MSG_CHECKING([required libopencm3 stm32f4 CFLAGS])
+	CFLAGS_OPENCM3="$(make --silent -f ${srcdir}/build-aux/libopencm3.mk OPENCM3_DIR="$OPENCM3_DIR" DEVICE=stm32f4 ARCH_FLAGS)" || exit 1
+	AC_SUBST([CFLAGS_OPENCM3], [$CFLAGS_OPENCM3])
+	AC_MSG_RESULT([ok])
+	# LDFLAGS
+	LDFLAGS_OPENCM3="-L$OPENCM3_DIR/lib"
+	AC_SUBST([LDFLAGS_OPENCM3], [$LDFLAGS_OPENCM3])
+	# LIBS
+	LIBS_OPENCM3="-lopencm3_stm32f4 -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group"
+	AC_SUBST([LIBS_OPENCM3], [$LIBS_OPENCM3])
+	# CPPFLAGS
+	AC_MSG_CHECKING([required libopencm3_stm32f4 CPPFLAGS])
+	CPPFLAGS_OPENCM3="$(make --silent -f ${srcdir}/build-aux/libopencm3.mk OPENCM3_DIR="$OPENCM3_DIR" DEVICE=stm32f4 CPPFLAGS)" || exit 1
+	AC_SUBST([CPPFLAGS_OPENCM3], [$CPPFLAGS_OPENCM3])
 	AC_MSG_RESULT([ok])
 fi
-AM_CONDITIONAL([OPENCM3_STM32F4], [test "x$enable_libopencm3_stm32f4" != xno])
 
-# html
+##
+## eglib
+##
+
+# LDFLAGS
+LDFLAGS_EGLIB="-L$(cd "${builddir}" && pwd)/src"
+AC_SUBST([LDFLAGS_EGLIB], [$LDFLAGS_EGLIB])
+# LIBS
+LIBS_EGLIB="-leglib -Wl,--start-group -lm -Wl,--end-group"
+AC_SUBST([LIBS_EGLIB], [$LIBS_EGLIB])
+# CPPFLAGS
+CPPFLAGS_EGLIB="-I$(cd "${builddir}" && pwd)/src -I$(cd "${srcdir}" && pwd)/src"
+AC_SUBST([CPPFLAGS_EGLIB], [$CPPFLAGS_EGLIB])
+
+##
+## html
+##
+
+# TODO Python
 if test "x$with_libopencm3" != xno ; then
 	BUILD_HTML=yes
 else
@@ -59,10 +99,26 @@ else
 fi
 AM_CONDITIONAL([BUILD_HTML], [test "x$BUILD_HTML" != xno])
 
-# Checks for programs.
+##
+## Misc
+##
+
+# Avoid "undefined reference to `_exit'" during tests
+LIBS_NOSYS_SPECS="--specs=nosys.specs"
+
+# Common warning flags
+CFLAGS_WARNINGS="-Wextra -Wshadow -Wno-unused-variable -Wimplicit-function-declaration"
+CFLAGS_WARNINGS="$CFLAGS_WARNINGS -Wredundant-decls -Wstrict-prototypes -Wmissing-prototypes"
+CFLAGS_WARNINGS="$CFLAGS_WARNINGS -Wall -Wundef"
+CFLAGS_WARNINGS="$CFLAGS_WARNINGS -Werror -Wfatal-errors"
+AC_SUBST([CFLAGS_WARNINGS], [$CFLAGS_WARNINGS])
+
+##
+## Checks for programs.
+##
+
+# CC
 : ${CFLAGS="-g -O3"}
-AM_CFLAGS="-Wall -Wextra -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes -Wundef -Wshadow -Werror -Wfatal-errors"
-AC_SUBST([AM_CFLAGS])
 ORIGINAL_CPPFLAGS="$CPPFLAGS"
 if test "x$host" = xarm-none-eabi ; then
 	# AC_PROG_CC calls exit(3) from its test: we temporarily add nosys.specs
@@ -71,13 +127,27 @@ if test "x$host" = xarm-none-eabi ; then
 fi
 AC_PROG_CC
 CPPFLAGS="$ORIGINAL_CPPFLAGS"
+
+
+# CC
+: ${CFLAGS="-g -O3"}
+ORIGINAL_LIBS="$LIBS"
+LIBS="$LIBS_NOSYS_SPECS $LIBS"
+AC_PROG_CC
+LIBS="$ORIGINAL_LIBS"
+
 AM_PROG_AR
+
 AC_PROG_RANLIB
+
+# Valgrind
 AX_VALGRIND_DFLT([helgrind],[off])
 AX_VALGRIND_DFLT([drd],[off])
 AX_VALGRIND_DFLT([sgcheck],[off])
 AX_VALGRIND_DFLT([memcheck],[on])
 AX_VALGRIND_CHECK
+
+# ImageMagick
 if test "x$build" = "x$host" ; then
 	AC_CHECK_PROG([IMAGE_MAGICK_COMPARE], [compare], [yes], [no])
 	if test "x$IMAGE_MAGICK_COMPARE" = xno
@@ -91,12 +161,30 @@ if test "x$build" = "x$host" ; then
 	fi
 fi
 
-# Checks for libraries.
+##
+## Checks for libraries.
+##
+
+# check
 if test "x$build" = "x$host" ; then
 	PKG_CHECK_MODULES([CHECK], [check >= 0.10.0])
 fi
 
-# Checks for header files.
+# opencm3_stm32f4
+if test "x$enable_libopencm3_stm32f4" != xno ; then
+	ORIGINAL_CFLAGS="$CFLAGS" ; CFLAGS="$CFLAGS_OPENCM3 $CFLAGS"
+	ORIGINAL_LDFLAGS="$LDFLAGS" ; LDFLAGS="$LDFLAGS_OPENCM3 $LDFLAGS"
+	ORIGINAL_LIBS="$LIBS" ; LIBS="$LIBS_NOSYS_SPECS $LIBS_OPENCM3 $LIBS"
+	AC_CHECK_LIB([opencm3_stm32f4], [rcc_clock_setup_pll], [], AC_MSG_FAILURE([opencm3_stm32f4 not found!]))
+	CFLAGS="$ORIGINAL_CFLAGS"
+	LDFLAGS="$ORIGINAL_LDFLAGS"
+	LIBS="$ORIGINAL_LIBS"
+fi
+
+##
+## Checks for header files.
+##
+
 AC_CHECK_HEADERS([stddef.h], [], AC_MSG_FAILURE([stddef.h not found!]))
 AC_CHECK_HEADERS([stdint.h], [], AC_MSG_FAILURE([stdint.h not found!]))
 AC_CHECK_HEADERS([stdlib.h], [], AC_MSG_FAILURE([stdlib.h not found!]))
@@ -107,10 +195,15 @@ if test "x$build" = "x$host" ; then
 	AC_CHECK_HEADERS([unistd.h], [], AC_MSG_FAILURE([unistd.h not found!]))
 fi
 if test "x$enable_libopencm3_stm32f4" != xno ; then
+	ORIGINAL_CPPFLAGS="$CPPFLAGS" ; CPPFLAGS="$CPPFLAGS_OPENCM3 $CPPFLAGS"
 	AC_CHECK_HEADERS([libopencm3/stm32/rcc.h], [], AC_MSG_FAILURE([libopencm3/stm32/rcc.h not found!]))
+	CPPFLAGS="$ORIGINAL_CPPFLAGS"
 fi
 
-# Checks for typedefs, structures, and compiler characteristics.
+##
+## Checks for typedefs, structures, and compiler characteristics.
+##
+
 AC_CHECK_HEADER_STDBOOL
 if ! test "x$ac_cv_header_stdbool_h" = xyes ; then
 	AC_MSG_FAILURE([stdbool.h not found!])
@@ -129,7 +222,10 @@ if test "x$build" = "x$host" ; then
 	AC_TYPE_SSIZE_T
 fi
 
-# Checks for library functions.
+##
+## Checks for library functions.
+##
+
 if test "x$build" = "x$host" ; then
 	AC_CHECK_FUNCS([munmap], [], AC_MSG_FAILURE([Function munmap not found!]))
 	AC_CHECK_FUNCS([strerror], [], AC_MSG_FAILURE([Function strerror not found!]))
@@ -153,7 +249,10 @@ AC_CONFIG_FILES([
 	tests/frame_buffer/Makefile
 	tests/Makefile])
 
-# Subdirectory packages
+##
+## Subdirectory packages
+##
+
 ORIGINAL_CC="$CC"
 unset CC
 ORIGINAL_CFLAGS="$CFLAGS"

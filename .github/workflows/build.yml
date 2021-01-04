@@ -30,43 +30,49 @@ jobs:
     runs-on: ubuntu-20.04
     needs: dist
     steps:
+      - uses: actions/checkout@v2
+      - name: git submodules
+        run: |
+          git submodule init
+          git submodule update
       - name: Install build dependencies
         run: sudo apt-get -y install ${{env.COMMON_BUILD_DEPS}} valgrind imagemagick
       - name: Setup Python
         uses: actions/setup-python@v2
       - name: Install requirements.txt dependencies
         run: sudo apt-get -y install libclang-10-dev
-      - name: Clone libopencm3
-        run: git clone https://github.com/libopencm3/libopencm3
-      - name: Build libopencm3
-        run: make -C libopencm3/
       - name: Download dist
         uses: actions/download-artifact@v2
       - name: Unpack
-        run: tar zxf dist/eglib-$(cat dist/.version).tar.gz
+        run: cd dist/ && tar zxf eglib-$(cat .version).tar.gz
       - name: Install requirements.txt dependencies
-        run: pip install -r eglib-$(cat dist/.version)/sphinx/requirements.txt
+        run: cd dist/ && pip install -r eglib-$(cat .version)/sphinx/requirements.txt
       - name: configure
-        run: eglib-$(cat dist/.version)/configure --with-libopencm3=submodules/libopencm3/
+        run: mkdir build/ && cd build && ../dist/eglib-$(cat ../dist/.version)/configure --with-libopencm3=../submodules/libopencm3/
       - name: make
-        run: make V=1
-      - name: make check-valgrind
-        run: make check-valgrind V=1
+        run: make -C build/ V=1
+      - name: make -C build/ check-valgrind
+        run: make -C build/ check-valgrind V=1
       - name: make html
-        run: make html V=1
+        run: make -C build/ html V=1
   build_libopencm3_stm32f4:
     runs-on: ubuntu-20.04
     needs: dist
     steps:
-      - name: Clone libopencm3
-        run: git clone https://github.com/libopencm3/libopencm3
+      - uses: actions/checkout@v2
+      - name: git submodules
+        run: |
+          git submodule init
+          git submodule update
       - name: Install build dependencies
         run: sudo apt-get -y install ${{env.COMMON_BUILD_DEPS}} gcc-arm-none-eabi libnewlib-dev libnewlib-arm-none-eabi
+      - name: Build libopencm3
+        run: make -C submodules/libopencm3/
       - name: Download dist
         uses: actions/download-artifact@v2
       - name: Unpack
-        run: tar zxf dist/eglib-$(cat dist/.version).tar.gz
+        run: cd dist/ && tar zxf eglib-$(cat .version).tar.gz
       - name: configure
-        run: eglib-$(cat dist/.version)/configure --host=arm-none-eabi --enable-libopencm3_stm32f4 --with-libopencm3=$PWD/libopencm3/
+        run: mkdir build/ && cd build && ../dist/eglib-$(cat ../dist/.version)/configure --host=arm-none-eabi --enable-libopencm3_stm32f4 --with-libopencm3=../submodules/libopencm3/
       - name: make
-        run: make V=1
+        run: make -C build/ V=1

@@ -1,4 +1,11 @@
 configure.ac
+  add examples
+  examples
+    add to main build
+    add Python check
+    add dfu-util check
+    add openocd check
+    add gdb
   make html
     python
       sphinx

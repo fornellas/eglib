@@ -12,9 +12,11 @@ EXTRA_DIST += $(expectations_pngs)
 BUILT_SOURCES = $(expectations_pngs)
 
 check_PROGRAMS = frame_buffer.test
+frame_buffer_test_CFLAGS = @CHECK_CFLAGS@ $(CFLAGS_WARNINGS)
+frame_buffer_test_LDFLAGS = $(LDFLAGS_EGLIB)
+frame_buffer_test_LDADD = ../libcommon.a $(LIBS_EGLIB) @CHECK_LIBS@
+frame_buffer_test_CPPFLAGS = $(CPPFLAGS_EGLIB)
 frame_buffer_test_SOURCES = frame_buffer.c
-frame_buffer_test_CFLAGS = $(EGLIB_CFLAGS) @CHECK_CFLAGS@ $(AM_CFLAGS)
-frame_buffer_test_LDADD = ../libcommon.a $(EGLIB_LIBS) @CHECK_LIBS@
 
 TESTS = $(check_PROGRAMS)
 

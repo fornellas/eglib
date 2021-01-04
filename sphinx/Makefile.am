@@ -22,7 +22,6 @@ EXTRA_DIST += api_reference/hal/i2c/stream.rst
 EXTRA_DIST += api_reference/hal/index.rst
 EXTRA_DIST += api_reference/hal/interface.rst
 EXTRA_DIST += api_reference/index.rst
-EXTRA_DIST += api_reference/libopencm3.rst
 EXTRA_DIST += conf.py
 EXTRA_DIST += driver_development/display.rst
 EXTRA_DIST += driver_development/hal.rst

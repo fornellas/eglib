@@ -38,7 +38,7 @@ if BUILD_HTML
 include/:
 	rm -rf include/
 	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/src/ install-data includedir=include DESTDIR=$(top_builddir)/sphinx/
-	ln -s $(OPENCM3_DIR)/include/* include/
+	cd include && $(LN_S) $(OPENCM3_DIR)/include/* .
 
 .PHONY: $(top_builddir)/html/
 $(top_builddir)/html/: include/

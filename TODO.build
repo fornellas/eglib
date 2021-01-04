@@ -1,5 +1,4 @@
 configure.ac
-  add examples
   examples
     add to main build
     add Python check
@@ -14,18 +13,3 @@ pkg-config
   add configuration for third party projects
 autoscan
   add to build
-
-docs
-  should not be built without libopencm3
-  add python & requirements.txt to configure.ac
-examples
-  libopencm3
-    four_wire_spi/libopencm3_stm32f4
-    i2c/libopencm3_stm32f4
-eglib
-  src
-    hal
-      four_wire_spi
-        libopencm3_stm32f4
-      i2c
-        libopencm3_stm32f4

@@ -9,3 +9,9 @@ Frame Buffer
     #include <eglib/display/frame_buffer.h>
 
 .. c:autodoc:: eglib/display/frame_buffer.h
+
+Examples
+--------
+
+.. literalinclude:: ../../../../examples/libopencm3_stm32f4/sh1106-four_wire_spi.c
+   :language: C

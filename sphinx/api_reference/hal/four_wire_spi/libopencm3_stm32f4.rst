@@ -16,5 +16,5 @@ Example
 
 Also see :doc:`../../libopencm3`.
 
-.. literalinclude:: ../../../../examples/libopencm3/stm32f4_sh1106_four_wire_spi/main.c
+.. literalinclude:: ../../../../examples/libopencm3_stm32f4/sh1106-four_wire_spi.c
    :language: C

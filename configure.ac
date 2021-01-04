@@ -140,6 +140,8 @@ AM_PROG_AR
 
 AC_PROG_RANLIB
 
+AC_PROG_LN_S
+
 # Valgrind
 AX_VALGRIND_DFLT([helgrind],[off])
 AX_VALGRIND_DFLT([drd],[off])

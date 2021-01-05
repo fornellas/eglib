@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
 EGLIB_ROOT=.
+EGLIB_FONT_GENERATOR="${top_builddir}/font_generator/eglib-font_generator"
 SCALABLE_FONT_SIZES=(7 8 9 10 11 12 13 14 15 16 18 20 22 24 26 28 32 36 40 44 48 54 60 66 72 80 83 88 96)
 FONT_HEADERS=""
 
@@ -70,7 +71,7 @@ EOF
 	for PIXEL_SIZE in "${SCALABLE_FONT_SIZES[@]}"
 	do
 		C_NAME="Liberation_$(echo "${NAME#Liberation*}" | tr -d _\ )_${PIXEL_SIZE}px"
-		../font_generator/eglib-font_generator "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" >> "$C_FILE"
+		"${EGLIB_FONT_GENERATOR}" "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" >> "$C_FILE"
 		cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
 
 /**
@@ -191,7 +192,7 @@ EOF
 	do
 		C_NAME="Adobe_$(echo "$NAME" | tr -d \ )_${PIXEL_SIZE}px"
 		FONT_PATH="${ADOBE_FONT_PATHS["$PIXEL_SIZE $NAME"]}"
-		../font_generator/eglib-font_generator "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" >> "$C_FILE"
+		"${EGLIB_FONT_GENERATOR}" "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" >> "$C_FILE"
 		cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/adobe.h
 
 /**

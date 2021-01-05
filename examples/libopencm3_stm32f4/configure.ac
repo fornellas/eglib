@@ -69,7 +69,7 @@ AC_ARG_WITH(
 	[AS_HELP_STRING([--with-eglib-libdir], [eglib libdir @<:@default=no@:>@])],
 	[EGLIB_LIBDIR="$(cd "$with_eglib_libdir" && pwd)"],
 	AC_MSG_ERROR([Missing --with-eglib-libdir=\$EGLIB_LIBDIR]))
-LDFLAGS_EGLIB="-L$EGLIB_LIBDIR"
+LDFLAGS_EGLIB="-L${EGLIB_LIBDIR}"
 AC_SUBST([EGLIB_LIBDIR], [$EGLIB_LIBDIR])
 AC_SUBST([LDFLAGS_EGLIB], [$LDFLAGS_EGLIB])
 # LIBS
@@ -138,9 +138,9 @@ AC_SUBST([GDB], [$GDB])
 ORIGINAL_CFLAGS="$CFLAGS" ; CFLAGS="$CFLAGS_EGLIB $CFLAGS"
 ORIGINAL_LDFLAGS="$LDFLAGS" ; LDFLAGS="$LDFLAGS_EGLIB $LDFLAGS"
 ORIGINAL_LIBS="$LIBS" ; LIBS="$LIBS_NOSYS_SPECS $LIBS"
-AC_CHECK_LIB([eglib], [eglib_Init], [], AC_MSG_FAILURE([eglib not found!]))
+AC_CHECK_LIB([eglib], [eglib_Init], [], AC_MSG_WARN([eglib not found! Please build it before building here!]))
 CFLAGS="$ORIGINAL_CFLAGS"
-LDFLAGS="$LDFLAGS"
+LDFLAGS="$ORIGINAL_LDFLAGS"
 LIBS="$ORIGINAL_LIBS"
 
 # opencm3_stm32f4

@@ -255,6 +255,7 @@ AC_CONFIG_FILES([
 ## Subdirectory packages
 ##
 
+# font_generator
 ORIGINAL_CC="$CC"
 unset CC
 ORIGINAL_CFLAGS="$CFLAGS"
@@ -279,6 +280,23 @@ LDFLAGS="$ORIGINAL_LDFLAGS"
 LIBS="$ORIGINAL_LIBS"
 CPPFLAGS="$ORIGINAL_CPPFLAGS"
 CPP="$ORIGINAL_CPP"
+
+# examples/libopencm3_stm32f4
+if test "x$enable_libopencm3_stm32f4" != xno ; then
+	AX_SUBDIRS_CONFIGURE(
+		[examples/libopencm3_stm32f4],
+		[],
+		[],
+		[
+			[--with-libopencm3="$OPENCM3_DIR"],
+			[--with-eglib-libdir="$(cd "${builddir}" && pwd)/src"],
+			[--with-eglib-includedir="$(cd "${builddir}" && pwd)/src"]],
+		[])
+fi
+
+##
+## Output
+##
 
 AC_OUTPUT
 

@@ -52,7 +52,7 @@ eglib/drawing/fonts/adobe.h: eglib/drawing/fonts.h
 eglib/drawing/fonts/liberation.h: eglib/drawing/fonts.h
 
 eglib/drawing/fonts.h: $(top_srcdir)/src/generate_fonts.sh
-	$(top_srcdir)/src/generate_fonts.sh
+	top_builddir=$(top_builddir) $(top_srcdir)/src/generate_fonts.sh
 
 .PHONY: clean-local
 clean-local:

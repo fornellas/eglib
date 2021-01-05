@@ -76,3 +76,5 @@ jobs:
         run: mkdir build/ && cd build && ../dist/eglib-$(cat ../dist/.version)/configure --host=arm-none-eabi --enable-libopencm3_stm32f4 --with-libopencm3=../submodules/libopencm3/
       - name: make
         run: make -C build/ V=1
+      - name: make check
+        run: make -C build/ check V=1

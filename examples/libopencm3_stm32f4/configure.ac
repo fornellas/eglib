@@ -3,8 +3,8 @@
 
 AC_PREREQ([2.69])
 AC_INIT(
-	m4_esyscmd_s([echo eglib-example-"$(basename "$(pwd)")"]),
-	m4_esyscmd([build-aux/git-version-gen .tarball-version]),
+	[eglib-example-libopencm3_stm32f4],
+	[m4_esyscmd([build-aux/git-version-gen .tarball-version])],
 	[https://github.com/fornellas/eglib/issues],
 	[eglib],
 	[https://fornellas.github.io/eglib/])

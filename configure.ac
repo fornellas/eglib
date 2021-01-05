@@ -240,6 +240,7 @@ fi
 
 AC_CONFIG_FILES([
 	Makefile
+	examples/Makefile
 	fonts/Makefile
 	src/Makefile
 	sphinx/Makefile
@@ -280,19 +281,6 @@ LDFLAGS="$ORIGINAL_LDFLAGS"
 LIBS="$ORIGINAL_LIBS"
 CPPFLAGS="$ORIGINAL_CPPFLAGS"
 CPP="$ORIGINAL_CPP"
-
-# examples/libopencm3_stm32f4
-if test "x$enable_libopencm3_stm32f4" != xno ; then
-	AX_SUBDIRS_CONFIGURE(
-		[examples/libopencm3_stm32f4],
-		[],
-		[],
-		[
-			[--with-libopencm3="$OPENCM3_DIR"],
-			[--with-eglib-libdir="$(cd "${builddir}" && pwd)/src"],
-			[--with-eglib-includedir="$(cd "${builddir}" && pwd)/src"]],
-		[])
-fi
 
 ##
 ## Output

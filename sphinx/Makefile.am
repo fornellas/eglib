@@ -48,7 +48,7 @@ html-local: $(top_builddir)/html/
 
 .PHONY: install-html-local
 install-html-local: html-local
-	find html/ -type f -exec $(install_sh_DATA) "{}" $(docdir)/"{}" \;
+	find html/ -type f -exec $(install_sh_DATA) "{}" $(DESTDIR)$(docdir)/"{}" \;
 
 .PHONY: uninstall-local
 uninstall-local:

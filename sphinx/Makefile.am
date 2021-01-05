@@ -52,7 +52,7 @@ install-html-local: html-local
 
 .PHONY: uninstall-local
 uninstall-local:
-	-rm -rf $(docdir)/html
+	-rm -rf $(DESTDIR)$(docdir)/html
 
 check: html-local
 

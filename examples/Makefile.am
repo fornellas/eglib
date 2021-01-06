@@ -58,7 +58,7 @@ check-eglib-example-libopencm3_stm32f4-$(VERSION).tar.gz: eglib-example-libopenc
 			--host=$(host) \
 			--with-libopencm3="$(OPENCM3_DIR)" \
 			--with-eglib-libdir="$(abs_top_builddir)/src" \
-			--with-eglib-includedir="$(abs_top_builddir)/src" \
+			--with-eglib-includedir="$(abs_top_srcdir)/src" \
 			CC="$(CC)" \
 			CFLAGS="$(CFLAGS)" \
 			LDFLAGS="$(LDFLAGS)" \

@@ -1,4 +1,5 @@
-name: build
+name: github_pages
+on:
   push:
     branches:
       - master

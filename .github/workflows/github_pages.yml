@@ -1,0 +1,62 @@
+name: build
+  push:
+    branches:
+      - master
+env:
+  COMMON_BUILD_DEPS: gcc pkg-config libfreetype-dev libc-dev make check
+jobs:
+  build_html:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: git submodules
+        run: |
+          git submodule init
+          git submodule update
+      - name: Install autotools dependencies
+        run: sudo apt-get -y install gnulib autoconf autoconf-archive automake
+      - name: Install build dependencies
+        run: sudo apt-get -y install ${{env.COMMON_BUILD_DEPS}}
+      - name: Setup Python
+        uses: actions/setup-python@v2
+      - name: Install requirements.txt dependencies
+        run: sudo apt-get -y install libclang-10-dev
+      - name: Install requirements.txt dependencies
+        run: pip install -r sphinx/requirements.txt
+      - name: autogen.sh
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --with-libopencm3=../submodules/libopencm3/
+      - name: make -C font_generator
+        run: make -C font_generator V=1
+      - name: make -C font_generator
+        run: make -C src/ eglib/drawing/fonts.h V=1
+      - name: make html
+        run: make -C html V=1
+      - name: Upload html
+        uses: actions/upload-artifact@v2
+        with:
+          name: html
+          path: |
+            sphinx/html/
+  commit_to_github_pages:
+    runs-on: ubuntu-20.04
+    needs: build_html
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: github_pages
+      - name: Configure Git
+        run: |
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+      - name: Clean
+        run: git rm -rf *
+      - name: Download html
+        uses: actions/download-artifact@v2
+      - name: Git Add
+        run: |
+          mv sphinx/html/* .
+          rm -rf sphinx
+          git add *
+          git commit -m "Update html"

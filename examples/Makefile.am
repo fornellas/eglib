@@ -50,15 +50,16 @@ if OPENCM3_STM32F4
 
 check-eglib-example-libopencm3_stm32f4-$(VERSION).tar.gz: eglib-example-libopencm3_stm32f4-$(VERSION).tar.gz
 	$(MAKE) $(AM_MAKEFLAGS) clean-eglib-example-libopencm3_stm32f4-$(VERSION)
-	tar zxf eglib-example-libopencm3_stm32f4-$(VERSION).tar.gz \
-		&& cd eglib-example-libopencm3_stm32f4-$(VERSION)/ \
-		&& mkdir build \
-		&& cd build/ \
+	tar zxf eglib-example-libopencm3_stm32f4-$(VERSION).tar.gz
+	$(MAKE) $(AM_MAKEFLAGS) -C $(abs_top_builddir)/src install-data DESTDIR=$(abs_builddir)/eglib-example-libopencm3_stm32f4-$(VERSION)/_eglib/
+	cd eglib-example-libopencm3_stm32f4-$(VERSION)/ \
+		&& mkdir _build \
+		&& cd _build/ \
 		&& ../configure \
 			--host=$(host) \
 			--with-libopencm3="$(OPENCM3_DIR)" \
 			--with-eglib-libdir="$(abs_top_builddir)/src" \
-			--with-eglib-includedir="$(abs_top_srcdir)/src" \
+			--with-eglib-includedir=$(abs_builddir)/eglib-example-libopencm3_stm32f4-$(VERSION)/_eglib/$(includedir) \
 			CC="$(CC)" \
 			CFLAGS="$(CFLAGS)" \
 			LDFLAGS="$(LDFLAGS)" \

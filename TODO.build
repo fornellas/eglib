@@ -1,6 +1,5 @@
 configure.ac
   examples
-    add to main build
     add Python check
     add dfu-util check
     add openocd check

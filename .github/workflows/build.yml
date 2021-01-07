@@ -39,14 +39,16 @@ jobs:
         run: sudo apt-get -y install ${{env.COMMON_BUILD_DEPS}} valgrind imagemagick
       - name: Setup Python
         uses: actions/setup-python@v2
+          with:
+            python-version: '3.8.x'
       - name: Install requirements.txt dependencies
         run: sudo apt-get -y install libclang-10-dev
+      - name: Install requirements.txt dependencies
+        run: cd dist/ && pip install -r eglib-$(cat .version)/sphinx/requirements.txt
       - name: Download dist
         uses: actions/download-artifact@v2
       - name: Unpack
         run: cd dist/ && tar zxf eglib-$(cat .version).tar.gz
-      - name: Install requirements.txt dependencies
-        run: cd dist/ && pip install -r eglib-$(cat .version)/sphinx/requirements.txt
       - name: configure
         run: mkdir build/ && cd build && ../dist/eglib-$(cat ../dist/.version)/configure --with-libopencm3=../submodules/libopencm3/
       - name: make
@@ -66,6 +68,14 @@ jobs:
           git submodule update
       - name: Install build dependencies
         run: sudo apt-get -y install ${{env.COMMON_BUILD_DEPS}} gcc-arm-none-eabi libnewlib-dev libnewlib-arm-none-eabi
+      - name: Setup Python
+        uses: actions/setup-python@v2
+          with:
+            python-version: '3.8.x'
+      - name: Install requirements.txt dependencies
+        run: sudo apt-get -y install libclang-10-dev
+      - name: Install requirements.txt dependencies
+        run: cd dist/ && pip install -r eglib-$(cat .version)/sphinx/requirements.txt
       - name: Build libopencm3
         run: make -C submodules/libopencm3/
       - name: Download dist

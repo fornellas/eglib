@@ -34,10 +34,10 @@ jobs:
         run: make -C src/ eglib/drawing/fonts.h V=1
       - name: make html
         run: make html V=1
-      - name: Upload html
+      - name: Upload
         uses: actions/upload-artifact@v2
         with:
-          name: html
+          name: gh_html
           path: |
             sphinx/html/
   commit_to_github_pages:
@@ -53,11 +53,11 @@ jobs:
             git config user.email github-actions@github.com
       - name: Clean
         run: git rm -rf *
-      - name: Download html
+      - name: Download
         uses: actions/download-artifact@v2
       - name: Git Add
         run: |
-          mv sphinx/html/* .
-          rm -rf sphinx
+          mv gh_html/* .
+          rm -rf gh_html
           git add *
           git commit -m "Update html"

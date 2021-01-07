@@ -62,3 +62,5 @@ jobs:
           git add *
       - name: Git Commit
         run: git commit -m "Update html"
+      - name: Git Push
+        run: git push

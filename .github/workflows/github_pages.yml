@@ -30,10 +30,10 @@ jobs:
         run: ./configure --with-libopencm3=submodules/libopencm3/
       - name: make -C font_generator
         run: make -C font_generator V=1
-      - name: make -C font_generator
+      - name: make -C src/ eglib/drawing/fonts.h
         run: make -C src/ eglib/drawing/fonts.h V=1
       - name: make html
-        run: make -C html V=1
+        run: make html V=1
       - name: Upload html
         uses: actions/upload-artifact@v2
         with:

@@ -51,6 +51,11 @@ html-local: $(top_builddir)/html/
 install-html-local: html-local
 	find html/ -type f -exec $(install_sh_DATA) "{}" $(DESTDIR)$(docdir)/"{}" \;
 
+.PHONY: update-html
+update-html: html-local
+	rm -rf $(top_srcdir)/docs
+	cp -a html $(top_srcdir)/docs
+
 .PHONY: uninstall-local
 uninstall-local:
 	-rm -rf $(DESTDIR)$(docdir)/html

@@ -55,6 +55,8 @@ jobs:
         run: make -C build/ check-valgrind -C tests/ V=1
       - name: make html
         run: make -C build/ html V=1
+      - name: git status
+        run: GIT_STATUS="$(git status --porcelain)" && [ -n "$GIT_STATUS" ] && { echo git status ; echo "$GIT_STATUS" ; echo git diff ; git diff ; exit 1 ; } || true
   build_libopencm3_stm32f4:
     runs-on: ubuntu-20.04
     needs: dist
@@ -84,3 +86,5 @@ jobs:
         run: make -C build/ V=1
       - name: make check
         run: make -C build/ check V=1
+      - name: git status
+        run: GIT_STATUS="$(git status --porcelain)" && [ -n "$GIT_STATUS" ] && { echo git status ; echo "$GIT_STATUS" ; echo git diff ; git diff ; exit 1 ; } || true

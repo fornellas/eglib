@@ -42,6 +42,7 @@ include/:
 .PHONY: $(top_builddir)/html/
 $(top_builddir)/html/: include/
 	EGLIB_SRC="$(top_builddir)/sphinx/include" sphinx-build -b html -W $(top_srcdir)/sphinx/ html/
+	rm -rf html/.buildinfo html/.doctrees
 
 .PHONY: html-local
 html-local: $(top_builddir)/html/

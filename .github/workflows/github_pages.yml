@@ -63,4 +63,4 @@ jobs:
       - name: Git Commit
         run: git commit -m "Update html"
       - name: Git Push
-        run: git push
+        run: ! test -z "$(git status --porcelain)" && git push

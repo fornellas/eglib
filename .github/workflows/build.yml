@@ -31,7 +31,7 @@ jobs:
           cd build
           ../configure --with-libopencm3=../submodules/libopencm3/
           make
-          make check-valgrind
+          make -C tests check-valgrind
           make update-html
           make dist
           cd ..

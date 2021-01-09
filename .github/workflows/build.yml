@@ -1,50 +1,117 @@
 name: build
 on: [push, pull_request]
+env:
+  AUTOTOOLS_APT_DEPS: gnulib autoconf autoconf-archive automake
+  BUILD_APT_DEPS: gcc pkg-config libfreetype-dev libc-dev make check
+  TEST_APT_DEPS: valgrind imagemagick
+  SPHINX_APT_DEPS: libclang-10-dev
+  LIBOPENCM3_APT_DEPS: gcc-arm-none-eabi libnewlib-dev libnewlib-arm-none-eabi
 jobs:
-  build:
+  dist:
     runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install APT dependencies
+        run: sudo apt-get -y install ${{env.AUTOTOOLS_APT_DEPS}} ${{env.BUILD_APT_DEPS}}
+      - name: autogen.sh
+        run: ./autogen.sh
+      - name: configure
+        run: |
+          mkdir _build/
+          cd _build/
+          ../configure
+      - name: make -C font_generator/
+        run: |
+          make -C _build/font_generator/ V=1
+      - name: make dist
+        run: |
+          make -C _build/ dist V=1
+          mv _build/eglib-$(cat _build/.version).tar.gz _build/.version .
+      - name: Upload dist
+        uses: actions/upload-artifact@v2
+        with:
+          name: _dist
+          path: |
+            eglib-*.tar.gz
+            .version
+  build_linux:
+    runs-on: ubuntu-20.04
+    needs: dist
     steps:
       - uses: actions/checkout@v2
       - name: git submodules
         run: |
           git submodule init
           git submodule update
-      - name: Install autotools dependencies
-        run: sudo apt-get -y install gnulib autoconf autoconf-archive automake
-      - name: Install build dependencies
-        run: sudo apt-get -y install gcc pkg-config libfreetype-dev libc-dev make check
-      - name: Install test dependencies
-        run: sudo apt-get -y install valgrind imagemagick
+      - name: Install APT dependencies
+        run: sudo apt-get -y install ${{env.BUILD_APT_DEPS}} ${{env.TEST_APT_DEPS}} ${{env.SPHINX_APT_DEPS}}
       - name: Setup Python
         uses: actions/setup-python@v2
-      - name: Install requirements.txt dependencies
-        run: sudo apt-get -y install libclang-10-dev
+      - name: Download dist
+        uses: actions/download-artifact@v2
+      - name: Unpack
+        run: |
+          cd _dist/
+          tar zxf eglib-$(cat .version).tar.gz
       - name: Install Python dependencies
-        run: pip install -rsphinx/requirements.txt
-      - name: Install libopencm3_stm32f4 dependencies
-        run: sudo apt-get install gcc-arm-none-eabi libnewlib-dev libnewlib-arm-none-eabi
-      - name: autogen.sh
-        run: ./autogen.sh
-      - name: Linux build
         run: |
-          mkdir build/
-          cd build
-          ../configure --with-libopencm3=../submodules/libopencm3/
-          make
-          make -C tests check-valgrind
-          make update-html
-          make dist
-          cd ..
-          rm -rf build
-      - name: libopencm3_stm32f4 build
+          cd _dist/
+          pip install -r eglib-$(cat .version)/sphinx/requirements.txt
+      - name: configure
         run: |
-          make -C submodules/libopencm3/ -j
-          mkdir build/
-          cd build
-          ../configure --host=arm-none-eabi --enable-libopencm3_stm32f4 --with-libopencm3=../submodules/libopencm3/
-          make
-          make check
-          cd ..
-          rm -rf build
+          mkdir _build/
+          cd _build
+          ../_dist/eglib-$(cat ../_dist/.version)/configure --with-libopencm3=../submodules/libopencm3/
+      - name: make
+        run: make -C _build/ V=1
+      - name: make check-valgrind
+        run: make -C _build/ check-valgrind -C tests/ V=1
+      - name: make html
+        run: |
+          make -C _build/ html V=1
+          git rm -r docs/
+          cp -a _build/sphinx/html/ docs/
+          touch docs/.nojekyll
+          git add docs/
+      - name: Cleanup
+        run: rm -rf _dist/ _build/
+      - name: git status
+        run: GIT_STATUS="$(git status --porcelain)" && [ -n "$GIT_STATUS" ] && { echo git status ; echo "$GIT_STATUS" ; echo git diff ; git diff ; exit 1 ; } || true
+  build_libopencm3_stm32f4:
+    runs-on: ubuntu-20.04
+    needs: dist
+    steps:
+      - uses: actions/checkout@v2
+      - name: git submodules
+        run: |
+          git submodule init
+          git submodule update
+      - name: Install APT dependencies
+        run: sudo apt-get -y install ${{env.BUILD_APT_DEPS}} ${{env.SPHINX_APT_DEPS}} ${{env.LIBOPENCM3_APT_DEPS}}
+      - name: Setup Python
+        uses: actions/setup-python@v2
+      - name: Build libopencm3
+        run: make -C submodules/libopencm3/
+      - name: Download dist
+        uses: actions/download-artifact@v2
+      - name: Unpack
+        run: |
+          cd _dist/
+          tar zxf eglib-$(cat .version).tar.gz
+      - name: Install Python dependencies
+        run: |
+          cd _dist/
+          pip install -r eglib-$(cat .version)/sphinx/requirements.txt
+      - name: configure
+        run: |
+          mkdir _build/
+          cd _build
+          ../_dist/eglib-$(cat ../_dist/.version)/configure --host=arm-none-eabi --enable-libopencm3_stm32f4 --with-libopencm3=../submodules/libopencm3/
+      - name: make
+        run: make -C _build/ V=1
+      - name: make check
+        run: make -C _build/ check V=1
+      - name: Cleanup
+        run: rm -rf _dist/ _build/
       - name: git status
         run: GIT_STATUS="$(git status --porcelain)" && [ -n "$GIT_STATUS" ] && { echo git status ; echo "$GIT_STATUS" ; echo git diff ; git diff ; exit 1 ; } || true

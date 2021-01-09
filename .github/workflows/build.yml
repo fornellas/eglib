@@ -26,7 +26,6 @@ jobs:
       - name: make dist
         run: |
           make -C _build/ dist V=1
-          mv _build/.version .
           mv _build/eglib-$(cat .version).tar.gz .
       - name: Upload dist
         uses: actions/upload-artifact@v2

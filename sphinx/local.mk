@@ -47,7 +47,8 @@ CLEANFILES += opencm3_dir
 opencm3_dir:
 	$(LN_S) $(OPENCM3_DIR) $@
 
-%D%/html/: eglib/drawing/fonts.h top_srcdir opencm3_dir
+
+%D%/html/: eglib/drawing/fonts.h top_srcdir opencm3_dir $(EXPECTATION_PNGS_TARGETS)
 	TOP_SRCDIR=$(top_srcdir) TOP_BUILDDIR=$(top_builddir) sphinx-build -b html -W $(top_srcdir)/sphinx/ $@
 	rm -rf $@/.buildinfo $@/.doctrees $@/_sources
 

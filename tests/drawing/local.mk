@@ -1,5 +1,15 @@
+EXTRA_DIST += %D%/expectation_pngs.tar
+
+%D%/.expectations: $(top_srcdir)/%D%/expectation_pngs.tar
+	tar xf $< -C %D%/
+	touch $@
+
 .PHONY: clean-tests-drawing
 clean-local: clean-tests-drawing
+clean-tests-drawing:
+	rm -f %D%/*.tga %D%/*.png %D%/.expectations
+
+EXPECTATION_PNGS_TARGETS += %D%/.expectations
 
 if NOT_CROSS_COMPILE
 
@@ -33,11 +43,6 @@ tests_drawing_test_sources += %D%/eglib_DrawVLine.c
 tests_drawing_test_sources += %D%/eglib_DrawWChar.c
 EXTRA_DIST += $(tests_drawing_test_sources)
 
-EXTRA_DIST += %D%/expectation_pngs.tar
-
-%D%/.expectations: $(top_srcdir)/%D%/expectation_pngs.tar
-	tar xf $< -C %D%/
-	touch $@
 
 check_PROGRAMS += %D%/drawing.test
 TESTS += %D%/drawing.test
@@ -47,12 +52,5 @@ tests_drawing_drawing_test_LDADD = tests/libcommon.a $(LIBS_EGLIB) @CHECK_LIBS@
 tests_drawing_drawing_test_CPPFLAGS = $(CPPFLAGS_EGLIB)
 tests_drawing_drawing_test_SOURCES = %D%/drawing.c
 EXTRA_tests_drawing_drawing_test_DEPENDENCIES = $(tests_drawing_test_sources) %D%/.expectations
-
-clean-tests-drawing:
-	rm -f %D%/*.tga %D%/*.png %D%/.expectations
-
-else
-
-clean-tests-drawing:
 
 endif

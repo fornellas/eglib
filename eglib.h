@@ -1,6 +1,10 @@
 #ifndef EGLIB_H
 #define EGLIB_H
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 #include "eglib/config.h"
 #include "eglib/types.h"
 #include "eglib/drawing.h"
@@ -74,5 +78,9 @@ void eglib_SleepIn(eglib_t *eglib);
 
 /** Takes both HAL and display out of sleep. See :c:func:`eglib_SleepIn` */
 void eglib_SleepOut(eglib_t *eglib);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

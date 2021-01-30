@@ -277,7 +277,6 @@ CPP="$ORIGINAL_CPP"
 
 AC_OUTPUT
 
-AC_MSG_NOTICE([])
 AC_MSG_NOTICE([Summary:])
 if test "x$build" = "x$host" ; then
 	AC_MSG_NOTICE([  - Cross compile: no])

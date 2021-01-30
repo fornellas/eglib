@@ -96,7 +96,7 @@ EOF
 			cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/liberation.h
 
 /**
- * .. image:: ../../../tests/fonts/liberation/${C_NAME}_${UNICODE_BLOCK_NAME}.png
+ * .. image:: ${C_NAME}_${UNICODE_BLOCK_NAME}.png
  */
 extern struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
 EOF
@@ -217,7 +217,7 @@ EOF
 			cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/adobe.h
 
 /**
- * .. image:: ../../../tests/fonts/adobe/${C_NAME}_${UNICODE_BLOCK_NAME}.png
+ * .. image:: ${C_NAME}_${UNICODE_BLOCK_NAME}.png
  */
 extern struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
 EOF

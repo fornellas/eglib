@@ -13,5 +13,5 @@ Frame Buffer
 Examples
 --------
 
-.. literalinclude:: ../../../../examples/libopencm3_stm32f4/sh1106-four_wire_spi.c
+.. literalinclude:: ../../../examples/libopencm3_stm32f4/sh1106-four_wire_spi.c
    :language: C

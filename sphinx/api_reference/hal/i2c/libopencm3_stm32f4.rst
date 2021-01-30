@@ -14,5 +14,5 @@ libopencm3 STM32F4
 Example
 -------
 
-.. literalinclude:: ../../../../examples/libopencm3_stm32f4/sh1106-i2c.c
+.. literalinclude:: ../../../examples/libopencm3_stm32f4/sh1106-i2c.c
    :language: C

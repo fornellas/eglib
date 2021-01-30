@@ -11,8 +11,6 @@ clean-tests-drawing:
 
 EXPECTATION_PNGS_TARGETS += %D%/.expectations
 
-if NOT_CROSS_COMPILE
-
 tests_drawing_test_sources =
 tests_drawing_test_sources += %D%/eglib_AddUnicodeBlockToFont.c
 tests_drawing_test_sources += %D%/eglib_ClearScreen.c
@@ -43,6 +41,7 @@ tests_drawing_test_sources += %D%/eglib_DrawVLine.c
 tests_drawing_test_sources += %D%/eglib_DrawWChar.c
 EXTRA_DIST += $(tests_drawing_test_sources)
 
+if NOT_CROSS_COMPILE
 
 check_PROGRAMS += %D%/drawing.test
 TESTS += %D%/drawing.test

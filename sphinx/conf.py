@@ -45,7 +45,7 @@ if "TOP_BUILDDIR" not in os.environ:
 TOP_BUILDDIR = os.environ.get("TOP_BUILDDIR")
 
 cautodoc_root = TOP_BUILDDIR
-cautodoc_clang = f"-I{TOP_SRCDIR},-I{TOP_BUILDDIR},-I{TOP_BUILDDIR}/opencm3_dir/include"
+cautodoc_clang = f"-I{TOP_SRCDIR},-I{TOP_BUILDDIR}"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]

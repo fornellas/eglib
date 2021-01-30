@@ -7,7 +7,7 @@ TESTS =
 
 check_HEADERS = %D%/common.h
 check_LIBRARIES = %D%/libcommon.a
-tests_libcommon_a_CFLAGS = @CHECK_CFLAGS@ $(CFLAGS_WARNINGS) -DTOP_SRCDIR=\"$(top_srcdir)\" -DTOP_BUILDDIR=\"$(top_builddir)\"
+tests_libcommon_a_CFLAGS = @CHECK_CFLAGS@ $(CFLAGS_WARNINGS) -DTOP_SRCDIR=\"$(abs_top_srcdir)\" -DTOP_BUILDDIR=\"$(abs_top_builddir)\"
 tests_libcommon_a_CPPFLAGS = $(CPPFLAGS_EGLIB)
 tests_libcommon_a_SOURCES = %D%/common.c
 EXTRA_tests_libcommon_a_DEPENDENCIES = libeglib.a

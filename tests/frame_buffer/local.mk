@@ -3,11 +3,11 @@ clean-local: clean-tests-frame_buffer
 
 if NOT_CROSS_COMPILE
 
-tests_frame_buffer_expectations_pngs =
-tests_frame_buffer_expectations_pngs += eglib_FrameBuffer_SendPartial.png
-tests_frame_buffer_expectations_pngs += eglib_FrameBuffer_Send.png
-tests_frame_buffer_expectations_pngs += eglib_FrameBuffer_SendUpdated.png
-EXTRA_DIST += $(tests_frame_buffer_expectation_pngs)
+EXTRA_DIST += %D%/expectation_pngs.tar
+
+%D%/.expectations: $(top_srcdir)/%D%/expectation_pngs.tar
+	tar xf $< -C %D%/
+	touch $@
 
 check_PROGRAMS += %D%/frame_buffer.test
 TESTS += %D%/frame_buffer.test
@@ -16,13 +16,13 @@ tests_frame_buffer_frame_buffer_test_LDFLAGS = $(LDFLAGS_EGLIB)
 tests_frame_buffer_frame_buffer_test_LDADD = tests/libcommon.a tests/fonts/libunicode_block.a $(LIBS_EGLIB) @CHECK_LIBS@
 tests_frame_buffer_frame_buffer_test_CPPFLAGS = $(CPPFLAGS_EGLIB)
 tests_frame_buffer_frame_buffer_test_SOURCES = %D%/frame_buffer.c
-EXTRA_tests_frame_buffer_frame_buffer_test_DEPENDENCIES = $(drawing_tests_frame_buffer_expectation_pngs)  $(drawing_test_sources)
+EXTRA_tests_frame_buffer_frame_buffer_test_DEPENDENCIES = %D%/.expectations
 
-clean-tests-fonts-frame_buffer:
-	-rm -f %D%/*.tga
+clean-tests-frame_buffer:
+	rm -f %D%/*.tga %D%/*.png %D%/.expectations
 
 else
 
-clean-tests-fonts-frame_buffer:
+clean-tests-frame_buffer:
 
 endif

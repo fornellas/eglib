@@ -65,7 +65,7 @@ jobs:
       - name: make
         run: make -C _build/ V=1
       - name: make check-valgrind
-        run: make -C _build/ check-valgrind -C tests/ V=1
+        run: make -C _build/ check-valgrind V=1
       - name: make html
         run: |
           git rm -r docs/

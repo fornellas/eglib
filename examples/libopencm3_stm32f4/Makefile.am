@@ -98,6 +98,15 @@ ssd1331_four_wire_spi_elf_SOURCES = ssd1331-four_wire_spi.c
 EXTRA_ssd1331_four_wire_spi_elf_DEPENDENCIES = $(LDSCRIPT)
 BINFILES += ssd1331-four_wire_spi.bin
 
+noinst_PROGRAMS += ssd1675a-four_wire_spi.elf
+ssd1675a_four_wire_spi_elf_CFLAGS = $(CFLAGS_COMMON) $(CFLAGS_WARNINGS)
+ssd1675a_four_wire_spi_elf_LDFLAGS = $(LDFLAGS_EGLIB) $(LDFLAGS_COMMON)
+ssd1675a_four_wire_spi_elf_LDADD = $(LIBS_EGLIB) $(LIBS_OPENCM3)
+ssd1675a_four_wire_spi_elf_CPPFLAGS = $(CPPFLAGS_EGLIB)
+ssd1675a_four_wire_spi_elf_SOURCES = ssd1675a-four_wire_spi.c
+EXTRA_ssd1675a_four_wire_spi_elf_DEPENDENCIES = $(LDSCRIPT)
+BINFILES += ssd1675a-four_wire_spi.bin
+
 noinst_PROGRAMS += st7789-four_wire_spi.elf
 st7789_four_wire_spi_elf_CFLAGS = $(CFLAGS_COMMON) $(CFLAGS_WARNINGS)
 st7789_four_wire_spi_elf_LDFLAGS = $(LDFLAGS_EGLIB) $(LDFLAGS_COMMON)

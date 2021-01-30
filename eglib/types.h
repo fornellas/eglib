@@ -23,6 +23,12 @@ enum pixel_format_t {
 	 */
 	PIXEL_FORMAT_1BIT_BW_PAGED,
 	/**
+	 * 2bits per pixel common across EPD / e-ink displays. The format in memory
+	 * are 2 independent 1bit per pixel buffers: the first one for 0=black / 1=white,
+	 * the second one for 0=BW / 1=color (eg: red, yellow).
+	 */
+	PIXEL_FORMAT_2BIT_EPD,
+	/**
 	 * Each pixel is encoded in 1 byte:
 	 *
 	 * ``RRRBBBAA``

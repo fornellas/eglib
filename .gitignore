@@ -12,6 +12,7 @@
 **/Makefile.in
 **/stamp-h1
 .version
+_build/
 aclocal.m4
 autom4te.cache/
 build-aux/

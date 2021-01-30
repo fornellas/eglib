@@ -40,20 +40,15 @@ static int run(char *command) {
 }
 
 void compare_expectation(char *expectation_name, eglib_t *eglib) {
-	char *expectation_dir;
 	char *expectation_path;
 	char *test_tga_path;
 	char *command;
 	int ret;
 
-	expectation_dir = getenv("EXPECTATIONS_DIR");
-	if(expectation_dir == NULL) {
-		fprintf(stdout, "EXPECTATIONS_DIR not set. Please run this via `make check'.\n");
+	if(asprintf(&expectation_path, "%s/%s/%s.png", TOP_SRCDIR, reldir, expectation_name) == -1)
 		exit(EXIT_FAILURE);
-	}
-	if(asprintf(&expectation_path, "%s/%s.png", expectation_dir, expectation_name) == -1)
-		exit(EXIT_FAILURE);
-	if(asprintf(&test_tga_path, "%s_test.tga", expectation_name) == -1)
+
+	if(asprintf(&test_tga_path, "%s/%s/%s_test.tga", TOP_BUILDDIR, reldir, expectation_name) == -1)
 		exit(EXIT_FAILURE);
 
 	tga_Save(eglib, test_tga_path);
@@ -70,7 +65,7 @@ void compare_expectation(char *expectation_name, eglib_t *eglib) {
 		free(command);
 	}
 
-	if(asprintf(&command, "compare -metric FUZZ %s %s /dev/null", test_tga_path, expectation_path) == -1)
+	if(asprintf(&command, "compare -quiet -metric FUZZ %s %s /dev/null", test_tga_path, expectation_path) == -1)
 		exit(EXIT_FAILURE);
 	ret = run(command);
 	switch(ret) {

@@ -8,7 +8,7 @@ ST7789
 
     #include <eglib/display/st7789.h>
 
-.. c:autodoc:: eglib/display/st7789.h
+.. c:autodoc:: top_srcdir/eglib/display/st7789.h
 
 Example
 -------

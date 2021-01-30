@@ -1,8 +1,10 @@
+#include "../common.h"
 #include <check.h>
 #include <eglib.h>
 #include <eglib/display/tga.h>
 #include <eglib/hal/four_wire_spi/none.h>
-#include "../common.h"
+#include <libgen.h>
+#include <stdlib.h>
 
 eglib_t eglib;
 tga_config_t tga_config = {
@@ -14,6 +16,7 @@ char *expectation_name;
 void setup(void);
 void teardown(void);
 Suite * build_suite(void);
+char *reldir = RELDIR;
 
 void setup(void) {
 	eglib_Init(&eglib, &four_wire_spi_none, NULL, &tga, &tga_config);

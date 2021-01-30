@@ -8,4 +8,4 @@ HAL Interface
 
     #include <eglib/hal.h>
 
-.. c:autodoc:: eglib/hal.h
+.. c:autodoc:: top_srcdir/eglib/hal.h

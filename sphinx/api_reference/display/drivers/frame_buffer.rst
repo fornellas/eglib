@@ -8,7 +8,7 @@ Frame Buffer
 
     #include <eglib/display/frame_buffer.h>
 
-.. c:autodoc:: eglib/display/frame_buffer.h
+.. c:autodoc:: top_srcdir/eglib/display/frame_buffer.h
 
 Examples
 --------

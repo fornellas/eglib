@@ -13,6 +13,7 @@ tga_config_t tga_config = {
 };
 eglib_t *eglib_tga;
 char *expectation_name;
+char *reldir = RELDIR;
 
 void setup(void);
 void teardown(void);

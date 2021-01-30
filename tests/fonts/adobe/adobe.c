@@ -1,10 +1,14 @@
+#include "../../common.h"
 #include "../unicode_block.h"
 #include <check.h>
 #include <eglib/display.h>
+#include <libgen.h>
+#include <stdlib.h>
 
 struct font_t *font;
 struct glyph_unicode_block_t *unicode_block;
 char *expectation_name;
+char *reldir = RELDIR;
 
 Suite * build_suite(void);
 

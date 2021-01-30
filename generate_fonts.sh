@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
-EGLIB_ROOT=.
-EGLIB_FONT_GENERATOR="${top_builddir}/font_generator/eglib-font_generator"
+EGLIB_FONT_GENERATOR="${TOP_BUILDDIR}/font_generator/eglib-font_generator"
 SCALABLE_FONT_SIZES=(7 8 9 10 11 12 13 14 15 16 18 20 22 24 26 28 32 36 40 44 48 54 60 66 72 80 83 88 96)
 FONT_HEADERS=""
 
@@ -19,10 +18,10 @@ UNICODE_BLOCKS=(
 ## Cleanup
 ##
 
-rm -f "$EGLIB_ROOT"/eglib/drawing/fonts/*.h
-rm -f "$EGLIB_ROOT"/eglib/drawing/fonts/*.c
-rm -f "$EGLIB_ROOT"/eglib/drawing/fonts.h
-mkdir -p "$EGLIB_ROOT"/eglib/drawing/fonts/
+rm -f "$TOP_BUILDDIR"/eglib/drawing/fonts/*.h
+rm -f "$TOP_BUILDDIR"/eglib/drawing/fonts/*.c
+rm -f "$TOP_BUILDDIR"/eglib/drawing/fonts.h
+mkdir -p "$TOP_BUILDDIR"/eglib/drawing/fonts/
 
 
 ##
@@ -33,7 +32,7 @@ echo "Liberation"
 
 FONT_HEADERS="$FONT_HEADERS fonts/liberation.h"
 
-cat << EOF > "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
+cat << EOF > "$TOP_BUILDDIR"/eglib/drawing/fonts/liberation.h
 #ifndef EGLIB_DRAWING_FONTS_LIBERATION_H
 #define EGLIB_DRAWING_FONTS_LIBERATION_H
 
@@ -50,20 +49,20 @@ cat << EOF > "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
  */
 EOF
 
-for FONT_PATH in $(ls -1 "$(dirname "$0")"/../fonts/liberation-fonts-ttf-2.1.2/*.ttf "$(dirname "$0")"/../fonts/liberation-narrow-fonts-ttf-1.07.6/*.ttf | LANG=C sort)
+for FONT_PATH in $(ls -1 "$(dirname "$0")"/fonts/liberation-fonts-ttf-2.1.2/*.ttf "$(dirname "$0")"/fonts/liberation-narrow-fonts-ttf-1.07.6/*.ttf | LANG=C sort)
 do
 	NAME="$(basename "${FONT_PATH%*.ttf}" | tr "-" "_" )"
 	FONT_TITLE="$(echo ${NAME#Liberation*} | tr _ \ )"
 	echo "  $FONT_TITLE"
 
-	cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
+	cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/liberation.h
 
 /**
  * $FONT_TITLE
  * $(echo "$FONT_TITLE" | tr "[a-zA-z_ ]" "*")
  */
 EOF
-	C_FILE=""$EGLIB_ROOT"/eglib/drawing/fonts/$(echo liberation_"${NAME#Liberation*}" | tr " " _ | tr A-Z a-z).c"
+	C_FILE=""$TOP_BUILDDIR"/eglib/drawing/fonts/$(echo liberation_"${NAME#Liberation*}" | tr " " _ | tr A-Z a-z).c"
 	cat << EOF >> "$C_FILE"
 #include <eglib/drawing.h>
 EOF
@@ -72,7 +71,7 @@ EOF
 	do
 		C_NAME="Liberation_$(echo "${NAME#Liberation*}" | tr -d _\ )_${PIXEL_SIZE}px"
 		"${EGLIB_FONT_GENERATOR}" "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" >> "$C_FILE"
-		cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
+		cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/liberation.h
 
 /**
  * ${PIXEL_SIZE} pixels
@@ -94,7 +93,7 @@ EOF
 		for ((i=0 ; i < "${#UNICODE_BLOCKS[@]}" ; i+=3))
 		do
 			UNICODE_BLOCK_NAME="${UNICODE_BLOCKS[$i]}"
-			cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
+			cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/liberation.h
 
 /**
  * .. image:: ../../../tests/fonts/liberation/${C_NAME}_${UNICODE_BLOCK_NAME}.png
@@ -105,7 +104,7 @@ EOF
 	done
 done
 
-echo "#endif" >> "$EGLIB_ROOT"/eglib/drawing/fonts/liberation.h
+echo "#endif" >> "$TOP_BUILDDIR"/eglib/drawing/fonts/liberation.h
 
 ##
 ## Adobe
@@ -115,7 +114,7 @@ echo "Adobe"
 
 FONT_HEADERS="$FONT_HEADERS fonts/adobe.h"
 
-cat << EOF > "$EGLIB_ROOT"/eglib/drawing/fonts/adobe.h
+cat << EOF > "$TOP_BUILDDIR"/eglib/drawing/fonts/adobe.h
 #ifndef EGLIB_DRAWING_FONTS_ADOBE_H
 #define EGLIB_DRAWING_FONTS_ADOBE_H
 
@@ -158,7 +157,7 @@ declare -A ADOBE_FONT_PIXEL_SIZES
 
 for DPI in 75 100
 do
-	FONT_PATHS="$(find "$(dirname "$0")"/../fonts/adobe/${DPI}dpi -name \*.bdf)"
+	FONT_PATHS="$(find "$(dirname "$0")"/fonts/adobe/${DPI}dpi -name \*.bdf)"
 	for FONT_PATH in $FONT_PATHS
 	do
 		NAME="$(gawk 'BEGIN{FS="\""}/^FULL_NAME /{print $2}' < $FONT_PATH)"
@@ -175,7 +174,7 @@ do
 		continue
 	fi
 	echo "  $NAME"
-	cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/adobe.h
+	cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/adobe.h
 
 /**
  * $NAME
@@ -183,7 +182,7 @@ do
  */
 EOF
 
-	C_FILE=""$EGLIB_ROOT"/eglib/drawing/fonts/adobe_$(echo "${NAME}" | tr " " _ | tr A-Z a-z).c"
+	C_FILE=""$TOP_BUILDDIR"/eglib/drawing/fonts/adobe_$(echo "${NAME}" | tr " " _ | tr A-Z a-z).c"
 	cat << EOF >> "$C_FILE"
 #include <eglib/drawing.h>
 EOF
@@ -193,7 +192,7 @@ EOF
 		C_NAME="Adobe_$(echo "$NAME" | tr -d \ )_${PIXEL_SIZE}px"
 		FONT_PATH="${ADOBE_FONT_PATHS["$PIXEL_SIZE $NAME"]}"
 		"${EGLIB_FONT_GENERATOR}" "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" >> "$C_FILE"
-		cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/adobe.h
+		cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/adobe.h
 
 /**
  * ${PIXEL_SIZE} pixels
@@ -215,7 +214,7 @@ EOF
 		for ((i=0 ; i < "${#UNICODE_BLOCKS[@]}" ; i+=3))
 		do
 			UNICODE_BLOCK_NAME="${UNICODE_BLOCKS[$i]}"
-			cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts/adobe.h
+			cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/adobe.h
 
 /**
  * .. image:: ../../../tests/fonts/adobe/${C_NAME}_${UNICODE_BLOCK_NAME}.png
@@ -226,7 +225,7 @@ EOF
 	done
 done
 
-echo "#endif" >> "$EGLIB_ROOT"/eglib/drawing/fonts/adobe.h
+echo "#endif" >> "$TOP_BUILDDIR"/eglib/drawing/fonts/adobe.h
 
 ##
 ## Header
@@ -234,7 +233,7 @@ echo "#endif" >> "$EGLIB_ROOT"/eglib/drawing/fonts/adobe.h
 
 echo "eglib/drawing/fonts.h"
 
-cat << EOF > "$EGLIB_ROOT"/eglib/drawing/fonts.h-
+cat << EOF > "$TOP_BUILDDIR"/eglib/drawing/fonts.h-
 #ifndef EGLIB_DRAWING_FONTS_H
 #define EGLIB_DRAWING_FONTS_H
 
@@ -244,12 +243,12 @@ EOF
 
 for FONT_HEADER in $FONT_HEADERS
 do
-	cat << EOF >> "$EGLIB_ROOT"/eglib/drawing/fonts.h-
+	cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts.h-
 #include "$FONT_HEADER"
 
 EOF
 done
 
-echo "#endif" >> "$EGLIB_ROOT"/eglib/drawing/fonts.h-
+echo "#endif" >> "$TOP_BUILDDIR"/eglib/drawing/fonts.h-
 
-mv "$EGLIB_ROOT"/eglib/drawing/fonts.h- "$EGLIB_ROOT"/eglib/drawing/fonts.h
+mv "$TOP_BUILDDIR"/eglib/drawing/fonts.h- "$TOP_BUILDDIR"/eglib/drawing/fonts.h

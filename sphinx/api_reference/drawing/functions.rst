@@ -8,4 +8,4 @@ Drawing Functions
 
     #include <eglib/drawing.h>
 
-.. c:autodoc:: eglib/drawing.h
+.. c:autodoc:: top_srcdir/eglib/drawing.h

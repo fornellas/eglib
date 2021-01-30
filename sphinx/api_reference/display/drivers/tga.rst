@@ -8,4 +8,4 @@ TGA
 
     #include <eglib/display/tga.h>
 
-.. c:autodoc:: eglib/display/tga.h
+.. c:autodoc:: top_srcdir/eglib/display/tga.h

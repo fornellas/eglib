@@ -11,7 +11,7 @@ eglib
 Functions
 ---------
 
-.. c:autodoc:: eglib.h
+.. c:autodoc:: top_srcdir/eglib.h
 
 Types
 -----
@@ -20,4 +20,4 @@ Types
 
     #include <eglib/types.h>
 
-.. c:autodoc:: eglib/types.h
+.. c:autodoc:: top_srcdir/eglib/types.h

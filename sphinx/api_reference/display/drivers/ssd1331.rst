@@ -8,7 +8,7 @@ SSD1331
 
     #include <eglib/display/ssd1331.h>
 
-.. c:autodoc:: eglib/display/ssd1331.h
+.. c:autodoc:: top_srcdir/eglib/display/ssd1331.h
 
 Examples
 --------

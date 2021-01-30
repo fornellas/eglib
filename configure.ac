@@ -11,11 +11,11 @@ AC_INIT(
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AM_SILENT_RULES([yes])
-AC_CONFIG_SRCDIR([src/eglib.c])
+AC_CONFIG_SRCDIR([eglib.c])
 AC_CONFIG_MACRO_DIR([/usr/share/aclocal])
 AC_REQUIRE_AUX_FILE([tap-driver.sh])
 AC_REQUIRE_AUX_FILE([libopencm3.mk])
-AC_CONFIG_HEADERS([src/eglib/config.h])
+AC_CONFIG_HEADERS([eglib/config.h])
 
 ##
 ## Canonical
@@ -78,13 +78,13 @@ fi
 ##
 
 # LDFLAGS
-LDFLAGS_EGLIB="-L$(cd "${builddir}" && pwd)/src"
+LDFLAGS_EGLIB="-L$(cd "${builddir}" && pwd)"
 AC_SUBST([LDFLAGS_EGLIB], [$LDFLAGS_EGLIB])
 # LIBS
 LIBS_EGLIB="-leglib -Wl,--start-group -lm -Wl,--end-group"
 AC_SUBST([LIBS_EGLIB], [$LIBS_EGLIB])
 # CPPFLAGS
-CPPFLAGS_EGLIB="-I$(cd "${builddir}" && pwd)/src -I$(cd "${srcdir}" && pwd)/src"
+CPPFLAGS_EGLIB="-I$(cd "${builddir}" && pwd) -I$(cd "${srcdir}" && pwd)"
 AC_SUBST([CPPFLAGS_EGLIB], [$CPPFLAGS_EGLIB])
 
 ##
@@ -239,18 +239,7 @@ if test "x$build" = "x$host" ; then
 fi
 
 AC_CONFIG_FILES([
-	Makefile
-	examples/Makefile
-	fonts/Makefile
-	src/Makefile
-	sphinx/Makefile
-	tests/display/Makefile
-	tests/drawing/Makefile
-	tests/fonts/adobe/Makefile
-	tests/fonts/liberation/Makefile
-	tests/fonts/Makefile
-	tests/frame_buffer/Makefile
-	tests/Makefile])
+	Makefile])
 
 ##
 ## Subdirectory packages

@@ -6,6 +6,6 @@ stream
 
 .. code:: c
 
-    #include <eeglib/hal/i2c/stream.h>
+    #include <eglib/hal/i2c/stream.h>
 
-.. c:autodoc:: eglib/hal/i2c/stream.h
+.. c:autodoc:: top_srcdir/eglib/hal/i2c/stream.h

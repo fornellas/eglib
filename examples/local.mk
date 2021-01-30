@@ -8,6 +8,7 @@ example_c_files =
 example_c_files += %D%/libopencm3_stm32f4/sh1106-four_wire_spi.c
 example_c_files += %D%/libopencm3_stm32f4/sh1106-i2c.c
 example_c_files += %D%/libopencm3_stm32f4/ssd1331-four_wire_spi.c
+example_c_files += %D%/libopencm3_stm32f4/ssd1675a-four_wire_spi.c
 example_c_files += %D%/libopencm3_stm32f4/st7789-four_wire_spi.c
 libopencm3_stm32f4_sources += $(example_c_files)
 

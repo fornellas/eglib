@@ -5,6 +5,7 @@
 struct font_t *font;
 struct glyph_unicode_block_t *unicode_block;
 char *expectation_name;
+char *reldir = RELDIR;
 
 Suite * build_suite(void);
 

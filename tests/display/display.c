@@ -7,12 +7,14 @@
 #include <eglib/hal/i2c/stream.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <libgen.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include "../common.h"
 
 #define EGLIB_UPDATE_EXPECTATIONS_MSG "If you trust the code is legit set "\
 	"EGLIB_UPDATE_EXPECTATIONS=true to have the expectation updated.\n"
@@ -33,6 +35,7 @@ extern coordinate_t width;
 extern coordinate_t height;
 extern enum pixel_format_t pixel_format;
 extern char driver_name[];
+char *reldir = RELDIR;
 
 void setup_four_wire_spi(void);
 void setup_i2c(void);
@@ -175,6 +178,7 @@ START_TEST(refresh) {
 
 void teardown(void) {
 	char *expectation_dir;
+	char *file;
 	char *expectation_path;
 	int expectation_fd;
 	struct stat expectation_stat;
@@ -185,18 +189,21 @@ void teardown(void) {
 	fclose(stream);
 	buffer_len = strlen(*buffer);
 
-	expectation_dir = getenv("EXPECTATIONS_DIR");
-	if(expectation_dir == NULL) {
-		fprintf(stdout, "EXPECTATIONS_DIR not set. Please run this via `make check'.\n");
-		exit(EXIT_FAILURE);
-	}
+
 
 	ck_assert_ptr_ne(driver_name, NULL);
 	ck_assert_ptr_ne(test_case_name, NULL);
 	ck_assert_ptr_ne(test_name, NULL);
 
+	file = malloc(strlen(__FILE__) + 1);
+	if(NULL == file)
+		exit(EXIT_FAILURE);
+	strcpy(file, __FILE__);
+	expectation_dir = dirname(file);
+
 	if(asprintf(&expectation_path, "%s/%s.%s.%s", expectation_dir, driver_name, test_case_name, test_name) == -1)
 		exit(EXIT_FAILURE);
+	free(file);
 
 	if(getenv("EGLIB_UPDATE_EXPECTATIONS")) {
 		fprintf(stderr, "Updating expectation `%s' %ld bytes.\n", expectation_path, buffer_len);

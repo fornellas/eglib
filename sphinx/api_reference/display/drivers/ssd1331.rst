@@ -8,7 +8,7 @@ SSD1331
 
     #include <eglib/display/ssd1331.h>
 
-.. c:autodoc:: eglib/display/ssd1331.h
+.. c:autodoc:: top_srcdir/eglib/display/ssd1331.h
 
 Examples
 --------
@@ -16,5 +16,5 @@ Examples
 4-Wire SPI
 **********
 
-.. literalinclude:: ../../../../examples/libopencm3_stm32f4/ssd1331-four_wire_spi.c
+.. literalinclude:: ../../../examples/libopencm3_stm32f4/ssd1331-four_wire_spi.c
    :language: C

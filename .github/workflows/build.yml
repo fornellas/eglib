@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install APT dependencies
-        run: sudo apt-get -y install ${{env.AUTOTOOLS_APT_DEPS}} ${{env.BUILD_APT_DEPS}}
+        run: sudo apt-get update && sudo apt-get -y install ${{env.AUTOTOOLS_APT_DEPS}} ${{env.BUILD_APT_DEPS}}
       - name: autogen.sh
         run: ./autogen.sh
       - name: configure
@@ -44,7 +44,7 @@ jobs:
           git submodule init
           git submodule update
       - name: Install APT dependencies
-        run: sudo apt-get -y install ${{env.BUILD_APT_DEPS}} ${{env.TEST_APT_DEPS}} ${{env.SPHINX_APT_DEPS}}
+        run: sudo apt-get update && sudo apt-get -y install ${{env.BUILD_APT_DEPS}} ${{env.TEST_APT_DEPS}} ${{env.SPHINX_APT_DEPS}}
       - name: Setup Python
         uses: actions/setup-python@v2
       - name: Download dist
@@ -65,7 +65,7 @@ jobs:
       - name: make
         run: make -C _build/ V=1
       - name: make check-valgrind
-        run: make -C _build/ check-valgrind -C tests/ V=1
+        run: make -C _build/ check-valgrind V=1
       - name: make html
         run: |
           make -C _build/ html V=1
@@ -87,7 +87,7 @@ jobs:
           git submodule init
           git submodule update
       - name: Install APT dependencies
-        run: sudo apt-get -y install ${{env.BUILD_APT_DEPS}} ${{env.SPHINX_APT_DEPS}} ${{env.LIBOPENCM3_APT_DEPS}}
+        run: sudo apt-get update && sudo apt-get -y install ${{env.BUILD_APT_DEPS}} ${{env.SPHINX_APT_DEPS}} ${{env.LIBOPENCM3_APT_DEPS}}
       - name: Setup Python
         uses: actions/setup-python@v2
       - name: Build libopencm3

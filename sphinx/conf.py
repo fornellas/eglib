@@ -36,11 +36,16 @@ release = "master"
 extensions = ["hawkmoth"]
 
 # hawkmoth
-EGLIB_SRC = os.environ.get("EGLIB_SRC")
-if not EGLIB_SRC:
-    raise RuntimeError("Please run this via `make html'.")
-cautodoc_root = EGLIB_SRC
-cautodoc_clang = f"-I{EGLIB_SRC}"
+
+if "TOP_SRCDIR" not in os.environ:
+    raise RuntimeError("TOP_SRCDIR not set!")
+TOP_SRCDIR = os.environ.get("TOP_SRCDIR")
+if "TOP_BUILDDIR" not in os.environ:
+    raise RuntimeError("TOP_BUILDDIR not set!")
+TOP_BUILDDIR = os.environ.get("TOP_BUILDDIR")
+
+cautodoc_root = TOP_BUILDDIR
+cautodoc_clang = f"-I{TOP_SRCDIR},-I{TOP_BUILDDIR}"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]

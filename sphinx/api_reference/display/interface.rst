@@ -10,4 +10,4 @@ Display drivers implement the interface :c:type:`display_struct` defined here.
 
     #include <eglib/display.h>
 
-.. c:autodoc:: eglib/display.h
+.. c:autodoc:: top_srcdir/eglib/display.h

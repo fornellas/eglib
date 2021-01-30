@@ -37,7 +37,7 @@ clean-local: clean-eglib-example-libopencm3_stm32f4-$(VERSION)
 	$(CLEAN_EGLIB_EXAMPLE_LIBOPENCM3_STM32F4_CMD)
 	mkdir -p %D%/eglib-example-libopencm3_stm32f4-$(VERSION)
 	cp -a $? %D%/eglib-example-libopencm3_stm32f4-$(VERSION)/
-	tar zcf $@ %D%/eglib-example-libopencm3_stm32f4-$(VERSION)/
+	tar zcf $@ -C %D% eglib-example-libopencm3_stm32f4-$(VERSION)/
 	chmod u+w -R %D%/eglib-example-libopencm3_stm32f4-$(VERSION)/
 	rm -rf %D%/eglib-example-libopencm3_stm32f4-$(VERSION)
 
@@ -47,19 +47,19 @@ CLEANFILES += %D%/eglib-example-libopencm3_stm32f4-$(VERSION).tar.gz
 
 if OPENCM3_STM32F4
 
-check-eglib-example-libopencm3_stm32f4-$(VERSION).tar.gz: %D%/eglib-example-libopencm3_stm32f4-$(VERSION).tar.gz
+check-eglib-example-libopencm3_stm32f4-$(VERSION).tar.gz: %D%/eglib-example-libopencm3_stm32f4-$(VERSION).tar.gz libeglib.a
 	$(MAKE) $(AM_MAKEFLAGS) clean-eglib-example-libopencm3_stm32f4-$(VERSION)
-	tar zxf %D%/eglib-example-libopencm3_stm32f4-$(VERSION).tar.gz
-	$(MAKE) $(AM_MAKEFLAGS) -C $(abs_top_builddir) install-data DESTDIR=$(abs_builddir)/eglib-example-libopencm3_stm32f4-$(VERSION)/_eglib/
-	cd eglib-example-libopencm3_stm32f4-$(VERSION)/ \
+	tar zxf %D%/eglib-example-libopencm3_stm32f4-$(VERSION).tar.gz -C %D%
+	$(MAKE) $(AM_MAKEFLAGS) -C $(abs_top_builddir) install-data DESTDIR=%D%/eglib-example-libopencm3_stm32f4-$(VERSION)/_eglib/
+	cd %D%/eglib-example-libopencm3_stm32f4-$(VERSION)/ \
 		&& if test -e _build/ ; then  chmod u+w -R _build/ && rm -rf _build/ ; fi \
 		&& mkdir _build \
 		&& cd _build/ \
-		&& $(abs_top_srcdir)/configure \
+		&& ../configure \
 			--host=$(host) \
 			--with-libopencm3="$(OPENCM3_DIR)" \
-			--with-eglib-libdir="$(abs_top_builddir)/src" \
-			--with-eglib-includedir=$(abs_builddir)/eglib-example-libopencm3_stm32f4-$(VERSION)/_eglib/$(includedir) \
+			--with-eglib-libdir="$(abs_top_builddir)" \
+			--with-eglib-includedir=$(abs_builddir)/%D%/eglib-example-libopencm3_stm32f4-$(VERSION)/_eglib/$(includedir) \
 			CC="$(CC)" \
 			CFLAGS="$(CFLAGS)" \
 			LDFLAGS="$(LDFLAGS)" \

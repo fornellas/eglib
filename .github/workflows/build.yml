@@ -68,8 +68,10 @@ jobs:
         run: make -C _build/ check-valgrind V=1
       - name: make html
         run: |
+          make -C _build/ html V=1
           git rm -r docs/
-          make -C _build/ update-html V=1
+          cp -a _build/sphinx/html/ docs/
+          touch docs/.nojekyll
           git add docs/
       - name: Cleanup
         run: rm -rf _dist/ _build/

@@ -749,6 +749,6 @@ void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, const char *
  *
  * :See also: :c:func:`eglib_SetFont`.
  */
-coordinate_t eglib_GetTextWidth(eglib_t *eglib, char *utf8_text);
+coordinate_t eglib_GetTextWidth(eglib_t *eglib, const char *utf8_text);
 
 #endif

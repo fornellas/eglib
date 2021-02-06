@@ -98,7 +98,7 @@ EOF
 /**
  * .. image:: ${C_NAME}_${UNICODE_BLOCK_NAME}.png
  */
-extern struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
+extern const struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
 EOF
 		done
 	done
@@ -219,7 +219,7 @@ EOF
 /**
  * .. image:: ${C_NAME}_${UNICODE_BLOCK_NAME}.png
  */
-extern struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
+extern const struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
 EOF
 		done
 	done

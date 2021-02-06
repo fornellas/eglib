@@ -103,11 +103,12 @@ nobase_include_HEADERS += eglib/hal/i2c/stream.h
 nobase_include_HEADERS += eglib/types.h
 
 lib_LIBRARIES = libeglib.a
+CFLAGS_COMMON = -ffunction-sections -fdata-sections
 if OPENCM3_STM32F4
-libeglib_a_CFLAGS = $(CFLAGS_OPENCM3) $(CFLAGS_WARNINGS)
+libeglib_a_CFLAGS = $(CFLAGS_OPENCM3) $(CFLAGS_WARNINGS) $(CFLAGS_COMMON)
 libeglib_a_CPPFLAGS = -I$(top_builddir) $(CPPFLAGS_OPENCM3)
 else
-libeglib_a_CFLAGS = $(CFLAGS_WARNINGS)
+libeglib_a_CFLAGS = $(CFLAGS_WARNINGS) $(CFLAGS_COMMON)
 libeglib_a_CPPFLAGS = -I$(top_builddir)
 endif
 

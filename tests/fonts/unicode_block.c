@@ -35,7 +35,7 @@ static void get_dimensions(coordinate_t *width, int16_t *rows) {
 	for(charcode = unicode_block->charcode_start ; charcode <= unicode_block->charcode_end ; ) {
 		wchar_t charcode_end;
 		coordinate_t new_width;
-		struct glyph_t *glyph;
+		const struct glyph_t *glyph;
 
 		*rows += 1;
 
@@ -76,7 +76,7 @@ void teardown(void) {
 	eglib_SetIndexColor(&eglib, 0, 0, 0, 0);
 	charcode = unicode_block->charcode_start;
 	for(int row=0 ; row < rows ; row++) {
-		struct glyph_t *glyph;
+		const struct glyph_t *glyph;
 		coordinate_t x;
 
 		x=0;

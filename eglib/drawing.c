@@ -577,7 +577,7 @@ void eglib_DrawGradientFilledArc(
 // Bitmap
 //
 
-static inline bool get_bit(uint8_t *data, uint16_t bit) {
+static inline bool get_bit(const uint8_t *data, uint16_t bit) {
   return (*(data + bit / 8)) & (1<<(7-(bit % 8)));
 }
 
@@ -626,13 +626,13 @@ void eglib_DrawBitmap(
 // Font
 //
 
-void eglib_SetFont(eglib_t *eglib, struct font_t *font) {
+void eglib_SetFont(eglib_t *eglib, const struct font_t *font) {
   eglib->drawing.font = font;
 }
 
 bool eglib_AddUnicodeBlockToFont(
   struct font_t *font,
-  struct glyph_unicode_block_t *unicode_block
+  const struct glyph_unicode_block_t *unicode_block
 ) {
   if(font->unicode_blocks_count == FONT_MAX_UNICODE_BLOCKS)
     return true;
@@ -643,8 +643,8 @@ bool eglib_AddUnicodeBlockToFont(
   return false;
 }
 
-struct glyph_t *eglib_GetGlyph(eglib_t *eglib, wchar_t unicode_char) {
-  struct font_t *font;
+const struct glyph_t *eglib_GetGlyph(eglib_t *eglib, wchar_t unicode_char) {
+  const struct font_t *font;
 
   font = eglib->drawing.font;
 
@@ -659,7 +659,7 @@ struct glyph_t *eglib_GetGlyph(eglib_t *eglib, wchar_t unicode_char) {
   return NULL;
 }
 
-void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, struct glyph_t *glyph) {
+void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, const struct glyph_t *glyph) {
   if(glyph == NULL) {
     uint8_t pixel_size;
 
@@ -690,7 +690,7 @@ void eglib_DrawWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t uni
 
 #define isutf(c) (((c)&0xC0)!=0x80)
 
-static wchar_t utf8_nextchar(char *utf8_text, uint16_t *index) {
+static wchar_t utf8_nextchar(const char *utf8_text, uint16_t *index) {
     wchar_t c;
     int length;
     static const uint32_t offsets_from_utf8[] = {
@@ -711,8 +711,8 @@ static wchar_t utf8_nextchar(char *utf8_text, uint16_t *index) {
     return c;
 }
 
-void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, char *utf8_text) {
-  struct glyph_t *glyph;
+void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, const char *utf8_text) {
+  const struct glyph_t *glyph;
 
   for(uint16_t index=0 ; utf8_text[index] ; ) {
     glyph = eglib_GetGlyph(eglib, utf8_nextchar(utf8_text, &index));
@@ -730,7 +730,7 @@ coordinate_t eglib_GetTextWidth(eglib_t *eglib, char *utf8_text) {
   width = 0;
 
   for(uint16_t index=0 ; utf8_text[index] ; ) {
-    struct glyph_t *glyph;
+    const struct glyph_t *glyph;
 
     glyph = eglib_GetGlyph(eglib, utf8_nextchar(utf8_text, &index));
     if(glyph == NULL)

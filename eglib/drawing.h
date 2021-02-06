@@ -645,7 +645,7 @@ struct glyph_t {
 	/** Distance from baseline to glyph's highest pixel. */
 	int8_t top;
 	/** Bitmap data. */
-	uint8_t *data;
+	const uint8_t *data;
 };
 
 /**
@@ -659,7 +659,7 @@ struct glyph_unicode_block_t {
 	/** Last unicode character code this font supports. */
 	wchar_t charcode_end;
 	/** Array of glyphs for each supported unicode character. */
-	struct glyph_t **glyphs;
+	const struct glyph_t **glyphs;
 };
 
 #define FONT_MAX_UNICODE_BLOCKS 5
@@ -677,7 +677,7 @@ struct font_t {
 	/** The distance that must be placed between two lines of text. */
 	uint16_t line_space;
 	/** Array of glyph unicode blocks. */
-	struct glyph_unicode_block_t *unicode_blocks[FONT_MAX_UNICODE_BLOCKS];
+	const struct glyph_unicode_block_t *unicode_blocks[FONT_MAX_UNICODE_BLOCKS];
 	/** Number of ``unicode_blocks``. */
 	uint8_t unicode_blocks_count;
 };
@@ -688,7 +688,7 @@ struct font_t {
  * :See also: :doc:`fonts`.
  * :See also: :c:func:`eglib_AddUnicodeBlockToFont`.
  */
-void eglib_SetFont(eglib_t *eglib, struct font_t *font);
+void eglib_SetFont(eglib_t *eglib, const struct font_t *font);
 
 /**
  * Add given unicode block to font.
@@ -700,19 +700,19 @@ void eglib_SetFont(eglib_t *eglib, struct font_t *font);
  */
 bool eglib_AddUnicodeBlockToFont(
 	struct font_t *font,
-	struct glyph_unicode_block_t *unicode_block
+	const struct glyph_unicode_block_t *unicode_block
 );
 
 /**
  * Return given unicode character's :c:type:`glyph_t` or `NULL` if unsupported
  * by font.
  */
-struct glyph_t *eglib_GetGlyph(eglib_t *eglib, wchar_t unicode_char);
+const struct glyph_t *eglib_GetGlyph(eglib_t *eglib, wchar_t unicode_char);
 
 /**
  * Draw given :c:type:`glyph_t`, similar to :c:func:`eglib_DrawWChar`.
  */
-void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, struct glyph_t *glyph);
+void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, const struct glyph_t *glyph);
 
 /**
  * Draw given unicode character glyph at ``(x, y)``.
@@ -742,7 +742,7 @@ void eglib_DrawWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t uni
  * .. image:: eglib_DrawText.png
  *   :width: 200
  */
-void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, char *utf8_text);
+void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, const char *utf8_text);
 
 /**
  * Return the width in pixels of the given UTF-8 text.

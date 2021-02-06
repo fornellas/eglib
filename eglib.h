@@ -43,7 +43,7 @@ struct _eglib_struct {
 	struct {
 		color_t color_index[4];
 		struct _gradient_t gradient;
-		struct font_t *font;
+		const struct font_t *font;
 	} drawing;
 };
 

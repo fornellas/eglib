@@ -43,10 +43,10 @@ void generate_font(
 
 
 	printf("\n");
-	printf("struct glyph_unicode_block_t unicode_block_%s_%s = {\n", font_name, unicode_block_name);
+	printf("const struct glyph_unicode_block_t unicode_block_%s_%s = {\n", font_name, unicode_block_name);
 	printf("  .charcode_start = %ld,\n", charcode_start);
 	printf("  .charcode_end = %ld,\n", charcode_end);
-	printf("  .glyphs = (struct glyph_t *[]){\n");
+	printf("  .glyphs = (const struct glyph_t *[]){\n");
 
 	for(FT_ULong charcode = charcode_start ; charcode <= charcode_end ; charcode++) {
 		uint16_t x_start, x_end, y_start, y_end;
@@ -103,13 +103,13 @@ void generate_font(
 		top = face->glyph->bitmap_top - y_start;
 		advance = face->glyph->advance.x >> 6;
 
-		printf("    &(struct glyph_t){\n");
+		printf("    &(const struct glyph_t){\n");
 		printf("      .width = %d,\n", width);
 		printf("      .height = %d,\n", height);
 		printf("      .left = %d,\n", left);
 		printf("      .top = %d,\n", top);
 		printf("      .advance = %d,\n", advance);
-		printf("      .data = (uint8_t []){");
+		printf("      .data = (const uint8_t []){");
 
 		byte = 0;
 		bits = 0;
@@ -220,7 +220,7 @@ int main(int argc, char *argv[]) {
 	printf("  .ascent = %ld,\n", face->size->metrics.ascender >> 6);
 	printf("  .descent = %ld,\n", face->size->metrics.descender >> 6);
 	printf("  .line_space = %ld,\n", face->size->metrics.height >> 6);
-	printf("  .unicode_blocks = (struct glyph_unicode_block_t *[FONT_MAX_UNICODE_BLOCKS]){\n");
+	printf("  .unicode_blocks = (const struct glyph_unicode_block_t *[FONT_MAX_UNICODE_BLOCKS]){\n");
 	printf("    &unicode_block_%s_%s,\n", font_name, unicode_block_name[0]);
 	printf("  },\n");
 	printf("  .unicode_blocks_count = 1,\n");

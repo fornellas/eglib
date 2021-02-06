@@ -142,6 +142,11 @@ START_TEST(test_eglib_DrawText) {
 	#include "eglib_DrawText.c"
 }END_TEST
 
+START_TEST(test_eglib_DrawTextCentered) {
+	expectation_name = "eglib_DrawTextCentered";
+	#include "eglib_DrawTextCentered.c"
+}END_TEST
+
 START_TEST(test_eglib_DrawTriangle) {
 	expectation_name = "eglib_DrawTriangle";
 	#include "eglib_DrawTriangle.c"
@@ -193,6 +198,7 @@ Suite * build_suite(void) {
 	tcase_add_test(tcase, test_eglib_DrawRoundBox);
 	tcase_add_test(tcase, test_eglib_DrawRoundFrame);
 	tcase_add_test(tcase, test_eglib_DrawText);
+	tcase_add_test(tcase, test_eglib_DrawTextCentered);
 	tcase_add_test(tcase, test_eglib_DrawTriangle);
 	tcase_add_test(tcase, test_eglib_DrawVLine);
 	tcase_add_test(tcase, test_eglib_DrawWChar);

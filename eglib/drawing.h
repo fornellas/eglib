@@ -745,6 +745,22 @@ void eglib_DrawWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t uni
 void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, const char *utf8_text);
 
 /**
+ * Similar to :c:func:`eglib_DrawText`, but centers text horizontally at given
+ * coordinates
+ *
+ * Example:
+ *
+ * .. literalinclude:: eglib_DrawTextCentered.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: eglib_DrawTextCentered.png
+ *   :width: 200
+ */
+#define eglib_DrawTextCentered(eglib, x, y, utf8_text) eglib_DrawText(eglib, x - eglib_GetTextWidth(eglib, utf8_text) / 2, y, utf8_text)
+
+/**
  * Return the width in pixels of the given UTF-8 text.
  *
  * :See also: :c:func:`eglib_SetFont`.

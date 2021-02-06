@@ -36,6 +36,7 @@ tests_drawing_test_sources += %D%/eglib_DrawPixel.c
 tests_drawing_test_sources += %D%/eglib_DrawRoundBox.c
 tests_drawing_test_sources += %D%/eglib_DrawRoundFrame.c
 tests_drawing_test_sources += %D%/eglib_DrawText.c
+tests_drawing_test_sources += %D%/eglib_DrawTextCentered.c
 tests_drawing_test_sources += %D%/eglib_DrawTriangle.c
 tests_drawing_test_sources += %D%/eglib_DrawVLine.c
 tests_drawing_test_sources += %D%/eglib_DrawWChar.c

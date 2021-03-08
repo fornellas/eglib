@@ -45,17 +45,15 @@ int main(void) {
 
 	rcc_clock_setup_pll(&rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_84MHZ]);
 
-	// eglib_ssd1675a = eglib_Init_FrameBuffer(
 	eglib_Init_FrameBuffer(
 		&eglib, &frame_buffer_config,
 		&four_wire_spi_libopencm3_stm32f4, &four_wire_spi_libopencm3_stm32f4_config,
-		&ssd1675a, &ssd1675a_config_buydisplay_red_2_9_inch_e_ink_display_module
-		// &ssd1675a, &ssd1675a_config_adafruit_2_13_inch_250x122_monochrome
+		&ssd1675a, &ssd1675a_config_buydisplay_red_2_9_inch_e_ink_display_module_fast_update
 	);
 
 	eglib_SetIndexColor(&eglib, 0, 255, 0, 0);
-	eglib_DrawLine(&eglib,0, 0, ssd1675a_config_buydisplay_red_2_9_inch_e_ink_display_module.width-1, ssd1675a_config_buydisplay_red_2_9_inch_e_ink_display_module.height-1);
-	eglib_DrawLine(&eglib,0, ssd1675a_config_buydisplay_red_2_9_inch_e_ink_display_module.height-1, ssd1675a_config_buydisplay_red_2_9_inch_e_ink_display_module.width-1, 0);
+	eglib_DrawLine(&eglib,0, 0, ssd1675a_config_buydisplay_red_2_9_inch_e_ink_display_module_fast_update.width-1, ssd1675a_config_buydisplay_red_2_9_inch_e_ink_display_module_fast_update.height-1);
+	eglib_DrawLine(&eglib,0, ssd1675a_config_buydisplay_red_2_9_inch_e_ink_display_module_fast_update.height-1, ssd1675a_config_buydisplay_red_2_9_inch_e_ink_display_module_fast_update.width-1, 0);
 
 	eglib_SetIndexColor(&eglib, 0, 255, 255, 255);
 	eglib_SetFont(&eglib, &font_Adobe_Helvetica_14px);

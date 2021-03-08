@@ -377,13 +377,13 @@ enum ssd1675a_booster_soft_start_phase_duration {
 	SSD1675A_BOOSTER_SOFT_START_PHASE_DURATION_40MS,
 };
 
-/** Temperature Sensor Control */
-enum ssd1675a_temperature_sensor {
-	/** External temperature sensor (POR) */
-	SSD1675A_TEMPERATURE_SENSOR_EXTERNAL = 0x48,
-	/** Internal temperature sensor */
-	SSD1675A_TEMPERATURE_SENSOR_INTERNAL = 0x80,
-};
+// /** Temperature Sensor Control */
+// enum ssd1675a_temperature_sensor {
+// 	/** External temperature sensor (POR) */
+// 	SSD1675A_TEMPERATURE_SENSOR_EXTERNAL = 0x48,
+// 	/** Internal temperature sensor */
+// 	SSD1675A_TEMPERATURE_SENSOR_INTERNAL = 0x80,
+// };
 
 /** VCOM Register */
 enum ssd1675a_vcom_register {
@@ -447,6 +447,9 @@ enum ssd1675a_vcom_register {
 	SSD1675A_VCOM_REGISTER_MINUS_3V = 0x78,
 };
 
+/** LUT */
+typedef const uint8_t ssd1675a_lut_t[70];
+
 /** Border Waveform for VBD Option */
 enum ssd1675a_border_waveform_vdb_option {
 	/** GS Transition */
@@ -489,8 +492,10 @@ enum ssd1675a_border_waveform_vdb_gs_transition {
  * =============
  */
 
+
+
 /**
- * Configuration for :c:data:`ssd1675`.
+ * Configuration for :c:data:`ssd1675a`.
  *
  * :See also: :c:func:`eglib_Init`.
  */
@@ -500,7 +505,6 @@ typedef struct {
 	/** Display height. */
 	coordinate_t height;
 
-	// SSD1675A_DRIVER_OUTPUT_CONTROL 0x01
 	/** MUX Gate lines setting (POR=296) */
 	uint16_t mux_gate_lines : 9;
 	/** First output Gate. */
@@ -510,11 +514,9 @@ typedef struct {
 	/** TB */
 	enum ssd1675a_tb tb : 1;
 
-	// SSD1675A_GATE_DRIVING_VOLTAGE_CONTROL 0x03
 	/** Gate driving voltage */
 	enum ssd1675a_gate_driving_voltage gate_driving_voltage : 5;
 
-	// SSD1675A_SOURCE_DRIVING_VOLTAGE_CONTROL 0x04
 	/** Source driving voltage VSH1 */
 	enum ssd1675a_source_driving_voltage_vsh source_driving_voltage_vsh1 : 8;
 	/** Source driving voltage VSH2 */
@@ -522,57 +524,46 @@ typedef struct {
 	/** Source driving voltage VSL */
 	enum ssd1675a_source_driving_voltage_vsl source_driving_voltage_vsl : 8;
 
-	// SSD1675A_BOOSTER_SOFT_START_CONTROL 0x0c
-	/** Booster Soft Start Phase 1 Driving Strength (0 = Weakest, 7 = Strongest) */
-	uint8_t booster_soft_start_phase1_driving_strength : 3;
-	/** Booster Soft Start Phase 1 Min Off Time Setting of GDR */
-	enum ssd1675a_booster_soft_start_phase_gdr_min_off_time booster_soft_start_phase1_min_off_time_setting_of_gdr : 4;
-	/** Booster Soft Start Phase 1 Duration */
-	enum ssd1675a_booster_soft_start_phase_duration booster_soft_start_phase1_duration : 2;
-	/** Booster Soft Start Phase 2 Driving Strength (0 = Weakest, 7 = Strongest) */
-	uint8_t booster_soft_start_phase2_driving_strength : 3;
-	/** Booster Soft Start Phase 2 Min Off Time Setting of GDR */
-	enum ssd1675a_booster_soft_start_phase_gdr_min_off_time booster_soft_start_phase2_min_off_time_setting_of_gdr : 4;
-	/** Booster Soft Start Phase 2 Duration */
-	enum ssd1675a_booster_soft_start_phase_duration booster_soft_start_phase2_duration : 2;
-	/** Booster Soft Start Phase 3 Driving Strength (0 = Weakest, 7 = Strongest) */
-	uint8_t booster_soft_start_phase3_driving_strength : 3;
-	/** Booster Soft Start Phase 3 Min Off Time Setting of GDR */
-	enum ssd1675a_booster_soft_start_phase_gdr_min_off_time booster_soft_start_phase3_min_off_time_setting_of_gdr : 4;
-	/** Booster Soft Start Phase 3 Duration */
-	enum ssd1675a_booster_soft_start_phase_duration booster_soft_start_phase3_duration : 2;
+	// /** Booster Soft Start Phase 1 Driving Strength (0 = Weakest, 7 = Strongest) */
+	// uint8_t booster_soft_start_phase1_driving_strength : 3;
+	// /** Booster Soft Start Phase 1 Min Off Time Setting of GDR */
+	// enum ssd1675a_booster_soft_start_phase_gdr_min_off_time booster_soft_start_phase1_min_off_time_setting_of_gdr : 4;
+	// /** Booster Soft Start Phase 1 Duration */
+	// enum ssd1675a_booster_soft_start_phase_duration booster_soft_start_phase1_duration : 2;
+	// /** Booster Soft Start Phase 2 Driving Strength (0 = Weakest, 7 = Strongest) */
+	// uint8_t booster_soft_start_phase2_driving_strength : 3;
+	// /** Booster Soft Start Phase 2 Min Off Time Setting of GDR */
+	// enum ssd1675a_booster_soft_start_phase_gdr_min_off_time booster_soft_start_phase2_min_off_time_setting_of_gdr : 4;
+	// /** Booster Soft Start Phase 2 Duration */
+	// enum ssd1675a_booster_soft_start_phase_duration booster_soft_start_phase2_duration : 2;
+	// /** Booster Soft Start Phase 3 Driving Strength (0 = Weakest, 7 = Strongest) */
+	// uint8_t booster_soft_start_phase3_driving_strength : 3;
+	// /** Booster Soft Start Phase 3 Min Off Time Setting of GDR */
+	// enum ssd1675a_booster_soft_start_phase_gdr_min_off_time booster_soft_start_phase3_min_off_time_setting_of_gdr : 4;
+	// /** Booster Soft Start Phase 3 Duration */
+	// enum ssd1675a_booster_soft_start_phase_duration booster_soft_start_phase3_duration : 2;
 	
-	// SSD1675A_GATE_SCAN_START_POSITION 0x0f
 	/** Gate scan start position from 0 to 295 (POR=0) */
 	uint16_t gate_scan_start_position : 9;
 
-	// SSD1675A_TEMPERATURE_SENSOR_CONTROL 0x18
-	/** Temperature Sensor Control */
-	enum ssd1675a_temperature_sensor temperature_sensor;
+	// /** Temperature Sensor Control */
+	// enum ssd1675a_temperature_sensor temperature_sensor;
 
-	// SSD1675A_DISPLAY_UPDATE_CONTROL_2 0x22
 	/** Display update control 2 */
 	uint8_t display_update_control2;
 
-	// SSD1675A_VCOM_SENSE_DURATION 0x29
-
-	// SSD1675A_WRITE_VCOM_REGISTER 0x2c
 	/** VCOM Register */
 	enum ssd1675a_vcom_register vcom_register : 8;
 
-	// SSD1675A_WRITE_LUT_REGISTER 0x32
 	/** LUT register (70 bytes) */
-	uint8_t *lut_register;
+	ssd1675a_lut_t *lut_register;
 
-	// SSD1675A_SET_DUMMY_LINE_PERIOD 0x3a
 	/** Dummy line period in terms of TGate */
 	uint8_t dummy_line_period : 7;
 
-	// SSD1675A_SET_GATE_LINE_WIDTH 0x3b
 	/** Gate line width (TGate) (POR=0x0a) */
 	uint8_t gate_line_width : 4;
 
-	// SSD1675A_BORDER_WAVEFORM_CONTROL 0x3c
 	/** Border Waveform for VBD Option */
 	enum ssd1675a_border_waveform_vdb_option border_waveform_vdb_option : 2;
 	/** Border Waveform for VBD Fix Level */
@@ -580,11 +571,9 @@ typedef struct {
 	/** Border Waveform for VBD GS Transition */
 	enum ssd1675a_border_waveform_vdb_gs_transition border_waveform_vdb_gs_transition : 2;
 
-	// SSD1675A_SET_ANALOG_BLOCK_CONTROL 0x74
 	/** Analog block control (POR=0x54) */
 	uint8_t analog_block_control;
 
-	// SSD1675A_SET_DIGITAL_BLOCK_CONTROL 0x7e
 	/** Digital block control (POR=0x3b) */
 	uint8_t digital_block_control;
 } ssd1675a_config_t;
@@ -595,20 +584,34 @@ typedef struct {
  */
 
 /**
- * Configuration for `BuyDisplay Red 2.9" inch e-Ink Display Module 296x128 <https://www.buydisplay.com/red-2-9-inch-e-ink-display-module-296x128-for-arduino-raspberry-pi>`_.
+ * Configuration for `BuyDisplay Red 2.9" inch e-Ink Display Module 296x128
+ * <https://www.buydisplay.com/red-2-9-inch-e-ink-display-module-296x128-for-arduino-raspberry-pi>`_.
+ * Should also work with
+ * `Yellow 2.9" e-Paper Display Module 296x128 for Arduino,Raspberry Pi <https://www.buydisplay.com/yellow-2-9-inch-e-paper-display-module-296x128-for-arduino-raspberry-pi-1>_`.
  *
  * Values extracted from BuyDisplay's provided example code.
  */
 extern ssd1675a_config_t ssd1675a_config_buydisplay_red_2_9_inch_e_ink_display_module;
 
 /**
- * Configuration for `Adafruit 2.13" Monochrome eInk / ePaper Display FeatherWing - 250x122 Monochrome with SSD1675 <https://www.adafruit.com/product/4195>`_.
- *
- * Values extracted from `here <https://github.com/adafruit/Adafruit_CircuitPython_EPD/blob/master/adafruit_epd/ssd1675.py>`_.
- *
- * Warning: Adafruit's hardware uses a different IC: SSD1675, this is untested!
+ * Variant of :c:data:`ssd1675a_config_buydisplay_red_2_9_inch_e_ink_display_module`
+ * but with custom voltages and LUT for ~3x faster update (~6s instead of ~18s).
  */
-extern ssd1675a_config_t ssd1675a_config_adafruit_2_13_inch_250x122_monochrome;
+extern ssd1675a_config_t ssd1675a_config_buydisplay_red_2_9_inch_e_ink_display_module_fast_update;
+
+/**
+ * Configuration for
+ * `Black 2.9" inch e-Paper Display Module for Arduino,Raspberry Pi <https://www.buydisplay.com/black-2-9-inch-e-paper-display-module-for-arduino-raspberry-pi>`_.
+ *
+ * Values extracted from BuyDisplay's provided example code. Unfortunately,
+ * BuyDisplay example code does not provide LUT for this BW display (only for
+ * BWR/BWR), but :c:data:`ssd1675a_lut_bw_adafruit` seems to work just fine.
+ *
+ * :See also: :c:func:`ssd1675a_writeLut`,
+ *   :c:data:`ssd1675a_lut_bw_adafruit` and
+ *   :c:data:`ssd1675a_lut_bw_partial`.
+ */
+extern ssd1675a_config_t ssd1675a_config_buydisplay_black_2_9_inch_e_ink_display_module;
 
 /**
  * Driver
@@ -616,7 +619,7 @@ extern ssd1675a_config_t ssd1675a_config_adafruit_2_13_inch_250x122_monochrome;
  */
 
 /**
- * SSD1675 display driver.
+ * SSD1675A display driver.
  *
  * :See also: :c:func:`eglib_Init`.
  * :See also: `Datasheet <https://www.buydisplay.com/download/ic/SSD1675A.pdf>`_.
@@ -628,7 +631,36 @@ extern const display_t ssd1675a;
  * =========
  *
  * These functions can be used exclusively with :c:type:`eglib_t` initialized
- * with :c:data:`ssd1675`.
+ * with :c:data:`ssd1675a`.
  */
+
+/**
+ * Full update LUT for
+ * `Adafruit_CircuitPython_SSD1675 <https://github.com/adafruit/Adafruit_CircuitPython_SSD1675>_`.
+ *
+ * This driver is for a different controller SSD1675, but the LUT should be
+ * compatible with similar BW displays.
+ */
+extern ssd1675a_lut_t ssd1675a_lut_bw_adafruit;
+
+/**
+ * Partial update LUT for
+ * :c:data:`ssd1675a_config_buydisplay_black_2_9_inch_e_ink_display_module`.
+ *
+ * This fast screen update causes no flickering, at the expense of image
+ * ghosting.
+ *
+ * **Warning:** doing repeated partial updates without issuing full updates once
+ * in a while will permanently polarize the display causing permanent damage as
+ * image burn in!
+ */
+extern ssd1675a_lut_t ssd1675a_lut_bw_partial;
+
+/**
+ * Set LUT.
+ *
+ * :param lut: LUT register (70 bytes).
+ */
+void ssd1675a_writeLut(eglib_t *eglib, ssd1675a_lut_t *lut);
 
 #endif

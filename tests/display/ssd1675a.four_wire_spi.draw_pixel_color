@@ -1,5 +1,4 @@
 init
-comm_end
 set_reset 1
 set_reset 0
 delay_ns 200000000
@@ -78,12 +77,16 @@ send
 send
   dc 1
   bytes 33
+comm_end
+comm_begin
 send
   dc 0
   bytes 32
 send
   dc 1
   bytes aa 99 10 00 00 00 00 55 99 80 00 00 00 00 8a a8 9b 00 00 00 00 8a a8 9b 00 00 00 00 00 00 00 00 00 00 00 0f 0f 0f 0f 02 14 14 14 14 06 14 14 0c 82 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+comm_end
+comm_begin
 send
   dc 0
   bytes 11

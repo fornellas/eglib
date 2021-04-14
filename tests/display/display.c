@@ -173,7 +173,7 @@ START_TEST(refresh) {
 		0, 0,
 		eglib_GetWidth(&eglib)-1, eglib_GetHeight(&eglib)-1
 	);
-	eglib_Refresh(&eglib);
+	while(eglib_Refresh(&eglib));
 }END_TEST
 
 void teardown(void) {

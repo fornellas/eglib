@@ -64,6 +64,32 @@ tests_display_ssd1331_test_CPPFLAGS = $(CPPFLAGS_EGLIB)
 tests_display_ssd1331_test_SOURCES = %D%/display.c %D%/ssd1331.c
 EXTRA_tests_display_ssd1331_test_DEPENDENCIES = $(SSD1331_EXPECTATIONS)
 
+SSD1675A_EXPECTATIONS = %D%/ssd1675a.four_wire_spi.init
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.sleep_in
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.sleep_out
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.get_dimension
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.get_pixel_format
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.draw_pixel_color
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.draw_line
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.send_buffer
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.refresh
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.DrawBox
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.DrawFrame
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.DrawLine
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.SetDimMode
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.SetDisplayMode
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.SetDisplayStartLine
+SSD1675A_EXPECTATIONS += %D%/ssd1675a.four_wire_spi.SetMasterCurrent
+EXTRA_DIST += $(SSD1675A_EXPECTATIONS)
+check_PROGRAMS += %D%/ssd1675a.test
+TESTS += %D%/ssd1675a.test
+tests_display_ssd1675a_test_CFLAGS = @CHECK_CFLAGS@ $(CFLAGS_WARNINGS) -DRELDIR=\"%D%\"
+tests_display_ssd1675a_test_LDFLAGS = $(LDFLAGS_EGLIB)
+tests_display_ssd1675a_test_LDADD = tests/libcommon.a $(LIBS_EGLIB) @CHECK_LIBS@
+tests_display_ssd1675a_test_CPPFLAGS = $(CPPFLAGS_EGLIB)
+tests_display_ssd1675a_test_SOURCES = %D%/display.c %D%/ssd1675a.c
+EXTRA_tests_display_ssd1675a_test_DEPENDENCIES = $(SSD1675A_EXPECTATIONS)
+
 ST7789_EXPECTATIONS = %D%/st7789.four_wire_spi.init
 ST7789_EXPECTATIONS += %D%/st7789.four_wire_spi.sleep_in
 ST7789_EXPECTATIONS += %D%/st7789.four_wire_spi.sleep_out

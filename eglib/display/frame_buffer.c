@@ -1,6 +1,7 @@
 #include "frame_buffer.h"
 #include "../hal/four_wire_spi/none.h"
 #include <stdlib.h>
+#include <string.h>
 
 static void get_pixel_format(eglib_t *eglib, enum pixel_format_t *pixel_format);
 
@@ -36,6 +37,39 @@ static void draw_to_buffer_1bit_paged(
 	byte = buffer + width * page + x;
 
 	*byte = ((*byte)&~(1<<bit)) | (((color->r|color->g|color->b)&0x01)<<bit);
+}
+
+static void draw_to_buffer_2bit_epd(
+	void *buffer_ptr,
+	coordinate_t width, coordinate_t height,
+	coordinate_t x, coordinate_t y,
+	color_t *color
+) {
+	uint8_t *buffer;
+	uint8_t *byte_bw;
+	uint8_t *byte_red;
+	uint8_t bit;
+
+	(void)height;
+
+	buffer = (uint8_t *)buffer_ptr;
+
+	byte_bw = buffer + (width / 8 * y) + x / 8;
+	byte_red = byte_bw + (width / 8 * height);
+	bit = 7 - (x % 8);
+
+	if(
+		!memcmp(color, &(color_t){0, 0, 0}, sizeof(color_t)) ||
+		!memcmp(color, &(color_t){255, 255, 255}, sizeof(color_t))
+	) {
+		if(color->r)
+			*byte_bw |= 1 << bit;
+		else
+			*byte_bw &= ~(1 << bit);
+		*byte_red &= ~(1 << bit);
+	} else if(!memcmp(color, &(color_t){255, 0, 0}, sizeof(color_t))) {
+		*byte_red |= 1 << bit;
+	}
 }
 
 static void draw_to_buffer_8bit(
@@ -144,6 +178,7 @@ static void (*draw_to_buffer[PIXEL_FORMAT_COUNT])(
 	color_t *color
 ) = {
 	[PIXEL_FORMAT_1BIT_BW_PAGED] = &draw_to_buffer_1bit_paged,
+	[PIXEL_FORMAT_2BIT_EPD] = &draw_to_buffer_2bit_epd,
 	[PIXEL_FORMAT_8BIT_RGB] = &draw_to_buffer_8bit,
 	[PIXEL_FORMAT_12BIT_RGB] = &draw_to_buffer_12bit,
 	[PIXEL_FORMAT_16BIT_RGB] = &draw_to_buffer_16bit,
@@ -153,6 +188,7 @@ static void (*draw_to_buffer[PIXEL_FORMAT_COUNT])(
 
 static const uint8_t color_bits[PIXEL_FORMAT_COUNT] = {
 	[PIXEL_FORMAT_1BIT_BW_PAGED] = 1,
+	[PIXEL_FORMAT_2BIT_EPD] = 2,
 	[PIXEL_FORMAT_8BIT_RGB] = 8,
 	[PIXEL_FORMAT_12BIT_RGB] = 12,
 	[PIXEL_FORMAT_16BIT_RGB] = 16,
@@ -327,9 +363,7 @@ static bool refresh(eglib_t *eglib) {
 
 	config = eglib_GetDisplayConfig(eglib);
 
-	return config->eglib_buffered.display.driver->refresh(
-		&config->eglib_buffered
-	);
+	return eglib_Refresh(&config->eglib_buffered);
 }
 
 //

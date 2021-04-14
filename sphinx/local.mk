@@ -14,6 +14,7 @@ sphinx_rst_files += %D%/api_reference/display/drivers/frame_buffer.rst
 sphinx_rst_files += %D%/api_reference/display/drivers/index.rst
 sphinx_rst_files += %D%/api_reference/display/drivers/sh1106.rst
 sphinx_rst_files += %D%/api_reference/display/drivers/ssd1331.rst
+sphinx_rst_files += %D%/api_reference/display/drivers/ssd1675a.rst
 sphinx_rst_files += %D%/api_reference/display/drivers/st7789.rst
 sphinx_rst_files += %D%/api_reference/display/drivers/tga.rst
 sphinx_rst_files += %D%/api_reference/display/index.rst

@@ -290,12 +290,12 @@ than <code class="docutils literal notranslate"><span class="pre">y</span></code
 writing to the display memory (<code class="docutils literal notranslate"><span class="pre">draw_pixel_color</span></code> / <code class="docutils literal notranslate"><span class="pre">send_buffer</span></code>)
 does not affect the displayed image: it needs to be sent a <em>refresh</em>
 command to do so. Other displays (eg: LCD, OLED) can implement this
-function with an empty body.</p>
+function with an empty body returning <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 <p>A typical implementation of this function will issue the refresh command
 to the display when first called and then poll the busy data line to
 return <code class="docutils literal notranslate"><span class="pre">true</span></code> when refresh is ongoing and <code class="docutils literal notranslate"><span class="pre">false</span></code> when refresh finished:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="p">(</span><span class="n">eglib_IsRefreshing</span><span class="p">(</span><span class="n">eglib</span><span class="p">))</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="o">!</span><span class="n">eglib_GetBusy</span><span class="p">(</span><span class="n">eglib</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nf">eglib_GetBusy</span><span class="p">(</span><span class="n">eglib</span><span class="p">);</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
         <span class="n">send_refresh_command_to_display</span><span class="p">(</span><span class="n">eglib</span><span class="p">);</span>
         <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>

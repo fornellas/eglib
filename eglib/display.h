@@ -194,7 +194,7 @@ struct display_struct {
 	 * writing to the display memory (``draw_pixel_color`` / ``send_buffer``)
 	 * does not affect the displayed image: it needs to be sent a *refresh*
 	 * command to do so. Other displays (eg: LCD, OLED) can implement this
-	 * function with an empty body.
+	 * function with an empty body returning ``false``.
 	 *
 	 * A typical implementation of this function will issue the refresh command
 	 * to the display when first called and then poll the busy data line to
@@ -203,7 +203,7 @@ struct display_struct {
 	 * .. code-block:: c
 	 *
 	 *   if(eglib_IsRefreshing(eglib)) {
-	 *   	return !eglib_GetBusy(eglib);
+	 *   	return eglib_GetBusy(eglib);
 	 *   } else {
 	 *   	send_refresh_command_to_display(eglib);
 	 *   	return true;
@@ -338,6 +338,6 @@ coordinate_t eglib_GetHeight(eglib_t *eglib);
 bool eglib_Refresh(eglib_t *eglib);
 
 /** Whether a display refresh initiated by :c:func:`eglib_Refresh` is ongoing */
-#define eglib_IsRefreshing(eglib) ((eglib)->display_refreshing)
+#define eglib_IsRefreshing(eglib) ((eglib)->display.refreshing)
 
 #endif

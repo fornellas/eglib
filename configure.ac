@@ -285,6 +285,11 @@ else
 	AC_MSG_NOTICE([  - Cross compile: $host])
 	AC_MSG_NOTICE([  - Tests: disabled (due to cross-compilation)])
 fi
-AC_MSG_NOTICE([  - libopencm3: $OPENCM3_DIR])
+if test "x$OPENCM3_DIR" = x
+then
+ AC_MSG_NOTICE([  - libopencm3: no])
+else
+ AC_MSG_NOTICE([  - libopencm3: $OPENCM3_DIR])
+fi
 AC_MSG_NOTICE([  - enable_libopencm3_stm32f4: $enable_libopencm3_stm32f4])
 AC_MSG_NOTICE([  - HTML documentation: $BUILD_HTML])

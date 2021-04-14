@@ -498,6 +498,14 @@ const display_t st7789 = {
 			// .sck_cycle_ns = 47, // 21.2MHz Overclock
 		}),
 		.i2c = NULL,
+		.parallel_8_bit_8080 = &((hal_parallel_8_bit_8080_t){
+			.csx_setup_ns = 15,
+			.csx_hold_ns = 10,
+			.csx_disable_ns = 0,
+			.wrx_cycle_ns = 66,
+			.wrx_high_ns = 15,
+			.wrx_low_ns = 15,
+		}),
 	},
 	.init = init,
 	.sleep_in = sleep_in,

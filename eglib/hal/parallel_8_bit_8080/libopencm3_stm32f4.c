@@ -33,7 +33,7 @@ static void set_cs(
 	}
 }
 
-static void set_dc(
+static inline void set_dc(
 	eglib_t *eglib,
 	bool state
 ) {
@@ -56,7 +56,7 @@ static void set_dc(
 		);
 }
 
-static void cycle_wrx(eglib_t * eglib) {
+static inline void cycle_wrx(eglib_t * eglib) {
 	parallel_8_bit_8080_libopencm3_stm32f4_config_t *config;
 	hal_parallel_8_bit_8080_config_t *parallel_8_bit_8080_config_comm;
 
@@ -116,6 +116,7 @@ static void init(
 		GPIO_PUPD_NONE,
 		config->gpio_csx
 	);
+	gpio_set(config->port_csx, config->gpio_csx);
 
 	rcc_periph_clock_enable(config->rcc_dcx);
 	gpio_mode_setup(
@@ -125,6 +126,15 @@ static void init(
 		config->gpio_dcx
 	);
 
+	rcc_periph_clock_enable(config->rcc_rdx);
+	gpio_mode_setup(
+		config->port_rdx,
+		GPIO_MODE_OUTPUT,
+		GPIO_PUPD_NONE,
+		config->gpio_rdx
+	);
+	gpio_set(config->port_rdx, config->gpio_rdx);
+
 	rcc_periph_clock_enable(config->rcc_wrx);
 	gpio_mode_setup(
 		config->port_wrx,
@@ -132,6 +142,7 @@ static void init(
 		GPIO_PUPD_NONE,
 		config->gpio_wrx
 	);
+	gpio_set(config->port_wrx, config->gpio_wrx);
 
 	rcc_periph_clock_enable(config->rcc_data);
 	gpio_mode_setup(
@@ -140,8 +151,6 @@ static void init(
 		GPIO_PUPD_NONE,
 		GPIO0|GPIO1|GPIO2|GPIO3|GPIO4|GPIO5|GPIO6|GPIO7
 	);
-
-	set_cs(eglib, true);
 }
 
 static void sleep_in(

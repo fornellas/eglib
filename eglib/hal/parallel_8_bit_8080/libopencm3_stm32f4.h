@@ -45,6 +45,13 @@ typedef struct {
 	/** D/CX line GPIO (eg: ``GPIO2``). */
 	uint16_t gpio_dcx;
 
+	/** RDX line RCC GPIO (eg: ``RCC_GPIOA``). */
+	enum rcc_periph_clken rcc_rdx;
+	/** RDX line PORT (eg: ``GPIOA``). */
+	uint32_t port_rdx;
+	/** RDX line GPIO (eg: ``GPIO2``). */
+	uint16_t gpio_rdx;
+
 	/** WRX line RCC GPIO (eg: ``RCC_GPIOA``). */
 	enum rcc_periph_clken rcc_wrx;
 	/** WRX line PORT (eg: ``GPIOA``). */

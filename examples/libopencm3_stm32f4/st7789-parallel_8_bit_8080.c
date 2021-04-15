@@ -14,19 +14,23 @@ int main(void) {
 	parallel_8_bit_8080_libopencm3_stm32f4_config_t  parallel_8_bit_8080_libopencm3_stm32f4_config = {
 		.rcc_rst = RCC_GPIOB,
 		.port_rst = GPIOB,
-		.gpio_rst = GPIO0,
+		.gpio_rst = GPIO1,
 
-		.rcc_csx = RCC_GPIOB,
-		.port_csx = GPIOB,
-		.gpio_csx = GPIO12,
+		.rcc_csx = RCC_GPIOC,
+		.port_csx = GPIOC,
+		.gpio_csx = GPIO13,
 
-		.rcc_dcx = RCC_GPIOB,
-		.port_dcx = GPIOB,
-		.gpio_dcx = GPIO1,
+		.rcc_dcx = RCC_GPIOC,
+		.port_dcx = GPIOC,
+		.gpio_dcx = GPIO14,
+
+		.rcc_rdx = RCC_GPIOC,
+		.port_rdx = GPIOC,
+		.gpio_rdx = GPIO15,
 
 		.rcc_wrx = RCC_GPIOB,
 		.port_wrx = GPIOB,
-		.gpio_wrx = GPIO3,
+		.gpio_wrx = GPIO9,
 
 		.rcc_data = RCC_GPIOA,
 		.port_data = GPIOA,

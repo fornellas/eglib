@@ -174,13 +174,16 @@ typedef struct {
 	/** Delay after de-asserting CSX. */
 	uint32_t csx_disable_ns;
 
+	/** Delay after D/CX set. */
+	uint32_t dcx_setup_ns;
+
 	/** Write cycle  duration  */
 	uint32_t wrx_cycle_ns;
 	/** Write cycle high duration. */
 	uint32_t wrx_high_ns;
 	/** Write cycle low duration. */
 	uint32_t wrx_low_ns;
-} hal_parallel_8_bit_8080_t;
+} hal_parallel_8_bit_8080_config_t;
 
 /**
  * HAL Driver

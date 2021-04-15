@@ -81,13 +81,15 @@ static void init(
 	config = eglib_GetHalConfig(eglib);
 	four_wire_spi_config_comm = eglib_GetHalFourWireSpiConfigComm(eglib);
 
-	rcc_periph_clock_enable(config->rcc_rst);
-	gpio_mode_setup(
-		config->port_rst,
-		GPIO_MODE_OUTPUT,
-		GPIO_PUPD_NONE,
-		config->gpio_rst
-	);
+	if(config->rcc_rst) {
+		rcc_periph_clock_enable(config->rcc_rst);
+		gpio_mode_setup(
+			config->port_rst,
+			GPIO_MODE_OUTPUT,
+			GPIO_PUPD_NONE,
+			config->gpio_rst
+		);
+	}
 
 	if(config->rcc_busy) {
 		rcc_periph_clock_enable(config->rcc_busy);

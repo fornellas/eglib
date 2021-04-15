@@ -34,7 +34,7 @@ struct display_comm_struct {
 	/** I2C */
 	hal_i2c_config_t *i2c;
 	/** Parallel 8-bit 8080 */
-	hal_parallel_8_bit_8080_t *parallel_8_bit_8080;
+	hal_parallel_8_bit_8080_config_t *parallel_8_bit_8080;
 };
 
 /**

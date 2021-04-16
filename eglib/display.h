@@ -33,6 +33,8 @@ struct display_comm_struct {
 	hal_four_wire_spi_config_t *four_wire_spi;
 	/** I2C */
 	hal_i2c_config_t *i2c;
+	/** Parallel 8-bit 8080 */
+	hal_parallel_8_bit_8080_config_t *parallel_8_bit_8080;
 };
 
 /**
@@ -272,6 +274,15 @@ void display_default_draw_line(
 #define eglib_GetHalI2cConfigComm(eglib) (\
 	(eglib)->display.driver->comm.i2c \
 )
+
+/**
+ * Returns :c:type:`hal_parallel_8_bit_8080_t` for :c:type:`display_struct`
+ * from given :c:type:`eglib_t`.
+ */
+#define eglib_GetHalParallel8bit8080ConfigComm(eglib) (\
+	(eglib)->display.driver->comm.parallel_8_bit_8080 \
+)
+
 
 /**
  * See :c:type:`hal_i2c_config_t` ``get_7bit_slave_addr`` for details on this

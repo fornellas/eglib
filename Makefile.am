@@ -101,6 +101,8 @@ nobase_include_HEADERS += eglib/hal/four_wire_spi/none.h
 nobase_include_HEADERS += eglib/hal/four_wire_spi/stream.h
 nobase_include_HEADERS += eglib/hal/i2c/libopencm3_stm32f4.h
 nobase_include_HEADERS += eglib/hal/i2c/stream.h
+nobase_include_HEADERS += eglib/hal/parallel_8_bit_8080/libopencm3_stm32f4.h
+nobase_include_HEADERS += eglib/hal/parallel_8_bit_8080/stream.h
 nobase_include_HEADERS += eglib/types.h
 
 lib_LIBRARIES = libeglib.a
@@ -133,8 +135,10 @@ EXTRA_DIST += eglib/hal/common/libopencm3/stm32f4/delay.c
 if OPENCM3_STM32F4
 libeglib_a_SOURCES += eglib/hal/four_wire_spi/libopencm3_stm32f4.c
 libeglib_a_SOURCES += eglib/hal/i2c/libopencm3_stm32f4.c
+libeglib_a_SOURCES += eglib/hal/parallel_8_bit_8080/libopencm3_stm32f4.c
 endif
 libeglib_a_SOURCES += eglib/hal/i2c/stream.c
+libeglib_a_SOURCES += eglib/hal/parallel_8_bit_8080/stream.c
 
 ##
 ## Version

@@ -156,6 +156,36 @@ typedef struct {
 } hal_i2c_config_t;
 
 /**
+ * Parallel 8-bit 8080
+ * -------------------
+ */
+
+/**
+ * Parallel 8-bit 8080 configuration.
+ *
+ * :See also: :c:type:`display_struct`.
+ * :See also: :c:func:`eglib_GetHalParallel8bit8080ConfigComm`.
+ */
+typedef struct {
+	/** Delay after CSX asserted. */
+	uint32_t csx_setup_ns;
+	/** Delay before de-asserting CSX. */
+	uint32_t csx_hold_ns;
+	/** Delay after de-asserting CSX. */
+	uint32_t csx_disable_ns;
+
+	/** Delay after D/CX set. */
+	uint32_t dcx_setup_ns;
+
+	/** Write cycle  duration  */
+	uint32_t wrx_cycle_ns;
+	/** Write cycle high duration. */
+	uint32_t wrx_high_ns;
+	/** Write cycle low duration. */
+	uint32_t wrx_low_ns;
+} hal_parallel_8_bit_8080_config_t;
+
+/**
  * HAL Driver
  * ==========
  */
@@ -174,6 +204,7 @@ struct hal_struct {
 	 *
 	 *   - **4-Wire SPI**: (:c:func:`eglib_GetHalFourWireSpiConfigComm`).
 	 *   - **I2C**: (:c:func:`eglib_GetHalI2cConfigComm`).
+	 *   - **Parallel 8-bit 8080**: (:c:func:`eglib_GetHalParallel8bit8080ConfigComm`).
 	 *
 	 */
 	void (*init)(eglib_t *eglib);

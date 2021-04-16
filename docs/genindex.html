@@ -102,14 +102,16 @@
 </li>
       <li><a href="api_reference/display/interface.html#c.display_comm_struct.i2c">display_comm_struct.i2c (C member)</a>
 </li>
+      <li><a href="api_reference/display/interface.html#c.display_comm_struct.parallel_8_bit_8080">display_comm_struct.parallel_8_bit_8080 (C member)</a>
+</li>
       <li><a href="api_reference/display/interface.html#c.display_default_draw_line">display_default_draw_line (C function)</a>
 </li>
       <li><a href="api_reference/display/interface.html#c.DISPLAY_LINE_DIRECTION_DOWN">DISPLAY_LINE_DIRECTION_DOWN (C macro)</a>
 </li>
-      <li><a href="api_reference/display/interface.html#c.DISPLAY_LINE_DIRECTION_LEFT">DISPLAY_LINE_DIRECTION_LEFT (C macro)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference/display/interface.html#c.DISPLAY_LINE_DIRECTION_LEFT">DISPLAY_LINE_DIRECTION_LEFT (C macro)</a>
+</li>
       <li><a href="api_reference/display/interface.html#c.DISPLAY_LINE_DIRECTION_RIGHT">DISPLAY_LINE_DIRECTION_RIGHT (C macro)</a>
 </li>
       <li><a href="api_reference/display/interface.html#c.display_line_direction_t">display_line_direction_t (C type)</a>
@@ -194,10 +196,10 @@
 </li>
       <li><a href="api_reference/drawing/functions.html#c.eglib_DrawVLine">eglib_DrawVLine (C function)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_reference/drawing/functions.html#c.eglib_DrawWChar">eglib_DrawWChar (C function)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_reference/display/drivers/frame_buffer.html#c.eglib_FrameBuffer_Send">eglib_FrameBuffer_Send (C function)</a>
 </li>
       <li><a href="api_reference/display/drivers/frame_buffer.html#c.eglib_FrameBuffer_SendPartial">eglib_FrameBuffer_SendPartial (C function)</a>
@@ -217,6 +219,8 @@
       <li><a href="api_reference/display/interface.html#c.eglib_GetHalFourWireSpiConfigComm">eglib_GetHalFourWireSpiConfigComm (C function)</a>
 </li>
       <li><a href="api_reference/display/interface.html#c.eglib_GetHalI2cConfigComm">eglib_GetHalI2cConfigComm (C function)</a>
+</li>
+      <li><a href="api_reference/display/interface.html#c.eglib_GetHalParallel8bit8080ConfigComm">eglib_GetHalParallel8bit8080ConfigComm (C function)</a>
 </li>
       <li><a href="api_reference/display/interface.html#c.eglib_GetHeight">eglib_GetHeight (C function)</a>
 </li>
@@ -1684,8 +1688,6 @@
 </li>
       <li><a href="api_reference/hal/interface.html#c.hal_four_wire_spi_config_t.dc_setup_ns">hal_four_wire_spi_config_t.dc_setup_ns (C member)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_reference/hal/interface.html#c.hal_four_wire_spi_config_t.mode">hal_four_wire_spi_config_t.mode (C member)</a>
 </li>
       <li><a href="api_reference/hal/interface.html#c.hal_four_wire_spi_config_t.sck_cycle_ns">hal_four_wire_spi_config_t.sck_cycle_ns (C member)</a>
@@ -1694,6 +1696,8 @@
 </li>
       <li><a href="api_reference/hal/interface.html#c.HAL_I2C_400KHZ">HAL_I2C_400KHZ (C macro)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_reference/hal/interface.html#c.hal_i2c_config_t">hal_i2c_config_t (C type)</a>
 </li>
       <li><a href="api_reference/hal/interface.html#c.hal_i2c_config_t.speed">hal_i2c_config_t.speed (C member)</a>
@@ -1703,6 +1707,22 @@
       <li><a href="api_reference/hal/interface.html#c.HAL_LSB_FIRST">HAL_LSB_FIRST (C macro)</a>
 </li>
       <li><a href="api_reference/hal/interface.html#c.HAL_MSB_FIRST">HAL_MSB_FIRST (C macro)</a>
+</li>
+      <li><a href="api_reference/hal/interface.html#c.hal_parallel_8_bit_8080_config_t">hal_parallel_8_bit_8080_config_t (C type)</a>
+</li>
+      <li><a href="api_reference/hal/interface.html#c.hal_parallel_8_bit_8080_config_t.csx_disable_ns">hal_parallel_8_bit_8080_config_t.csx_disable_ns (C member)</a>
+</li>
+      <li><a href="api_reference/hal/interface.html#c.hal_parallel_8_bit_8080_config_t.csx_hold_ns">hal_parallel_8_bit_8080_config_t.csx_hold_ns (C member)</a>
+</li>
+      <li><a href="api_reference/hal/interface.html#c.hal_parallel_8_bit_8080_config_t.csx_setup_ns">hal_parallel_8_bit_8080_config_t.csx_setup_ns (C member)</a>
+</li>
+      <li><a href="api_reference/hal/interface.html#c.hal_parallel_8_bit_8080_config_t.dcx_setup_ns">hal_parallel_8_bit_8080_config_t.dcx_setup_ns (C member)</a>
+</li>
+      <li><a href="api_reference/hal/interface.html#c.hal_parallel_8_bit_8080_config_t.wrx_cycle_ns">hal_parallel_8_bit_8080_config_t.wrx_cycle_ns (C member)</a>
+</li>
+      <li><a href="api_reference/hal/interface.html#c.hal_parallel_8_bit_8080_config_t.wrx_high_ns">hal_parallel_8_bit_8080_config_t.wrx_high_ns (C member)</a>
+</li>
+      <li><a href="api_reference/hal/interface.html#c.hal_parallel_8_bit_8080_config_t.wrx_low_ns">hal_parallel_8_bit_8080_config_t.wrx_low_ns (C member)</a>
 </li>
       <li><a href="api_reference/hal/interface.html#c.hal_struct">hal_struct (C type)</a>
 </li>
@@ -1762,6 +1782,62 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4">parallel_8_bit_8080_libopencm3_stm32f4 (C variable)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t">parallel_8_bit_8080_libopencm3_stm32f4_config_t (C type)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.gpio_busy">parallel_8_bit_8080_libopencm3_stm32f4_config_t.gpio_busy (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.gpio_csx">parallel_8_bit_8080_libopencm3_stm32f4_config_t.gpio_csx (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.gpio_dcx">parallel_8_bit_8080_libopencm3_stm32f4_config_t.gpio_dcx (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.gpio_rdx">parallel_8_bit_8080_libopencm3_stm32f4_config_t.gpio_rdx (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.gpio_rst">parallel_8_bit_8080_libopencm3_stm32f4_config_t.gpio_rst (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.gpio_wrx">parallel_8_bit_8080_libopencm3_stm32f4_config_t.gpio_wrx (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_busy">parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_busy (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_csx">parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_csx (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_data">parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_data (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_dcx">parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_dcx (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_rdx">parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_rdx (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_rst">parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_rst (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_wrx">parallel_8_bit_8080_libopencm3_stm32f4_config_t.port_wrx (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_busy">parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_busy (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_csx">parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_csx (C member)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_data">parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_data (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_dcx">parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_dcx (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_rdx">parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_rdx (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_rst">parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_rst (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.html#c.parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_wrx">parallel_8_bit_8080_libopencm3_stm32f4_config_t.rcc_wrx (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/stream.html#c.parallel_8_bit_8080_stream">parallel_8_bit_8080_stream (C variable)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/stream.html#c.parallel_8_bit_8080_stream_config_t">parallel_8_bit_8080_stream_config_t (C type)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/stream.html#c.parallel_8_bit_8080_stream_config_t.buffer">parallel_8_bit_8080_stream_config_t.buffer (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/stream.html#c.parallel_8_bit_8080_stream_config_t.sizeloc">parallel_8_bit_8080_stream_config_t.sizeloc (C member)</a>
+</li>
+      <li><a href="api_reference/hal/parallel_8_bit_8080/stream.html#c.parallel_8_bit_8080_stream_config_t.stream">parallel_8_bit_8080_stream_config_t.stream (C member)</a>
+</li>
       <li><a href="api_reference/eglib.html#c.PIXEL_FORMAT_12BIT_RGB">PIXEL_FORMAT_12BIT_RGB (C macro)</a>
 </li>
       <li><a href="api_reference/eglib.html#c.PIXEL_FORMAT_16BIT_RGB">PIXEL_FORMAT_16BIT_RGB (C macro)</a>
@@ -1770,8 +1846,6 @@
 </li>
       <li><a href="api_reference/eglib.html#c.PIXEL_FORMAT_1BIT_BW_PAGED">PIXEL_FORMAT_1BIT_BW_PAGED (C macro)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_reference/eglib.html#c.PIXEL_FORMAT_24BIT_RGB">PIXEL_FORMAT_24BIT_RGB (C macro)</a>
 </li>
       <li><a href="api_reference/eglib.html#c.PIXEL_FORMAT_2BIT_EPD">PIXEL_FORMAT_2BIT_EPD (C macro)</a>

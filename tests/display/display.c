@@ -5,6 +5,7 @@
 #include <eglib/display/frame_buffer.h>
 #include <eglib/hal/four_wire_spi/stream.h>
 #include <eglib/hal/i2c/stream.h>
+#include <eglib/hal/parallel_8_bit_8080/stream.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <libgen.h>
@@ -23,6 +24,7 @@ eglib_t eglib;
 const hal_t *hal_driver = NULL;
 four_wire_spi_stream_config_t four_wire_spi_stream_config;
 i2c_stream_config_t i2c_stream_config;
+parallel_8_bit_8080_stream_config_t parallel_8_bit_8080_stream_config;
 void *hal_config_ptr = NULL;
 FILE *stream = NULL;
 char **buffer = NULL;
@@ -39,6 +41,7 @@ char *reldir = RELDIR;
 
 void setup_four_wire_spi(void);
 void setup_i2c(void);
+void setup_parallel_8_bit_8080(void);
 void teardown(void);
 void tcase_add_common_tests(TCase *tcase);
 void tcase_add_extra_tests(TCase *tcase);
@@ -68,6 +71,19 @@ void setup_i2c(void) {
 	);
 	stream = i2c_stream_config.stream;
 	buffer = &(i2c_stream_config.buffer);
+}
+
+void setup_parallel_8_bit_8080(void) {
+	test_case_name = "parallel_8_bit_8080";
+	hal_driver = &parallel_8_bit_8080_stream;
+	hal_config_ptr = &parallel_8_bit_8080_stream_config;
+	eglib_Init(
+		&eglib,
+		hal_driver, hal_config_ptr,
+		display_driver, display_config_ptr
+	);
+	stream = parallel_8_bit_8080_stream_config.stream;
+	buffer = &(parallel_8_bit_8080_stream_config.buffer);
 }
 
 START_TEST(init) {
@@ -316,6 +332,17 @@ Suite * build_suite(void) {
 
 		tcase = tcase_create("i2c");
 		tcase_add_checked_fixture(tcase, setup_i2c, teardown);
+		tcase_add_common_tests(tcase);
+		tcase_add_extra_tests(tcase);
+
+		suite_add_tcase(suite, tcase);
+	}
+
+	if(display_driver->comm.parallel_8_bit_8080 != NULL) {
+		TCase *tcase;
+
+		tcase = tcase_create("parallel_8_bit_8080");
+		tcase_add_checked_fixture(tcase, setup_parallel_8_bit_8080, teardown);
 		tcase_add_common_tests(tcase);
 		tcase_add_extra_tests(tcase);
 

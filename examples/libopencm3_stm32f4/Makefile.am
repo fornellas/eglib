@@ -116,6 +116,15 @@ st7789_four_wire_spi_elf_SOURCES = st7789-four_wire_spi.c
 EXTRA_st7789_four_wire_spi_elf_DEPENDENCIES = $(LDSCRIPT)
 BINFILES += st7789-four_wire_spi.bin
 
+noinst_PROGRAMS += st7789-parallel_8_bit_8080.elf
+st7789_parallel_8_bit_8080_elf_CFLAGS = $(CFLAGS_COMMON) $(CFLAGS_WARNINGS)
+st7789_parallel_8_bit_8080_elf_LDFLAGS = $(LDFLAGS_EGLIB) $(LDFLAGS_COMMON)
+st7789_parallel_8_bit_8080_elf_LDADD = $(LIBS_EGLIB) $(LIBS_OPENCM3)
+st7789_parallel_8_bit_8080_elf_CPPFLAGS = $(CPPFLAGS_EGLIB)
+st7789_parallel_8_bit_8080_elf_SOURCES = st7789-parallel_8_bit_8080.c
+EXTRA_st7789_parallel_8_bit_8080_elf_DEPENDENCIES = $(LDSCRIPT)
+BINFILES += st7789-parallel_8_bit_8080.bin
+
 CLEANFILES += $(BINFILES)
 
 ##

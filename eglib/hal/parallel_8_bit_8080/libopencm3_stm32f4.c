@@ -56,28 +56,6 @@ static inline void set_dc(
 		);
 }
 
-static inline void cycle_wrx(eglib_t * eglib) {
-	parallel_8_bit_8080_libopencm3_stm32f4_config_t *config;
-	hal_parallel_8_bit_8080_config_t *parallel_8_bit_8080_config_comm;
-
-	config = eglib_GetHalConfig(eglib);
-	parallel_8_bit_8080_config_comm = eglib_GetHalParallel8bit8080ConfigComm(eglib);
-
-	gpio_clear(
-		config->port_wrx,
-		config->gpio_wrx
-	);
-	_delay_ns(parallel_8_bit_8080_config_comm->wrx_low_ns);
-	gpio_set(
-		config->port_wrx,
-		config->gpio_wrx
-	);
-	_delay_ns(
-		parallel_8_bit_8080_config_comm->wrx_cycle_ns
-		- parallel_8_bit_8080_config_comm->wrx_low_ns
-	);
-}
-
 //
 // Driver
 //
@@ -210,17 +188,40 @@ static void send(
 	uint32_t length
 ) {
 	parallel_8_bit_8080_libopencm3_stm32f4_config_t *config;
+	hal_parallel_8_bit_8080_config_t *parallel_8_bit_8080_config_comm;
+	uint32_t delay_low_ns;
+	uint32_t delay_high_ns;
 
 	config = eglib_GetHalConfig(eglib);
+	parallel_8_bit_8080_config_comm = eglib_GetHalParallel8bit8080ConfigComm(eglib);
+
+	delay_low_ns = parallel_8_bit_8080_config_comm->wrx_low_ns;
+	if(delay_low_ns < _delay_min_ns())
+		delay_low_ns = 0;
+
+	delay_high_ns = (
+		parallel_8_bit_8080_config_comm->wrx_cycle_ns
+		- parallel_8_bit_8080_config_comm->wrx_low_ns
+	);
+	if(delay_high_ns < _delay_min_ns())
+		delay_high_ns = 0;
 
 	set_dc(eglib, dc);
 
-	for(;length;bytes++,length--) {
-		gpio_port_write(
-			config->port_data,
-			(gpio_port_read(config->port_data) & 0xff00) | (*bytes)
-		);
-		cycle_wrx(eglib);
+	if(delay_low_ns || delay_high_ns) {
+		for(;length;bytes++,length--) {
+			GPIO_ODR(config->port_data) = (GPIO_IDR(config->port_data) & 0xff00) | (*bytes);
+			GPIO_BSRR(config->port_wrx) = (config->gpio_wrx << 16);
+			_delay_ns(delay_low_ns);
+			GPIO_BSRR(config->port_wrx) = config->gpio_wrx;
+			_delay_ns(delay_high_ns);
+		}
+	} else {
+		for(;length;bytes++,length--) {
+			GPIO_ODR(config->port_data) = (GPIO_IDR(config->port_data) & 0xff00) | (*bytes);
+			GPIO_BSRR(config->port_wrx) = (config->gpio_wrx << 16);
+			GPIO_BSRR(config->port_wrx) = config->gpio_wrx;
+		}
 	}
 }
 

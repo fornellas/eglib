@@ -10,3 +10,4 @@ The Hardware Abstraction layer provides a common interface :c:type:`hal_struct`,
    interface.rst
    four_wire_spi/index.rst
    i2c/index.rst
+   parallel_8_bit_8080/index.rst

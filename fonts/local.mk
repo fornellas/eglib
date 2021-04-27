@@ -204,6 +204,27 @@ EXTRA_DIST += %D%/adobe/75dpi/timR18.bdf
 EXTRA_DIST += %D%/adobe/75dpi/timR24.bdf
 EXTRA_DIST += %D%/adobe/COPYING
 
+EXTRA_DIST += %D%/freefont-20120503/FreeSerif.ttf
+EXTRA_DIST += %D%/freefont-20120503/FreeMonoBold.ttf
+EXTRA_DIST += %D%/freefont-20120503/FreeMonoBoldOblique.ttf
+EXTRA_DIST += %D%/freefont-20120503/FreeSerifItalic.ttf
+EXTRA_DIST += %D%/freefont-20120503/USAGE
+EXTRA_DIST += %D%/freefont-20120503/COPYING
+EXTRA_DIST += %D%/freefont-20120503/FreeMono.ttf
+EXTRA_DIST += %D%/freefont-20120503/FreeSansBold.ttf
+EXTRA_DIST += %D%/freefont-20120503/FreeSerifBold.ttf
+EXTRA_DIST += %D%/freefont-20120503/CREDITS
+EXTRA_DIST += %D%/freefont-20120503/FreeSansBoldOblique.ttf
+EXTRA_DIST += %D%/freefont-20120503/AUTHORS
+EXTRA_DIST += %D%/freefont-20120503/README
+EXTRA_DIST += %D%/freefont-20120503/FreeSerifBoldItalic.ttf
+EXTRA_DIST += %D%/freefont-20120503/TROUBLESHOOTING
+EXTRA_DIST += %D%/freefont-20120503/INSTALL
+EXTRA_DIST += %D%/freefont-20120503/FreeMonoOblique.ttf
+EXTRA_DIST += %D%/freefont-20120503/FreeSansOblique.ttf
+EXTRA_DIST += %D%/freefont-20120503/ChangeLog
+EXTRA_DIST += %D%/freefont-20120503/FreeSans.ttf
+
 EXTRA_DIST += %D%/liberation-fonts-ttf-2.1.2/AUTHORS
 EXTRA_DIST += %D%/liberation-fonts-ttf-2.1.2/ChangeLog
 EXTRA_DIST += %D%/liberation-fonts-ttf-2.1.2/LiberationMono-BoldItalic.ttf

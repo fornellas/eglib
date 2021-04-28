@@ -20,6 +20,9 @@ sphinx_rst_files += %D%/api_reference/display/drivers/tga.rst
 sphinx_rst_files += %D%/api_reference/display/index.rst
 sphinx_rst_files += %D%/api_reference/display/interface.rst
 sphinx_rst_files += %D%/api_reference/drawing/fonts.rst
+sphinx_rst_files += %D%/api_reference/drawing/fonts/adobe.rst
+sphinx_rst_files += %D%/api_reference/drawing/fonts/freefont.rst
+sphinx_rst_files += %D%/api_reference/drawing/fonts/liberation.rst
 sphinx_rst_files += %D%/api_reference/drawing/functions.rst
 sphinx_rst_files += %D%/api_reference/drawing/index.rst
 sphinx_rst_files += %D%/api_reference/eglib.rst
@@ -72,7 +75,12 @@ opencm3_dir:
 	cp -a $(top_srcdir)/%D%/_templates/ %D%/root/_templates/
 	{ cd $(top_srcdir)/%D%/ && find . -name \*.rst ; } | while read rst ; do mkdir -p %D%/root/$$(dirname $$rst) && cp -a $(top_srcdir)/%D%/$$rst %D%/root/$$rst ; done
 	for f in $(example_c_files) ; do mkdir -p %D%/root/$$(dirname $$f) && cp -a $(top_srcdir)/$$f %D%/root/$$(dirname $$f) ; done
-	cp -a tests/fonts/adobe/*.png tests/fonts/liberation/*.png %D%/root/api_reference/drawing/
+	mkdir -p %D%/root/api_reference/drawing/fonts/adobe/
+	cp -a tests/fonts/adobe/*.png %D%/root/api_reference/drawing/fonts/adobe/
+	mkdir -p %D%/root/api_reference/drawing/fonts/freefont/
+	cp -a tests/fonts/freefont/*.png %D%/root/api_reference/drawing/fonts/freefont/
+	mkdir -p %D%/root/api_reference/drawing/fonts/liberation/
+	cp -a tests/fonts/liberation/*.png %D%/root/api_reference/drawing/fonts/liberation/
 	for f in $(tests_drawing_test_sources) ; do cp -a $(top_srcdir)/$$f %D%/root/api_reference/drawing/ ; done
 	cp -a tests/drawing/*.png %D%/root/api_reference/drawing/
 

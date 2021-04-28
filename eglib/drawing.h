@@ -639,7 +639,7 @@ struct glyph_t {
 	/** Bitmap height. */
 	uint8_t height : 7;
 	/** Left padding before bitmap. */
-	int8_t left : 5;
+	int8_t left : 6;
 	/** Distance to increment the pen position after rendering this glyph. */
 	uint8_t advance : 7;
 	/** Distance from baseline to glyph's highest pixel. */

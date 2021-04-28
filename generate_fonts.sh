@@ -23,6 +23,107 @@ rm -f "$TOP_BUILDDIR"/eglib/drawing/fonts/*.c
 rm -f "$TOP_BUILDDIR"/eglib/drawing/fonts.h
 mkdir -p "$TOP_BUILDDIR"/eglib/drawing/fonts/
 
+##
+## FreeFont
+##
+
+# https://en.wikipedia.org/wiki/Unicode_block
+FREEFONT_UNICODE_BLOCKS=(
+	# https://en.wikipedia.org/wiki/Superscripts_and_Subscripts_(Unicode_block)
+	"SuperscriptsAndSubscripts" "8304" "8351"
+)
+
+
+echo  "FreeFont"
+
+FONT_HEADERS="$FONT_HEADERS fonts/freefont.h"
+
+cat << EOF > "$TOP_BUILDDIR"/eglib/drawing/fonts/freefont.h
+#ifndef EGLIB_DRAWING_FONTS_FREEFONT_H
+#define EGLIB_DRAWING_FONTS_FREEFONT_H
+
+#include <eglib/drawing.h>
+
+/**
+ * GNU FreeFont
+ * ############
+ *
+ * GNU FreeFont is a free family of scalable outline fonts, suitable for general use on computers and for desktop publishing.
+ *
+ * :Source: https://www.gnu.org/software/freefont/
+ * :License: GNU GPLv3
+ */
+EOF
+
+for FONT_PATH in $(ls -1 "$(dirname "$0")"/fonts/freefont-20120503/*.ttf | LANG=C sort)
+do
+	NAME="$(basename "${FONT_PATH%*.ttf}" | tr "-" "_" )"
+	FONT_TITLE="$(echo ${NAME} | tr _ \ )"
+	echo "  $FONT_TITLE"
+
+	cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/freefont.h
+
+/**
+ * $FONT_TITLE
+ * $(echo "$FONT_TITLE" | tr "[a-zA-z_ ]" "*")
+ */
+EOF
+	C_FILE=""$TOP_BUILDDIR"/eglib/drawing/fonts/freefont/$(echo "${NAME}" | tr " " _ | tr A-Z a-z).c"
+	mkdir -p "$(dirname "$C_FILE")"
+	rm -f "$C_FILE"
+	cat << EOF >> "$C_FILE"
+#include <eglib/drawing.h>
+EOF
+
+	for PIXEL_SIZE in "${SCALABLE_FONT_SIZES[@]}"
+	do
+		C_NAME="FreeFont_$(echo "${NAME}" | tr -d _\ )_${PIXEL_SIZE}px"
+		"${EGLIB_FONT_GENERATOR}" "$FONT_PATH" "$C_NAME" 0 "$PIXEL_SIZE" "${UNICODE_BLOCKS[@]}" "${FREEFONT_UNICODE_BLOCKS[@]}" >> "$C_FILE"
+		cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/freefont.h
+
+/**
+ * ${PIXEL_SIZE} pixels
+ * ====================
+ */
+
+/**
+ * This fonts comes with :c:data:\`unicode_block_${C_NAME}_${UNICODE_BLOCKS[0]}\`
+ * and can be extended with :c:func:\`eglib_AddUnicodeBlockToFont\` to support
+ * extra unicode blocks defined below.
+ */
+extern struct font_t font_$C_NAME;
+
+/**
+ * Unicode blocks
+ * --------------
+ */
+EOF
+		for ((i=0 ; i < "${#UNICODE_BLOCKS[@]}" ; i+=3))
+		do
+			UNICODE_BLOCK_NAME="${UNICODE_BLOCKS[$i]}"
+			cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/freefont.h
+
+/**
+ * .. image:: freefont/${C_NAME}_${UNICODE_BLOCK_NAME}.png
+ */
+extern const struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
+EOF
+		done
+		for ((i=0 ; i < "${#FREEFONT_UNICODE_BLOCKS[@]}" ; i+=3))
+		do
+			UNICODE_BLOCK_NAME="${FREEFONT_UNICODE_BLOCKS[$i]}"
+			cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/freefont.h
+
+/**
+ * .. image:: freefont/${C_NAME}_${UNICODE_BLOCK_NAME}.png
+ */
+extern const struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
+EOF
+		done
+	done
+done
+
+echo "#endif" >> "$TOP_BUILDDIR"/eglib/drawing/fonts/freefont.h
 
 ##
 ## Liberation fonts
@@ -62,7 +163,9 @@ do
  * $(echo "$FONT_TITLE" | tr "[a-zA-z_ ]" "*")
  */
 EOF
-	C_FILE=""$TOP_BUILDDIR"/eglib/drawing/fonts/$(echo liberation_"${NAME#Liberation*}" | tr " " _ | tr A-Z a-z).c"
+	C_FILE=""$TOP_BUILDDIR"/eglib/drawing/fonts/liberation/$(echo "${NAME#Liberation*}" | tr " " _ | tr A-Z a-z).c"
+	mkdir -p "$(dirname "$C_FILE")"
+	rm -f "$C_FILE"
 	cat << EOF >> "$C_FILE"
 #include <eglib/drawing.h>
 EOF
@@ -96,7 +199,7 @@ EOF
 			cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/liberation.h
 
 /**
- * .. image:: ${C_NAME}_${UNICODE_BLOCK_NAME}.png
+ * .. image:: liberation/${C_NAME}_${UNICODE_BLOCK_NAME}.png
  */
 extern const struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
 EOF
@@ -182,7 +285,9 @@ do
  */
 EOF
 
-	C_FILE=""$TOP_BUILDDIR"/eglib/drawing/fonts/adobe_$(echo "${NAME}" | tr " " _ | tr A-Z a-z).c"
+	C_FILE=""$TOP_BUILDDIR"/eglib/drawing/fonts/adobe/$(echo "${NAME}" | tr " " _ | tr A-Z a-z).c"
+	mkdir -p "$(dirname "$C_FILE")"
+	rm -f "$C_FILE"
 	cat << EOF >> "$C_FILE"
 #include <eglib/drawing.h>
 EOF
@@ -217,7 +322,7 @@ EOF
 			cat << EOF >> "$TOP_BUILDDIR"/eglib/drawing/fonts/adobe.h
 
 /**
- * .. image:: ${C_NAME}_${UNICODE_BLOCK_NAME}.png
+ * .. image:: adobe/${C_NAME}_${UNICODE_BLOCK_NAME}.png
  */
 extern const struct glyph_unicode_block_t unicode_block_${C_NAME}_${UNICODE_BLOCK_NAME};
 EOF

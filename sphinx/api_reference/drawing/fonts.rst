@@ -1,9 +1,10 @@
 Fonts
 =====
 
-.. contents::
-    :depth: 3
+.. toctree::
+	:maxdepth: 3
+	:caption: Contents:
 
-.. c:autodoc:: eglib/drawing/fonts/adobe.h
-
-.. c:autodoc:: eglib/drawing/fonts/liberation.h
+	fonts/adobe.rst
+	fonts/freefont.rst
+	fonts/liberation.rst

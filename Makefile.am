@@ -14,6 +14,7 @@ include $(srcdir)/tests/display/local.mk
 include $(srcdir)/tests/drawing/local.mk
 include $(srcdir)/tests/fonts/local.mk
 include $(srcdir)/tests/fonts/adobe/local.mk
+include $(srcdir)/tests/fonts/freefont/local.mk
 include $(srcdir)/tests/fonts/liberation/local.mk
 include $(srcdir)/tests/frame_buffer/local.mk
 @VALGRIND_CHECK_RULES@
@@ -25,41 +26,54 @@ include $(srcdir)/tests/frame_buffer/local.mk
 nobase_nodist_include_HEADERS = eglib/config.h
 nobase_nodist_include_HEADERS += eglib/drawing/fonts.h
 nobase_nodist_include_HEADERS += eglib/drawing/fonts/adobe.h
+nobase_nodist_include_HEADERS += eglib/drawing/fonts/freefont.h
 nobase_nodist_include_HEADERS += eglib/drawing/fonts/liberation.h
-nodist_libeglib_a_SOURCES = $(top_builddir)/eglib/drawing/fonts/adobe_courier_bold.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_courier_bold_oblique.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_courier.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_courier_oblique.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_helvetica_bold.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_helvetica_bold_oblique.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_helvetica.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_helvetica_oblique.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_new_century_schoolbook_bold.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_new_century_schoolbook_bold_italic.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_new_century_schoolbook_italic.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_new_century_schoolbook_roman.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_new_centuy_schoolbook_bold.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_new_cenury_schoolbook_roman.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_times_bold.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_times_bold_italic.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_times_italic.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe_times_roman.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_mono_bold.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_mono_bolditalic.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_mono_italic.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_mono_regular.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_sans_bold.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_sans_bolditalic.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_sans_italic.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_sansnarrow_bold.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_sansnarrow_bolditalic.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_sansnarrow_italic.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_sansnarrow_regular.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_sans_regular.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_serif_bold.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_serif_bolditalic.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_serif_italic.c
-nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation_serif_regular.c
+nodist_libeglib_a_SOURCES = $(top_builddir)/eglib/drawing/fonts/adobe/courier_bold.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/courier_bold_oblique.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/courier.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/courier_oblique.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/helvetica_bold.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/helvetica_bold_oblique.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/helvetica.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/helvetica_oblique.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/new_century_schoolbook_bold.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/new_century_schoolbook_bold_italic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/new_century_schoolbook_italic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/new_century_schoolbook_roman.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/new_centuy_schoolbook_bold.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/new_cenury_schoolbook_roman.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/times_bold.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/times_bold_italic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/times_italic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/adobe/times_roman.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/freefont/freemonobold.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/freefont/freemonoboldoblique.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/freefont/freemono.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/freefont/freemonooblique.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/freefont/freesansbold.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/freefont/freesansboldoblique.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/freefont/freesans.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/freefont/freesansoblique.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/freefont/freeserifbold.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/freefont/freeserifbolditalic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/freefont/freeserif.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/freefont/freeserifitalic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/mono_bold.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/mono_bolditalic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/mono_italic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/mono_regular.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/sans_bold.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/sans_bolditalic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/sans_italic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/sansnarrow_bold.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/sansnarrow_bolditalic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/sansnarrow_italic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/sansnarrow_regular.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/sans_regular.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/serif_bold.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/serif_bolditalic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/serif_italic.c
+nodist_libeglib_a_SOURCES += $(top_builddir)/eglib/drawing/fonts/liberation/serif_regular.c
 
 BUILT_SOURCES += $(nobase_nodist_include_HEADERS) $(nodist_libeglib_a_SOURCES)
 
@@ -75,6 +89,7 @@ eglib/drawing/fonts.h: $(top_srcdir)/generate_fonts.sh ${top_builddir}/font_gene
 
 $(nodist_libeglib_a_SOURCES): eglib/drawing/fonts.h
 eglib/drawing/fonts/adobe.h: eglib/drawing/fonts.h
+eglib/drawing/fonts/freefont.h: eglib/drawing/fonts.h
 eglib/drawing/fonts/liberation.h: eglib/drawing/fonts.h
 
 .PHONY: clean-local

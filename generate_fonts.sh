@@ -70,6 +70,7 @@ do
 EOF
 	C_FILE=""$TOP_BUILDDIR"/eglib/drawing/fonts/freefont/$(echo "${NAME}" | tr " " _ | tr A-Z a-z).c"
 	mkdir -p "$(dirname "$C_FILE")"
+	rm -f "$C_FILE"
 	cat << EOF >> "$C_FILE"
 #include <eglib/drawing.h>
 EOF
@@ -164,6 +165,7 @@ do
 EOF
 	C_FILE=""$TOP_BUILDDIR"/eglib/drawing/fonts/liberation/$(echo "${NAME#Liberation*}" | tr " " _ | tr A-Z a-z).c"
 	mkdir -p "$(dirname "$C_FILE")"
+	rm -f "$C_FILE"
 	cat << EOF >> "$C_FILE"
 #include <eglib/drawing.h>
 EOF
@@ -285,6 +287,7 @@ EOF
 
 	C_FILE=""$TOP_BUILDDIR"/eglib/drawing/fonts/adobe/$(echo "${NAME}" | tr " " _ | tr A-Z a-z).c"
 	mkdir -p "$(dirname "$C_FILE")"
+	rm -f "$C_FILE"
 	cat << EOF >> "$C_FILE"
 #include <eglib/drawing.h>
 EOF

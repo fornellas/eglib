@@ -1,7 +1,7 @@
 EXTRA_DIST += %D%/expectation_pngs.tar
 
-%D%/.expectations:
-	test -e %D%/expectation_pngs.tar && tar xf $< -C %D%/ || true
+%D%/.expectations: $(top_srcdir)/%D%/expectation_pngs.tar
+	tar xf $< -C %D%/
 	touch $@
 
 .PHONY: clean-tests-fonts-freefont

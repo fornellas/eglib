@@ -1,12 +1,13 @@
 #define CLOCKS_PER_DELAY_LOOP 3
-#define CALL_CYCLES 28
+#define CALL_CYCLES 60
 
 #define _delay_min_ns() (uint32_t)((float)CALL_CYCLES * 1000000000U / (rcc_ahb_frequency))
 
-inline static void _delay_ns_real(volatile uint32_t ns) {
+inline static void _delay_ns(volatile uint32_t ns) {
 	volatile uint32_t loop_count;
 
-	loop_count = ns * rcc_ahb_frequency / (CLOCKS_PER_DELAY_LOOP * 1000000000U);
+	loop_count = (float)ns * rcc_ahb_frequency / (CLOCKS_PER_DELAY_LOOP * 1000000000U);
+
 	if(loop_count > CALL_CYCLES / CLOCKS_PER_DELAY_LOOP)
 		loop_count -= CALL_CYCLES / CLOCKS_PER_DELAY_LOOP;
 	else
@@ -21,5 +22,3 @@ inline static void _delay_ns_real(volatile uint32_t ns) {
 		: "r0"
 	);
 }
-
-#define _delay_ns(ns) if(ns>_delay_min_ns())_delay_ns_real(ns)

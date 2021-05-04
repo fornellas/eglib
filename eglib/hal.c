@@ -37,3 +37,9 @@ void eglib_CommEnd(eglib_t *eglib) {
 	eglib->hal.comm_active = false;
 	eglib->hal.i2c_send_slave_addr = 0;
 }
+
+void eglib_DelayS(eglib_t *eglib, uint32_t s) {
+	for(uint32_t i=0 ; i < s/4 ; i++)
+		eglib_DelayNs(eglib, 4 * 1000000000UL);
+	eglib_DelayNs(eglib, (s%4) * 1000000000UL);
+}

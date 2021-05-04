@@ -331,6 +331,9 @@ struct hal_struct {
 /** Delay for given number of milliseconds */
 #define eglib_DelayMs(eglib, ms) ((eglib)->hal.driver->delay_ns(eglib, (uint32_t)(ms) * 1000000UL))
 
+/** Delay for given number of seconds */
+void eglib_DelayS(eglib_t *eglib, uint32_t s);
+
 /**
  * I/O
  * ---

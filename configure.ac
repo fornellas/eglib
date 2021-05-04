@@ -177,7 +177,12 @@ if test "x$enable_libopencm3_stm32f4" != xno ; then
 	ORIGINAL_CFLAGS="$CFLAGS" ; CFLAGS="$CFLAGS_OPENCM3 $CFLAGS"
 	ORIGINAL_LDFLAGS="$LDFLAGS" ; LDFLAGS="$LDFLAGS_OPENCM3 $LDFLAGS"
 	ORIGINAL_LIBS="$LIBS" ; LIBS="$LIBS_NOSYS_SPECS $LIBS_OPENCM3 $LIBS"
-	AC_CHECK_LIB([opencm3_stm32f4], [rcc_clock_setup_pll], [], AC_MSG_FAILURE([opencm3_stm32f4 not found!]))
+	AC_CHECK_LIB(
+		[opencm3_stm32f4],
+		[rcc_clock_setup_pll],
+		[],
+		AC_MSG_WARN(
+			[opencm3_stm32f4 not found! Please make sure to 'make -C $OPENCM3_DIR' before calling make here!]))
 	CFLAGS="$ORIGINAL_CFLAGS"
 	LDFLAGS="$ORIGINAL_LDFLAGS"
 	LIBS="$ORIGINAL_LIBS"

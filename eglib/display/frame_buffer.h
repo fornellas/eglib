@@ -40,7 +40,7 @@ typedef struct {
  *
  * Using a frame buffer makes sense when:
  *
- * - You are using a display that does not support directly writing pixes to
+ * - You are using a display that does not support directly writing pixels to
  *   display memory (eg: :c:data:`sh1106_vdd1_2_4_v`).
  * - You have enough RAM.
  * - You want to have faster refresh rates.

@@ -5,7 +5,6 @@ Display drivers use the :ref:`common interface <Display driver HAL interface fun
 
 .. toctree::
    :maxdepth: 3
-   :caption: Contents:
 
    interface.rst
    drivers/index.rst

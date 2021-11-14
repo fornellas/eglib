@@ -1,9 +1,8 @@
+autoconf
+	Sphinx python deps
 doc
 	Usage
 		Linux
 			eglib-font_generator
-		libopencm3
 	Development
-		Environment
-		Display driver
 		HAL driver

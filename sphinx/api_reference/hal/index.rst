@@ -5,7 +5,6 @@ The Hardware Abstraction layer provides a common interface :c:type:`hal_struct`,
 
 .. toctree::
    :maxdepth: 3
-   :caption: Contents:
 
    interface.rst
    four_wire_spi/index.rst

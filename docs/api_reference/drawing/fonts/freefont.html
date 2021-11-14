@@ -13391,16 +13391,1448 @@ const struct <a class="reference internal" href="../functions.html#c.glyph_unico
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../../driver_development/index.html">Driver Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/index.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../eglib.html">eglib</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Drawing</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../functions.html">Drawing Functions</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../fonts.html">Fonts</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="adobe.html">Adobe</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">FreeFont</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">FreeFont</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#gnu-freefont">GNU FreeFont</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#freemono">FreeMono</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#pixels">7 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#unicode-blocks">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id1">8 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id2">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id3">9 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id4">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id5">10 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id6">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id7">11 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id8">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id9">12 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id10">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id11">13 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id12">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id13">14 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id14">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id15">15 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id16">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id17">16 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id18">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id19">18 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id20">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id21">20 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id22">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id23">22 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id24">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id25">24 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id26">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id27">26 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id28">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id29">28 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id30">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id31">32 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id32">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id33">36 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id34">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id35">40 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id36">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id37">44 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id38">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id39">48 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id40">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id41">54 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id42">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id43">60 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id44">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id45">66 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id46">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id47">72 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id48">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id49">80 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id50">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id51">83 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id52">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id53">88 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id54">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id55">96 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id56">Unicode blocks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#freemonobold">FreeMonoBold</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#id57">7 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id58">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id59">8 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id60">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id61">9 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id62">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id63">10 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id64">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id65">11 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id66">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id67">12 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id68">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id69">13 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id70">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id71">14 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id72">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id73">15 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id74">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id75">16 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id76">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id77">18 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id78">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id79">20 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id80">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id81">22 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id82">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id83">24 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id84">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id85">26 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id86">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id87">28 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id88">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id89">32 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id90">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id91">36 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id92">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id93">40 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id94">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id95">44 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id96">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id97">48 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id98">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id99">54 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id100">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id101">60 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id102">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id103">66 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id104">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id105">72 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id106">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id107">80 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id108">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id109">83 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id110">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id111">88 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id112">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id113">96 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id114">Unicode blocks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#freemonoboldoblique">FreeMonoBoldOblique</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#id115">7 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id116">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id117">8 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id118">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id119">9 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id120">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id121">10 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id122">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id123">11 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id124">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id125">12 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id126">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id127">13 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id128">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id129">14 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id130">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id131">15 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id132">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id133">16 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id134">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id135">18 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id136">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id137">20 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id138">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id139">22 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id140">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id141">24 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id142">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id143">26 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id144">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id145">28 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id146">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id147">32 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id148">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id149">36 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id150">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id151">40 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id152">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id153">44 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id154">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id155">48 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id156">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id157">54 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id158">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id159">60 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id160">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id161">66 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id162">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id163">72 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id164">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id165">80 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id166">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id167">83 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id168">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id169">88 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id170">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id171">96 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id172">Unicode blocks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#freemonooblique">FreeMonoOblique</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#id173">7 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id174">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id175">8 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id176">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id177">9 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id178">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id179">10 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id180">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id181">11 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id182">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id183">12 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id184">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id185">13 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id186">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id187">14 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id188">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id189">15 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id190">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id191">16 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id192">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id193">18 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id194">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id195">20 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id196">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id197">22 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id198">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id199">24 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id200">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id201">26 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id202">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id203">28 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id204">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id205">32 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id206">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id207">36 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id208">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id209">40 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id210">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id211">44 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id212">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id213">48 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id214">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id215">54 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id216">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id217">60 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id218">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id219">66 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id220">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id221">72 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id222">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id223">80 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id224">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id225">83 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id226">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id227">88 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id228">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id229">96 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id230">Unicode blocks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#freesans">FreeSans</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#id231">7 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id232">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id233">8 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id234">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id235">9 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id236">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id237">10 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id238">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id239">11 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id240">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id241">12 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id242">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id243">13 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id244">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id245">14 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id246">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id247">15 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id248">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id249">16 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id250">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id251">18 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id252">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id253">20 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id254">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id255">22 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id256">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id257">24 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id258">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id259">26 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id260">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id261">28 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id262">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id263">32 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id264">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id265">36 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id266">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id267">40 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id268">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id269">44 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id270">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id271">48 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id272">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id273">54 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id274">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id275">60 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id276">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id277">66 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id278">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id279">72 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id280">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id281">80 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id282">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id283">83 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id284">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id285">88 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id286">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id287">96 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id288">Unicode blocks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#freesansbold">FreeSansBold</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#id289">7 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id290">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id291">8 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id292">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id293">9 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id294">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id295">10 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id296">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id297">11 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id298">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id299">12 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id300">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id301">13 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id302">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id303">14 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id304">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id305">15 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id306">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id307">16 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id308">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id309">18 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id310">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id311">20 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id312">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id313">22 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id314">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id315">24 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id316">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id317">26 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id318">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id319">28 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id320">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id321">32 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id322">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id323">36 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id324">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id325">40 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id326">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id327">44 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id328">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id329">48 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id330">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id331">54 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id332">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id333">60 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id334">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id335">66 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id336">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id337">72 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id338">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id339">80 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id340">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id341">83 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id342">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id343">88 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id344">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id345">96 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id346">Unicode blocks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#freesansboldoblique">FreeSansBoldOblique</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#id347">7 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id348">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id349">8 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id350">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id351">9 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id352">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id353">10 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id354">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id355">11 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id356">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id357">12 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id358">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id359">13 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id360">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id361">14 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id362">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id363">15 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id364">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id365">16 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id366">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id367">18 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id368">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id369">20 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id370">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id371">22 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id372">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id373">24 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id374">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id375">26 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id376">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id377">28 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id378">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id379">32 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id380">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id381">36 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id382">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id383">40 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id384">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id385">44 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id386">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id387">48 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id388">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id389">54 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id390">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id391">60 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id392">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id393">66 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id394">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id395">72 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id396">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id397">80 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id398">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id399">83 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id400">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id401">88 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id402">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id403">96 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id404">Unicode blocks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#freesansoblique">FreeSansOblique</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#id405">7 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id406">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id407">8 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id408">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id409">9 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id410">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id411">10 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id412">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id413">11 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id414">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id415">12 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id416">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id417">13 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id418">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id419">14 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id420">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id421">15 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id422">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id423">16 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id424">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id425">18 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id426">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id427">20 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id428">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id429">22 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id430">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id431">24 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id432">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id433">26 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id434">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id435">28 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id436">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id437">32 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id438">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id439">36 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id440">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id441">40 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id442">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id443">44 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id444">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id445">48 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id446">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id447">54 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id448">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id449">60 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id450">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id451">66 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id452">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id453">72 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id454">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id455">80 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id456">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id457">83 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id458">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id459">88 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id460">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id461">96 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id462">Unicode blocks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#freeserif">FreeSerif</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#id463">7 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id464">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id465">8 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id466">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id467">9 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id468">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id469">10 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id470">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id471">11 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id472">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id473">12 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id474">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id475">13 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id476">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id477">14 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id478">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id479">15 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id480">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id481">16 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id482">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id483">18 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id484">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id485">20 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id486">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id487">22 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id488">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id489">24 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id490">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id491">26 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id492">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id493">28 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id494">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id495">32 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id496">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id497">36 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id498">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id499">40 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id500">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id501">44 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id502">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id503">48 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id504">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id505">54 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id506">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id507">60 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id508">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id509">66 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id510">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id511">72 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id512">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id513">80 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id514">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id515">83 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id516">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id517">88 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id518">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id519">96 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id520">Unicode blocks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#freeserifbold">FreeSerifBold</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#id521">7 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id522">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id523">8 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id524">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id525">9 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id526">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id527">10 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id528">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id529">11 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id530">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id531">12 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id532">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id533">13 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id534">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id535">14 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id536">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id537">15 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id538">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id539">16 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id540">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id541">18 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id542">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id543">20 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id544">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id545">22 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id546">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id547">24 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id548">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id549">26 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id550">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id551">28 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id552">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id553">32 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id554">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id555">36 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id556">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id557">40 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id558">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id559">44 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id560">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id561">48 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id562">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id563">54 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id564">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id565">60 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id566">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id567">66 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id568">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id569">72 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id570">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id571">80 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id572">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id573">83 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id574">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id575">88 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id576">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id577">96 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id578">Unicode blocks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#freeserifbolditalic">FreeSerifBoldItalic</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#id579">7 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id580">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id581">8 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id582">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id583">9 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id584">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id585">10 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id586">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id587">11 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id588">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id589">12 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id590">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id591">13 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id592">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id593">14 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id594">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id595">15 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id596">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id597">16 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id598">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id599">18 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id600">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id601">20 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id602">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id603">22 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id604">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id605">24 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id606">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id607">26 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id608">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id609">28 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id610">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id611">32 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id612">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id613">36 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id614">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id615">40 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id616">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id617">44 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id618">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id619">48 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id620">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id621">54 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id622">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id623">60 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id624">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id625">66 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id626">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id627">72 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id628">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id629">80 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id630">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id631">83 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id632">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id633">88 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id634">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id635">96 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id636">Unicode blocks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#freeserifitalic">FreeSerifItalic</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#id637">7 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id638">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id639">8 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id640">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id641">9 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id642">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id643">10 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id644">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id645">11 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id646">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id647">12 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id648">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id649">13 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id650">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id651">14 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id652">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id653">15 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id654">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id655">16 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id656">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id657">18 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id658">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id659">20 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id660">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id661">22 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id662">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id663">24 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id664">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id665">26 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id666">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id667">28 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id668">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id669">32 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id670">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id671">36 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id672">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id673">40 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id674">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id675">44 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id676">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id677">48 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id678">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id679">54 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id680">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id681">60 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id682">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id683">66 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id684">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id685">72 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id686">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id687">80 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id688">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id689">83 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id690">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id691">88 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id692">Unicode blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#id693">96 pixels</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#id694">Unicode blocks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="liberation.html">Liberation</a></li>
 </ul>
 </li>
@@ -13410,6 +14842,7 @@ const struct <a class="reference internal" href="../functions.html#c.glyph_unico
 <li class="toctree-l2"><a class="reference internal" href="../../hal/index.html">HAL</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../hacking/index.html">Hacking</a></li>
 </ul>
 
 

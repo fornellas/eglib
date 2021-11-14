@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Drawing &#8212; eglib master documentation</title>
+    <title>libopencm3 &#8212; eglib master documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Drawing Functions" href="functions.html" />
-    <link rel="prev" title="eglib" href="../eglib.html" />
+    <link rel="next" title="API Reference" href="../../api_reference/index.html" />
+    <link rel="prev" title="Usage" href="../index.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -32,29 +32,22 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="drawing">
-<h1>Drawing<a class="headerlink" href="#drawing" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="functions.html">Drawing Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#color">Color</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#pixel">Pixel</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#lines">Lines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#triangles">Triangles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#frames">Frames</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#boxes">Boxes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#round-things">Round things</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#bitmaps">Bitmaps</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#text">Text</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="fonts.html">Fonts</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fonts/adobe.html">Adobe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fonts/freefont.html">FreeFont</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fonts/liberation.html">Liberation</a></li>
-</ul>
-</li>
-</ul>
+  <div class="section" id="libopencm3">
+<h1>libopencm3<a class="headerlink" href="#libopencm3" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://libopencm3.org/">libopencm3</a> is a lowlevel hardware library for various ARM CPUs.</p>
+<p>Both eglib and your project must be compiled using the same libopencm3 build. So first, compile libopencm3:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:libopencm3/libopencm3.git
+<span class="nb">cd</span> libopencm3/
+make
+</pre></div>
+</div>
+<p>eglib must then be configured pointing to where libopencm3 is:</p>
+<p>The following libopencm3 targets are supported:</p>
+<div class="section" id="stm32f4">
+<h2>STM32F4<a class="headerlink" href="#stm32f4" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./configure --host<span class="o">=</span>arm-none-eabi --with-libopencm3<span class="o">=</span><span class="nv">$OPENCM3_PATH</span> --enable-libopencm3_stm32f4
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -66,10 +59,10 @@
     <ul>
         <li>
           &larr;
-          <a href="../eglib.html" title="Previous document">eglib</a>
+          <a href="../index.html" title="Previous document">Usage</a>
         </li>
         <li>
-          <a href="functions.html" title="Next document">Drawing Functions</a>
+          <a href="../../api_reference/index.html" title="Next document">API Reference</a>
           &rarr;
         </li>
     </ul>
@@ -117,18 +110,20 @@
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../usage/index.html">Usage</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../eglib.html">eglib</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Drawing</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="functions.html">Drawing Functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fonts.html">Fonts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Usage</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#download">Download</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#configure-compile">Configure &amp; Compile</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">libopencm3</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stm32f4">STM32F4</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../display/index.html">Display</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../hal/index.html">HAL</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#installing-optional">Installing (optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#using">Using</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../hacking/index.html">Hacking</a></li>
 </ul>
 
@@ -155,7 +150,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../../_sources/api_reference/drawing/index.rst.txt"
+      <a href="../../_sources/usage/libopencm3/index.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

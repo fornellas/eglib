@@ -39,10 +39,12 @@ sphinx_rst_files += %D%/api_reference/hal/parallel_8_bit_8080/index.rst
 sphinx_rst_files += %D%/api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4.rst
 sphinx_rst_files += %D%/api_reference/hal/parallel_8_bit_8080/stream.rst
 sphinx_rst_files += %D%/api_reference/index.rst
-sphinx_rst_files += %D%/driver_development/display.rst
-sphinx_rst_files += %D%/driver_development/hal.rst
-sphinx_rst_files += %D%/driver_development/index.rst
+sphinx_rst_files += %D%/hacking/display.rst
+sphinx_rst_files += %D%/hacking/hal.rst
+sphinx_rst_files += %D%/hacking/index.rst
 sphinx_rst_files += %D%/index.rst
+sphinx_rst_files += %D%/usage/index.rst
+sphinx_rst_files += %D%/usage/libopencm3/index.rst
 EXTRA_DIST += $(sphinx_rst_files)
 
 sphinx_deps = $(sphinx_conf) $(sphinx_static_files) $(sphinx_template_files) $(sphinx_rst_files)

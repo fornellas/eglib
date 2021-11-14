@@ -45,9 +45,8 @@ Features
   - Clipping box support.
 
 .. toctree::
-   :maxdepth: 4
-   :caption: Contents:
    :hidden:
 
-   driver_development/index.rst
+   usage/index.rst
    api_reference/index.rst
+   hacking/index.rst

@@ -47,14 +47,7 @@ The general process of writing a display driver is as follows:
 Scaffold the Code
 -----------------
 
-Fork `eglib's Git <https://github.com/fornellas/eglib/>`_ and clone it:
-
-.. code:: bash
-
-  git clone https://github.com/$YOUR_GH_USERNAME/eglib/
-  cd eglib/
-
-Then add ``src/eglib/display/${IC_NUMBER}.h``:
+Add ``src/eglib/display/${IC_NUMBER}.h``:
 
 .. code:: c
 
@@ -75,6 +68,8 @@ Then add ``src/eglib/display/${IC_NUMBER}.c``. This must define the :c:type:`dis
 
 :c:type:`display_struct` is well documented: you should be able to follow it though to a working driver.
 
+Make sure to add both new source files to ``Makefile.am``, so that they're picked up by the build system.
+
 :Important: Create defines for all display commands used: sending a "maigic" value ``0x33`` is meaningless, but ``IC_NUMBER_SLEEP_IN`` is not.
 
 :Tip: Peek at other drivers implementations at `src/eglib/display/ <https://github.com/fornellas/eglib/tree/master/src/eglib/display>`_ for reference.
@@ -84,6 +79,8 @@ Add An Example
 
 Add a working example at `examples/ <https://github.com/fornellas/eglib/tree/master/examples/>`_, including a ``Makefile`` for it.
 
+Add a build target for the example at ``examples/local.mk`` and make the ``check`` target depend on it.
+
 :Important: test your example with real hardware to make sure it works.
 
 Add Documentation
@@ -91,7 +88,7 @@ Add Documentation
 
 Peek at other existing drivers at `src/eglib/display/ <https://github.com/fornellas/eglib/tree/master/src/eglib/display>`_ to see how the documentation inside the C code should be.
 
-Add a documentation page ``sphinx/reference/display/drivers/${IC_NUMBER}.rst``, following the `example of other display drivers <https://github.com/fornellas/eglib/tree/master/sphinx/reference/display/drivers>`_. Also add this to `sphinx/reference/display/index.rst <https://github.com/fornellas/eglib/blob/master/sphinx/reference/display/index.rst>`_
+Add a documentation page ``sphinx/reference/display/drivers/${IC_NUMBER}.rst``, following the `example of other display drivers <https://github.com/fornellas/eglib/tree/master/sphinx/reference/display/drivers>`_. Also add this to `sphinx/reference/display/index.rst <https://github.com/fornellas/eglib/blob/master/sphinx/reference/display/index.rst>`_ and to ``sphinx/local.mk`` (so the build system picks it up).
 
 Add Unit Tests
 --------------
@@ -102,8 +99,3 @@ Send A Pull Request
 -------------------
 
 Send a `pull request <https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request>`_ of your good work, so others can benefit from it.
-
-Questions?
-----------
-
-Please `reach out <https://github.com/fornellas/eglib/issues>`_.

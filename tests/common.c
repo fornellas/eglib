@@ -7,8 +7,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-
-#define EGLIB_UPDATE_EXPECTATIONS_MSG "If you trust the code is legit set EGLIB_UPDATE_EXPECTATIONS=true to have the expectation updated.\n"
+#include <unistd.h>
 
 static int updated_expectations = 0;
 
@@ -68,6 +67,25 @@ void compare_expectation(char *expectation_name, eglib_t *eglib) {
 		updated_expectations++;
 	}
 
+	if(access(expectation_path, F_OK)) {
+		fprintf(
+			stderr,
+			"ERROR: An expectation image at:\n"
+			"%s\n"
+			"isn't available to compare it with the test output at:\n"
+			"%s\n"
+			"\n"
+			"Please open the test output image and confirm it is as expected. "
+			"If not, fix the code until it is.\n"
+			"\n"
+			"Once test output image is as expected, you can re-run the tests with this set\n"
+			"EGLIB_UPDATE_EXPECTATIONS=true\n"
+			"so that the test test expectation is updated with the current test output.\n", 
+			expectation_path, test_tga_path
+		);
+		exit(EXIT_FAILURE);
+	}
+
 	if(asprintf(&command, "compare -quiet -metric FUZZ %s %s /dev/null", test_tga_path, expectation_path) == -1)
 		exit(EXIT_FAILURE);
 	ret = run(command);
@@ -77,7 +95,18 @@ void compare_expectation(char *expectation_name, eglib_t *eglib) {
 		case 1:
 			fprintf(
 				stderr,
-				"`%s' differs from expectation `%s'.\n" EGLIB_UPDATE_EXPECTATIONS_MSG,
+				"Test output at:\n"
+				"%s\n"
+				"does not match test expectation at:\n"
+				"%s\n"
+				"\n"
+				"If the test output is legit but the expectation isn't,"
+				"re-run the tests with this set:\n"
+				"EGLIB_UPDATE_EXPECTATIONS=true\n"
+				"so that the test test expectation is updated with the current test output.\n"
+				"\n"
+				"If the expectation is legit, but the test output isn't,"
+				"fix the code and make sure the test output matches the expectation.",
 				test_tga_path, expectation_path
 			);
 			exit(EXIT_FAILURE);

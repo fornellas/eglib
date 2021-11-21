@@ -695,6 +695,16 @@ void eglib_SetFont(eglib_t *eglib, const struct font_t *font);
  *
  * Returns `true` in case of error, `false` on success.
  *
+ * Example:
+ *
+ * .. literalinclude:: eglib_AddUnicodeBlockToFont.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: eglib_AddUnicodeBlockToFont.png
+ *   :width: 200
+ *
  * :See also: :doc:`fonts`
  * :See also: :c:func:`eglib_SetFont`.
  */

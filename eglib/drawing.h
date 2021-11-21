@@ -710,7 +710,17 @@ bool eglib_AddUnicodeBlockToFont(
 const struct glyph_t *eglib_GetGlyph(eglib_t *eglib, wchar_t unicode_char);
 
 /**
- * Draw given :c:type:`glyph_t`, similar to :c:func:`eglib_DrawWChar`.
+ * Draw given :c:type:`glyph_t` at ``(x, y)``.
+ *
+ * Example:
+ *
+ * .. literalinclude:: eglib_DrawGlyph.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: eglib_DrawGlyph.png
+ *   :width: 200
  */
 void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, const struct glyph_t *glyph);
 

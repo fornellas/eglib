@@ -67,6 +67,12 @@ START_TEST(test_eglib_DrawFrame) {
 	#include "eglib_DrawFrame.c"
 }END_TEST
 
+START_TEST(test_eglib_DrawGlyph) {
+	expectation_name = "eglib_DrawGlyph";
+	#include "eglib_DrawGlyph.c"
+}END_TEST
+
+
 START_TEST(test_eglib_DrawGradientArc) {
 	expectation_name = "eglib_DrawGradientArc";
 	#include "eglib_DrawGradientArc.c"
@@ -183,6 +189,7 @@ Suite * build_suite(void) {
 	tcase_add_test(tcase, test_eglib_DrawDisc);
 	tcase_add_test(tcase, test_eglib_DrawFilledArc);
 	tcase_add_test(tcase, test_eglib_DrawFrame);
+	tcase_add_test(tcase, test_eglib_DrawGlyph);
 	tcase_add_test(tcase, test_eglib_DrawGradientArc);
 	tcase_add_test(tcase, test_eglib_DrawGradientBox);
 	tcase_add_test(tcase, test_eglib_DrawGradientDisc);

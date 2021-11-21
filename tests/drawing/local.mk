@@ -20,6 +20,7 @@ tests_drawing_test_sources += %D%/eglib_DrawBox.c
 tests_drawing_test_sources += %D%/eglib_DrawCircle.c
 tests_drawing_test_sources += %D%/eglib_DrawDisc.c
 tests_drawing_test_sources += %D%/eglib_DrawFilledArc.c
+tests_drawing_test_sources += %D%/eglib_DrawFilledWChar.c
 tests_drawing_test_sources += %D%/eglib_DrawFrame.c
 tests_drawing_test_sources += %D%/eglib_DrawGlyph.c
 tests_drawing_test_sources += %D%/eglib_DrawGradientArc.c

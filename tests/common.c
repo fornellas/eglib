@@ -78,7 +78,7 @@ void compare_expectation(char *expectation_name, eglib_t *eglib) {
 			"Please open the test output image and confirm it is as expected. "
 			"If not, fix the code until it is.\n"
 			"\n"
-			"Once test output image is as expected, you can re-run the tests with this set\n"
+			"Once test output image is as expected, you can re-run the tests once with this set\n"
 			"EGLIB_UPDATE_EXPECTATIONS=true\n"
 			"so that the test test expectation is updated with the current test output.\n", 
 			expectation_path, test_tga_path
@@ -95,13 +95,13 @@ void compare_expectation(char *expectation_name, eglib_t *eglib) {
 		case 1:
 			fprintf(
 				stderr,
-				"Test output at:\n"
+				"Test output image at:\n"
 				"%s\n"
 				"does not match test expectation at:\n"
 				"%s\n"
 				"\n"
 				"If the test output is legit but the expectation isn't,"
-				"re-run the tests with this set:\n"
+				"re-run the tests once with this set:\n"
 				"EGLIB_UPDATE_EXPECTATIONS=true\n"
 				"so that the test test expectation is updated with the current test output.\n"
 				"\n"

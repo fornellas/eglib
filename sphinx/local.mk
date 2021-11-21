@@ -40,6 +40,7 @@ sphinx_rst_files += %D%/api_reference/hal/parallel_8_bit_8080/libopencm3_stm32f4
 sphinx_rst_files += %D%/api_reference/hal/parallel_8_bit_8080/stream.rst
 sphinx_rst_files += %D%/api_reference/index.rst
 sphinx_rst_files += %D%/hacking/display.rst
+sphinx_rst_files += %D%/hacking/drawing.rst
 sphinx_rst_files += %D%/hacking/hal.rst
 sphinx_rst_files += %D%/hacking/index.rst
 sphinx_rst_files += %D%/index.rst

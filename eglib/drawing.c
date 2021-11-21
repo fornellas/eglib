@@ -708,7 +708,7 @@ void eglib_DrawWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t uni
   }
 }
 
-void eglib_DrawFilledWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t unicode_char) {
+size_t eglib_DrawFilledWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t unicode_char) {
   color_channel_t old_r0, old_g0, old_b0;
   const struct font_t *font;
   const struct glyph_t *glyph;
@@ -742,6 +742,7 @@ void eglib_DrawFilledWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar
   eglib_SetIndexColor(eglib, 0, old_r0, old_g0, old_b0);
 
   eglib_DrawGlyph(eglib, x, y, glyph);
+  return glyph->advance;
 }
 
 #define isutf(c) (((c)&0xC0)!=0x80)

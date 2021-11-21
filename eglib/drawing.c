@@ -660,15 +660,8 @@ const struct glyph_t *eglib_GetGlyph(eglib_t *eglib, wchar_t unicode_char) {
 }
 
 void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, const struct glyph_t *glyph) {
-  if(glyph == NULL) {
-    uint8_t pixel_size;
-
-    pixel_size = eglib->drawing.font->pixel_size;
-    eglib_DrawFrame(eglib, x, y - pixel_size, pixel_size, pixel_size);
-    eglib_DrawLine(eglib, x, y, x + pixel_size, y - pixel_size);
-    eglib_DrawLine(eglib, x, y - pixel_size, x + pixel_size, y);
+  if(glyph == NULL)
     return;
-  }
 
   for(coordinate_t v=0 ; v < glyph->height ; v++)
     for(coordinate_t u=0 ; u < glyph->width ; u++) {
@@ -684,8 +677,71 @@ void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, const struc
     }
 }
 
+#define MISSING_GLYPH_ADVANCE eglib->drawing.font->pixel_size
+
+void draw_missing_glyph(eglib_t *eglib, coordinate_t x, coordinate_t y);
+
+void draw_missing_glyph(eglib_t *eglib, coordinate_t x, coordinate_t y) {
+  const struct font_t *font;
+  coordinate_t box_x, box_y, box_width, box_height;
+
+  font = eglib->drawing.font;
+
+  box_x = x;
+  box_y = y - font->ascent;
+  box_width = MISSING_GLYPH_ADVANCE;
+  box_height = font->ascent - font->descent;
+
+  eglib_DrawFrame(eglib, box_x, box_y, box_width, box_height);
+  eglib_DrawLine(eglib, box_x, box_y, box_x + box_width, box_y + box_height);
+  eglib_DrawLine(eglib, box_x, box_y + box_height, box_x + box_width, box_y);
+}
+
 void eglib_DrawWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t unicode_char) {
-  eglib_DrawGlyph(eglib, x, y, eglib_GetGlyph(eglib, unicode_char));
+  const struct glyph_t *glyph;
+
+  glyph = eglib_GetGlyph(eglib, unicode_char);
+  if(glyph != NULL) {
+    eglib_DrawGlyph(eglib, x, y, glyph);
+  } else {
+    draw_missing_glyph(eglib, x, y);
+  }
+}
+
+void eglib_DrawFilledWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t unicode_char) {
+  color_channel_t old_r0, old_g0, old_b0;
+  const struct font_t *font;
+  const struct glyph_t *glyph;
+  coordinate_t box_x, box_width;
+
+  old_r0 = eglib->drawing.color_index[0].r;
+  old_g0 = eglib->drawing.color_index[0].g;
+  old_b0 = eglib->drawing.color_index[0].b;
+
+  eglib_SetIndexColor(
+    eglib, 0,
+    eglib->drawing.color_index[1].r,
+    eglib->drawing.color_index[1].g,
+    eglib->drawing.color_index[1].b
+  );
+
+  font = eglib->drawing.font;
+  glyph = eglib_GetGlyph(eglib, unicode_char);
+
+  if(glyph == NULL)
+    return;
+
+  eglib_DrawBox(
+    eglib,
+    x - glyph->left,
+    y - font->ascent,
+    glyph->left + glyph->width + glyph->advance,
+    font->ascent - font->descent
+  );
+
+  eglib_SetIndexColor(eglib, 0, old_r0, old_g0, old_b0);
+
+  eglib_DrawGlyph(eglib, x, y, glyph);
 }
 
 #define isutf(c) (((c)&0xC0)!=0x80)
@@ -716,11 +772,13 @@ void eglib_DrawText(eglib_t *eglib, coordinate_t x, coordinate_t y, const char *
 
   for(uint16_t index=0 ; utf8_text[index] ; ) {
     glyph = eglib_GetGlyph(eglib, utf8_nextchar(utf8_text, &index));
-    eglib_DrawGlyph(eglib, x, y, glyph);
-    if(glyph == NULL)
-      x += eglib->drawing.font->pixel_size;
-    else
+    if(glyph == NULL) {
+      draw_missing_glyph(eglib, x, y);
+      x += MISSING_GLYPH_ADVANCE;
+    } else {
+      eglib_DrawGlyph(eglib, x, y, glyph);
       x += glyph->advance;
+    }
   }
 }
 

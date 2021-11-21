@@ -695,6 +695,16 @@ void eglib_SetFont(eglib_t *eglib, const struct font_t *font);
  *
  * Returns `true` in case of error, `false` on success.
  *
+ * Example:
+ *
+ * .. literalinclude:: eglib_AddUnicodeBlockToFont.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: eglib_AddUnicodeBlockToFont.png
+ *   :width: 200
+ *
  * :See also: :doc:`fonts`
  * :See also: :c:func:`eglib_SetFont`.
  */
@@ -738,6 +748,21 @@ void eglib_DrawGlyph(eglib_t *eglib, coordinate_t x, coordinate_t y, const struc
  *   :width: 200
  */
 void eglib_DrawWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t unicode_char);
+
+/**
+ * Similar to :c:func:`eglib_DrawWChar`, but fills the background using color from index 1.
+ *
+ * Example:
+ *
+ * .. literalinclude:: eglib_DrawFilledWChar.c
+ *   :language: C
+ *
+ * Output:
+ *
+ * .. image:: eglib_DrawFilledWChar.png
+ *   :width: 200
+ */
+void eglib_DrawFilledWChar(eglib_t *eglib, coordinate_t x, coordinate_t y, wchar_t unicode_char);
 
 /**
  * Draw given UTF-8 text starting at ``(x, y)``.

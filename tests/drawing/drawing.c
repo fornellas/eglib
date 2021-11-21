@@ -62,6 +62,11 @@ START_TEST(test_eglib_DrawFilledArc) {
 	#include "eglib_DrawFilledArc.c"
 }END_TEST
 
+START_TEST(test_eglib_DrawFilledWChar) {
+	expectation_name = "eglib_DrawFilledWChar";
+	#include "eglib_DrawFilledWChar.c"
+}END_TEST
+
 START_TEST(test_eglib_DrawFrame) {
 	expectation_name = "eglib_DrawFrame";
 	#include "eglib_DrawFrame.c"
@@ -188,6 +193,7 @@ Suite * build_suite(void) {
 	tcase_add_test(tcase, test_eglib_DrawCircle);
 	tcase_add_test(tcase, test_eglib_DrawDisc);
 	tcase_add_test(tcase, test_eglib_DrawFilledArc);
+	tcase_add_test(tcase, test_eglib_DrawFilledWChar);
 	tcase_add_test(tcase, test_eglib_DrawFrame);
 	tcase_add_test(tcase, test_eglib_DrawGlyph);
 	tcase_add_test(tcase, test_eglib_DrawGradientArc);
@@ -200,8 +206,8 @@ Suite * build_suite(void) {
 	tcase_add_test(tcase, test_eglib_DrawGradientVLine);
 	tcase_add_test(tcase, test_eglib_DrawHLine);
 	tcase_add_test(tcase, test_eglib_DrawLine);
-	tcase_add_test(tcase, test_eglib_DrawPixelColor);
 	tcase_add_test(tcase, test_eglib_DrawPixel);
+	tcase_add_test(tcase, test_eglib_DrawPixelColor);
 	tcase_add_test(tcase, test_eglib_DrawRoundBox);
 	tcase_add_test(tcase, test_eglib_DrawRoundFrame);
 	tcase_add_test(tcase, test_eglib_DrawText);
